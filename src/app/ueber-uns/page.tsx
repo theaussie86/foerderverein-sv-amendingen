@@ -9,12 +9,13 @@ export const metadata: Metadata = {
 export default function UeberUnsPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-sva-gray-900 sm:text-4xl">
+      <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">
         Über den Förderverein
       </h1>
-      <div className="mt-8 space-y-6 text-sva-gray-700 leading-relaxed">
+      <div className="mt-2 h-1 w-16 bg-sva-gold" />
+      <div className="mt-8 space-y-6 leading-relaxed text-sva-gray-200">
         <p>
-          Der <strong>Förderverein SV Amendingen e.V.</strong> wurde gegründet,
+          Der <strong className="text-white">Förderverein SV Amendingen e.V.</strong> wurde gegründet,
           um den SV Amendingen in seiner sportlichen und gesellschaftlichen
           Arbeit zu unterstützen. Als eigenständiger Verein sammeln wir
           finanzielle Mittel durch Mitgliedsbeiträge, Spenden und
@@ -28,29 +29,18 @@ export default function UeberUnsPage() {
           Amendingen die nötigen Ressourcen hat.
         </p>
 
-        <h2 className="pt-4 text-2xl font-bold text-sva-gray-900">
+        <h2 className="pt-4 text-2xl font-bold text-white">
           Unsere Ziele
         </h2>
-        <ul className="list-inside list-disc space-y-2 text-sva-gray-700">
-          <li>
-            Finanzielle Unterstützung des SV Amendingen in allen Abteilungen
-          </li>
-          <li>
-            Förderung der Jugendarbeit und des Breitensports
-          </li>
-          <li>
-            Unterstützung bei der Instandhaltung und Verbesserung der
-            Sportanlagen
-          </li>
-          <li>
-            Organisation und Mitfinanzierung besonderer Vereinsprojekte
-          </li>
-          <li>
-            Stärkung des Gemeinschaftsgefühls in Amendingen
-          </li>
+        <ul className="list-inside list-disc space-y-2 text-sva-gray-200">
+          <li>Finanzielle Unterstützung des SV Amendingen in allen Abteilungen</li>
+          <li>Förderung der Jugendarbeit und des Breitensports</li>
+          <li>Unterstützung bei der Instandhaltung und Verbesserung der Sportanlagen</li>
+          <li>Organisation und Mitfinanzierung besonderer Vereinsprojekte</li>
+          <li>Stärkung des Gemeinschaftsgefühls in Amendingen</li>
         </ul>
 
-        <h2 className="pt-4 text-2xl font-bold text-sva-gray-900">
+        <h2 className="pt-4 text-2xl font-bold text-white">
           Der SV Amendingen
         </h2>
         <p>

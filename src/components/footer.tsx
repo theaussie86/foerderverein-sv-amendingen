@@ -2,15 +2,15 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-sva-gray-200 bg-sva-gray-900 text-sva-gray-300">
+    <footer className="border-t border-sva-gray-800 bg-sva-charcoal-dark text-sva-gray-300">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Verein */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-sva-gold">
               Förderverein
             </h3>
-            <p className="text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed text-sva-gray-300">
               Förderverein SV Amendingen e.V. &mdash; Gemeinsam für den Sport in
               Amendingen. Wir unterstützen den SV Amendingen finanziell und
               ideell.
@@ -19,27 +19,27 @@ export function Footer() {
 
           {/* Navigation */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-sva-gold">
               Navigation
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/ueber-uns" className="hover:text-white transition-colors">
+                <Link href="/ueber-uns" className="text-sva-gray-300 hover:text-white transition-colors">
                   Über uns
                 </Link>
               </li>
               <li>
-                <Link href="/vorstand" className="hover:text-white transition-colors">
+                <Link href="/vorstand" className="text-sva-gray-300 hover:text-white transition-colors">
                   Vorstand
                 </Link>
               </li>
               <li>
-                <Link href="/projekte" className="hover:text-white transition-colors">
+                <Link href="/projekte" className="text-sva-gray-300 hover:text-white transition-colors">
                   Projekte
                 </Link>
               </li>
               <li>
-                <Link href="/sponsoren" className="hover:text-white transition-colors">
+                <Link href="/sponsoren" className="text-sva-gray-300 hover:text-white transition-colors">
                   Sponsoren
                 </Link>
               </li>
@@ -48,22 +48,22 @@ export function Footer() {
 
           {/* Mitmachen */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-sva-gold">
               Mitmachen
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/spenden" className="hover:text-white transition-colors">
+                <Link href="/spenden" className="text-sva-gray-300 hover:text-white transition-colors">
                   Spenden
                 </Link>
               </li>
               <li>
-                <Link href="/mitglied-werden" className="hover:text-white transition-colors">
+                <Link href="/mitglied-werden" className="text-sva-gray-300 hover:text-white transition-colors">
                   Mitglied werden
                 </Link>
               </li>
               <li>
-                <Link href="/kontakt" className="hover:text-white transition-colors">
+                <Link href="/kontakt" className="text-sva-gray-300 hover:text-white transition-colors">
                   Kontakt
                 </Link>
               </li>
@@ -72,17 +72,17 @@ export function Footer() {
 
           {/* Rechtliches */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-sva-gold">
               Rechtliches
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/impressum" className="hover:text-white transition-colors">
+                <Link href="/impressum" className="text-sva-gray-300 hover:text-white transition-colors">
                   Impressum
                 </Link>
               </li>
               <li>
-                <Link href="/datenschutz" className="hover:text-white transition-colors">
+                <Link href="/datenschutz" className="text-sva-gray-300 hover:text-white transition-colors">
                   Datenschutz
                 </Link>
               </li>
@@ -90,7 +90,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-sva-gray-700 pt-6 text-center text-xs text-sva-gray-600">
+        <div className="mt-10 border-t border-sva-gray-800 pt-6 text-center text-xs text-sva-gray-400">
           &copy; {new Date().getFullYear()} Förderverein SV Amendingen e.V. Alle
           Rechte vorbehalten.
         </div>

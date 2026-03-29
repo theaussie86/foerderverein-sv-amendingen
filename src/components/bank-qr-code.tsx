@@ -54,7 +54,7 @@ export function BankQrCode({ amount }: { amount?: number }) {
       type: "svg",
       width: 200,
       margin: 2,
-      color: { dark: "#003366", light: "#ffffff" },
+      color: { dark: "#2d6a2e", light: "#ffffff" },
     })
       .then((svg) => {
         const encoded = `data:image/svg+xml;base64,${btoa(svg)}`;

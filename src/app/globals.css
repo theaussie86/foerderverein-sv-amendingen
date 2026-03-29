@@ -1,20 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* SV Amendingen Vereinsfarben: Blau/Weiß */
-  --color-sva-blue: #003366;
-  --color-sva-blue-light: #004c99;
-  --color-sva-blue-dark: #002244;
+  /* SV Amendingen Vereinsfarben: Grün/Gold/Dunkel */
+  --color-sva-green: #2d6a2e;
+  --color-sva-green-light: #3a8a3b;
+  --color-sva-green-dark: #1e4d1f;
+  --color-sva-gold: #d4a017;
+  --color-sva-gold-light: #e6b422;
+  --color-sva-gold-dark: #b8860b;
   --color-sva-white: #ffffff;
-  --color-sva-gold: #c8a84e;
-  --color-sva-gray-50: #f8fafc;
-  --color-sva-gray-100: #f1f5f9;
-  --color-sva-gray-200: #e2e8f0;
-  --color-sva-gray-300: #cbd5e1;
-  --color-sva-gray-600: #475569;
-  --color-sva-gray-700: #334155;
-  --color-sva-gray-800: #1e293b;
-  --color-sva-gray-900: #0f172a;
+  --color-sva-charcoal: #2a2a2a;
+  --color-sva-charcoal-light: #3a3a3a;
+  --color-sva-charcoal-dark: #1a1a1a;
+  --color-sva-gray-50: #f5f5f5;
+  --color-sva-gray-100: #e8e8e8;
+  --color-sva-gray-200: #d4d4d4;
+  --color-sva-gray-300: #a3a3a3;
+  --color-sva-gray-400: #737373;
+  --color-sva-gray-600: #525252;
+  --color-sva-gray-700: #404040;
+  --color-sva-gray-800: #262626;
+  --color-sva-gray-900: #171717;
 
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
@@ -22,6 +28,6 @@
 
 body {
   font-family: var(--font-sans);
-  color: var(--color-sva-gray-800);
-  background-color: var(--color-sva-white);
+  color: var(--color-sva-gray-100);
+  background-color: var(--color-sva-charcoal);
 }
