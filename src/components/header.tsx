@@ -8,6 +8,7 @@ const navItems = [
   { href: "/ueber-uns", label: "Über uns" },
   { href: "/vorstand", label: "Vorstand" },
   { href: "/projekte", label: "Projekte" },
+  { href: "/satzung", label: "Satzung" },
   { href: "/sponsoren", label: "Sponsoren" },
   { href: "/spenden", label: "Spenden" },
   { href: "/mitglied-werden", label: "Mitglied werden" },

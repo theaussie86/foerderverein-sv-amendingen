@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ueber-uns",
     "/vorstand",
     "/projekte",
+    "/satzung",
     "/sponsoren",
     "/spenden",
     "/mitglied-werden",

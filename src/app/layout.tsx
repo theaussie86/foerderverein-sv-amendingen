@@ -57,6 +57,27 @@ export default function RootLayout({
         <Header />
         <main id="main-content" className="flex-1">{children}</main>
         <Footer />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Förderverein SV Amendingen e.V.",
+              description:
+                "Der Förderverein SV Amendingen unterstützt den SV Amendingen finanziell und ideell.",
+              url: "https://foerderverein-sv-amendingen.de",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Memmingen",
+                addressRegion: "Bayern",
+                postalCode: "87700",
+                addressCountry: "DE",
+              },
+              sameAs: ["https://www.sv-amendingen-fussball.de/"],
+            }),
+          }}
+        />
       </body>
     </html>
   );
