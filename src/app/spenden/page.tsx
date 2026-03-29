@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Metadata } from "next";
+import { BankQrCode } from "@/components/bank-qr-code";
 
 const amounts = [10, 25, 50, 100];
 
@@ -109,29 +109,40 @@ export default function SpendenPage() {
           Banküberweisung
         </h2>
         <p className="mt-2 text-sm text-sva-gray-600">
-          Alternativ können Sie direkt auf unser Vereinskonto überweisen:
+          Überweisen Sie direkt auf unser Vereinskonto &mdash; scannen Sie den
+          QR-Code oder nutzen Sie die Kontodaten:
         </p>
-        <dl className="mt-4 space-y-2 font-mono text-sm text-sva-gray-700">
-          <div className="flex gap-3">
-            <dt className="font-semibold text-sva-gray-900 w-28">Empfänger:</dt>
-            <dd>Förderverein SV Amendingen e.V.</dd>
-          </div>
-          <div className="flex gap-3">
-            <dt className="font-semibold text-sva-gray-900 w-28">IBAN:</dt>
-            <dd>DE00 0000 0000 0000 0000 00</dd>
-          </div>
-          <div className="flex gap-3">
-            <dt className="font-semibold text-sva-gray-900 w-28">BIC:</dt>
-            <dd>XXXXXXXXXXX</dd>
-          </div>
-          <div className="flex gap-3">
-            <dt className="font-semibold text-sva-gray-900 w-28">Verwendung:</dt>
-            <dd>Spende Förderverein SVA</dd>
-          </div>
-        </dl>
-        <p className="mt-4 text-xs text-sva-gray-600">
-          Bankdaten werden in Kürze ergänzt. Bitte kontaktieren Sie den Vorstand
-          für aktuelle Kontoinformationen.
+
+        <div className="mt-6 flex flex-col items-center gap-8 sm:flex-row sm:items-start">
+          <BankQrCode amount={activeAmount > 0 ? activeAmount : undefined} />
+
+          <dl className="flex-1 space-y-2 font-mono text-sm text-sva-gray-700">
+            <div className="flex gap-3">
+              <dt className="w-28 font-semibold text-sva-gray-900">
+                Empfänger:
+              </dt>
+              <dd>Förderverein SV Amendingen e.V.</dd>
+            </div>
+            <div className="flex gap-3">
+              <dt className="w-28 font-semibold text-sva-gray-900">IBAN:</dt>
+              <dd>DE00 0000 0000 0000 0000 00</dd>
+            </div>
+            <div className="flex gap-3">
+              <dt className="w-28 font-semibold text-sva-gray-900">BIC:</dt>
+              <dd>XXXXXXXXXXX</dd>
+            </div>
+            <div className="flex gap-3">
+              <dt className="w-28 font-semibold text-sva-gray-900">
+                Verwendung:
+              </dt>
+              <dd>Spende Förderverein SVA</dd>
+            </div>
+          </dl>
+        </div>
+
+        <p className="mt-6 text-xs text-sva-gray-600">
+          Der QR-Code passt sich automatisch an den gewählten Spendenbetrag an.
+          Bankdaten werden in Kürze durch die echten Kontodaten ersetzt.
         </p>
       </div>
     </div>
