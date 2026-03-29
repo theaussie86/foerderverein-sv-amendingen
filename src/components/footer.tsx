@@ -1,0 +1,100 @@
+import Link from "next/link";
+
+export function Footer() {
+  return (
+    <footer className="border-t border-sva-gray-200 bg-sva-gray-900 text-sva-gray-300">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Verein */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Förderverein
+            </h3>
+            <p className="text-sm leading-relaxed">
+              Förderverein SV Amendingen e.V. &mdash; Gemeinsam für den Sport in
+              Amendingen. Wir unterstützen den SV Amendingen finanziell und
+              ideell.
+            </p>
+          </div>
+
+          {/* Navigation */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Navigation
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/ueber-uns" className="hover:text-white transition-colors">
+                  Über uns
+                </Link>
+              </li>
+              <li>
+                <Link href="/vorstand" className="hover:text-white transition-colors">
+                  Vorstand
+                </Link>
+              </li>
+              <li>
+                <Link href="/projekte" className="hover:text-white transition-colors">
+                  Projekte
+                </Link>
+              </li>
+              <li>
+                <Link href="/sponsoren" className="hover:text-white transition-colors">
+                  Sponsoren
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Mitmachen */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Mitmachen
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/spenden" className="hover:text-white transition-colors">
+                  Spenden
+                </Link>
+              </li>
+              <li>
+                <Link href="/mitglied-werden" className="hover:text-white transition-colors">
+                  Mitglied werden
+                </Link>
+              </li>
+              <li>
+                <Link href="/kontakt" className="hover:text-white transition-colors">
+                  Kontakt
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Rechtliches */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Rechtliches
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/impressum" className="hover:text-white transition-colors">
+                  Impressum
+                </Link>
+              </li>
+              <li>
+                <Link href="/datenschutz" className="hover:text-white transition-colors">
+                  Datenschutz
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 border-t border-sva-gray-700 pt-6 text-center text-xs text-sva-gray-600">
+          &copy; {new Date().getFullYear()} Förderverein SV Amendingen e.V. Alle
+          Rechte vorbehalten.
+        </div>
+      </div>
+    </footer>
+  );
+}

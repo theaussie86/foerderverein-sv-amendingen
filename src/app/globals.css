@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  /* SV Amendingen Vereinsfarben: Blau/Weiß */
+  --color-sva-blue: #003366;
+  --color-sva-blue-light: #004c99;
+  --color-sva-blue-dark: #002244;
+  --color-sva-white: #ffffff;
+  --color-sva-gold: #c8a84e;
+  --color-sva-gray-50: #f8fafc;
+  --color-sva-gray-100: #f1f5f9;
+  --color-sva-gray-200: #e2e8f0;
+  --color-sva-gray-300: #cbd5e1;
+  --color-sva-gray-600: #475569;
+  --color-sva-gray-700: #334155;
+  --color-sva-gray-800: #1e293b;
+  --color-sva-gray-900: #0f172a;
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-sva-gray-800);
+  background-color: var(--color-sva-white);
+}
