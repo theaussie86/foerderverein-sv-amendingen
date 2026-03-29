@@ -1,18 +1,69 @@
 "use client";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { mitgliedSchema, type MitgliedFormData } from "@/lib/schemas";
 
 type Step = 1 | 2 | 3;
 
 const membershipTypes = [
-  { id: "einzel", label: "Einzelmitglied", price: "24 € / Jahr" },
-  { id: "familie", label: "Familienmitglied", price: "36 € / Jahr" },
-  { id: "firma", label: "Firmenmitglied", price: "100 € / Jahr" },
+  { id: "einzel" as const, label: "Einzelmitglied", price: "24 € / Jahr" },
+  { id: "familie" as const, label: "Familienmitglied", price: "36 € / Jahr" },
+  { id: "firma" as const, label: "Firmenmitglied", price: "100 € / Jahr" },
 ];
 
 export default function MitgliedWerdenPage() {
   const [step, setStep] = useState<Step>(1);
-  const [memberType, setMemberType] = useState("einzel");
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    trigger,
+    formState: { errors },
+  } = useForm<MitgliedFormData>({
+    resolver: zodResolver(mitgliedSchema),
+    defaultValues: {
+      memberType: "einzel",
+      vorname: "",
+      nachname: "",
+      strasse: "",
+      plz: "",
+      ort: "",
+      email: "",
+      geburtsdatum: "",
+      iban: "",
+      datenschutz: undefined as unknown as true,
+    },
+  });
+
+  const memberType = watch("memberType");
+
+  async function goToStep2() {
+    const valid = await trigger("memberType");
+    if (valid) setStep(2);
+  }
+
+  async function goToStep3() {
+    const valid = await trigger([
+      "vorname",
+      "nachname",
+      "strasse",
+      "plz",
+      "ort",
+      "email",
+    ]);
+    if (valid) setStep(3);
+  }
+
+  function onSubmit(data: MitgliedFormData) {
+    // Will be connected to Server Action in Phase 4
+    console.log("Beitrittserklärung:", data);
+    alert(
+      "Vielen Dank! Die Formularübermittlung wird in Kürze aktiviert. Bitte kontaktieren Sie uns direkt."
+    );
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
@@ -55,7 +106,10 @@ export default function MitgliedWerdenPage() {
         <span className="w-8 text-center">Zahlung</span>
       </div>
 
-      <div className="mt-8 rounded-xl border border-sva-gray-200 bg-white p-6 sm:p-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-8 rounded-xl border border-sva-gray-200 bg-white p-6 sm:p-8"
+      >
         {step === 1 && (
           <>
             <h2 className="text-xl font-semibold text-sva-gray-900">
@@ -74,10 +128,8 @@ export default function MitgliedWerdenPage() {
                   <div className="flex items-center gap-3">
                     <input
                       type="radio"
-                      name="memberType"
                       value={type.id}
-                      checked={memberType === type.id}
-                      onChange={(e) => setMemberType(e.target.value)}
+                      {...register("memberType")}
                       className="h-4 w-4 text-sva-blue focus:ring-sva-blue"
                     />
                     <span className="font-medium text-sva-gray-900">
@@ -92,7 +144,7 @@ export default function MitgliedWerdenPage() {
             </div>
             <button
               type="button"
-              onClick={() => setStep(2)}
+              onClick={goToStep2}
               className="mt-8 w-full rounded-lg bg-sva-blue px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-sva-blue-light"
             >
               Weiter zu persönlichen Daten
@@ -108,76 +160,136 @@ export default function MitgliedWerdenPage() {
             <div className="mt-6 space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="vorname" className="block text-sm font-medium text-sva-gray-700">
+                  <label
+                    htmlFor="vorname"
+                    className="block text-sm font-medium text-sva-gray-700"
+                  >
                     Vorname *
                   </label>
                   <input
                     id="vorname"
                     type="text"
+                    {...register("vorname")}
                     className="mt-1 w-full rounded-lg border border-sva-gray-200 px-4 py-2.5 text-sva-gray-900 focus:border-sva-blue focus:outline-none focus:ring-1 focus:ring-sva-blue"
                   />
+                  {errors.vorname && (
+                    <p className="mt-1 text-xs text-red-600">
+                      {errors.vorname.message}
+                    </p>
+                  )}
                 </div>
                 <div>
-                  <label htmlFor="nachname" className="block text-sm font-medium text-sva-gray-700">
+                  <label
+                    htmlFor="nachname"
+                    className="block text-sm font-medium text-sva-gray-700"
+                  >
                     Nachname *
                   </label>
                   <input
                     id="nachname"
                     type="text"
+                    {...register("nachname")}
                     className="mt-1 w-full rounded-lg border border-sva-gray-200 px-4 py-2.5 text-sva-gray-900 focus:border-sva-blue focus:outline-none focus:ring-1 focus:ring-sva-blue"
                   />
+                  {errors.nachname && (
+                    <p className="mt-1 text-xs text-red-600">
+                      {errors.nachname.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div>
-                <label htmlFor="strasse" className="block text-sm font-medium text-sva-gray-700">
+                <label
+                  htmlFor="strasse"
+                  className="block text-sm font-medium text-sva-gray-700"
+                >
                   Straße & Hausnummer *
                 </label>
                 <input
                   id="strasse"
                   type="text"
+                  {...register("strasse")}
                   className="mt-1 w-full rounded-lg border border-sva-gray-200 px-4 py-2.5 text-sva-gray-900 focus:border-sva-blue focus:outline-none focus:ring-1 focus:ring-sva-blue"
                 />
+                {errors.strasse && (
+                  <p className="mt-1 text-xs text-red-600">
+                    {errors.strasse.message}
+                  </p>
+                )}
               </div>
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
-                  <label htmlFor="plz" className="block text-sm font-medium text-sva-gray-700">
+                  <label
+                    htmlFor="plz"
+                    className="block text-sm font-medium text-sva-gray-700"
+                  >
                     PLZ *
                   </label>
                   <input
                     id="plz"
                     type="text"
+                    inputMode="numeric"
+                    maxLength={5}
+                    {...register("plz")}
                     className="mt-1 w-full rounded-lg border border-sva-gray-200 px-4 py-2.5 text-sva-gray-900 focus:border-sva-blue focus:outline-none focus:ring-1 focus:ring-sva-blue"
                   />
+                  {errors.plz && (
+                    <p className="mt-1 text-xs text-red-600">
+                      {errors.plz.message}
+                    </p>
+                  )}
                 </div>
                 <div className="sm:col-span-2">
-                  <label htmlFor="ort" className="block text-sm font-medium text-sva-gray-700">
+                  <label
+                    htmlFor="ort"
+                    className="block text-sm font-medium text-sva-gray-700"
+                  >
                     Ort *
                   </label>
                   <input
                     id="ort"
                     type="text"
+                    {...register("ort")}
                     className="mt-1 w-full rounded-lg border border-sva-gray-200 px-4 py-2.5 text-sva-gray-900 focus:border-sva-blue focus:outline-none focus:ring-1 focus:ring-sva-blue"
                   />
+                  {errors.ort && (
+                    <p className="mt-1 text-xs text-red-600">
+                      {errors.ort.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-sva-gray-700">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-sva-gray-700"
+                  >
                     E-Mail *
                   </label>
                   <input
                     id="email"
                     type="email"
+                    {...register("email")}
                     className="mt-1 w-full rounded-lg border border-sva-gray-200 px-4 py-2.5 text-sva-gray-900 focus:border-sva-blue focus:outline-none focus:ring-1 focus:ring-sva-blue"
                   />
+                  {errors.email && (
+                    <p className="mt-1 text-xs text-red-600">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 <div>
-                  <label htmlFor="geburtsdatum" className="block text-sm font-medium text-sva-gray-700">
+                  <label
+                    htmlFor="geburtsdatum"
+                    className="block text-sm font-medium text-sva-gray-700"
+                  >
                     Geburtsdatum
                   </label>
                   <input
                     id="geburtsdatum"
                     type="date"
+                    {...register("geburtsdatum")}
                     className="mt-1 w-full rounded-lg border border-sva-gray-200 px-4 py-2.5 text-sva-gray-900 focus:border-sva-blue focus:outline-none focus:ring-1 focus:ring-sva-blue"
                   />
                 </div>
@@ -193,7 +305,7 @@ export default function MitgliedWerdenPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setStep(3)}
+                onClick={goToStep3}
                 className="flex-1 rounded-lg bg-sva-blue px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-sva-blue-light"
               >
                 Weiter zur Zahlung
@@ -220,15 +332,24 @@ export default function MitgliedWerdenPage() {
                   automatisch ein.
                 </p>
                 <div className="mt-4">
-                  <label htmlFor="iban" className="block text-sm font-medium text-sva-gray-700">
+                  <label
+                    htmlFor="iban"
+                    className="block text-sm font-medium text-sva-gray-700"
+                  >
                     IBAN *
                   </label>
                   <input
                     id="iban"
                     type="text"
                     placeholder="DE00 0000 0000 0000 0000 00"
+                    {...register("iban")}
                     className="mt-1 w-full rounded-lg border border-sva-gray-200 px-4 py-2.5 font-mono text-sm text-sva-gray-900 placeholder:text-sva-gray-300 focus:border-sva-blue focus:outline-none focus:ring-1 focus:ring-sva-blue"
                   />
+                  {errors.iban && (
+                    <p className="mt-1 text-xs text-red-600">
+                      {errors.iban.message}
+                    </p>
+                  )}
                 </div>
                 <p className="mt-3 text-xs text-sva-gray-600">
                   Mit Absenden erteilen Sie dem Förderverein SV Amendingen e.V.
@@ -249,6 +370,7 @@ export default function MitgliedWerdenPage() {
               <label className="flex items-start gap-3 cursor-pointer">
                 <input
                   type="checkbox"
+                  {...register("datenschutz")}
                   className="mt-0.5 h-4 w-4 rounded border-sva-gray-300 text-sva-blue focus:ring-sva-blue"
                 />
                 <span className="text-sm text-sva-gray-700">
@@ -262,6 +384,11 @@ export default function MitgliedWerdenPage() {
                   zu und akzeptiere die Vereinssatzung. *
                 </span>
               </label>
+              {errors.datenschutz && (
+                <p className="mt-1 ml-7 text-xs text-red-600">
+                  {errors.datenschutz.message}
+                </p>
+              )}
             </div>
 
             <div className="mt-8 flex gap-3">
@@ -273,7 +400,7 @@ export default function MitgliedWerdenPage() {
                 Zurück
               </button>
               <button
-                type="button"
+                type="submit"
                 className="flex-1 rounded-lg bg-sva-blue px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-sva-blue-light"
               >
                 Beitrittserklärung absenden
@@ -285,7 +412,7 @@ export default function MitgliedWerdenPage() {
             </p>
           </>
         )}
-      </div>
+      </form>
     </div>
   );
 }
