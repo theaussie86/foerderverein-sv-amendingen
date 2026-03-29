@@ -91,8 +91,21 @@ export function Footer() {
         </div>
 
         <div className="mt-10 border-t border-sva-gray-800 pt-6 text-center text-xs text-sva-gray-400">
-          &copy; {new Date().getFullYear()} Förderverein SV Amendingen e.V. Alle
-          Rechte vorbehalten.
+          <p>
+            &copy; {new Date().getFullYear()} Förderverein SV Amendingen e.V. Alle
+            Rechte vorbehalten.
+          </p>
+          <p className="mt-2">
+            Website erstellt von{" "}
+            <a
+              href="https://weissteiner-automation.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sva-gold hover:text-white transition-colors"
+            >
+              Weissteiner Automation
+            </a>
+          </p>
         </div>
       </div>
     </footer>
