@@ -4,33 +4,60 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { mitgliedSchema, type MitgliedFormData } from "@/lib/schemas";
+import { mandatstext, mitgliedschaften, verein } from "@/lib/verein";
+import { antragEinreichen } from "./actions";
 
 type Step = 1 | 2 | 3;
 
-const membershipTypes = [
-  { id: "einzel" as const, label: "Einzelmitglied", price: "24 € / Jahr" },
-  { id: "familie" as const, label: "Familienmitglied", price: "36 € / Jahr" },
-  { id: "firma" as const, label: "Firmenmitglied", price: "100 € / Jahr" },
-];
+const membershipTypes = (Object.keys(mitgliedschaften) as (keyof typeof mitgliedschaften)[]).map((id) => ({
+  id,
+  label: mitgliedschaften[id].label,
+  price: `${mitgliedschaften[id].beitrag} € / Jahr`,
+}));
 
 const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 
 export default function MitgliedWerdenPage() {
   const [step, setStep] = useState<Step>(1);
+  const [gesendet, setGesendet] = useState(false);
+  const [fehler, setFehler] = useState<string | null>(null);
 
-  const { register, handleSubmit, watch, trigger, formState: { errors } } = useForm<MitgliedFormData>({
+  const { register, handleSubmit, watch, trigger, getValues, setValue, formState: { errors, isSubmitting } } = useForm<MitgliedFormData>({
     resolver: zodResolver(mitgliedSchema),
-    defaultValues: { memberType: "einzel", vorname: "", nachname: "", strasse: "", plz: "", ort: "", email: "", geburtsdatum: "", iban: "", datenschutz: undefined as unknown as true },
+    defaultValues: { memberType: "einzel", vorname: "", nachname: "", strasse: "", plz: "", ort: "", email: "", geburtsdatum: "", kontoinhaber: "", iban: "", website: "", mandat: undefined as unknown as true, datenschutz: undefined as unknown as true },
   });
 
   const memberType = watch("memberType");
 
   async function goToStep2() { if (await trigger("memberType")) setStep(2); }
-  async function goToStep3() { if (await trigger(["vorname", "nachname", "strasse", "plz", "ort", "email"])) setStep(3); }
+  async function goToStep3() {
+    if (!(await trigger(["vorname", "nachname", "strasse", "plz", "ort", "email"]))) return;
+    if (!getValues("kontoinhaber")) setValue("kontoinhaber", `${getValues("vorname")} ${getValues("nachname")}`);
+    setStep(3);
+  }
 
-  function onSubmit(data: MitgliedFormData) {
-    console.log("Beitrittserklärung:", data);
-    alert("Vielen Dank! Die Formularübermittlung wird in Kürze aktiviert.");
+  async function onSubmit(data: MitgliedFormData) {
+    setFehler(null);
+    const ergebnis = await antragEinreichen(data);
+    if (ergebnis.ok) setGesendet(true);
+    else setFehler(ergebnis.fehler);
+  }
+
+  if (gesendet) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Fast geschafft!</h1>
+        <div className="mt-2 h-1 w-16 bg-sva-gold" />
+        <div className="mt-10 rounded-lg border-2 border-sva-green bg-sva-green/10 p-6 sm:p-8">
+          <h2 className="text-xl font-semibold text-white">Bitte prüfen Sie Ihr E-Mail-Postfach</h2>
+          <p className="mt-2 text-sva-gray-300">
+            Wir haben Ihnen einen Link an <strong className="text-white">{getValues("email")}</strong> geschickt. Darüber
+            unterschreiben Sie Ihre Beitrittserklärung mit Finger oder Maus. Erst danach ist der Antrag gültig.
+          </p>
+          <p className="mt-4 text-sm text-sva-gray-400">Keine E-Mail erhalten? Bitte schauen Sie auch im Spam-Ordner nach.</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -119,30 +146,40 @@ export default function MitgliedWerdenPage() {
             </div>
             <div className="mt-8 flex gap-3">
               <button type="button" onClick={() => setStep(1)} className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal">Zurück</button>
-              <button type="button" onClick={goToStep3} className="flex-1 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">Weiter zur Zahlung</button>
+              <button type="button" onClick={goToStep3} className="flex-1 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">Weiter zum Lastschriftmandat</button>
             </div>
           </>
         )}
 
         {step === 3 && (
           <>
-            <h2 className="text-xl font-semibold text-white">Zahlungsart</h2>
-            <p className="mt-2 text-sm text-sva-gray-300">Wählen Sie Ihre bevorzugte Zahlungsmethode.</p>
+            <h2 className="text-xl font-semibold text-white">SEPA-Lastschriftmandat</h2>
+            <p className="mt-2 text-sm text-sva-gray-300">Der Jahresbeitrag wird bequem per Lastschrift jeweils zum {verein.einzugstermin} eingezogen.</p>
             <div className="mt-6 space-y-4">
-              <div className="rounded-md border-2 border-sva-green bg-sva-green/10 p-5">
-                <h3 className="font-semibold text-white">SEPA-Lastschrift</h3>
-                <p className="mt-1 text-sm text-sva-gray-300">Bequem per Lastschrift &mdash; wir ziehen den Jahresbeitrag automatisch ein.</p>
-                <div className="mt-4">
-                  <label htmlFor="iban" className="block text-sm font-medium text-sva-gray-300">IBAN *</label>
-                  <input id="iban" type="text" placeholder="DE00 0000 0000 0000 0000 00" {...register("iban")} className={`${inputCls} font-mono text-sm placeholder:text-sva-gray-600`} />
-                  {errors.iban && <p className="mt-1 text-xs text-red-400">{errors.iban.message}</p>}
-                </div>
-                <p className="mt-3 text-xs text-sva-gray-400">Mit Absenden erteilen Sie ein SEPA-Lastschriftmandat zum Einzug des Jahresbeitrags.</p>
+              <div>
+                <label htmlFor="kontoinhaber" className="block text-sm font-medium text-sva-gray-300">Kontoinhaber/in *</label>
+                <input id="kontoinhaber" type="text" {...register("kontoinhaber")} className={inputCls} />
+                {errors.kontoinhaber && <p className="mt-1 text-xs text-red-400">{errors.kontoinhaber.message}</p>}
               </div>
-              <div className="rounded-md border border-sva-gray-600 p-5 opacity-60">
-                <h3 className="font-semibold text-white">PayPal</h3>
-                <p className="mt-1 text-sm text-sva-gray-400">PayPal-Integration wird in Kürze freigeschaltet.</p>
+              <div>
+                <label htmlFor="iban" className="block text-sm font-medium text-sva-gray-300">IBAN *</label>
+                <input id="iban" type="text" autoComplete="off" placeholder="DE00 0000 0000 0000 0000 00" {...register("iban")} className={`${inputCls} font-mono text-sm placeholder:text-sva-gray-600`} />
+                {errors.iban && <p className="mt-1 text-xs text-red-400">{errors.iban.message}</p>}
               </div>
+              <div className="rounded-md border border-sva-gray-600 bg-sva-charcoal p-4 text-xs leading-relaxed text-sva-gray-300">
+                <p>Zahlungsempfänger: {verein.name}, Gläubiger-ID {verein.glaeubigerId}. Die Mandatsreferenz erhalten Sie mit der Bestätigung.</p>
+                <p className="mt-2">{mandatstext()}</p>
+              </div>
+              <label className="flex cursor-pointer items-start gap-3">
+                <input type="checkbox" {...register("mandat")} className="mt-0.5 h-4 w-4 rounded border-sva-gray-600 bg-sva-charcoal text-sva-green focus:ring-sva-green" />
+                <span className="text-sm text-sva-gray-300">Ich erteile das SEPA-Lastschriftmandat für den Jahresbeitrag. *</span>
+              </label>
+              {errors.mandat && <p className="ml-7 text-xs text-red-400">{errors.mandat.message}</p>}
+            </div>
+            {/* Honeypot gegen Bots */}
+            <div className="absolute -left-[9999px]" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input id="website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
             </div>
             <div className="mt-6">
               <label className="flex cursor-pointer items-start gap-3">
@@ -155,8 +192,10 @@ export default function MitgliedWerdenPage() {
             </div>
             <div className="mt-8 flex gap-3">
               <button type="button" onClick={() => setStep(2)} className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal">Zurück</button>
-              <button type="submit" className="flex-1 rounded-md bg-sva-gold px-6 py-3 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light">Beitrittserklärung absenden</button>
+              <button type="submit" disabled={isSubmitting} className="flex-1 rounded-md bg-sva-gold px-6 py-3 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-50">{isSubmitting ? "Wird gesendet …" : "Weiter zur Unterschrift"}</button>
             </div>
+            {fehler && <p className="mt-4 text-sm text-red-400">{fehler}</p>}
+            <p className="mt-4 text-xs text-sva-gray-400">Im nächsten Schritt erhalten Sie eine E-Mail mit einem Link, über den Sie Ihren Antrag unterschreiben.</p>
           </>
         )}
       </form>

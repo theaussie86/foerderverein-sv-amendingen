@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/"],
+      disallow: ["/api/", "/unterschreiben/"],
     },
     sitemap: "https://foerderverein-sv-amendingen.de/sitemap.xml",
   };
