@@ -26,30 +26,37 @@ export default function DatenschutzPage() {
           <p>Ihre Daten werden ausschließlich zur Abwicklung Ihrer Mitgliedschaft, Spende oder Anfrage verwendet (Art. 6 Abs. 1 lit. b DSGVO).</p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">4. Weitergabe von Daten</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">4. Online-Mitgliedsantrag und elektronische Unterschrift</h2>
+          <p>Wenn Sie online Mitglied werden, verarbeiten wir die Angaben aus dem Formular (Name, Anschrift, E-Mail-Adresse, Geburtsdatum, Kontoinhaber, IBAN) zur Durchführung der Mitgliedschaft und zum Einzug des Beitrags per SEPA-Lastschrift (Art. 6 Abs. 1 lit. b DSGVO).</p>
+          <p className="mt-2">Zur Bestätigung erhalten Sie einen persönlichen Link per E-Mail. Ihre Angaben sind in diesem Link verschlüsselt enthalten und werden bis zur Unterschrift nicht auf unserem Server gespeichert. Beim Absenden, beim Öffnen des Links und bei der Unterschrift protokollieren wir Zeitpunkt, IP-Adresse und Browserkennung. Dieses Protokoll dient als Nachweis für die Erteilung des Lastschriftmandats (Art. 6 Abs. 1 lit. c und f DSGVO).</p>
+          <p className="mt-2">Die unterschriebene Beitrittserklärung wird als PDF an den Vorstand und an Sie gesendet und für die Dauer der Mitgliedschaft aufbewahrt, als Mandatsnachweis mindestens 14 Monate nach der letzten Lastschrift.</p>
+          <p className="mt-2">Für den Versand der E-Mails nutzen wir den Dienst Resend (Resend, Inc., USA) als Auftragsverarbeiter. Die Übermittlung erfolgt auf Grundlage der EU-Standardvertragsklauseln.</p>
+        </section>
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-white">5. Weitergabe von Daten</h2>
           <p>Eine Weitergabe an Dritte erfolgt nur zur Vertragserfüllung (z.B. SEPA-Lastschrift) oder bei gesetzlicher Verpflichtung.</p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">5. Speicherdauer</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">6. Speicherdauer</h2>
           <p>Personenbezogene Daten werden gelöscht, sobald der Zweck entfällt und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">6. Ihre Rechte</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">7. Ihre Rechte</h2>
           <ul className="mt-2 list-inside list-disc space-y-1">
             <li>Auskunft (Art. 15 DSGVO)</li><li>Berichtigung (Art. 16 DSGVO)</li><li>Löschung (Art. 17 DSGVO)</li>
             <li>Einschränkung (Art. 18 DSGVO)</li><li>Datenübertragbarkeit (Art. 20 DSGVO)</li><li>Widerspruch (Art. 21 DSGVO)</li>
           </ul>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">7. Cookies und Analyse</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">8. Cookies und Analyse</h2>
           <p>Diese Website verwendet ausschließlich technisch notwendige Cookies. Analyse-Tools werden nur mit Ihrer Einwilligung eingesetzt.</p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">8. PayPal</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">9. PayPal</h2>
           <p>Wenn Sie über PayPal bezahlen, gelten die <a href="https://www.paypal.com/de/webapps/mpp/ua/privacy-full" target="_blank" rel="noopener noreferrer" className="text-sva-gold underline hover:text-sva-gold-light">Datenschutzbestimmungen von PayPal</a>.</p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">9. Beschwerderecht</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">10. Beschwerderecht</h2>
           <p>Zuständige Aufsichtsbehörde: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA).</p>
         </section>
       </div>

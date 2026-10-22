@@ -30,9 +30,8 @@ export async function antragEinreichen(eingabe: unknown): Promise<Ergebnis> {
     daten: { ...daten, iban: normalizeIban(daten.iban) },
     eingereicht: { zeit: new Date().toISOString(), ip },
   };
-  const link = `${siteUrl()}/unterschreiben/${seal(antrag, LINK_GUELTIG_TAGE * 24 * 60 * 60)}`;
-
   try {
+    const link = `${siteUrl()}/unterschreiben/${seal(antrag, LINK_GUELTIG_TAGE * 24 * 60 * 60)}`;
     await sendMail({
       to: daten.email,
       subject: "Bitte bestätigen: Ihre Beitrittserklärung zum Förderverein SV Amendingen",

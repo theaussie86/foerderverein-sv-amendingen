@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
+import { verein } from "@/lib/verein";
 
 // EPC QR Code format (European Payments Council)
 // https://www.europeanpaymentscouncil.eu/document-library/guidance-documents/quick-response-code-guidelines-enable-data-capture-initiation
@@ -34,11 +35,11 @@ function buildEpcPayload({
   return lines.join("\n");
 }
 
-// Placeholder bank details — replace with real data
 const BANK_DETAILS = {
-  name: "Foerderverein SV Amendingen e.V.",
-  iban: "DE00 0000 0000 0000 0000 00",
-  bic: "XXXXXXXXXXX",
+  name: verein.bank.kontoinhaber,
+  iban: verein.bank.iban,
+  bic: verein.bank.bic,
+  reference: verein.spendenVerwendungszweck,
 };
 
 export function BankQrCode({ amount }: { amount?: number }) {

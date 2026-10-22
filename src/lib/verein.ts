@@ -8,6 +8,15 @@ export const verein = {
   glaeubigerId: "DE00ZZZ00000000000",
   // Termin des jährlichen Beitragseinzugs, dient zugleich als Vorabankündigung (Pre-Notification).
   einzugstermin: "15. März",
+  bank: {
+    kontoinhaber: "Förderverein SV Amendingen e.V.",
+    iban: "DE00 0000 0000 0000 0000 00",
+    bic: "XXXXXXXXXXX",
+    name: "Musterbank",
+  },
+  // E-Mail-Adresse des PayPal-Kontos. Leer lassen, solange es kein Vereinskonto gibt.
+  paypal: "",
+  spendenVerwendungszweck: "Spende Förderverein SVA",
 };
 
 export const mitgliedschaften = {
