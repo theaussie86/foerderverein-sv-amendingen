@@ -18,18 +18,36 @@ export const mitgliedSchema = z.object({
   ort: z.string().min(1, "Ort ist erforderlich."),
   email: z.string().email("Bitte eine gültige E-Mail-Adresse eingeben."),
   geburtsdatum: z.string().optional(),
+  kontoinhaber: z.string().min(1, "Kontoinhaber ist erforderlich."),
   iban: z
     .string()
-    .regex(
-      /^DE\d{2}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{2}$/,
-      "Bitte eine gültige deutsche IBAN eingeben."
-    )
-    .optional()
-    .or(z.literal("")),
+    .refine((v) => isValidIban(normalizeIban(v)), "Bitte eine gültige IBAN eingeben."),
+  mandat: z.literal(true, {
+    error: "Bitte erteilen Sie das SEPA-Lastschriftmandat.",
+  }),
   datenschutz: z.literal(true, {
     error: "Bitte stimmen Sie der Datenschutzerklärung zu.",
   }),
+  // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer.
+  website: z.string().max(0).optional(),
 });
+
+export function normalizeIban(iban: string): string {
+  return iban.replace(/\s+/g, "").toUpperCase();
+}
+
+export function formatIban(iban: string): string {
+  return normalizeIban(iban).replace(/(.{4})/g, "$1 ").trim();
+}
+
+// Prüfsumme nach ISO 13616 (Modulo 97).
+export function isValidIban(iban: string): boolean {
+  if (!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(iban)) return false;
+  const digits = (iban.slice(4) + iban.slice(0, 4)).replace(/[A-Z]/g, (c) => String(c.charCodeAt(0) - 55));
+  let rest = 0;
+  for (const d of digits) rest = (rest * 10 + Number(d)) % 97;
+  return rest === 1;
+}
 
 export type MitgliedFormData = z.infer<typeof mitgliedSchema>;
 
