@@ -4,18 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { BankQrCode } from "@/components/bank-qr-code";
 import { verein } from "@/lib/verein";
+import { QuittungDialog } from "./quittung-dialog";
 
 const amounts = [10, 25, 50, 100];
-
-function paypalLink(amount: number): string {
-  const params = new URLSearchParams({
-    business: verein.paypal,
-    currency_code: "EUR",
-    item_name: verein.spendenVerwendungszweck,
-  });
-  if (amount > 0) params.set("amount", amount.toFixed(2));
-  return `https://www.paypal.com/donate?${params}`;
-}
 
 export default function SpendenPage() {
   const [selected, setSelected] = useState<number | null>(25);
@@ -104,33 +95,14 @@ export default function SpendenPage() {
         </p>
       </div>
 
-      <div className="mt-6 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 sm:p-8">
-        <h2 className="text-xl font-semibold text-white">Oder mit PayPal</h2>
-        {verein.paypal ? (
-          <>
-            <p className="mt-2 text-sm text-sva-gray-300">Sie werden zu PayPal weitergeleitet. Dort ist auch eine monatliche Spende möglich.</p>
-            <a
-              href={paypalLink(activeAmount)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 block w-full rounded-md bg-sva-gold px-6 py-4 text-center text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light"
-            >
-              {activeAmount > 0 ? `${activeAmount} € mit PayPal spenden` : "Mit PayPal spenden"}
-            </a>
-          </>
-        ) : (
-          <p className="mt-2 text-sm text-sva-gray-400">PayPal-Spenden werden in Kürze freigeschaltet.</p>
-        )}
-      </div>
-
       <div className="mt-6 rounded-lg border border-sva-gray-700 p-6 sm:p-8">
         <h2 className="text-lg font-semibold text-white">Spendenquittung</h2>
         <p className="mt-2 text-sm leading-relaxed text-sva-gray-300">
           Der {verein.name} ist als gemeinnützig anerkannt, Ihre Spende ist steuerlich absetzbar. Bis 300 € genügt dem
-          Finanzamt Ihr Kontoauszug bzw. der PayPal-Beleg als Nachweis. Für höhere Beträge oder auf Wunsch stellen wir
-          Ihnen gern eine Zuwendungsbestätigung aus. Schreiben Sie uns dazu einfach über das{" "}
-          <Link href="/kontakt" className="text-sva-gold underline hover:text-sva-gold-light">Kontaktformular</Link> mit Ihrer Anschrift.
+          Finanzamt Ihr Kontoauszug als Nachweis. Für höhere Beträge oder auf Wunsch stellen wir Ihnen gern eine
+          Zuwendungsbestätigung aus, sobald Ihre Überweisung bei uns eingegangen ist.
         </p>
+        <QuittungDialog betrag={activeAmount > 0 ? activeAmount : undefined} />
       </div>
 
       <div className="mt-10 text-center">

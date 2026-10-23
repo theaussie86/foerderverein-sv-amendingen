@@ -14,18 +14,11 @@ export const verein = {
     bic: "XXXXXXXXXXX",
     name: "Musterbank",
   },
-  // E-Mail-Adresse des PayPal-Kontos. Leer lassen, solange es kein Vereinskonto gibt.
-  paypal: "",
   spendenVerwendungszweck: "Spende Förderverein SVA",
 };
 
-export const mitgliedschaften = {
-  einzel: { label: "Einzelmitglied", beitrag: 20 },
-  familie: { label: "Familienmitglied", beitrag: 30 },
-  firma: { label: "Firmenmitglied", beitrag: 100 },
-} as const;
-
-export type Mitgliedschaft = keyof typeof mitgliedschaften;
+// Es gibt nur eine Mitgliedschaft mit festem Jahresbeitrag.
+export const mitgliedsbeitrag = 20;
 
 export function mandatstext(): string {
   return (

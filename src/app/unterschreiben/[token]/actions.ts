@@ -5,7 +5,7 @@ import { sendMail } from "@/lib/mail";
 import { erzeugeAntragPdf, pruefsumme } from "@/lib/pdf";
 import { clientInfo } from "@/lib/request";
 import { unseal } from "@/lib/token";
-import { mitgliedschaften, verein } from "@/lib/verein";
+import { mitgliedsbeitrag, verein } from "@/lib/verein";
 
 const MAX_BILD_BYTES = 500_000;
 
@@ -35,15 +35,14 @@ export async function unterschreiben(
   const pdf = Buffer.from(await erzeugeAntragPdf(antrag, png, protokoll));
   const d = antrag.daten;
   const dateiname = `Beitrittserklaerung_${d.nachname}_${d.vorname}.pdf`.replace(/[^\w.-]/g, "_");
-  const art = mitgliedschaften[d.memberType];
 
   try {
     await sendMail({
       to: process.env.ANTRAG_EMPFAENGER ?? "",
-      subject: `Neuer Mitgliedsantrag: ${d.vorname} ${d.nachname} (${art.label})`,
+      subject: `Neuer Mitgliedsantrag: ${d.vorname} ${d.nachname}`,
       text:
         `Neuer unterschriebener Mitgliedsantrag über die Website.\n\n` +
-        `Name: ${d.vorname} ${d.nachname}\nE-Mail: ${d.email}\nMitgliedschaft: ${art.label}, ${art.beitrag} €/Jahr\n` +
+        `Name: ${d.vorname} ${d.nachname}\nE-Mail: ${d.email}\nJahresbeitrag: ${mitgliedsbeitrag} €\n` +
         `Mandatsreferenz: ${antrag.mandatsreferenz}\nAntrags-ID: ${antrag.id}\nPrüfsumme: ${pruefsumme(antrag, png)}\n\n` +
         `Das PDF mit Beitrittserklärung, SEPA-Mandat und Protokoll ist angehängt. ` +
         `Bitte das PDF als Mandatsnachweis aufbewahren (bis mindestens 14 Monate nach der letzten Lastschrift).`,
@@ -56,7 +55,7 @@ export async function unterschreiben(
         `Hallo ${d.vorname} ${d.nachname},\n\n` +
         `vielen Dank, Ihre Beitrittserklärung ist bei uns eingegangen. Im Anhang finden Sie Ihre unterschriebene ` +
         `Beitrittserklärung mit dem SEPA-Lastschriftmandat für Ihre Unterlagen.\n\n` +
-        `Vorabinformation zum Lastschrifteinzug: Wir ziehen den Jahresbeitrag von ${art.beitrag} € jeweils zum ` +
+        `Vorabinformation zum Lastschrifteinzug: Wir ziehen den Jahresbeitrag von ${mitgliedsbeitrag} € jeweils zum ` +
         `${verein.einzugstermin} unter der Gläubiger-ID ${verein.glaeubigerId} und der Mandatsreferenz ` +
         `${antrag.mandatsreferenz} von Ihrem Konto ein.\n\n` +
         `Sportliche Grüße\n${verein.name}`,

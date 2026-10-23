@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from "pdf-lib";
 import type { Antrag, Protokoll } from "@/lib/antrag";
 import { formatIban } from "@/lib/schemas";
-import { mandatstext, mitgliedschaften, verein } from "@/lib/verein";
+import { mandatstext, mitgliedsbeitrag, verein } from "@/lib/verein";
 
 const A4: [number, number] = [595.28, 841.89];
 const RAND = 56;
@@ -73,7 +73,6 @@ export async function erzeugeAntragPdf(antrag: Antrag, unterschriftPng: Uint8Arr
   const font = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
   const d = antrag.daten;
-  const art = mitgliedschaften[d.memberType];
 
   // Seite 1: Beitrittserklärung und SEPA-Mandat
   const s = new Schreiber(doc.addPage(A4), font, bold);
@@ -84,7 +83,7 @@ export async function erzeugeAntragPdf(antrag: Antrag, unterschriftPng: Uint8Arr
   s.abstand(8);
   s.text(`Hiermit erkläre ich meinen Beitritt zum ${verein.name} und erkenne die Vereinssatzung an.`);
   s.abstand(10);
-  s.feld("Mitgliedschaft", `${art.label}, ${art.beitrag} € pro Jahr`);
+  s.feld("Mitgliedschaft", `${mitgliedsbeitrag} € pro Jahr`);
   s.feld("Name", `${d.vorname} ${d.nachname}`);
   s.feld("Anschrift", `${d.strasse}, ${d.plz} ${d.ort}`);
   s.feld("E-Mail", d.email);

@@ -4,7 +4,7 @@ import type { Antrag, Sitzung } from "@/lib/antrag";
 import { clientInfo } from "@/lib/request";
 import { formatIban } from "@/lib/schemas";
 import { seal, unseal } from "@/lib/token";
-import { mandatstext, mitgliedschaften, verein } from "@/lib/verein";
+import { mandatstext, mitgliedsbeitrag, verein } from "@/lib/verein";
 import { UnterschriftFormular } from "./unterschrift-formular";
 
 export const metadata: Metadata = {
@@ -35,10 +35,9 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
   const sitzung: Sitzung = { antragId: antrag.id, geoeffnet: { zeit: new Date().toISOString(), ip } };
   const sitzungToken = seal(sitzung, 24 * 60 * 60);
   const d = antrag.daten;
-  const art = mitgliedschaften[d.memberType];
 
   const zeilen: [string, string][] = [
-    ["Mitgliedschaft", `${art.label}, ${art.beitrag} € / Jahr`],
+    ["Mitgliedschaft", `${mitgliedsbeitrag} € / Jahr`],
     ["Name", `${d.vorname} ${d.nachname}`],
     ["Anschrift", `${d.strasse}, ${d.plz} ${d.ort}`],
     ["E-Mail", d.email],
@@ -54,8 +53,7 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
       <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 sm:p-8">
         <h2 className="text-xl font-semibold text-white">Beitrittserklärung</h2>
         <p className="mt-2 text-sm text-sva-gray-300">
-          Hiermit erkläre ich meinen Beitritt zum {verein.name} und erkenne die{" "}
-          <Link href="/satzung" className="text-sva-gold underline hover:text-sva-gold-light">Vereinssatzung</Link> an.
+          Hiermit erkläre ich meinen Beitritt zum {verein.name} und erkenne die Vereinssatzung an.
         </p>
         <dl className="mt-6 space-y-2 text-sm">
           {zeilen.map(([k, v]) => (
@@ -86,7 +84,7 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
         </dl>
         <p className="mt-6 text-sm leading-relaxed text-sva-gray-300">{mandatstext()}</p>
         <p className="mt-3 text-sm text-sva-gray-300">
-          Der Jahresbeitrag von {art.beitrag} € wird jeweils zum {verein.einzugstermin} eingezogen.
+          Der Jahresbeitrag von {mitgliedsbeitrag} € wird jeweils zum {verein.einzugstermin} eingezogen.
         </p>
       </section>
 

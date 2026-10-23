@@ -33,16 +33,6 @@ export function Footer() {
                   Vorstand
                 </Link>
               </li>
-              <li>
-                <Link href="/projekte" className="text-sva-gray-300 hover:text-white transition-colors">
-                  Projekte
-                </Link>
-              </li>
-              <li>
-                <Link href="/sponsoren" className="text-sva-gray-300 hover:text-white transition-colors">
-                  Sponsoren
-                </Link>
-              </li>
             </ul>
           </div>
 
