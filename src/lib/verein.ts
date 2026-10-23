@@ -15,7 +15,19 @@ export const verein = {
     name: "Musterbank",
   },
   spendenVerwendungszweck: "Spende Förderverein SVA",
+  // Angaben aus dem Freistellungsbescheid für den vereinfachten Spendenbeleg (§ 50 Abs. 4 EStDV).
+  // TODO: aus dem aktuellen Bescheid übernehmen. Der Bescheid darf höchstens 5 Jahre alt sein.
+  steuer: {
+    zweck: "Förderung des Sports (§ 52 Abs. 2 Satz 1 Nr. 21 AO) durch Beschaffung von Mitteln für den SV Amendingen",
+    finanzamt: "Memmingen-Mindelheim",
+    steuernummer: "000/000/00000",
+    bescheidDatum: "01.01.2025",
+    veranlagungszeitraum: "2023",
+  },
 };
+
+// Bis zu diesem Betrag genügt dem Finanzamt Kontoauszug plus Vereinsbeleg (§ 50 Abs. 4 EStDV).
+export const spendenGrenzeVereinfacht = 300;
 
 // Es gibt nur eine Mitgliedschaft mit festem Jahresbeitrag.
 export const mitgliedsbeitrag = 20;

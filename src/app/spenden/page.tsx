@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BankQrCode } from "@/components/bank-qr-code";
-import { verein } from "@/lib/verein";
+import { spendenGrenzeVereinfacht, verein } from "@/lib/verein";
 import { QuittungDialog } from "./quittung-dialog";
 
 const amounts = [10, 25, 50, 100];
@@ -98,9 +98,9 @@ export default function SpendenPage() {
       <div className="mt-6 rounded-lg border border-sva-gray-700 p-6 sm:p-8">
         <h2 className="text-lg font-semibold text-white">Spendenquittung</h2>
         <p className="mt-2 text-sm leading-relaxed text-sva-gray-300">
-          Der {verein.name} ist als gemeinnützig anerkannt, deine Spende ist steuerlich absetzbar. Bis 300 € genügt dem
-          Finanzamt dein Kontoauszug als Nachweis. Für höhere Beträge oder auf Wunsch stellen wir dir gern eine
-          Zuwendungsbestätigung aus, sobald deine Überweisung bei uns eingegangen ist.
+          Der {verein.name} ist als gemeinnützig anerkannt, deine Spende ist steuerlich absetzbar. Bis {spendenGrenzeVereinfacht} € genügt
+          dem Finanzamt dein Kontoauszug zusammen mit unserem Spendenbeleg, den wir dir sofort per E-Mail schicken. Für
+          höhere Beträge stellen wir dir eine Zuwendungsbestätigung aus, sobald deine Überweisung bei uns eingegangen ist.
         </p>
         <QuittungDialog betrag={activeAmount > 0 ? activeAmount : undefined} />
       </div>

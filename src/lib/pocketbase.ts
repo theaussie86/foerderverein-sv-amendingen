@@ -96,3 +96,36 @@ export async function antraegeSeit(datum: Date): Promise<number | null> {
     return null;
   }
 }
+
+export type NeuerSpendenbeleg = {
+  art: "vereinfacht" | "zuwendungsbestaetigung";
+  status: "versendet" | "offen";
+  name: string;
+  strasse: string;
+  plz: string;
+  ort: string;
+  email: string;
+  betrag: number;
+  ueberwiesenAm: string;
+};
+
+// Gibt die ID des neuen Eintrags zurück, null ohne PocketBase.
+export async function spendenbelegSpeichern(b: NeuerSpendenbeleg): Promise<string | null> {
+  const pb = await pocketbase();
+  if (!pb) return null;
+  const { ueberwiesenAm, ...rest } = b;
+  const record = await pb.collection("spendenbelege").create({ ...rest, ueberwiesen_am: `${ueberwiesenAm} 00:00:00.000Z` });
+  return record.id;
+}
+
+// Der Vorstand darf Spendenbelege nur lesen. Das Abhaken läuft deshalb als Superuser,
+// nachdem die Website die Vorstands-Session geprüft hat, und hält fest, wer es war.
+export async function spendenbelegAusgestellt(id: string, vorstandId: string): Promise<void> {
+  const pb = await pocketbase();
+  if (!pb) throw new Error("PocketBase ist nicht konfiguriert.");
+  await pb.collection("spendenbelege").update(id, {
+    status: "ausgestellt",
+    ausgestellt_von: vorstandId,
+    ausgestellt_am: new Date().toISOString().replace("T", " "),
+  });
+}

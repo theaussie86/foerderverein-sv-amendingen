@@ -160,3 +160,37 @@ export async function erzeugeMandatPdf(k: Kontext): Promise<Uint8Array> {
   protokollSeite(doc, font, bold, k);
   return doc.save();
 }
+
+export type Spende = { name: string; strasse: string; plz: string; ort: string; betrag: number; datum: string };
+
+// Beleg für den vereinfachten Zuwendungsnachweis bis 300 € (§ 50 Abs. 4 Satz 1 Nr. 2 Buchst. b EStDV).
+// Er bestätigt keinen Geldeingang, den belegt der Kontoauszug des Spenders. Deshalb darf er ungeprüft raus.
+export async function erzeugeSpendenbelegPdf(spende: Spende): Promise<Uint8Array> {
+  const st = verein.steuer;
+  const { doc, s } = await neuesDokument("Spendenbeleg");
+  s.text("Beleg für den vereinfachten Zuwendungsnachweis nach § 50 Abs. 4 EStDV", { bold: true });
+  s.abstand(10);
+  s.feld("Spender/in", spende.name);
+  s.feld("Anschrift", `${spende.strasse}, ${spende.plz} ${spende.ort}`);
+  s.feld("Betrag", spende.betrag.toLocaleString("de-DE", { style: "currency", currency: "EUR" }));
+  s.feld("Überwiesen am", new Date(spende.datum).toLocaleDateString("de-DE", { timeZone: "UTC" }));
+  s.feld("Empfänger", `${verein.bank.kontoinhaber}, IBAN ${verein.bank.iban}`);
+  s.feld("Art der Zuwendung", "Geldzuwendung (Spende), kein Mitgliedsbeitrag");
+  s.abstand(14);
+  s.text(
+    `Der ${verein.name} ist wegen ${st.zweck} nach dem Freistellungsbescheid des Finanzamtes ${st.finanzamt}, ` +
+      `StNr. ${st.steuernummer}, vom ${st.bescheidDatum} für den letzten Veranlagungszeitraum ${st.veranlagungszeitraum} ` +
+      `nach § 5 Abs. 1 Nr. 9 KStG von der Körperschaftsteuer und nach § 3 Nr. 6 GewStG von der Gewerbesteuer befreit.`,
+  );
+  s.abstand(6);
+  s.text(`Die Zuwendung wird ausschließlich für diesen Zweck verwendet.`);
+  s.abstand(14);
+  s.linie();
+  s.text(
+    "Hinweis: Dieser Beleg gilt nur zusammen mit dem Kontoauszug oder der Buchungsbestätigung der Bank, aus dem " +
+      "Name und Konto von Auftraggeber und Empfänger, Betrag und Buchungstag hervorgehen. Er ist keine " +
+      "Zuwendungsbestätigung nach amtlichem Muster und wird maschinell erstellt, deshalb ohne Unterschrift.",
+    { size: 9, grau: true },
+  );
+  return doc.save();
+}
