@@ -40,21 +40,11 @@ export function LoginFormular() {
     <form action={aktion} className={formCls}>
       <div>
         <label htmlFor="email" className="text-sm font-medium text-sva-gray-200">E-Mail</label>
-        <input id="email" name="email" type="email" autoComplete="username" required defaultValue={zustand.email} className={inputCls} />
-      </div>
-      <div>
-        <label htmlFor="passwort" className="text-sm font-medium text-sva-gray-200">Passwort</label>
-        <input id="passwort" name="passwort" type="password" autoComplete="current-password" className={inputCls} />
+        <input id="email" name="email" type="email" autoComplete="email" required autoFocus defaultValue={zustand.email} className={inputCls} />
       </div>
       {fehler}
-      <button type="submit" name="modus" value="passwort" disabled={laeuft} className={primaerCls}>
-        {laeuft ? "Anmelden…" : "Anmelden"}
-      </button>
-      <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-sva-gray-400">
-        <span className="h-px flex-1 bg-sva-gray-700" />oder<span className="h-px flex-1 bg-sva-gray-700" />
-      </div>
-      <button type="submit" name="modus" value="code-anfordern" disabled={laeuft} className={sekundaerCls}>
-        Code per E-Mail schicken
+      <button type="submit" name="modus" value="code-anfordern" disabled={laeuft} className={primaerCls}>
+        {laeuft ? "Senden…" : "Code per E-Mail schicken"}
       </button>
     </form>
   );

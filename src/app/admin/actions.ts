@@ -10,7 +10,7 @@ export type LoginZustand =
 
 const FENSTER_MS = 15 * 60 * 1000;
 
-// Ein Formular für drei Schritte: Passwort-Login, Code anfordern, Code prüfen.
+// Anmeldung nur per Einmal-Code: erst Code anfordern, dann Code prüfen.
 export async function anmelden(_: LoginZustand, formData: FormData): Promise<LoginZustand> {
   const modus = String(formData.get("modus") ?? "");
   const email = String(formData.get("email") ?? "").trim();
@@ -48,18 +48,7 @@ export async function anmelden(_: LoginZustand, formData: FormData): Promise<Log
     }
   }
 
-  const passwort = String(formData.get("passwort") ?? "");
-  if (!passwort) return { schritt: "start", email, fehler: "Bitte Passwort eingeben oder einen Code anfordern." };
-  if (!rateLimit(`login:${ip}`, 5, FENSTER_MS)) {
-    return { schritt: "start", email, fehler: "Zu viele Versuche. Bitte in 15 Minuten erneut probieren." };
-  }
-  try {
-    await pb.collection("vorstand").authWithPassword(email, passwort);
-    await sessionSetzen(pb.authStore.token);
-  } catch {
-    return { schritt: "start", email, fehler: "E-Mail oder Passwort ist falsch." };
-  }
-  redirect("/admin");
+  return { schritt: "start", email };
 }
 
 export async function abmelden(): Promise<void> {
