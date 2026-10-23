@@ -3,6 +3,7 @@ import { writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import nodemailer from "nodemailer";
+import { verein } from "@/lib/verein";
 
 type Mail = {
   to: string;
@@ -28,5 +29,6 @@ export async function sendMail(mail: Mail): Promise<void> {
     secure: process.env.SMTP_PORT === "465",
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
   });
-  await transport.sendMail({ from: process.env.MAIL_FROM, ...mail });
+  // MAIL_FROM enthält nur die Adresse, der Anzeigename kommt aus den Vereinsdaten.
+  await transport.sendMail({ from: { name: verein.name, address: process.env.MAIL_FROM ?? "" }, ...mail });
 }
