@@ -66,47 +66,27 @@ function umbrechen(text: string, font: PDFFont, size: number, max: number): stri
   return zeilen;
 }
 
-export async function erzeugeAntragPdf(antrag: Antrag, unterschriftPng: Uint8Array, protokoll: Protokoll): Promise<Uint8Array> {
+type Kontext = { antrag: Antrag; unterschriftPng: Uint8Array; protokoll: Protokoll };
+
+async function neuesDokument(titel: string) {
   const doc = await PDFDocument.create();
-  doc.setTitle(`Beitrittserklärung ${antrag.daten.vorname} ${antrag.daten.nachname}`);
+  doc.setTitle(titel);
   doc.setAuthor(verein.name);
   const font = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
-  const d = antrag.daten;
-
-  // Seite 1: Beitrittserklärung und SEPA-Mandat
   const s = new Schreiber(doc.addPage(A4), font, bold);
   s.text(verein.name, { size: 9, grau: true });
   s.text(`${verein.strasse}, ${verein.plzOrt}`, { size: 9, grau: true });
   s.abstand(16);
-  s.text("Beitrittserklärung", { size: 20, bold: true });
+  s.text(titel, { size: 20, bold: true });
   s.abstand(8);
-  s.text(`Hiermit erkläre ich meinen Beitritt zum ${verein.name} und erkenne die Vereinssatzung an.`);
-  s.abstand(10);
-  s.feld("Mitgliedschaft", `${mitgliedsbeitrag} € pro Jahr`);
-  s.feld("Name", `${d.vorname} ${d.nachname}`);
-  s.feld("Anschrift", `${d.strasse}, ${d.plz} ${d.ort}`);
-  s.feld("E-Mail", d.email);
-  if (d.geburtsdatum) s.feld("Geburtsdatum", new Date(d.geburtsdatum).toLocaleDateString("de-DE"));
-  s.abstand(14);
-  s.linie();
+  return { doc, font, bold, s };
+}
 
-  s.text("SEPA-Lastschriftmandat", { size: 14, bold: true });
-  s.abstand(6);
-  s.feld("Zahlungsempfänger", `${verein.name}, ${verein.strasse}, ${verein.plzOrt}`);
-  s.feld("Gläubiger-ID", verein.glaeubigerId);
-  s.feld("Mandatsreferenz", antrag.mandatsreferenz);
-  s.feld("Zahlungsart", "Wiederkehrende Zahlung");
-  s.abstand(8);
-  s.text(mandatstext());
-  s.abstand(4);
-  s.text(`Der Jahresbeitrag wird jeweils zum ${verein.einzugstermin} eingezogen (fällt dieser Tag nicht auf einen Bankarbeitstag, am folgenden Bankarbeitstag).`);
+async function unterschrift(doc: PDFDocument, s: Schreiber, { antrag, unterschriftPng, protokoll }: Kontext, name: string) {
+  const datum = new Date(protokoll.unterschrieben.zeit).toLocaleDateString("de-DE", { timeZone: "Europe/Berlin" });
+  s.feld("Ort, Datum", `${antrag.daten.ort}, ${datum}`);
   s.abstand(10);
-  s.feld("Kontoinhaber", d.kontoinhaber);
-  s.feld("IBAN", formatIban(d.iban));
-  s.feld("Ort, Datum", `${d.ort}, ${new Date(protokoll.unterschrieben.zeit).toLocaleDateString("de-DE", { timeZone: "Europe/Berlin" })}`);
-  s.abstand(10);
-
   const bild = await doc.embedPng(unterschriftPng);
   const breite = 200;
   const hoehe = (bild.height / bild.width) * breite;
@@ -114,9 +94,11 @@ export async function erzeugeAntragPdf(antrag: Antrag, unterschriftPng: Uint8Arr
   s.page.drawImage(bild, { x: RAND, y: s.y, width: breite, height: hoehe });
   s.abstand(4);
   s.linie();
-  s.text(`Unterschrift Kontoinhaber/in bzw. Erziehungsberechtigte/r, elektronisch geleistet am ${formatZeit(protokoll.unterschrieben.zeit)}`, { size: 8, grau: true });
+  s.text(`${name}, elektronisch unterschrieben am ${formatZeit(protokoll.unterschrieben.zeit)}`, { size: 8, grau: true });
+}
 
-  // Seite 2: Protokoll als Nachweis
+function protokollSeite(doc: PDFDocument, font: PDFFont, bold: PDFFont, { antrag, unterschriftPng, protokoll }: Kontext) {
+  const d = antrag.daten;
   const p = new Schreiber(doc.addPage(A4), font, bold);
   p.text("Protokoll der elektronischen Unterschrift", { size: 16, bold: true });
   p.abstand(8);
@@ -135,9 +117,46 @@ export async function erzeugeAntragPdf(antrag: Antrag, unterschriftPng: Uint8Arr
   p.abstand(14);
   p.text(
     "Die Unterschrift wurde auf der Website des Vereins nach Bestätigung der E-Mail-Adresse über einen persönlichen, " +
-      "zeitlich begrenzten Link geleistet. Die Prüfsumme bezieht sich auf die Antragsdaten und das Unterschriftsbild.",
+      "zeitlich begrenzten Link geleistet. Beitrittserklärung und SEPA-Lastschriftmandat wurden mit derselben Unterschrift " +
+      "unterzeichnet. Die Prüfsumme bezieht sich auf die Antragsdaten und das Unterschriftsbild.",
     { size: 9, grau: true },
   );
+}
 
+export async function erzeugeBeitrittPdf(k: Kontext): Promise<Uint8Array> {
+  const d = k.antrag.daten;
+  const { doc, font, bold, s } = await neuesDokument("Beitrittserklärung");
+  s.text(`Hiermit erkläre ich meinen Beitritt zum ${verein.name} und erkenne die Vereinssatzung an.`);
+  s.abstand(10);
+  s.feld("Mitgliedschaft", `${mitgliedsbeitrag} € pro Jahr`);
+  s.feld("Name", `${d.vorname} ${d.nachname}`);
+  s.feld("Anschrift", `${d.strasse}, ${d.plz} ${d.ort}`);
+  s.feld("E-Mail", d.email);
+  if (d.geburtsdatum) s.feld("Geburtsdatum", new Date(d.geburtsdatum).toLocaleDateString("de-DE"));
+  s.feld("Zahlung", `per SEPA-Lastschrift, Mandatsreferenz ${k.antrag.mandatsreferenz}`);
+  s.abstand(14);
+  await unterschrift(doc, s, k, "Unterschrift Mitglied bzw. Erziehungsberechtigte/r");
+  protokollSeite(doc, font, bold, k);
+  return doc.save();
+}
+
+export async function erzeugeMandatPdf(k: Kontext): Promise<Uint8Array> {
+  const d = k.antrag.daten;
+  const { doc, font, bold, s } = await neuesDokument("SEPA-Lastschriftmandat");
+  s.feld("Zahlungsempfänger", `${verein.name}, ${verein.strasse}, ${verein.plzOrt}`);
+  s.feld("Gläubiger-ID", verein.glaeubigerId);
+  s.feld("Mandatsreferenz", k.antrag.mandatsreferenz);
+  s.feld("Zahlungsart", "Wiederkehrende Zahlung");
+  s.feld("Verwendung", `Mitgliedsbeitrag ${d.vorname} ${d.nachname}, ${mitgliedsbeitrag} € pro Jahr`);
+  s.abstand(8);
+  s.text(mandatstext());
+  s.abstand(4);
+  s.text(`Der Jahresbeitrag wird jeweils zum ${verein.einzugstermin} eingezogen (fällt dieser Tag nicht auf einen Bankarbeitstag, am folgenden Bankarbeitstag).`);
+  s.abstand(10);
+  s.feld("Kontoinhaber", d.kontoinhaber);
+  s.feld("IBAN", formatIban(d.iban));
+  s.abstand(4);
+  await unterschrift(doc, s, k, `Unterschrift Kontoinhaber/in (${d.kontoinhaber})`);
+  protokollSeite(doc, font, bold, k);
   return doc.save();
 }

@@ -2,7 +2,7 @@
 
 import type { Antrag, Protokoll, Sitzung } from "@/lib/antrag";
 import { sendMail } from "@/lib/mail";
-import { erzeugeAntragPdf, pruefsumme } from "@/lib/pdf";
+import { erzeugeBeitrittPdf, erzeugeMandatPdf, pruefsumme } from "@/lib/pdf";
 import { clientInfo } from "@/lib/request";
 import { unseal } from "@/lib/token";
 import { mitgliedsbeitrag, verein } from "@/lib/verein";
@@ -32,9 +32,13 @@ export async function unterschreiben(
     unterschrieben: { zeit: new Date().toISOString(), ip, userAgent },
   };
 
-  const pdf = Buffer.from(await erzeugeAntragPdf(antrag, png, protokoll));
   const d = antrag.daten;
-  const dateiname = `Beitrittserklaerung_${d.nachname}_${d.vorname}.pdf`.replace(/[^\w.-]/g, "_");
+  const kontext = { antrag, unterschriftPng: png, protokoll };
+  const name = `${d.nachname}_${d.vorname}`.replace(/[^\w-]/g, "_");
+  const anhaenge = [
+    { filename: `Beitrittserklaerung_${name}.pdf`, content: Buffer.from(await erzeugeBeitrittPdf(kontext)) },
+    { filename: `SEPA-Lastschriftmandat_${name}.pdf`, content: Buffer.from(await erzeugeMandatPdf(kontext)) },
+  ];
 
   try {
     await sendMail({
@@ -44,9 +48,9 @@ export async function unterschreiben(
         `Neuer unterschriebener Mitgliedsantrag über die Website.\n\n` +
         `Name: ${d.vorname} ${d.nachname}\nE-Mail: ${d.email}\nJahresbeitrag: ${mitgliedsbeitrag} €\n` +
         `Mandatsreferenz: ${antrag.mandatsreferenz}\nAntrags-ID: ${antrag.id}\nPrüfsumme: ${pruefsumme(antrag, png)}\n\n` +
-        `Das PDF mit Beitrittserklärung, SEPA-Mandat und Protokoll ist angehängt. ` +
-        `Bitte das PDF als Mandatsnachweis aufbewahren (bis mindestens 14 Monate nach der letzten Lastschrift).`,
-      attachments: [{ filename: dateiname, content: pdf }],
+        `Beitrittserklärung und SEPA-Mandat (jeweils mit Protokoll) sind als PDF angehängt. ` +
+        `Bitte das Mandat als Nachweis aufbewahren (bis mindestens 14 Monate nach der letzten Lastschrift).`,
+      attachments: anhaenge,
     });
     await sendMail({
       to: d.email,
@@ -54,12 +58,12 @@ export async function unterschreiben(
       text:
         `Hallo ${d.vorname} ${d.nachname},\n\n` +
         `vielen Dank, Ihre Beitrittserklärung ist bei uns eingegangen. Im Anhang finden Sie Ihre unterschriebene ` +
-        `Beitrittserklärung mit dem SEPA-Lastschriftmandat für Ihre Unterlagen.\n\n` +
+        `Beitrittserklärung und Ihr SEPA-Lastschriftmandat für Ihre Unterlagen.\n\n` +
         `Vorabinformation zum Lastschrifteinzug: Wir ziehen den Jahresbeitrag von ${mitgliedsbeitrag} € jeweils zum ` +
         `${verein.einzugstermin} unter der Gläubiger-ID ${verein.glaeubigerId} und der Mandatsreferenz ` +
         `${antrag.mandatsreferenz} von Ihrem Konto ein.\n\n` +
         `Sportliche Grüße\n${verein.name}`,
-      attachments: [{ filename: dateiname, content: pdf }],
+      attachments: anhaenge,
     });
   } catch (e) {
     console.error("Versand des Antrags fehlgeschlagen", e);
