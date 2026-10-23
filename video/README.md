@@ -11,7 +11,7 @@ Läuft der Next-Dev-Server auf Port 3000: `npm run v2:render -- --port=3123`.
 - `src/v2/timeline.json`: zentrale Zeitachse. Szenengrenzen (Frames, 30 fps), Beats für Einblendungen (Sekunden), Untertitel. Nach Änderungen `npm run v2:all`.
 - `src/v2/scenes.tsx`: die 14 Szenen. `src/v2/ui.tsx`: Bausteine (Shot, Tag, Wappen).
 - `public/v2/sprecher.mp3`: Sprecherspur, unverändert. `public/v2/scenes/*.webp`: Storyboard-Panels, bereinigt und 3x hochskaliert.
-- `assets-source/storyboard/`: Storyboard-PDF und Seiten-PNGs. Panels neu erzeugen (Pillow + numpy):
+- `assets-source/storyboard/` (nicht im Repo): Seiten-PNGs aus dem Storyboard-PDF als `seite-01.png` bis `seite-04.png` (z. B. `pdfimages -png`). Panels neu erzeugen (Pillow + numpy):
   `python scripts/prep-v2.py assets-source/storyboard public/v2/scenes`
 
 ---
