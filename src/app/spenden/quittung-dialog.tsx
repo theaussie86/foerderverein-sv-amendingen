@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { quittungSchema, type QuittungFormData } from "@/lib/schemas";
-import { spendenGrenzeVereinfacht } from "@/lib/verein";
+import { spendenGrenzeVereinfacht, verein } from "@/lib/verein";
 import { quittungAnfordern } from "./actions";
 
 const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
@@ -76,6 +76,11 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
               <p className="text-sm text-sva-gray-300">
                 Bis {spendenGrenzeVereinfacht} € schicken wir dir den Spendenbeleg sofort per E-Mail. Für höhere Beträge
                 stellen wir die Zuwendungsbestätigung aus, sobald deine Überweisung auf unserem Konto eingegangen ist.
+              </p>
+              <p className="rounded-md border border-sva-gray-700 bg-sva-charcoal px-4 py-3 font-mono text-xs leading-relaxed text-sva-gray-200">
+                {verein.bank.kontoinhaber}<br />
+                IBAN {verein.bank.iban}<br />
+                BIC {verein.bank.bic}, {verein.bank.name}
               </p>
               <div>
                 <label htmlFor="q-name" className="block text-sm font-medium text-sva-gray-300">Vor- und Nachname *</label>

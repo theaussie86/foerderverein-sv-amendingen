@@ -1,5 +1,5 @@
 // Stammdaten des Vereins für Beitrittserklärung und SEPA-Mandat.
-// TODO: Platzhalter durch echte Daten ersetzen (Gläubiger-ID, Anschrift, Beiträge).
+// TODO: Platzhalter durch echte Daten ersetzen (Gläubiger-ID, Anschrift).
 
 export const verein = {
   name: "Förderverein SV Amendingen e.V.",
@@ -9,10 +9,11 @@ export const verein = {
   // Termin des jährlichen Beitragseinzugs, dient zugleich als Vorabankündigung (Pre-Notification).
   einzugstermin: "15. März",
   bank: {
-    kontoinhaber: "Förderverein SV Amendingen e.V.",
-    iban: "DE00 0000 0000 0000 0000 00",
-    bic: "XXXXXXXXXXX",
-    name: "Musterbank",
+    // Kontoinhaber so, wie die Bank ihn führt (Umsatzdetails DKB, 07.07.2026).
+    kontoinhaber: "Förderverein des SV Amendingen Fußball e.V.",
+    iban: "DE31 7315 0000 0010 0585 19",
+    bic: "BYLADEM1MLM",
+    name: "Sparkasse Memmingen-Lindau-Mindelheim",
   },
   spendenVerwendungszweck: "Spende Förderverein SVA",
   // Angaben aus dem Freistellungsbescheid für den vereinfachten Spendenbeleg (§ 50 Abs. 4 EStDV).
