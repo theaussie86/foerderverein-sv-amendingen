@@ -3,6 +3,7 @@
 import type { Antrag, Protokoll, Sitzung } from "@/lib/antrag";
 import { sendMail } from "@/lib/mail";
 import { erzeugeBeitrittPdf, erzeugeMandatPdf, pruefsumme } from "@/lib/pdf";
+import { antragSpeichern } from "@/lib/pocketbase";
 import { clientInfo } from "@/lib/request";
 import { unseal } from "@/lib/token";
 import { mitgliedsbeitrag, verein } from "@/lib/verein";
@@ -39,6 +40,14 @@ export async function unterschreiben(
     { filename: `Beitrittserklaerung_${name}.pdf`, content: Buffer.from(await erzeugeBeitrittPdf(kontext)) },
     { filename: `SEPA-Lastschriftmandat_${name}.pdf`, content: Buffer.from(await erzeugeMandatPdf(kontext)) },
   ];
+
+  // Fällt PocketBase aus, gehen die Mails trotzdem raus. Die PDFs hängen an der Mail an den Vorstand.
+  try {
+    const ergebnis = await antragSpeichern(antrag, png, anhaenge[0], anhaenge[1], protokoll, pruefsumme(antrag, png), mitgliedsbeitrag);
+    if (ergebnis === "bereits-vorhanden") return { ok: true };
+  } catch (e) {
+    console.error(`Speichern des Antrags ${antrag.id} in PocketBase fehlgeschlagen`, e);
+  }
 
   try {
     await sendMail({
