@@ -1,0 +1,29 @@
+{
+  "name": "sva-video",
+  "version": "1.0.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "tts": "node scripts/tts.mjs",
+    "render:mp4": "remotion render src/index.ts SalesVideo out/foerderverein.mp4 --codec=h264 --crf=26",
+    "render:webm": "remotion render src/index.ts SalesVideo out/foerderverein.webm --codec=vp9 --crf=34",
+    "poster": "remotion still src/index.ts Poster out/poster.jpg --image-format=jpeg --jpeg-quality=85",
+    "typecheck": "tsc"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "@remotion/cli": "^4.0.538",
+    "@remotion/fonts": "^4.0.538",
+    "@remotion/media-utils": "^4.0.538",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.538"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
+  },
+  "private": true
+}
