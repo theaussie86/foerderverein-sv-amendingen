@@ -4,16 +4,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { mitgliedSchema, type MitgliedFormData } from "@/lib/schemas";
-import { mandatstext, mitgliedschaften, verein } from "@/lib/verein";
+import { mandatstext, mitgliedsbeitrag, verein } from "@/lib/verein";
 import { antragEinreichen } from "./actions";
 
-type Step = 1 | 2 | 3;
-
-const membershipTypes = (Object.keys(mitgliedschaften) as (keyof typeof mitgliedschaften)[]).map((id) => ({
-  id,
-  label: mitgliedschaften[id].label,
-  price: `${mitgliedschaften[id].beitrag} € / Jahr`,
-}));
+type Step = 1 | 2;
 
 const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 
@@ -22,18 +16,15 @@ export default function MitgliedWerdenPage() {
   const [gesendet, setGesendet] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
 
-  const { register, handleSubmit, watch, trigger, getValues, setValue, formState: { errors, isSubmitting } } = useForm<MitgliedFormData>({
+  const { register, handleSubmit, trigger, getValues, setValue, formState: { errors, isSubmitting } } = useForm<MitgliedFormData>({
     resolver: zodResolver(mitgliedSchema),
-    defaultValues: { memberType: "einzel", vorname: "", nachname: "", strasse: "", plz: "", ort: "", email: "", geburtsdatum: "", kontoinhaber: "", iban: "", website: "", mandat: undefined as unknown as true, datenschutz: undefined as unknown as true },
+    defaultValues: { vorname: "", nachname: "", strasse: "", plz: "", ort: "", email: "", geburtsdatum: "", kontoinhaber: "", iban: "", website: "", mandat: undefined as unknown as true, datenschutz: undefined as unknown as true },
   });
 
-  const memberType = watch("memberType");
-
-  async function goToStep2() { if (await trigger("memberType")) setStep(2); }
-  async function goToStep3() {
+  async function goToStep2() {
     if (!(await trigger(["vorname", "nachname", "strasse", "plz", "ort", "email"]))) return;
     if (!getValues("kontoinhaber")) setValue("kontoinhaber", `${getValues("vorname")} ${getValues("nachname")}`);
-    setStep(3);
+    setStep(2);
   }
 
   async function onSubmit(data: MitgliedFormData) {
@@ -68,38 +59,23 @@ export default function MitgliedWerdenPage() {
         Werden Sie Teil des Fördervereins SV Amendingen und unterstützen Sie den Verein mit Ihrem Jahresbeitrag.
       </p>
 
+      <div className="mt-8 flex items-center justify-between rounded-lg border-2 border-sva-green bg-sva-green/10 p-4 sm:p-6">
+        <span className="font-semibold text-white">Mitgliedschaft</span>
+        <span className="text-lg font-bold text-sva-gold">{mitgliedsbeitrag} € / Jahr</span>
+      </div>
+
       {/* Progress */}
       <div className="mt-10 flex items-center gap-2">
-        {[1, 2, 3].map((s) => (
+        {[1, 2].map((s) => (
           <div key={s} className="flex items-center gap-2">
             <div className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold ${step >= s ? "bg-sva-green text-white" : "bg-sva-gray-700 text-sva-gray-400"}`}>{s}</div>
-            {s < 3 && <div className={`h-0.5 w-12 sm:w-20 ${step > s ? "bg-sva-green" : "bg-sva-gray-700"}`} />}
+            {s < 2 && <div className={`h-0.5 w-12 sm:w-20 ${step > s ? "bg-sva-green" : "bg-sva-gray-700"}`} />}
           </div>
         ))}
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 sm:p-8">
         {step === 1 && (
-          <>
-            <h2 className="text-xl font-semibold text-white">Mitgliedschaftsart wählen</h2>
-            <div className="mt-6 space-y-3">
-              {membershipTypes.map((type) => (
-                <label key={type.id} className={`flex cursor-pointer items-center justify-between rounded-md border-2 p-4 transition-colors ${memberType === type.id ? "border-sva-green bg-sva-green/10" : "border-sva-gray-600 hover:border-sva-gray-400"}`}>
-                  <div className="flex items-center gap-3">
-                    <input type="radio" value={type.id} {...register("memberType")} className="h-4 w-4 text-sva-green focus:ring-sva-green" />
-                    <span className="font-medium text-white">{type.label}</span>
-                  </div>
-                  <span className="text-sm font-semibold text-sva-gold">{type.price}</span>
-                </label>
-              ))}
-            </div>
-            <button type="button" onClick={goToStep2} className="mt-8 w-full rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">
-              Weiter zu persönlichen Daten
-            </button>
-          </>
-        )}
-
-        {step === 2 && (
           <>
             <h2 className="text-xl font-semibold text-white">Persönliche Daten</h2>
             <div className="mt-6 space-y-4">
@@ -145,13 +121,12 @@ export default function MitgliedWerdenPage() {
               </div>
             </div>
             <div className="mt-8 flex gap-3">
-              <button type="button" onClick={() => setStep(1)} className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal">Zurück</button>
-              <button type="button" onClick={goToStep3} className="flex-1 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">Weiter zum Lastschriftmandat</button>
+              <button type="button" onClick={goToStep2} className="flex-1 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">Weiter zum Lastschriftmandat</button>
             </div>
           </>
         )}
 
-        {step === 3 && (
+        {step === 2 && (
           <>
             <h2 className="text-xl font-semibold text-white">SEPA-Lastschriftmandat</h2>
             <p className="mt-2 text-sm text-sva-gray-300">Der Jahresbeitrag wird bequem per Lastschrift jeweils zum {verein.einzugstermin} eingezogen.</p>
@@ -191,7 +166,7 @@ export default function MitgliedWerdenPage() {
               {errors.datenschutz && <p className="mt-1 ml-7 text-xs text-red-400">{errors.datenschutz.message}</p>}
             </div>
             <div className="mt-8 flex gap-3">
-              <button type="button" onClick={() => setStep(2)} className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal">Zurück</button>
+              <button type="button" onClick={() => setStep(1)} className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal">Zurück</button>
               <button type="submit" disabled={isSubmitting} className="flex-1 rounded-md bg-sva-gold px-6 py-3 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-50">{isSubmitting ? "Wird gesendet …" : "Weiter zur Unterschrift"}</button>
             </div>
             {fehler && <p className="mt-4 text-sm text-red-400">{fehler}</p>}

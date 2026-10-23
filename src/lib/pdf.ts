@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from "pdf-lib";
 import type { Antrag, Protokoll } from "@/lib/antrag";
 import { formatIban } from "@/lib/schemas";
-import { mandatstext, mitgliedschaften, verein } from "@/lib/verein";
+import { mandatstext, mitgliedsbeitrag, verein } from "@/lib/verein";
 
 const A4: [number, number] = [595.28, 841.89];
 const RAND = 56;
@@ -125,11 +125,10 @@ function protokollSeite(doc: PDFDocument, font: PDFFont, bold: PDFFont, { antrag
 
 export async function erzeugeBeitrittPdf(k: Kontext): Promise<Uint8Array> {
   const d = k.antrag.daten;
-  const art = mitgliedschaften[d.memberType];
   const { doc, font, bold, s } = await neuesDokument("Beitrittserklärung");
   s.text(`Hiermit erkläre ich meinen Beitritt zum ${verein.name} und erkenne die Vereinssatzung an.`);
   s.abstand(10);
-  s.feld("Mitgliedschaft", `${art.label}, ${art.beitrag} € pro Jahr`);
+  s.feld("Mitgliedschaft", `${mitgliedsbeitrag} € pro Jahr`);
   s.feld("Name", `${d.vorname} ${d.nachname}`);
   s.feld("Anschrift", `${d.strasse}, ${d.plz} ${d.ort}`);
   s.feld("E-Mail", d.email);
@@ -143,13 +142,12 @@ export async function erzeugeBeitrittPdf(k: Kontext): Promise<Uint8Array> {
 
 export async function erzeugeMandatPdf(k: Kontext): Promise<Uint8Array> {
   const d = k.antrag.daten;
-  const art = mitgliedschaften[d.memberType];
   const { doc, font, bold, s } = await neuesDokument("SEPA-Lastschriftmandat");
   s.feld("Zahlungsempfänger", `${verein.name}, ${verein.strasse}, ${verein.plzOrt}`);
   s.feld("Gläubiger-ID", verein.glaeubigerId);
   s.feld("Mandatsreferenz", k.antrag.mandatsreferenz);
   s.feld("Zahlungsart", "Wiederkehrende Zahlung");
-  s.feld("Verwendung", `Mitgliedsbeitrag ${d.vorname} ${d.nachname}, ${art.beitrag} € pro Jahr`);
+  s.feld("Verwendung", `Mitgliedsbeitrag ${d.vorname} ${d.nachname}, ${mitgliedsbeitrag} € pro Jahr`);
   s.abstand(8);
   s.text(mandatstext());
   s.abstand(4);

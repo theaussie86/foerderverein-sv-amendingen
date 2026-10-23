@@ -9,6 +9,7 @@ type Mail = {
   to: string;
   subject: string;
   text: string;
+  replyTo?: string;
   attachments?: { filename: string; content: Buffer }[];
 };
 

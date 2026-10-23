@@ -1,14 +1,20 @@
 import { z } from "zod";
 
-export const spendenSchema = z.object({
-  amount: z.number().min(1, "Bitte einen Betrag von mindestens 1 € eingeben."),
-  recurring: z.boolean(),
+export const quittungSchema = z.object({
+  name: z.string().min(1, "Name ist erforderlich."),
+  strasse: z.string().min(1, "Straße ist erforderlich."),
+  plz: z.string().regex(/^\d{5}$/, "Bitte eine gültige 5-stellige PLZ eingeben."),
+  ort: z.string().min(1, "Ort ist erforderlich."),
+  email: z.string().email("Bitte eine gültige E-Mail-Adresse eingeben."),
+  betrag: z.number({ error: "Bitte den überwiesenen Betrag eingeben." }).min(1, "Bitte den überwiesenen Betrag eingeben."),
+  datum: z.string().min(1, "Bitte das Datum der Überweisung angeben."),
+  // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer.
+  website: z.string().max(0).optional(),
 });
 
-export type SpendenFormData = z.infer<typeof spendenSchema>;
+export type QuittungFormData = z.infer<typeof quittungSchema>;
 
 export const mitgliedSchema = z.object({
-  memberType: z.enum(["einzel", "familie", "firma"]),
   vorname: z.string().min(1, "Vorname ist erforderlich."),
   nachname: z.string().min(1, "Nachname ist erforderlich."),
   strasse: z.string().min(1, "Straße ist erforderlich."),

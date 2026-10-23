@@ -4,12 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 
 const navItems = [
-  { href: "/", label: "Home" },
+  { href: "/", label: "Start" },
   { href: "/ueber-uns", label: "Über uns" },
   { href: "/vorstand", label: "Vorstand" },
-  { href: "/projekte", label: "Projekte" },
-  { href: "/satzung", label: "Satzung" },
-  { href: "/sponsoren", label: "Sponsoren" },
   { href: "/spenden", label: "Spenden" },
   { href: "/mitglied-werden", label: "Mitglied werden" },
 ];

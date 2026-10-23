@@ -18,7 +18,7 @@ export default function DatenschutzPage() {
           <p>Wir erheben personenbezogene Daten nur, wenn Sie uns diese freiwillig mitteilen:</p>
           <ul className="mt-2 list-inside list-disc space-y-1">
             <li>Name und Anschrift</li><li>E-Mail-Adresse</li><li>Geburtsdatum</li>
-            <li>Bankverbindung (IBAN) bei SEPA-Lastschrift</li><li>PayPal-Kontodaten bei PayPal-Zahlung</li>
+            <li>Bankverbindung (IBAN) bei SEPA-Lastschrift</li>
           </ul>
         </section>
         <section>
@@ -52,11 +52,7 @@ export default function DatenschutzPage() {
           <p>Diese Website verwendet ausschließlich technisch notwendige Cookies. Analyse-Tools werden nur mit Ihrer Einwilligung eingesetzt.</p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">9. PayPal</h2>
-          <p>Wenn Sie über PayPal bezahlen, gelten die <a href="https://www.paypal.com/de/webapps/mpp/ua/privacy-full" target="_blank" rel="noopener noreferrer" className="text-sva-gold underline hover:text-sva-gold-light">Datenschutzbestimmungen von PayPal</a>.</p>
-        </section>
-        <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">10. Beschwerderecht</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">9. Beschwerderecht</h2>
           <p>Zuständige Aufsichtsbehörde: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA).</p>
         </section>
       </div>
