@@ -23,7 +23,7 @@ Nicht erwähnen: die Sponsoren im Seniorenbereich (bewusst weggelassen).
 
 ## Sprecher: Manu
 
-Manuel „Manu“ Rothemmel spricht das ganze Video, in der Ich- und Wir-Form.
+Manu spricht das ganze Video, in der Ich- und Wir-Form.
 
 - Vorstandsvorsitzender des Fördervereins.
 - Späte 30er, Anfang 40.
@@ -43,9 +43,9 @@ Animation: Manu erscheint als wiederkehrende Vektorfigur (Trainingsjacke in Vere
 
 | # | Zeit | Bild (Animation) | Sprechertext (Manu) |
 |---|------|------------------|---------------------|
-| 1 | 0-10 s | Samstagmorgen, Sportplatz Amendingen. Ein kleiner Junge läuft aufs Feld, Überblendung: derselbe Junge erwachsen als Spieler, dann als Trainer mit Hütchen. Das ist Manu. | „Servus, ich bin Manu. Ich bin hier in Amendingen groß geworden. Auf diesem Platz habe ich als Kind gekickt, später viele Jahre für den SVA gespielt. Heute stehe ich als Jugendtrainer am Rand.“ |
+| 1 | 0-10 s | Samstagmorgen, Sportplatz Amendingen. Ein kleiner Junge läuft aufs Feld, Überblendung: derselbe Junge erwachsen als Spieler, dann als Trainer mit Hütchen. Das ist Manu. | „Servus, ich bin Manu, Vorstandsvorsitzender vom Förderverein des SVA. Ich bin hier in Amendingen groß geworden. Auf diesem Platz habe ich als Kind gekickt, später viele Jahre für den SVA gespielt. Heute stehe ich als Jugendtrainer am Rand.“ |
 | 2 | 10-25 s | Trainer im Regen, Eltern im Auto, Helfer mit Rasenmäher und Kreidewagen. Dann Preisschilder an Bällen, Trainingsanzügen, einem Bus. | „Und jede Woche sehe ich, wie viel hier ehrenamtlich läuft. Trainer, Eltern, Helfer. Aber Ehrenamt kauft keine Bälle. In der Jugend sind es oft kleine Beträge, für die sich einfach niemand findet.“ |
-| 3 | 25-37 s | SVA-Wappen, daneben baut sich der Schriftzug „Förderverein“ auf. Manu-Figur steht daneben. Geld fließt sichtbar zum Platz. | „Genau dafür gibt es den Förderverein. Ich bin dort Vorsitzender. Wir sind ein eigener, gemeinnütziger Verein mit einer Aufgabe: den SVA unterstützen. Jeder Euro bleibt in Amendingen.“ |
+| 3 | 25-37 s | SVA-Wappen, daneben baut sich der Schriftzug „Förderverein“ auf. Manu-Figur steht daneben. Geld fließt sichtbar zum Platz. | „Genau dafür gibt es unseren Förderverein. Wir sind ein eigener, gemeinnütziger Verein mit einer Aufgabe: den SVA unterstützen. Jeder Euro bleibt in Amendingen.“ |
 | 4 | 37-57 s | Vier Szenen nacheinander, jeweils mit Jahr und Betrag eingeblendet: Bus nach Augsburg, Kinder in gleichen Trainingsanzügen, Ballnetz und Hütchen, FC-Bayern-Camp. | „Letztes Jahr sind wir mit der ganzen Jugend nach Augsburg gefahren, die Fahrt haben wir bezuschusst. Wir haben bei den Trainingsanzügen geholfen, neue Bälle und Hütchen gekauft und das Jugendcamp mit dem FC Bayern unterstützt. Keine großen Schlagzeilen. Aber die Kinder merken es.“ |
 | 5 | 57-75 s | Eine Figur wird zu vielen. Zahlen zählen hoch: 1 Mitglied = 20 € (ein Spielball), 25 = 500 € (Trainingsmaterial für ein Team), 100 = 2.000 € (Zuschuss für die nächste Jugendfahrt). | „Mitglied werden kostet 20 € im Jahr. Allein ist das wenig, das weiß ich. Aber 25 Mitglieder sind Trainingsmaterial für eine ganze Mannschaft. Und hundert sind die nächste Jugendfahrt. Niemand muss viel geben, wenn viele mitmachen.“ |
 | 6 | 75-90 s | Mitgliederzähler zählt hoch auf „über 80“, Ziel 100. Handy mit Formular, Haken, Wappen. Manu-Figur zeigt auf den Button. Endkarte „Mitglied werden · 20 € im Jahr“. | „Wir sind schon über 80. Ich will, dass wir die hundert knacken. Mitglied werden dauert zwei Minuten, komplett online. Mach mit. Für die Kinder auf unserem Platz.“ |
@@ -71,7 +71,7 @@ Für die Einblendungen in Szene 4. **Ausgedacht, vor Produktion durch echte Wert
   - Gold `#d4a017`, hell `#e6b422`
   - Anthrazit `#2a2a2a`, dunkel `#1a1a1a`, Weiß
 - Schrift: Geist (wie die Seite), Headlines fett.
-- Wappen als Vektor: `public/sva-wappen.svg`. Nachgezeichnet aus `logoSVA.png` der Hauptseite sv-amendingen.de (offizielles SVG gibt es online nicht). Farben dort: Grün `#009d41`, Gelb `#ffed00`, Schwarz. Für kleine Größen reicht es; für Großaufnahmen im Video lieber das Original-SVG beim Verein anfragen.
+- Wappen als Vektor: `docs/assets/sva-wappen.svg` (nur fürs Video, nicht auf der Website verwenden). Nachgezeichnet aus `logoSVA.png` der Hauptseite sv-amendingen.de (offizielles SVG gibt es online nicht). Farben dort: Grün `#009d41`, Gelb `#ffed00`, Schwarz. Für kleine Größen reicht es; für Großaufnahmen im Video lieber das Original-SVG beim Verein anfragen.
 - Figuren ohne erkennbare Gesichter, damit keine Bildrechte an Kindern nötig sind.
 
 ## Ton und Untertitel
@@ -105,7 +105,7 @@ Für die Einblendungen in Szene 4. **Ausgedacht, vor Produktion durch echte Wert
 ## Offene Punkte
 
 - [x] Rechenbeispiele bestätigt (1 = Spielball, 25 = Trainingsmaterial für ein Team, 100 = Zuschuss Jugendfahrt).
-- [x] Sprecher: Manu (Manuel Rothemmel). Schreibweise des Nachnamens noch prüfen.
+- [x] Sprecher: Manu, stellt sich gleich zu Beginn als Vorstandsvorsitzender vor.
 - [x] Wappen als Vektor (nachgezeichnet, siehe Visueller Stil).
 - [ ] Projekte: Platzhalter-Jahre und -Beträge durch echte Werte ersetzen.
 - [ ] Foto von Manu als Vorlage für die Figur.

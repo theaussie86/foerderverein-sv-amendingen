@@ -123,23 +123,41 @@ export default async function HomePage() {
       {/* 1. Hero */}
       <section className="relative overflow-hidden bg-sva-charcoal-dark">
         <div className="absolute inset-0 bg-gradient-to-br from-sva-green-dark/40 via-sva-charcoal-dark to-sva-charcoal-dark" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1.4fr_1fr] lg:px-8">
-          <div>
-            <h1 className="text-4xl font-black uppercase leading-[1.05] text-white sm:text-5xl lg:text-6xl">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <h1 className="text-balance text-4xl font-black uppercase leading-[1.05] text-white sm:text-5xl lg:text-6xl">
               Für {mitgliedsbeitrag} € im Jahr stehst du hinter jedem Kind auf unserem Platz.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-sva-gray-300 sm:text-xl">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-sva-gray-300 sm:text-xl">
               Der Förderverein finanziert die kleinen Dinge, für die sich in der Jugend kein Sponsor findet:
               Material, Zuschüsse, gemeinsame Fahrten. Werde Mitglied und mach den SVA stärker.
             </p>
-            <div className="mt-10">
-              <MitgliedButton>Jetzt Mitglied werden · {mitgliedsbeitrag} € im Jahr</MitgliedButton>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-4xl">
+            <video
+              className="aspect-video w-full rounded-xl bg-sva-charcoal shadow-2xl shadow-black/40 ring-1 ring-sva-gray-700"
+              controls
+              playsInline
+              preload="none"
+              poster="/video/poster-kurzfassung.jpg"
+              aria-label="Video: Manu, Vorsitzender des Fördervereins, erklärt in einer Minute, wofür der Förderverein da ist"
+            >
+              <source src="/video/foerderverein-kurzfassung-v2.mp4" type="video/mp4" />
+              <track kind="captions" src="/video/untertitel-kurzfassung.de.vtt" srcLang="de" label="Deutsch" />
+            </video>
+
+            <div className="mt-8 text-center">
+              <MitgliedButton className="w-full sm:w-auto">Jetzt Mitglied werden · {mitgliedsbeitrag} € im Jahr</MitgliedButton>
               <p className="mt-4 text-sm text-sva-gray-300">
                 In 2 Minuten online · ohne Papierkram · nur {proMonat} € im Monat
               </p>
             </div>
           </div>
-          <Zaehler stand={stand} />
+
+          <div className="mx-auto mt-14 max-w-xl">
+            <Zaehler stand={stand} />
+          </div>
         </div>
       </section>
 

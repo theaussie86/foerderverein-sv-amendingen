@@ -1,0 +1,172 @@
+{
+  "total": 93.67325,
+  "scenes": [
+    {
+      "id": "intro",
+      "start": 0,
+      "end": 17.669355,
+      "sentences": [
+        {
+          "text": "Servus, ich bin Manu, Vorstandsvorsitzender vom Förderverein des SVA.",
+          "start": 0.6,
+          "end": 5.698792
+        },
+        {
+          "text": "Ich bin hier in Amendingen groß geworden.",
+          "start": 5.998792,
+          "end": 8.403020999999999
+        },
+        {
+          "text": "Auf diesem Platz habe ich als Kind gekickt, später viele Jahre für den SVA gespielt.",
+          "start": 8.703021,
+          "end": 14.195958999999998
+        },
+        {
+          "text": "Heute stehe ich als Jugendtrainer am Rand.",
+          "start": 14.495959,
+          "end": 17.069354999999998
+        }
+      ]
+    },
+    {
+      "id": "ehrenamt",
+      "start": 17.669355,
+      "end": 31.387563,
+      "sentences": [
+        {
+          "text": "Und jede Woche sehe ich, wie viel hier ehrenamtlich läuft.",
+          "start": 17.669355,
+          "end": 21.231855
+        },
+        {
+          "text": "Trainer, Eltern, Helfer.",
+          "start": 21.531855,
+          "end": 23.395626
+        },
+        {
+          "text": "Aber Ehrenamt kauft keine Bälle.",
+          "start": 23.695626,
+          "end": 25.868105
+        },
+        {
+          "text": "In der Jugend sind es oft kleine Beträge, für die sich einfach niemand findet.",
+          "start": 26.168105,
+          "end": 30.787563
+        }
+      ]
+    },
+    {
+      "id": "verein",
+      "start": 31.387563,
+      "end": 43.361292,
+      "sentences": [
+        {
+          "text": "Genau dafür gibt es unseren Förderverein.",
+          "start": 31.387563,
+          "end": 34.244396
+        },
+        {
+          "text": "Wir sind ein eigener, gemeinnütziger Verein mit einer Aufgabe: den SVA unterstützen.",
+          "start": 34.544396,
+          "end": 40.350167
+        },
+        {
+          "text": "Jeder Euro bleibt in Amendingen.",
+          "start": 40.650166999999996,
+          "end": 42.761292
+        }
+      ]
+    },
+    {
+      "id": "projekte",
+      "start": 43.361292,
+      "end": 62.39272999999999,
+      "sentences": [
+        {
+          "text": "Letztes Jahr sind wir mit der ganzen Jugend nach Augsburg gefahren, die Fahrt haben wir bezuschusst.",
+          "start": 43.361292,
+          "end": 49.155084
+        },
+        {
+          "text": "Wir haben bei den Trainingsanzügen geholfen,",
+          "start": 49.455084,
+          "end": 52.149792
+        },
+        {
+          "text": "neue Bälle und Hütchen gekauft",
+          "start": 52.449791999999995,
+          "end": 54.413709
+        },
+        {
+          "text": "und das Jugendcamp mit dem FC Bayern unterstützt.",
+          "start": 54.713708999999994,
+          "end": 58.04402199999999
+        },
+        {
+          "text": "Keine großen Schlagzeilen. Aber die Kinder merken es.",
+          "start": 58.34402199999999,
+          "end": 61.79272999999999
+        }
+      ]
+    },
+    {
+      "id": "rechnung",
+      "start": 62.39272999999999,
+      "end": 79.45164699999998,
+      "sentences": [
+        {
+          "text": "Mitglied werden kostet 20 € im Jahr.",
+          "start": 62.39272999999999,
+          "end": 65.202709
+        },
+        {
+          "text": "Allein ist das wenig, das weiß ich.",
+          "start": 65.502709,
+          "end": 68.000272
+        },
+        {
+          "text": "Aber 25 Mitglieder sind Trainingsmaterial für eine ganze Mannschaft.",
+          "start": 68.30027199999999,
+          "end": 73.15466799999999
+        },
+        {
+          "text": "Und hundert sind die nächste Jugendfahrt.",
+          "start": 73.45466799999998,
+          "end": 75.78652199999999
+        },
+        {
+          "text": "Niemand muss viel geben, wenn viele mitmachen.",
+          "start": 76.08652199999999,
+          "end": 78.85164699999999
+        }
+      ]
+    },
+    {
+      "id": "aufruf",
+      "start": 79.45164699999998,
+      "end": 93.67325099999996,
+      "sentences": [
+        {
+          "text": "Wir sind schon über 80.",
+          "start": 79.45164699999998,
+          "end": 81.24035499999998
+        },
+        {
+          "text": "Ich will, dass wir die hundert knacken.",
+          "start": 81.54035499999998,
+          "end": 83.81687599999998
+        },
+        {
+          "text": "Mitglied werden dauert zwei Minuten, komplett online.",
+          "start": 84.11687599999998,
+          "end": 87.55379299999997
+        },
+        {
+          "text": "Mach mit. Für die Kinder auf unserem Platz.",
+          "start": 87.85379299999997,
+          "end": 90.67325099999996
+        }
+      ]
+    }
+  ]
+}

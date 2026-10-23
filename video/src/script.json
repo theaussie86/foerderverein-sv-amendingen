@@ -1,0 +1,70 @@
+{
+  "voice": "Anna",
+  "rate": 186,
+  "pauseSentence": 0.3,
+  "pauseScene": 0.6,
+  "scenes": [
+    {
+      "id": "intro",
+      "sentences": [
+        { "text": "Servus, ich bin Manu, Vorstandsvorsitzender vom Förderverein des SVA.", "tts": "Servus, ich bin Manu, Vorstandsvorsitzender vom Förderverein des S V A." },
+        { "text": "Ich bin hier in Amendingen groß geworden." },
+        { "text": "Auf diesem Platz habe ich als Kind gekickt, später viele Jahre für den SVA gespielt.", "tts": "Auf diesem Platz habe ich als Kind gekickt, später viele Jahre für den S V A gespielt." },
+        { "text": "Heute stehe ich als Jugendtrainer am Rand." }
+      ]
+    },
+    {
+      "id": "ehrenamt",
+      "sentences": [
+        { "text": "Und jede Woche sehe ich, wie viel hier ehrenamtlich läuft." },
+        { "text": "Trainer, Eltern, Helfer." },
+        { "text": "Aber Ehrenamt kauft keine Bälle." },
+        { "text": "In der Jugend sind es oft kleine Beträge, für die sich einfach niemand findet." }
+      ]
+    },
+    {
+      "id": "verein",
+      "sentences": [
+        { "text": "Genau dafür gibt es unseren Förderverein." },
+        { "text": "Wir sind ein eigener, gemeinnütziger Verein mit einer Aufgabe: den SVA unterstützen.", "tts": "Wir sind ein eigener, gemeinnütziger Verein mit einer Aufgabe: den S V A unterstützen." },
+        { "text": "Jeder Euro bleibt in Amendingen." }
+      ]
+    },
+    {
+      "id": "projekte",
+      "sentences": [
+        { "text": "Letztes Jahr sind wir mit der ganzen Jugend nach Augsburg gefahren, die Fahrt haben wir bezuschusst." },
+        { "text": "Wir haben bei den Trainingsanzügen geholfen," },
+        { "text": "neue Bälle und Hütchen gekauft" },
+        { "text": "und das Jugendcamp mit dem FC Bayern unterstützt." },
+        { "text": "Keine großen Schlagzeilen. Aber die Kinder merken es." }
+      ]
+    },
+    {
+      "id": "rechnung",
+      "sentences": [
+        { "text": "Mitglied werden kostet 20 € im Jahr.", "tts": "Mitglied werden kostet zwanzig Euro im Jahr." },
+        { "text": "Allein ist das wenig, das weiß ich." },
+        { "text": "Aber 25 Mitglieder sind Trainingsmaterial für eine ganze Mannschaft.", "tts": "Aber fünfundzwanzig Mitglieder sind Trainingsmaterial für eine ganze Mannschaft." },
+        { "text": "Und hundert sind die nächste Jugendfahrt." },
+        { "text": "Niemand muss viel geben, wenn viele mitmachen." }
+      ]
+    },
+    {
+      "id": "aufruf",
+      "sentences": [
+        { "text": "Wir sind schon über 80.", "tts": "Wir sind schon über achtzig." },
+        { "text": "Ich will, dass wir die hundert knacken." },
+        { "text": "Mitglied werden dauert zwei Minuten, komplett online." },
+        { "text": "Mach mit. Für die Kinder auf unserem Platz." }
+      ],
+      "tail": 3
+    }
+  ],
+  "projekte": [
+    { "key": "bus", "jahr": 2025, "betrag": "1.500 €", "label": "für die Jugendfahrt" },
+    { "key": "anzug", "jahr": 2024, "betrag": "2.000 €", "label": "für Trainingsanzüge" },
+    { "key": "material", "jahr": 2025, "betrag": "800 €", "label": "für Trainingsmaterial" },
+    { "key": "camp", "jahr": 2026, "betrag": "1.000 €", "label": "fürs Jugendcamp" }
+  ]
+}
