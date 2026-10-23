@@ -77,3 +77,22 @@ export async function antragSpeichern(
     throw e;
   }
 }
+
+// Online eingegangene Anträge seit einem Datum, ohne abgelehnte und ausgetretene.
+// Null, wenn PocketBase nicht konfiguriert oder nicht erreichbar ist.
+export async function antraegeSeit(datum: Date): Promise<number | null> {
+  try {
+    const pb = await pocketbase();
+    if (!pb) return null;
+    const liste = await pb.collection("mitgliedsantraege").getList(1, 1, {
+      filter: pb.filter('unterschrieben_am >= {:datum} && status != "abgelehnt" && status != "ausgetreten"', {
+        datum: datum.toISOString().replace("T", " "),
+      }),
+      fields: "id",
+    });
+    return liste.totalItems;
+  } catch (e) {
+    console.error("Mitgliederzähler: PocketBase-Abfrage fehlgeschlagen", e);
+    return null;
+  }
+}

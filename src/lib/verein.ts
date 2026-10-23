@@ -28,3 +28,8 @@ export function mandatstext(): string {
     `Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.`
   );
 }
+
+// Mitgliederzähler auf der Startseite: Stand vor den Online-Anträgen plus alle
+// online eingegangenen Anträge seit dem Stichtag. Bei Offline-Beitritten Basis neu setzen.
+export const mitgliederbasis = { anzahl: 83, stichtag: "2026-10-23" };
+export const mitgliederziel = 100;

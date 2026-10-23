@@ -20,9 +20,7 @@ export function Header() {
       <div className="bg-sva-charcoal-dark border-b border-sva-gray-800">
         <div className="mx-auto flex max-w-7xl items-center justify-center px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-md bg-sva-green text-lg font-black text-sva-gold">
-              FV
-            </div>
+            <img src="/sva-wappen.png" alt="Wappen SV Amendingen" width={48} height={48} className="h-12 w-12" />
             <div className="text-center">
               <p className="text-xl font-black uppercase tracking-wider text-white sm:text-2xl">
                 Förderverein SV Amendingen
