@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Förderverein SV Amendingen",
   },
   description:
-    "Der Förderverein SV Amendingen e.V. unterstützt den SV Amendingen finanziell und ideell. Spenden Sie oder werden Sie Mitglied!",
+    "Der Förderverein SV Amendingen e.V. unterstützt den SV Amendingen finanziell und ideell. Werde Mitglied oder unterstütze uns mit einer Spende.",
   keywords: [
     "Förderverein",
     "SV Amendingen",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Förderverein SV Amendingen e.V.",
     description:
-      "Gemeinsam für den Sport in Amendingen. Unterstützen Sie den SV Amendingen mit einer Spende oder Mitgliedschaft.",
+      "Gemeinsam für den Sport in Amendingen. Unterstütze den SV Amendingen als Mitglied oder mit einer Spende.",
     type: "website",
     locale: "de_DE",
   },

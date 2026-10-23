@@ -11,7 +11,7 @@ export function Footer() {
               Förderverein
             </h3>
             <p className="text-sm leading-relaxed text-sva-gray-300">
-              Förderverein SV Amendingen e.V. &mdash; Gemeinsam für den Sport in
+              Förderverein SV Amendingen e.V. Gemeinsam für den Sport in
               Amendingen. Wir unterstützen den SV Amendingen finanziell und
               ideell.
             </p>
@@ -80,7 +80,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-sva-gray-800 pt-6 text-center text-xs text-sva-gray-400">
+        <div className="mt-10 border-t border-sva-gray-800 pt-6 text-center text-xs text-sva-gray-300">
           <p>
             &copy; {new Date().getFullYear()} Förderverein SV Amendingen e.V. Alle
             Rechte vorbehalten.

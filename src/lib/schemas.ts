@@ -29,10 +29,10 @@ export const mitgliedSchema = z.object({
     .string()
     .refine((v) => isValidIban(normalizeIban(v)), "Bitte eine gültige IBAN eingeben."),
   mandat: z.literal(true, {
-    error: "Bitte erteilen Sie das SEPA-Lastschriftmandat.",
+    error: "Bitte erteil das SEPA-Lastschriftmandat.",
   }),
   datenschutz: z.literal(true, {
-    error: "Bitte stimmen Sie der Datenschutzerklärung zu.",
+    error: "Bitte stimm der Datenschutzerklärung zu.",
   }),
   // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer.
   website: z.string().max(0).optional(),

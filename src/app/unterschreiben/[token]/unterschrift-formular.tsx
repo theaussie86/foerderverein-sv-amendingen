@@ -15,8 +15,8 @@ export function UnterschriftFormular({ token, sitzungToken, kontoinhaber }: { to
       <div className="mt-6 rounded-lg border-2 border-sva-green bg-sva-green/10 p-6 sm:p-8">
         <h2 className="text-xl font-semibold text-white">Willkommen im Förderverein!</h2>
         <p className="mt-2 text-sva-gray-300">
-          Ihre Beitrittserklärung und das SEPA-Lastschriftmandat sind unterschrieben und bei uns eingegangen. Eine Kopie
-          als PDF haben wir Ihnen per E-Mail geschickt.
+          Deine Beitrittserklärung und das SEPA-Lastschriftmandat sind unterschrieben und bei uns eingegangen. Eine Kopie
+          als PDF haben wir dir per E-Mail geschickt.
         </p>
       </div>
     );
@@ -32,7 +32,7 @@ export function UnterschriftFormular({ token, sitzungToken, kontoinhaber }: { to
         >
           Jetzt unterschreiben
         </button>
-        <p className="mt-3 text-center text-xs text-sva-gray-400">Sie unterschreiben in einem eigenen Fenster mit Finger oder Maus.</p>
+        <p className="mt-3 text-center text-xs text-sva-gray-400">Du unterschreibst in einem eigenen Fenster mit Finger oder Maus.</p>
       </div>
       {offen && (
         <UnterschriftModal
@@ -145,8 +145,8 @@ function UnterschriftModal({
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 id="unterschrift-titel" className="text-lg font-semibold text-white sm:text-xl">Unterschrift</h2>
-            <p className="mt-1 text-sm text-sva-gray-300">Unterschreiben Sie mit Finger oder Maus im weißen Feld.</p>
-            <p className="mt-1 text-xs text-sva-gold sm:hidden">Tipp: Halten Sie Ihr Handy quer, dann haben Sie mehr Platz.</p>
+            <p className="mt-1 text-sm text-sva-gray-300">Unterschreib mit Finger oder Maus im weißen Feld.</p>
+            <p className="mt-1 text-xs text-sva-gold sm:hidden">Tipp: Halt dein Handy quer, dann hast du mehr Platz.</p>
           </div>
           <button type="button" onClick={onSchliessen} aria-label="Schließen" className="rounded p-2 text-2xl leading-none text-sva-gray-300 hover:bg-sva-charcoal hover:text-white">
             &times;

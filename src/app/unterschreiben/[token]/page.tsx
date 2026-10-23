@@ -22,7 +22,7 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
         <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Link ungültig</h1>
         <div className="mt-2 h-1 w-16 bg-sva-gold" />
         <p className="mt-6 text-lg text-sva-gray-300">
-          Dieser Link ist abgelaufen oder ungültig. Bitte füllen Sie den Mitgliedsantrag erneut aus.
+          Dieser Link ist abgelaufen oder ungültig. Bitte füll den Mitgliedsantrag erneut aus.
         </p>
         <Link href="/mitglied-werden" className="mt-8 inline-block rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white hover:bg-sva-green-light">
           Zum Mitgliedsantrag
@@ -48,7 +48,7 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Beitrittserklärung unterschreiben</h1>
       <div className="mt-2 h-1 w-16 bg-sva-gold" />
-      <p className="mt-4 text-lg text-sva-gray-300">Bitte prüfen Sie Ihre Angaben und unterschreiben Sie unten.</p>
+      <p className="mt-4 text-lg text-sva-gray-300">Bitte prüf deine Angaben und unterschreib unten.</p>
 
       <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 sm:p-8">
         <h2 className="text-xl font-semibold text-white">Beitrittserklärung</h2>

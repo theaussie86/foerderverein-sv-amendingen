@@ -62,7 +62,7 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
           {gesendet ? (
             <>
               <p className="mt-4 text-sva-gray-300">
-                Vielen Dank! Sobald Ihre Überweisung auf unserem Konto eingegangen ist, schicken wir Ihnen die
+                Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir die
                 Zuwendungsbestätigung zu.
               </p>
               <button type="button" onClick={schliessen} className="mt-6 w-full rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">
@@ -72,7 +72,7 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
               <p className="text-sm text-sva-gray-300">
-                Die Quittung stellen wir aus, sobald Ihre Überweisung auf unserem Konto eingegangen ist.
+                Die Quittung stellen wir aus, sobald deine Überweisung auf unserem Konto eingegangen ist.
               </p>
               <div>
                 <label htmlFor="q-name" className="block text-sm font-medium text-sva-gray-300">Vor- und Nachname *</label>
@@ -119,7 +119,7 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
                 <input id="q-website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
               </div>
               <p className="text-xs text-sva-gray-400">
-                Ihre Angaben verwenden wir nur für die Zuwendungsbestätigung, siehe{" "}
+                Deine Angaben verwenden wir nur für die Zuwendungsbestätigung, siehe{" "}
                 <a href="/datenschutz" className="text-sva-gold underline hover:text-sva-gold-light">Datenschutzerklärung</a>.
               </p>
               <button type="submit" disabled={isSubmitting} className="w-full rounded-md bg-sva-gold px-6 py-3 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-50">
