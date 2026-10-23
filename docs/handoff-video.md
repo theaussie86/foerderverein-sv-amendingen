@@ -21,24 +21,47 @@ Zielgruppen in dieser Reihenfolge:
 
 Nicht erwähnen: die Sponsoren im Seniorenbereich (bewusst weggelassen).
 
-## Tonalität
+## Sprecher: Manu
 
+Manuel „Manu“ Rothemmel spricht das ganze Video, in der Ich- und Wir-Form.
+
+- Vorstandsvorsitzender des Fördervereins.
+- Späte 30er, Anfang 40.
+- In Amendingen aufgewachsen, viele Jahre selbst Spieler beim SVA.
+- Heute engagierter Jugendtrainer.
+
+Damit ist er Absender und Beweis zugleich: Er kennt den Platz als Kind, als Spieler und als Trainer. Das Video lebt davon, dass er glaubwürdig erzählt, nicht verkauft.
+
+Tonalität:
 - Du-Form, lokal, warm, bodenständig. Kein Marketing-Sprech.
-- Echte Stimme aus dem Verein schlägt Profi-Sprecher.
-- Satzbau kurz, gesprochen, zum Mitlesen geeignet.
+- Klingt wie Manu am Spielfeldrand, nicht wie ein Werbesprecher. Leichte Dialektfärbung ist erwünscht.
+- Kurze, gesprochene Sätze, zum Mitlesen in Untertiteln geeignet.
+
+Animation: Manu erscheint als wiederkehrende Vektorfigur (Trainingsjacke in Vereinsfarben, Pfeife oder Ball unterm Arm), angelehnt an ein Foto von ihm, aber stilisiert.
 
 ## Skript (ca. 90 s)
 
-| # | Zeit | Bild (Animation) | Sprechertext |
-|---|------|------------------|--------------|
-| 1 | 0-8 s | Samstagmorgen, Sportplatz Amendingen. Kinder laufen aufs Feld, ein Ball rollt ins Bild. | „Jeden Samstag stehen in Amendingen Kinder auf dem Platz. Mit Ball, mit Trikot, mit Trainer. Das ist nicht selbstverständlich." |
-| 2 | 8-22 s | Trainer im Regen, Eltern im Auto, Helfer mit Rasenmäher und Kreidewagen. Dann Preisschilder an Bällen, Trainingsanzügen, einem Bus. | „Trainer stehen bei jedem Wetter am Platz. Eltern fahren, Helfer mähen und kreiden. Aber Ehrenamt kauft keine Bälle. Und in der Jugend sind es oft kleine Beträge, für die sich niemand findet." |
-| 3 | 22-35 s | SVA-Wappen, daneben baut sich der Schriftzug „Förderverein" auf. Geld fließt sichtbar zum Platz, nicht weg. | „Genau dafür gibt es den Förderverein SV Amendingen. Ein eigener, gemeinnütziger Verein mit einer Aufgabe: den SVA unterstützen. Jeder Euro bleibt in Amendingen." |
-| 4 | 35-55 s | Vier Szenen nacheinander: Bus fährt nach Augsburg, Kinder in gleichen Trainingsanzügen, Ballnetz und Hütchen, FC-Bayern-Camp. | „Zuletzt haben wir die Fahrt nach Augsburg für die ganze Jugend bezuschusst. Trainingsanzüge. Bälle, Hütchen, Leibchen. Und besondere Projekte wie das Jugendcamp mit dem FC Bayern." |
-| 5 | 55-75 s | Eine Figur wird zu vielen. Zahlen zählen hoch: 1 Mitglied = 20 € (ein Spielball), 25 = 500 € (Trainingsmaterial für ein Team), 100 = 2.000 € (Zuschuss für die nächste Jugendfahrt). | „Mitglied werden kostet 20 € im Jahr. Allein ist das wenig. Aber mit hundert anderen ist es der Zuschuss für die nächste Jugendfahrt. Niemand muss viel geben, wenn viele mitmachen." |
-| 6 | 75-90 s | Mitgliederzähler zählt hoch auf die aktuelle Zahl, darunter Handy mit Formular, Haken, Wappen. Endkarte mit „Mitglied werden · 20 € im Jahr". | „Wir sind schon über 80. Unser Ziel sind hundert. Mitglied werden dauert zwei Minuten, komplett online. Werde einer davon. Für die Kinder auf unserem Platz." |
+| # | Zeit | Bild (Animation) | Sprechertext (Manu) |
+|---|------|------------------|---------------------|
+| 1 | 0-10 s | Samstagmorgen, Sportplatz Amendingen. Ein kleiner Junge läuft aufs Feld, Überblendung: derselbe Junge erwachsen als Spieler, dann als Trainer mit Hütchen. Das ist Manu. | „Servus, ich bin Manu. Ich bin hier in Amendingen groß geworden. Auf diesem Platz habe ich als Kind gekickt, später viele Jahre für den SVA gespielt. Heute stehe ich als Jugendtrainer am Rand.“ |
+| 2 | 10-25 s | Trainer im Regen, Eltern im Auto, Helfer mit Rasenmäher und Kreidewagen. Dann Preisschilder an Bällen, Trainingsanzügen, einem Bus. | „Und jede Woche sehe ich, wie viel hier ehrenamtlich läuft. Trainer, Eltern, Helfer. Aber Ehrenamt kauft keine Bälle. In der Jugend sind es oft kleine Beträge, für die sich einfach niemand findet.“ |
+| 3 | 25-37 s | SVA-Wappen, daneben baut sich der Schriftzug „Förderverein“ auf. Manu-Figur steht daneben. Geld fließt sichtbar zum Platz. | „Genau dafür gibt es den Förderverein. Ich bin dort Vorsitzender. Wir sind ein eigener, gemeinnütziger Verein mit einer Aufgabe: den SVA unterstützen. Jeder Euro bleibt in Amendingen.“ |
+| 4 | 37-57 s | Vier Szenen nacheinander, jeweils mit Jahr und Betrag eingeblendet: Bus nach Augsburg, Kinder in gleichen Trainingsanzügen, Ballnetz und Hütchen, FC-Bayern-Camp. | „Letztes Jahr sind wir mit der ganzen Jugend nach Augsburg gefahren, die Fahrt haben wir bezuschusst. Wir haben bei den Trainingsanzügen geholfen, neue Bälle und Hütchen gekauft und das Jugendcamp mit dem FC Bayern unterstützt. Keine großen Schlagzeilen. Aber die Kinder merken es.“ |
+| 5 | 57-75 s | Eine Figur wird zu vielen. Zahlen zählen hoch: 1 Mitglied = 20 € (ein Spielball), 25 = 500 € (Trainingsmaterial für ein Team), 100 = 2.000 € (Zuschuss für die nächste Jugendfahrt). | „Mitglied werden kostet 20 € im Jahr. Allein ist das wenig, das weiß ich. Aber 25 Mitglieder sind Trainingsmaterial für eine ganze Mannschaft. Und hundert sind die nächste Jugendfahrt. Niemand muss viel geben, wenn viele mitmachen.“ |
+| 6 | 75-90 s | Mitgliederzähler zählt hoch auf „über 80“, Ziel 100. Handy mit Formular, Haken, Wappen. Manu-Figur zeigt auf den Button. Endkarte „Mitglied werden · 20 € im Jahr“. | „Wir sind schon über 80. Ich will, dass wir die hundert knacken. Mitglied werden dauert zwei Minuten, komplett online. Mach mit. Für die Kinder auf unserem Platz.“ |
 
-Zahlen in Szene 5 und 6 vor Produktion bestätigen (siehe Offene Punkte). „Über 80" bewusst unscharf, damit das Video nicht veraltet, wenn der Zähler auf der Seite steigt.
+„Über 80“ ist bewusst unscharf, damit das Video nicht veraltet, wenn der Zähler auf der Seite steigt.
+
+### Projekte mit Zahlen (Platzhalter)
+
+Für die Einblendungen in Szene 4. **Ausgedacht, vor Produktion durch echte Werte ersetzen.**
+
+| Projekt | Jahr | Betrag | Einblendung |
+|---|---|---|---|
+| Fahrt nach Augsburg, gesamte Jugend | 2025 | 1.500 € Zuschuss | „2025 · 1.500 € für die Jugendfahrt“ |
+| Trainingsanzüge | 2024 | 2.000 € Zuschuss | „2024 · 2.000 € für Trainingsanzüge“ |
+| Trainingsmaterial (Bälle, Hütchen, Leibchen) | 2025 | 800 € | „2025 · 800 € für Trainingsmaterial“ |
+| FC-Bayern-Jugendcamp | 2026 | 1.000 € | „2026 · 1.000 € fürs Jugendcamp“ |
 
 ## Visueller Stil
 
@@ -48,7 +71,7 @@ Zahlen in Szene 5 und 6 vor Produktion bestätigen (siehe Offene Punkte). „Üb
   - Gold `#d4a017`, hell `#e6b422`
   - Anthrazit `#2a2a2a`, dunkel `#1a1a1a`, Weiß
 - Schrift: Geist (wie die Seite), Headlines fett.
-- Wappen: `public/sva-wappen.png` (512 px, transparent). Für die Animation besser als Vektor nachbauen oder SVG beim Verein anfragen.
+- Wappen als Vektor: `public/sva-wappen.svg`. Nachgezeichnet aus `logoSVA.png` der Hauptseite sv-amendingen.de (offizielles SVG gibt es online nicht). Farben dort: Grün `#009d41`, Gelb `#ffed00`, Schwarz. Für kleine Größen reicht es; für Großaufnahmen im Video lieber das Original-SVG beim Verein anfragen.
 - Figuren ohne erkennbare Gesichter, damit keine Bildrechte an Kindern nötig sind.
 
 ## Ton und Untertitel
@@ -81,10 +104,12 @@ Zahlen in Szene 5 und 6 vor Produktion bestätigen (siehe Offene Punkte). „Üb
 
 ## Offene Punkte
 
-- [ ] Rechenbeispiele bestätigen: 25 Mitglieder = Trainingsmaterial für ein Team, 100 Mitglieder = Zuschuss für die Jugendfahrt.
-- [ ] Projekte: Jahr und Betrag für Augsburg-Fahrt, Trainingsanzüge, Trainingsmaterial, FC-Bayern-Camp.
-- [ ] Wer spricht? Vorstand, Jugendleiter oder Trainer.
-- [ ] Wappen als SVG.
+- [x] Rechenbeispiele bestätigt (1 = Spielball, 25 = Trainingsmaterial für ein Team, 100 = Zuschuss Jugendfahrt).
+- [x] Sprecher: Manu (Manuel Rothemmel). Schreibweise des Nachnamens noch prüfen.
+- [x] Wappen als Vektor (nachgezeichnet, siehe Visueller Stil).
+- [ ] Projekte: Platzhalter-Jahre und -Beträge durch echte Werte ersetzen.
+- [ ] Foto von Manu als Vorlage für die Figur.
 - [ ] Musik: lizenzfreier Titel auswählen.
 - [ ] Freigabe des Skripts durch den Vorstand.
 - [ ] Wer produziert: selbst mit Remotion oder externe Agentur.
+- [ ] Jahreszahl klären: Hauptseite sagt „Tradition seit 100 Jahren“, die Startseite „Seit 1946 Fußball in Amendingen“ (80 Jahre). Beides kann stimmen (Gesamtverein vs. Fußball), sollte aber bewusst so sein.
