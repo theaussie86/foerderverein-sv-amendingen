@@ -18,11 +18,11 @@ export async function unterschreiben(
   const antrag = unseal<Antrag>(token);
   const sitzung = unseal<Sitzung>(sitzungToken);
   if (!antrag || !sitzung || sitzung.antragId !== antrag.id) {
-    return { ok: false, fehler: "Der Link ist abgelaufen oder ungültig. Bitte stellen Sie den Antrag erneut." };
+    return { ok: false, fehler: "Der Link ist abgelaufen oder ungültig. Bitte stell den Antrag erneut." };
   }
 
   const prefix = "data:image/png;base64,";
-  if (!unterschriftDataUrl.startsWith(prefix)) return { ok: false, fehler: "Bitte unterschreiben Sie im Feld." };
+  if (!unterschriftDataUrl.startsWith(prefix)) return { ok: false, fehler: "Bitte unterschreib im Feld." };
   const png = Buffer.from(unterschriftDataUrl.slice(prefix.length), "base64");
   if (png.length === 0 || png.length > MAX_BILD_BYTES) return { ok: false, fehler: "Die Unterschrift konnte nicht verarbeitet werden." };
 
@@ -65,18 +65,18 @@ export async function unterschreiben(
       to: d.email,
       subject: "Willkommen im Förderverein SV Amendingen!",
       text:
-        `Hallo ${d.vorname} ${d.nachname},\n\n` +
-        `vielen Dank, Ihre Beitrittserklärung ist bei uns eingegangen. Im Anhang finden Sie Ihre unterschriebene ` +
-        `Beitrittserklärung und Ihr SEPA-Lastschriftmandat für Ihre Unterlagen.\n\n` +
+        `Hallo ${d.vorname},\n\n` +
+        `vielen Dank, deine Beitrittserklärung ist bei uns eingegangen. Im Anhang findest du deine unterschriebene ` +
+        `Beitrittserklärung und dein SEPA-Lastschriftmandat für deine Unterlagen.\n\n` +
         `Vorabinformation zum Lastschrifteinzug: Wir ziehen den Jahresbeitrag von ${mitgliedsbeitrag} € jeweils zum ` +
         `${verein.einzugstermin} unter der Gläubiger-ID ${verein.glaeubigerId} und der Mandatsreferenz ` +
-        `${antrag.mandatsreferenz} von Ihrem Konto ein.\n\n` +
+        `${antrag.mandatsreferenz} von deinem Konto ein.\n\n` +
         `Sportliche Grüße\n${verein.name}`,
       attachments: anhaenge,
     });
   } catch (e) {
     console.error("Versand des Antrags fehlgeschlagen", e);
-    return { ok: false, fehler: "Der Antrag konnte nicht versendet werden. Bitte versuchen Sie es später erneut." };
+    return { ok: false, fehler: "Der Antrag konnte nicht versendet werden. Bitte versuch es später erneut." };
   }
   return { ok: true };
 }

@@ -31,3 +31,14 @@ body {
   color: var(--color-sva-gray-100);
   background-color: var(--color-sva-charcoal);
 }
+
+:focus-visible {
+  outline: 2px solid var(--color-sva-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background-color: var(--color-sva-gold);
+  color: var(--color-sva-charcoal-dark);
+}

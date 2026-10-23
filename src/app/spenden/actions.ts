@@ -9,7 +9,7 @@ export type Ergebnis = { ok: true } | { ok: false; fehler: string };
 // Die Quittung wird erst ausgestellt, nachdem der Vorstand den Geldeingang auf dem Konto geprüft hat.
 export async function quittungAnfordern(eingabe: unknown): Promise<Ergebnis> {
   const parsed = quittungSchema.safeParse(eingabe);
-  if (!parsed.success) return { ok: false, fehler: "Bitte prüfen Sie Ihre Angaben." };
+  if (!parsed.success) return { ok: false, fehler: "Bitte prüf deine Angaben." };
 
   const { website, ...d } = parsed.data;
   // Bots bekommen eine scheinbare Erfolgsmeldung, damit sie nicht weiterprobieren.
@@ -17,7 +17,7 @@ export async function quittungAnfordern(eingabe: unknown): Promise<Ergebnis> {
 
   const { ip } = await clientInfo();
   if (!rateLimit(ip, 5, 60 * 60 * 1000)) {
-    return { ok: false, fehler: "Zu viele Anfragen in kurzer Zeit. Bitte versuchen Sie es später erneut." };
+    return { ok: false, fehler: "Zu viele Anfragen in kurzer Zeit. Bitte versuch es später erneut." };
   }
 
   const betrag = d.betrag.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
@@ -36,7 +36,7 @@ export async function quittungAnfordern(eingabe: unknown): Promise<Ergebnis> {
     });
   } catch (e) {
     console.error("Quittungsanfrage fehlgeschlagen", e);
-    return { ok: false, fehler: "Die Anfrage konnte nicht versendet werden. Bitte versuchen Sie es später erneut." };
+    return { ok: false, fehler: "Die Anfrage konnte nicht versendet werden. Bitte versuch es später erneut." };
   }
   return { ok: true };
 }

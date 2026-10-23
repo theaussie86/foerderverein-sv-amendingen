@@ -1,9 +1,13 @@
 import Link from "next/link";
+import { MitgliedLeiste } from "@/components/mitglied-leiste";
 import { mitgliederstand, type Mitgliederstand } from "@/lib/mitglieder";
 import { mitgliedsbeitrag, verein } from "@/lib/verein";
 
 // Mitgliederzähler stündlich neu berechnen.
 export const revalidate = 3600;
+
+const gruendungsjahr = 1946;
+const teilenText = "Für 20 € im Jahr den Jugendfußball beim SV Amendingen unterstützen: https://foerderverein-sv-amendingen.de";
 
 const projekte = [
   {
@@ -73,13 +77,13 @@ function MitgliedButton({ className = "", children = "Jetzt Mitglied werden" }: 
   );
 }
 
-function Abschnitt({ titel, eyebrow, children, className = "" }: { titel: string; eyebrow?: string; children: React.ReactNode; className?: string }) {
+const h2Cls = "text-balance text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl";
+
+function Abschnitt({ titel, children, className = "" }: { titel: string; children: React.ReactNode; className?: string }) {
   return (
     <section className={`py-20 sm:py-24 ${className}`}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        {eyebrow && <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-sva-gold">{eyebrow}</p>}
-        <h2 className="text-3xl font-black uppercase leading-tight text-white sm:text-4xl">{titel}</h2>
-        <div className="mt-3 h-1 w-16 bg-sva-gold" />
+        <h2 className={h2Cls}>{titel}</h2>
         <div className="mt-8 space-y-5 text-lg leading-relaxed text-sva-gray-200">{children}</div>
       </div>
     </section>
@@ -121,7 +125,6 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-sva-green-dark/40 via-sva-charcoal-dark to-sva-charcoal-dark" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-[1.4fr_1fr] lg:px-8">
           <div>
-            <p className="mb-4 text-sm font-bold uppercase tracking-[0.3em] text-sva-gold">{verein.name}</p>
             <h1 className="text-4xl font-black uppercase leading-[1.05] text-white sm:text-5xl lg:text-6xl">
               Für {mitgliedsbeitrag} € im Jahr stehst du hinter jedem Kind auf unserem Platz.
             </h1>
@@ -130,9 +133,9 @@ export default async function HomePage() {
               Material, Zuschüsse, gemeinsame Fahrten. Werde Mitglied und mach den SVA stärker.
             </p>
             <div className="mt-10">
-              <MitgliedButton />
+              <MitgliedButton>Jetzt Mitglied werden · {mitgliedsbeitrag} € im Jahr</MitgliedButton>
               <p className="mt-4 text-sm text-sva-gray-300">
-                {mitgliedsbeitrag} € im Jahr · in 2 Minuten online · ohne Papierkram
+                In 2 Minuten online · ohne Papierkram · nur {proMonat} € im Monat
               </p>
             </div>
           </div>
@@ -141,19 +144,22 @@ export default async function HomePage() {
       </section>
 
       {/* 2. Problem */}
-      <Abschnitt eyebrow="Das Problem" titel="Ehrenamt zahlt keine Rechnungen" className="bg-sva-charcoal">
+      <Abschnitt titel="Ehrenamt zahlt keine Rechnungen" className="bg-sva-charcoal">
         <p>
           Trainer stehen bei jedem Wetter am Platz. Eltern fahren zu Auswärtsspielen. Helfer mähen, kreiden, grillen.
           Ohne dieses Ehrenamt gäbe es keinen SVA.
         </p>
         <p>
           Aber Ehrenamt kauft keine Bälle. Es bezahlt keine Trainingsanzüge und keinen Bus zum Ausflug. Bei den
-          Senioren helfen größere Sponsoren. <strong className="text-white">In der Jugend sind es oft kleine Beträge, für die sich niemand findet.</strong>
+          Senioren helfen größere Sponsoren.
+        </p>
+        <p className="text-balance pt-4 text-2xl font-black leading-snug text-white sm:text-3xl">
+          In der Jugend sind es oft kleine Beträge, für die sich <span className="text-sva-gold">niemand findet.</span>
         </p>
       </Abschnitt>
 
       {/* 3. Lösung */}
-      <Abschnitt eyebrow="Die Lösung" titel="Dafür gibt es den Förderverein" className="bg-sva-charcoal-dark">
+      <Abschnitt titel="Dafür gibt es den Förderverein" className="bg-sva-charcoal-dark">
         <p>
           Der {verein.name} ist ein eigenständiger, eingetragener und gemeinnütziger Verein mit genau einer Aufgabe:
           den SV Amendingen zu unterstützen. Vor allem dort, wo sonst kein Geld herkommt.
@@ -167,16 +173,14 @@ export default async function HomePage() {
       {/* 4. Mittelverwendung */}
       <section className="bg-sva-charcoal py-20 sm:py-24">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-sva-gold">Wofür dein Beitrag verwendet wird</p>
-          <h2 className="text-3xl font-black uppercase leading-tight text-white sm:text-4xl">Kleine Beiträge, die man sieht</h2>
-          <div className="mt-3 h-1 w-16 bg-sva-gold" />
+          <h2 className={h2Cls}>Kleine Beiträge, die man sieht</h2>
           <p className="mt-8 max-w-3xl text-lg leading-relaxed text-sva-gray-200">
             Keine großen Schlagzeilen, sondern Unterstützung im Hintergrund. Das haben wir zuletzt möglich gemacht:
           </p>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {projekte.map((p) => (
               <div key={p.titel} className="rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
-                <h3 className="text-lg font-bold uppercase text-white">{p.titel}</h3>
+                <h3 className="text-lg font-bold text-white">{p.titel}</h3>
                 <p className="mt-2 leading-relaxed text-sva-gray-300">{p.text}</p>
               </div>
             ))}
@@ -185,40 +189,45 @@ export default async function HomePage() {
       </section>
 
       {/* 5. Hebel */}
-      <Abschnitt eyebrow="Warum 20 € viel bewirken" titel="Niemand muss viel geben, wenn viele mitmachen" className="bg-sva-green-dark">
-        <p>
-          {mitgliedsbeitrag} € im Jahr sind {proMonat} € im Monat. Allein ist das wenig. Genau darum geht es: Der Hebel
-          ist nicht die Höhe des Beitrags, sondern die Zahl der Mitglieder.
-        </p>
-        <ul className="space-y-3 pt-2">
-          {hebel.map((h) => (
-            <li key={h.mitglieder} className="flex flex-wrap items-baseline gap-x-3 rounded-lg bg-black/20 px-5 py-4">
-              <span className="font-black tabular-nums text-sva-gold">
-                {h.mitglieder} {h.mitglieder === 1 ? "Mitglied" : "Mitglieder"} = {(h.mitglieder * mitgliedsbeitrag).toLocaleString("de-DE")} €
-              </span>
-              <span className="text-white">{h.text}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="pt-4">
-          <MitgliedButton />
+      <section className="bg-sva-green-dark py-20 sm:py-24">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className={`${h2Cls} max-w-3xl`}>Niemand muss viel geben, wenn viele mitmachen</h2>
+          <p className="mt-8 max-w-3xl text-lg leading-relaxed text-green-50/90">
+            {mitgliedsbeitrag} € im Jahr sind {proMonat} € im Monat. Allein ist das wenig. Entscheidend ist nicht die
+            Höhe des Beitrags, sondern die Zahl der Mitglieder.
+          </p>
+          <ul className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
+            {hebel.map((h) => (
+              <li key={h.mitglieder} className="border-t border-white/20 pt-6">
+                <p className="text-7xl font-black leading-none tracking-tight tabular-nums text-sva-gold-light sm:text-8xl">
+                  {h.mitglieder}
+                </p>
+                <p className="mt-3 text-sm font-bold uppercase tracking-wide text-green-50/90">
+                  {h.mitglieder === 1 ? "Mitglied" : "Mitglieder"} = {(h.mitglieder * mitgliedsbeitrag).toLocaleString("de-DE")} €
+                </p>
+                <p className="mt-2 text-lg font-semibold text-white">{h.text}</p>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-12">
+            <MitgliedButton />
+          </div>
         </div>
-      </Abschnitt>
+      </section>
 
       {/* 6. Beweis */}
-      <Abschnitt eyebrow="Darum lohnt es sich" titel="Ein Verein, auf den Amendingen stolz sein kann" className="bg-sva-charcoal-dark">
-        <ul className="grid gap-4 sm:grid-cols-3">
+      <Abschnitt titel="Ein Verein, auf den Amendingen stolz sein kann" className="bg-sva-charcoal-dark">
+        <dl className="grid gap-8 sm:grid-cols-2">
           {[
-            { zahl: "1946", text: "Fußballtradition seit über 75 Jahren" },
-            { zahl: stand.gesamt.toString(), text: "Mitglieder im Förderverein" },
+            { zahl: String(gruendungsjahr), text: `Seit ${new Date().getFullYear() - gruendungsjahr} Jahren Fußball in Amendingen` },
             { zahl: "FC Bayern", text: "Einziger Kooperationsverein der Region" },
           ].map((f) => (
-            <li key={f.text} className="rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-5 text-center">
-              <p className="text-2xl font-black text-sva-gold">{f.zahl}</p>
-              <p className="mt-1 text-sm text-sva-gray-300">{f.text}</p>
-            </li>
+            <div key={f.text} className="flex flex-col-reverse">
+              <dt className="mt-1 text-base text-sva-gray-300">{f.text}</dt>
+              <dd className="text-4xl font-black tracking-tight text-sva-gold sm:text-5xl">{f.zahl}</dd>
+            </div>
           ))}
-        </ul>
+        </dl>
         <p>
           Mit zahlreichen Jugend- und Erwachsenenmannschaften ist der SV Amendingen fester Bestandteil des Lebens im
           Ort. Als erster und einziger Verein der Region hat der SVA eine Kooperation mit dem FC Bayern München.
@@ -226,7 +235,7 @@ export default async function HomePage() {
       </Abschnitt>
 
       {/* 7. Was du bekommst */}
-      <Abschnitt eyebrow="Mitglied sein" titel="Mehr als eine Spende" className="bg-sva-charcoal">
+      <Abschnitt titel="Mehr als eine Spende" className="bg-sva-charcoal">
         <ul className="space-y-4">
           {[
             { titel: "Du gehörst dazu.", text: "Du bist Teil der Gemeinschaft, die den SVA im Hintergrund trägt." },
@@ -248,14 +257,12 @@ export default async function HomePage() {
       {/* 8. So geht's */}
       <section className="bg-sva-charcoal-dark py-20 sm:py-24">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-sva-gold">So einfach geht&apos;s</p>
-          <h2 className="text-3xl font-black uppercase leading-tight text-white sm:text-4xl">In drei Schritten dabei</h2>
-          <div className="mt-3 h-1 w-16 bg-sva-gold" />
+          <h2 className={h2Cls}>In drei Schritten dabei</h2>
           <ol className="mt-10 grid gap-6 sm:grid-cols-3">
             {schritte.map((s, i) => (
               <li key={s.titel} className="rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sva-green text-lg font-black text-white">{i + 1}</span>
-                <h3 className="mt-4 text-lg font-bold uppercase text-white">{s.titel}</h3>
+                <h3 className="mt-4 text-lg font-bold text-white">{s.titel}</h3>
                 <p className="mt-2 leading-relaxed text-sva-gray-300">{s.text}</p>
               </li>
             ))}
@@ -267,13 +274,15 @@ export default async function HomePage() {
       </section>
 
       {/* 9. FAQ */}
-      <Abschnitt eyebrow="Fragen" titel="Häufige Fragen" className="bg-sva-charcoal">
+      <Abschnitt titel="Häufige Fragen" className="bg-sva-charcoal">
         <div className="space-y-3">
           {fragen.map((f) => (
             <details key={f.frage} className="group rounded-lg border border-sva-gray-700 bg-sva-charcoal-light px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-white">
                 {f.frage}
-                <span className="text-sva-gold transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                <svg className="h-5 w-5 shrink-0 text-sva-gold transition-transform duration-200 group-open:rotate-45" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" d="M12 5v14M5 12h14" />
+                </svg>
               </summary>
               <p className="mt-3 text-base text-sva-gray-300">{f.antwort}</p>
             </details>
@@ -284,7 +293,7 @@ export default async function HomePage() {
       {/* 10. Abschluss */}
       <section className="bg-sva-green py-20 sm:py-24">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-black uppercase leading-tight text-white sm:text-4xl">
+          <h2 className={h2Cls}>
             Der SVA lebt von Menschen, die mehr tun als zuschauen.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-xl text-green-100">Werde einer davon.</p>
@@ -296,11 +305,22 @@ export default async function HomePage() {
 
       {/* 11. P.S. + Nebenausgang */}
       <section className="bg-sva-charcoal-dark py-14">
-        <div className="mx-auto max-w-3xl space-y-4 px-4 text-sva-gray-300 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl space-y-5 px-4 text-sva-gray-300 sm:px-6 lg:px-8">
           <p>
             <strong className="text-white">P.S.</strong> Jedes neue Mitglied zählt. Kennst du jemanden, dem der SVA am
             Herzen liegt? Schick ihr oder ihm diese Seite.
           </p>
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(teilenText)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-md bg-sva-charcoal-light px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-sva-gray-700"
+          >
+            <svg className="h-5 w-5 text-sva-gold" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+            </svg>
+            Per WhatsApp teilen
+          </a>
           <div className="flex flex-col items-start gap-4 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 sm:flex-row sm:items-center sm:justify-between">
             <p>
               <strong className="block text-lg text-white">Lieber kein Mitglied werden?</strong>
@@ -315,6 +335,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <MitgliedLeiste beitrag={mitgliedsbeitrag} />
     </>
   );
 }

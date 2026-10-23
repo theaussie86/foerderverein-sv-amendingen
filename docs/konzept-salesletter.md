@@ -80,7 +80,7 @@ Jeder Abschnitt: **Zweck** - **Inhalt** - **Entwurfstext**. Platzhalter in `[eck
   > Der Förderverein SV Amendingen e.V. ist ein eigenständiger, eingetragener Verein mit genau einer Aufgabe: den SV Amendingen zu unterstützen. Finanziell und ideell.
   >
   > Wir sammeln Mitgliedsbeiträge und Spenden und geben sie dort aus, wo der SVA sie braucht. Jeder Euro bleibt in Amendingen.
-- Vertrauenssignale: e.V., [gemeinnützig - prüfen], Vorstand mit Namen und Gesicht, Satzung verlinkt.
+- Vertrauenssignale: e.V., gemeinnützig (bestätigt 23.10.2026), Vorstand mit Namen und Gesicht, Satzung verlinkt.
 
 ### 4. Wofür dein Beitrag verwendet wird
 
@@ -164,7 +164,7 @@ Jeder Abschnitt: **Zweck** - **Inhalt** - **Entwurfstext**. Platzhalter in `[eck
 - [ ] Hebel-Beispiele prüfen (25 Mitglieder = Trainingsmaterial für ein Team, 100 = Zuschuss Jugendfahrt)
 - [ ] Mitgliederzahl 83 bestätigen
 - [ ] Anzahl Mannschaften / Jugendspieler
-- [ ] Gemeinnützigkeit / Absetzbarkeit
+- [x] Gemeinnützigkeit / Absetzbarkeit (bestätigt 23.10.2026)
 - [ ] Kündigungsfrist laut Satzung
 - [ ] Echte Vorstandsnamen + Fotos (aktuell Platzhalter auf `/vorstand`)
 - [ ] 2-3 Zitate (Trainer, Eltern, Spieler) mit Foto-Freigabe

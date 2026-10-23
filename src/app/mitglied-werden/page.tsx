@@ -40,12 +40,12 @@ export default function MitgliedWerdenPage() {
         <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Fast geschafft!</h1>
         <div className="mt-2 h-1 w-16 bg-sva-gold" />
         <div className="mt-10 rounded-lg border-2 border-sva-green bg-sva-green/10 p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-white">Bitte prüfen Sie Ihr E-Mail-Postfach</h2>
+          <h2 className="text-xl font-semibold text-white">Bitte schau in dein E-Mail-Postfach</h2>
           <p className="mt-2 text-sva-gray-300">
-            Wir haben Ihnen einen Link an <strong className="text-white">{getValues("email")}</strong> geschickt. Darüber
-            unterschreiben Sie Ihre Beitrittserklärung mit Finger oder Maus. Erst danach ist der Antrag gültig.
+            Wir haben dir einen Link an <strong className="text-white">{getValues("email")}</strong> geschickt. Darüber
+            unterschreibst du deine Beitrittserklärung mit Finger oder Maus. Erst danach ist der Antrag gültig.
           </p>
-          <p className="mt-4 text-sm text-sva-gray-400">Keine E-Mail erhalten? Bitte schauen Sie auch im Spam-Ordner nach.</p>
+          <p className="mt-4 text-sm text-sva-gray-400">Keine E-Mail erhalten? Schau bitte auch im Spam-Ordner nach.</p>
         </div>
       </div>
     );
@@ -56,7 +56,7 @@ export default function MitgliedWerdenPage() {
       <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Mitglied werden</h1>
       <div className="mt-2 h-1 w-16 bg-sva-gold" />
       <p className="mt-4 text-lg text-sva-gray-300">
-        Werden Sie Teil des Fördervereins SV Amendingen und unterstützen Sie den Verein mit Ihrem Jahresbeitrag.
+        Werde Teil des Fördervereins SV Amendingen und unterstütze den Verein mit deinem Jahresbeitrag.
       </p>
 
       <div className="mt-8 flex items-center justify-between rounded-lg border-2 border-sva-green bg-sva-green/10 p-4 sm:p-6">
@@ -142,7 +142,7 @@ export default function MitgliedWerdenPage() {
                 {errors.iban && <p className="mt-1 text-xs text-red-400">{errors.iban.message}</p>}
               </div>
               <div className="rounded-md border border-sva-gray-600 bg-sva-charcoal p-4 text-xs leading-relaxed text-sva-gray-300">
-                <p>Zahlungsempfänger: {verein.name}, Gläubiger-ID {verein.glaeubigerId}. Die Mandatsreferenz erhalten Sie mit der Bestätigung.</p>
+                <p>Zahlungsempfänger: {verein.name}, Gläubiger-ID {verein.glaeubigerId}. Die Mandatsreferenz bekommst du mit der Bestätigung.</p>
                 <p className="mt-2">{mandatstext()}</p>
               </div>
               <label className="flex cursor-pointer items-start gap-3">
@@ -170,7 +170,7 @@ export default function MitgliedWerdenPage() {
               <button type="submit" disabled={isSubmitting} className="flex-1 rounded-md bg-sva-gold px-6 py-3 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-50">{isSubmitting ? "Wird gesendet …" : "Weiter zur Unterschrift"}</button>
             </div>
             {fehler && <p className="mt-4 text-sm text-red-400">{fehler}</p>}
-            <p className="mt-4 text-xs text-sva-gray-400">Im nächsten Schritt erhalten Sie eine E-Mail mit einem Link, über den Sie Ihren Antrag unterschreiben.</p>
+            <p className="mt-4 text-xs text-sva-gray-400">Im nächsten Schritt bekommst du eine E-Mail mit einem Link, über den du deinen Antrag unterschreibst.</p>
           </>
         )}
       </form>

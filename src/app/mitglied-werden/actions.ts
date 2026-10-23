@@ -12,7 +12,7 @@ export type Ergebnis = { ok: true } | { ok: false; fehler: string };
 
 export async function antragEinreichen(eingabe: unknown): Promise<Ergebnis> {
   const parsed = mitgliedSchema.safeParse(eingabe);
-  if (!parsed.success) return { ok: false, fehler: "Bitte prüfen Sie Ihre Angaben." };
+  if (!parsed.success) return { ok: false, fehler: "Bitte prüf deine Angaben." };
 
   const { mandat: _m, datenschutz: _d, website, ...daten } = parsed.data;
   // Bots bekommen eine scheinbare Erfolgsmeldung, damit sie nicht weiterprobieren.
@@ -20,7 +20,7 @@ export async function antragEinreichen(eingabe: unknown): Promise<Ergebnis> {
 
   const { ip } = await clientInfo();
   if (!rateLimit(ip, 5, 60 * 60 * 1000)) {
-    return { ok: false, fehler: "Zu viele Anträge in kurzer Zeit. Bitte versuchen Sie es später erneut." };
+    return { ok: false, fehler: "Zu viele Anträge in kurzer Zeit. Bitte versuch es später erneut." };
   }
 
   const id = randomUUID();
@@ -34,18 +34,18 @@ export async function antragEinreichen(eingabe: unknown): Promise<Ergebnis> {
     const link = `${siteUrl()}/unterschreiben/${seal(antrag, LINK_GUELTIG_TAGE * 24 * 60 * 60)}`;
     await sendMail({
       to: daten.email,
-      subject: "Bitte bestätigen: Ihre Beitrittserklärung zum Förderverein SV Amendingen",
+      subject: "Bitte bestätigen: deine Beitrittserklärung zum Förderverein SV Amendingen",
       text:
-        `Hallo ${daten.vorname} ${daten.nachname},\n\n` +
-        `vielen Dank für Ihr Interesse am ${verein.name}!\n\n` +
-        `Bitte öffnen Sie den folgenden Link, prüfen Sie Ihre Angaben und unterschreiben Sie Ihre Beitrittserklärung ` +
+        `Hallo ${daten.vorname},\n\n` +
+        `vielen Dank für dein Interesse am ${verein.name}!\n\n` +
+        `Bitte öffne den folgenden Link, prüf deine Angaben und unterschreib deine Beitrittserklärung ` +
         `mit dem SEPA-Lastschriftmandat:\n\n${link}\n\n` +
-        `Der Link ist ${LINK_GUELTIG_TAGE} Tage gültig. Falls Sie keinen Antrag gestellt haben, ignorieren Sie diese E-Mail einfach.\n\n` +
+        `Der Link ist ${LINK_GUELTIG_TAGE} Tage gültig. Falls du keinen Antrag gestellt hast, ignorier diese E-Mail einfach.\n\n` +
         `Sportliche Grüße\n${verein.name}`,
     });
   } catch (e) {
     console.error("Bestätigungsmail fehlgeschlagen", e);
-    return { ok: false, fehler: "Die E-Mail konnte nicht versendet werden. Bitte versuchen Sie es später erneut." };
+    return { ok: false, fehler: "Die E-Mail konnte nicht versendet werden. Bitte versuch es später erneut." };
   }
   return { ok: true };
 }
