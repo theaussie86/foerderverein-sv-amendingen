@@ -4,6 +4,7 @@ import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { antraegeSuchen, datumZeit, istStatus, STATUS, STATUS_LABEL, type Status } from "@/lib/antraege";
 import { cn } from "@/lib/utils";
 import { abmelden } from "./actions";
+import { AdminNav } from "./admin-nav";
 import { StatusBadge } from "./status-badge";
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <AdminNav pb={pb} aktiv="antraege" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Mitgliedsanträge</h1>

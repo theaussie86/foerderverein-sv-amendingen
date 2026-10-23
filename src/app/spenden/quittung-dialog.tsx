@@ -4,13 +4,14 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { quittungSchema, type QuittungFormData } from "@/lib/schemas";
+import { spendenGrenzeVereinfacht } from "@/lib/verein";
 import { quittungAnfordern } from "./actions";
 
 const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 
 export function QuittungDialog({ betrag }: { betrag?: number }) {
   const dialog = useRef<HTMLDialogElement>(null);
-  const [gesendet, setGesendet] = useState(false);
+  const [gesendet, setGesendet] = useState<"vereinfacht" | "zuwendungsbestaetigung" | null>(null);
   const [fehler, setFehler] = useState<string | null>(null);
 
   const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<QuittungFormData>({
@@ -27,14 +28,14 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
     dialog.current?.close();
     if (gesendet) {
       reset();
-      setGesendet(false);
+      setGesendet(null);
     }
   }
 
   async function onSubmit(data: QuittungFormData) {
     setFehler(null);
     const ergebnis = await quittungAnfordern(data);
-    if (ergebnis.ok) setGesendet(true);
+    if (ergebnis.ok) setGesendet(ergebnis.art);
     else setFehler(ergebnis.fehler);
   }
 
@@ -62,8 +63,9 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
           {gesendet ? (
             <>
               <p className="mt-4 text-sva-gray-300">
-                Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir die
-                Zuwendungsbestätigung zu.
+                {gesendet === "vereinfacht"
+                  ? "Vielen Dank! Der Spendenbeleg ist unterwegs in dein Postfach. Heb ihn zusammen mit deinem Kontoauszug für die Steuererklärung auf."
+                  : "Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir die Zuwendungsbestätigung zu."}
               </p>
               <button type="button" onClick={schliessen} className="mt-6 w-full rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">
                 Schließen
@@ -72,7 +74,8 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
               <p className="text-sm text-sva-gray-300">
-                Die Quittung stellen wir aus, sobald deine Überweisung auf unserem Konto eingegangen ist.
+                Bis {spendenGrenzeVereinfacht} € schicken wir dir den Spendenbeleg sofort per E-Mail. Für höhere Beträge
+                stellen wir die Zuwendungsbestätigung aus, sobald deine Überweisung auf unserem Konto eingegangen ist.
               </p>
               <div>
                 <label htmlFor="q-name" className="block text-sm font-medium text-sva-gray-300">Vor- und Nachname *</label>
