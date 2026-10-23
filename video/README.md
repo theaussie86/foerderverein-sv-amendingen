@@ -1,3 +1,21 @@
+# Kurzfassung v2 (14 Szenen, ElevenLabs-Sprecher)
+
+```bash
+npm install
+npm run v2:all       # out/untertitel-kurzfassung.de.vtt, out/foerderverein-kurzfassung-v2.mp4, out/poster-kurzfassung.jpg
+npm run studio       # Vorschau, Komposition „KurzfassungV2“ (Prop subtitles=true zeigt Untertitel nur in der Vorschau)
+```
+
+Läuft der Next-Dev-Server auf Port 3000: `npm run v2:render -- --port=3123`.
+
+- `src/v2/timeline.json`: zentrale Zeitachse. Szenengrenzen (Frames, 30 fps), Beats für Einblendungen (Sekunden), Untertitel. Nach Änderungen `npm run v2:all`.
+- `src/v2/scenes.tsx`: die 14 Szenen. `src/v2/ui.tsx`: Bausteine (Shot, Tag, Wappen).
+- `public/v2/sprecher.mp3`: Sprecherspur, unverändert. `public/v2/scenes/*.webp`: Storyboard-Panels, bereinigt und 3x hochskaliert.
+- `assets-source/storyboard/`: Storyboard-PDF und Seiten-PNGs. Panels neu erzeugen (Pillow + numpy):
+  `python scripts/prep-v2.py assets-source/storyboard public/v2/scenes`
+
+---
+
 # Video Sales Letter (Remotion)
 
 Vektor-Animationsvideo für die Startseite, gebaut nach `docs/handoff-video.md`.

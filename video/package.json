@@ -7,7 +7,11 @@
     "render:mp4": "remotion render src/index.ts SalesVideo out/foerderverein.mp4 --codec=h264 --crf=26",
     "render:webm": "remotion render src/index.ts SalesVideo out/foerderverein.webm --codec=vp9 --crf=34",
     "poster": "remotion still src/index.ts Poster out/poster.jpg --image-format=jpeg --jpeg-quality=85",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "v2:vtt": "node scripts/vtt-v2.mjs out/untertitel-kurzfassung.de.vtt",
+    "v2:render": "remotion render src/index.ts KurzfassungV2 out/foerderverein-kurzfassung-v2.mp4 --codec=h264 --crf=18 --audio-codec=aac --audio-bitrate=192k --pixel-format=yuv420p",
+    "v2:poster": "remotion still src/index.ts PosterV2 out/poster-kurzfassung.jpg --image-format=jpeg --jpeg-quality=88",
+    "v2:all": "npm run v2:vtt && npm run v2:render && npm run v2:poster"
   },
   "type": "commonjs",
   "dependencies": {
