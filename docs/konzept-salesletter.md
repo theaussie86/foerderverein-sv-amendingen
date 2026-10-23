@@ -30,6 +30,8 @@ Ein einziges Ziel: **neue Mitglieder gewinnen.** Jeder Abschnitt zahlt darauf ei
 
 ## Teil 1: Video Sales Letter (Vektor-Animation, ca. 90 Sekunden)
 
+> Veraltet: aktuelles Skript und Produktionsvorgaben in `docs/handoff-video.md`.
+
 Stil: flache Vektorgrafik in Vereinsfarben (Grün, Gold, Anthrazit), Wappen als wiederkehrendes Element. Sprecher aus dem Verein (echte Stimme schlägt Profi-Sprecher). Untertitel eingebrannt, weil viele ohne Ton schauen.
 
 | # | Zeit | Bild (Animation) | Sprechertext | Zweck |
