@@ -15,7 +15,7 @@ export default function ImpressumPage() {
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Vertreten durch</h2>
-          <p>1. Vorstand: [Name]<br />2. Vorstand: [Name]</p>
+          <p>1. Vorstand: Manuel Rothermel<br />2. Vorstand: Christian Geiger</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Kontakt</h2>
