@@ -49,7 +49,12 @@ export default function DatenschutzPage() {
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">8. Cookies und Analyse</h2>
-          <p>Diese Website verwendet ausschließlich technisch notwendige Cookies. Analyse-Tools werden nur mit Ihrer Einwilligung eingesetzt.</p>
+          <p>Diese Website setzt keine Analyse-, Tracking- oder Marketing-Dienste ein. Schriftarten und Videos werden von unserem eigenen Server ausgeliefert, es werden dabei keine Daten an Dritte übertragen.</p>
+          <p className="mt-2">Gespeichert wird nur, was technisch notwendig ist (§ 25 Abs. 2 Nr. 2 TDDDG):</p>
+          <ul className="mt-2 list-inside list-disc space-y-1">
+            <li><span className="font-mono text-xs">vorstand_token</span> (Cookie): hält die Anmeldung im Vorstandsbereich. Wird nur nach dem Login gesetzt und mit dem Logout oder dem Ablauf der Sitzung gelöscht.</li>
+            <li><span className="font-mono text-xs">sva_cookie_hinweis</span> (localStorage): merkt sich, dass Sie den Cookie-Hinweis gelesen haben. Bleibt gespeichert, bis Sie Ihre Browserdaten löschen.</li>
+          </ul>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">9. Beschwerderecht</h2>
