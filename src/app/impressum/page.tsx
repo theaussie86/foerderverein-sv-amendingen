@@ -10,24 +10,24 @@ export default function ImpressumPage() {
 
       <div className="mt-8 space-y-8 text-sm leading-relaxed text-sva-gray-200">
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">Angaben gemäß § 5 TMG</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">Angaben gemäß § 5 DDG</h2>
           <p>Förderverein SV Amendingen e.V.<br />Musterstraße 1<br />87700 Memmingen / Amendingen</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Vertreten durch</h2>
-          <p>1. Vorstand: [Name]<br />2. Vorstand: [Name]</p>
+          <p>1. Vorstand: Manuel Rothermel<br />2. Vorstand: Christian Geiger</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Kontakt</h2>
-          <p>E-Mail: foerderverein@sv-amendingen.de<br />Telefon: [Telefonnummer]</p>
+          <p>E-Mail: foerderverein@sv-amendingen.de</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Registereintrag</h2>
           <p>Eingetragen im Vereinsregister.<br />Registergericht: Amtsgericht Memmingen<br />Registernummer: VR [Nummer]</p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
-          <p>[Name des Verantwortlichen]<br />Musterstraße 1<br />87700 Memmingen / Amendingen</p>
+          <h2 className="mb-3 text-lg font-semibold text-white">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+          <p>Christoph Weissteiner<br />[Anschrift]</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Haftungsausschluss</h2>

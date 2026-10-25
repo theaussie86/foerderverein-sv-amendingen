@@ -6,10 +6,13 @@ export const metadata: Metadata = {
 };
 
 const members = [
-  { name: "Max Mustermann", role: "1. Vorstand", description: "Leitet den Förderverein und koordiniert alle Aktivitäten." },
-  { name: "Erika Musterfrau", role: "2. Vorstand", description: "Stellvertretende Vorsitzende und Ansprechpartnerin für Sponsoren." },
-  { name: "Thomas Beispiel", role: "Kassier", description: "Verantwortlich für die Finanzen und Buchhaltung des Vereins." },
-  { name: "Anna Schmidt", role: "Schriftführerin", description: "Zuständig für Protokolle, Korrespondenz und Vereinskommunikation." },
+  { name: "Manuel Rothermel", role: "1. Vorstand" },
+  { name: "Christian Geiger", role: "2. Vorstand" },
+  { name: "Patrick Natterer", role: "Kassierer" },
+  { name: "Kevin Schmid", role: "Schriftführer" },
+  { name: "Stefan Aichmann", role: "Beisitzer" },
+  { name: "Jenny Aichmann", role: "Beisitzerin" },
+  { name: "Christoph Weissteiner", role: "Beisitzer" },
 ];
 
 export default function VorstandPage() {
@@ -31,15 +34,8 @@ export default function VorstandPage() {
             </div>
             <h3 className="text-lg font-semibold text-white">{member.name}</h3>
             <p className="mt-1 text-sm font-medium text-sva-gold">{member.role}</p>
-            <p className="mt-3 text-sm text-sva-gray-300">{member.description}</p>
           </div>
         ))}
-      </div>
-
-      <div className="mt-12 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-8">
-        <p className="text-sm text-sva-gray-400">
-          <strong className="text-sva-gray-200">Hinweis:</strong> Die hier gezeigten Namen sind Platzhalter. Die tatsächlichen Vorstandsmitglieder werden in Kürze ergänzt.
-        </p>
       </div>
     </div>
   );
