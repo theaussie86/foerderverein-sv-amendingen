@@ -30,7 +30,7 @@ export default function DatenschutzPage() {
           <p>Wenn Sie online Mitglied werden, verarbeiten wir die Angaben aus dem Formular (Name, Anschrift, E-Mail-Adresse, Geburtsdatum, Kontoinhaber, IBAN) zur Durchführung der Mitgliedschaft und zum Einzug des Beitrags per SEPA-Lastschrift (Art. 6 Abs. 1 lit. b DSGVO).</p>
           <p className="mt-2">Zur Bestätigung erhalten Sie einen persönlichen Link per E-Mail. Ihre Angaben sind in diesem Link verschlüsselt enthalten und werden bis zur Unterschrift nicht auf unserem Server gespeichert. Beim Absenden, beim Öffnen des Links und bei der Unterschrift protokollieren wir Zeitpunkt, IP-Adresse und Browserkennung. Dieses Protokoll dient als Nachweis für die Erteilung des Lastschriftmandats (Art. 6 Abs. 1 lit. c und f DSGVO).</p>
           <p className="mt-2">Die unterschriebene Beitrittserklärung wird als PDF an den Vorstand und an Sie gesendet und für die Dauer der Mitgliedschaft aufbewahrt, als Mandatsnachweis mindestens 14 Monate nach der letzten Lastschrift.</p>
-          <p className="mt-2">Für den Versand der E-Mails nutzen wir den Dienst Resend (Resend, Inc., USA) als Auftragsverarbeiter. Die Übermittlung erfolgt auf Grundlage der EU-Standardvertragsklauseln.</p>
+          <p className="mt-2">Für den Versand der E-Mails nutzen wir den Dienst Resend (Resend, Inc., USA) als Auftragsverarbeiter. Die E-Mails werden über Server in der EU (Irland) verarbeitet. Da Resend seinen Sitz in den USA hat, ist ein Zugriff aus den USA nicht auszuschließen. Die Übermittlung erfolgt auf Grundlage der EU-Standardvertragsklauseln.</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">5. Weitergabe von Daten</h2>
