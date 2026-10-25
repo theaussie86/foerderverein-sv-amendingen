@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookieEinstellungenButton } from "@/components/cookie-hinweis";
 
 export function Footer() {
   return (
@@ -75,6 +76,9 @@ export function Footer() {
                 <Link href="/datenschutz" className="text-sva-gray-300 hover:text-white transition-colors">
                   Datenschutz
                 </Link>
+              </li>
+              <li>
+                <CookieEinstellungenButton className="text-sva-gray-300 hover:text-white transition-colors" />
               </li>
             </ul>
           </div>
