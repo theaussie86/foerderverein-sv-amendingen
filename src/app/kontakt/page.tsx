@@ -1,18 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { kontaktSchema, type KontaktFormData } from "@/lib/schemas";
 import { verein } from "@/lib/verein";
+import { nachrichtSenden } from "./actions";
 
 const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 
 export default function KontaktPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm<KontaktFormData>({ resolver: zodResolver(kontaktSchema) });
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<KontaktFormData>({
+    resolver: zodResolver(kontaktSchema),
+    defaultValues: { name: "", email: "", betreff: "", nachricht: "", website: "" },
+  });
+  const [gesendet, setGesendet] = useState(false);
+  const [fehler, setFehler] = useState<string | null>(null);
 
-  function onSubmit(data: KontaktFormData) {
-    console.log("Kontaktformular:", data);
-    alert("Vielen Dank! Die Formularübermittlung wird in Kürze aktiviert.");
+  async function onSubmit(data: KontaktFormData) {
+    setFehler(null);
+    const ergebnis = await nachrichtSenden(data);
+    if (ergebnis.ok) {
+      setGesendet(true);
+      reset();
+    } else setFehler(ergebnis.fehler);
   }
 
   return (
@@ -24,6 +35,13 @@ export default function KontaktPage() {
       <div className="mt-12 grid gap-12 lg:grid-cols-2">
         <div>
           <h2 className="text-xl font-semibold text-white">Schreiben Sie uns</h2>
+          {gesendet ? (
+            <div className="mt-6 rounded-lg border border-sva-green bg-sva-charcoal p-6" role="status">
+              <p className="font-semibold text-white">Vielen Dank für Ihre Nachricht!</p>
+              <p className="mt-2 text-sm text-sva-gray-300">Wir melden uns so bald wie möglich bei Ihnen.</p>
+              <button type="button" onClick={() => setGesendet(false)} className="mt-4 text-sm text-sva-gold hover:text-sva-gold-light">Weitere Nachricht schreiben</button>
+            </div>
+          ) : (
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -46,9 +64,15 @@ export default function KontaktPage() {
               <textarea id="contact-nachricht" rows={5} {...register("nachricht")} className={inputCls} />
               {errors.nachricht && <p className="mt-1 text-xs text-red-400">{errors.nachricht.message}</p>}
             </div>
-            <button type="submit" className="rounded-md bg-sva-green px-8 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">Nachricht senden</button>
-            <p className="text-xs text-sva-gray-400">Formularversand wird in Kürze aktiviert.</p>
+            <div className="absolute -left-[9999px]" aria-hidden="true">
+              <label htmlFor="contact-website">Website</label>
+              <input id="contact-website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
+            </div>
+            {fehler && <p className="text-sm text-red-400" role="alert">{fehler}</p>}
+            <button type="submit" disabled={isSubmitting} className="rounded-md bg-sva-green px-8 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light disabled:opacity-60">{isSubmitting ? "Wird gesendet …" : "Nachricht senden"}</button>
+            <p className="text-xs text-sva-gray-400">Hinweise zur Verarbeitung Ihrer Daten finden Sie in der <a href="/datenschutz" className="text-sva-gold hover:text-sva-gold-light">Datenschutzerklärung</a>.</p>
           </form>
+          )}
         </div>
 
         <div className="space-y-8">

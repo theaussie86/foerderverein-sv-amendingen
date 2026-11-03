@@ -25,6 +25,7 @@ export default function DatenschutzPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">3. Zweck der Datenverarbeitung</h2>
           <p>Ihre Daten werden ausschließlich zur Abwicklung Ihrer Mitgliedschaft, Spende oder Anfrage verwendet (Art. 6 Abs. 1 lit. b DSGVO).</p>
+          <p className="mt-2">Nachrichten über das Kontaktformular leiten wir per E-Mail an das Postfach des Vereins weiter (Versand über Resend, siehe Abschnitt 4). Wir speichern sie nicht auf der Website und nutzen sie nur zur Beantwortung Ihrer Anfrage.</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">4. Online-Mitgliedsantrag und elektronische Unterschrift</h2>

@@ -8,8 +8,9 @@ export const quittungSchema = z.object({
   email: z.string().email("Bitte eine gültige E-Mail-Adresse eingeben."),
   betrag: z.number({ error: "Bitte den überwiesenen Betrag eingeben." }).min(1, "Bitte den überwiesenen Betrag eingeben."),
   datum: z.string().min(1, "Bitte das Datum der Überweisung angeben."),
-  // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer.
-  website: z.string().max(0).optional(),
+  // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer. Ohne max(0), damit die
+  // Action befüllte Felder erkennt und Bots eine scheinbare Erfolgsmeldung bekommen.
+  website: z.string().optional(),
 });
 
 export type QuittungFormData = z.infer<typeof quittungSchema>;
@@ -60,8 +61,11 @@ export type MitgliedFormData = z.infer<typeof mitgliedSchema>;
 export const kontaktSchema = z.object({
   name: z.string().min(1, "Name ist erforderlich."),
   email: z.string().email("Bitte eine gültige E-Mail-Adresse eingeben."),
-  betreff: z.string().optional(),
-  nachricht: z.string().min(10, "Bitte mindestens 10 Zeichen eingeben."),
+  betreff: z.string().max(200).optional(),
+  nachricht: z.string().min(10, "Bitte mindestens 10 Zeichen eingeben.").max(5000, "Bitte höchstens 5000 Zeichen eingeben."),
+  // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer. Ohne max(0), damit die
+  // Action befüllte Felder erkennt und Bots eine scheinbare Erfolgsmeldung bekommen.
+  website: z.string().optional(),
 });
 
 export type KontaktFormData = z.infer<typeof kontaktSchema>;
