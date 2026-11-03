@@ -6,13 +6,14 @@ import type { Vorstand } from "@/lib/vorstand-session";
 // Lesezugriff des Vorstands auf die Anfragen nach Spendenbelegen, mit dem Token
 // des angemeldeten Vorstandsmitglieds.
 
-export const BELEG_STATUS = ["offen", "ausgestellt", "versendet"] as const;
+export const BELEG_STATUS = ["offen", "ausgestellt", "versendet", "abgelehnt"] as const;
 export type BelegStatus = (typeof BELEG_STATUS)[number];
 
 export const BELEG_STATUS_LABEL: Record<BelegStatus, string> = {
   offen: "Offen",
   ausgestellt: "Ausgestellt",
-  versendet: "Automatisch versendet",
+  versendet: "Beleg versendet",
+  abgelehnt: "Nicht eingegangen",
 };
 
 export const BELEG_ART_LABEL = {

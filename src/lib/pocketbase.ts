@@ -1,5 +1,4 @@
 import "server-only";
-import { randomBytes } from "node:crypto";
 import PocketBase, { ClientResponseError } from "pocketbase";
 import type { Antrag, Protokoll } from "@/lib/antrag";
 
@@ -100,7 +99,6 @@ export async function antraegeSeit(datum: Date): Promise<number | null> {
 
 export type NeuerSpendenbeleg = {
   art: "vereinfacht" | "zuwendungsbestaetigung";
-  status: "versendet" | "offen";
   name: string;
   strasse: string;
   plz: string;
@@ -108,27 +106,17 @@ export type NeuerSpendenbeleg = {
   email: string;
   betrag: number;
   ueberwiesenAm: string;
-  // Vorab vergebene ID, wenn sie schon im PDF steht (siehe neueRecordId).
-  id?: string;
-  pdf?: PdfAnhang;
 };
-
-// Eine ID im Format von PocketBase (15 Zeichen a-z0-9), damit die Beleg-Nr. im PDF
-// schon vor dem Speichern feststeht und mit dem Eintrag übereinstimmt.
-export function neueRecordId(): string {
-  const zeichen = "abcdefghijklmnopqrstuvwxyz0123456789";
-  return Array.from(randomBytes(15), (b) => zeichen[b % zeichen.length]).join("");
-}
 
 // Gibt die ID des neuen Eintrags zurück, null ohne PocketBase.
 export async function spendenbelegSpeichern(b: NeuerSpendenbeleg): Promise<string | null> {
   const pb = await pocketbase();
   if (!pb) return null;
-  const { ueberwiesenAm, pdf, id, ...rest } = b;
+  const { ueberwiesenAm, ...rest } = b;
+  // Jede Anfrage startet offen. Erst wenn der Vorstand den Geldeingang geprüft hat, geht ein Beleg raus.
   const record = await pb.collection("spendenbelege").create({
     ...rest,
-    ...(id ? { id } : {}),
-    ...(pdf ? { beleg_pdf: pdfDatei(pdf) } : {}),
+    status: "offen",
     ueberwiesen_am: `${ueberwiesenAm} 00:00:00.000Z`,
   });
   return record.id;
@@ -136,12 +124,19 @@ export async function spendenbelegSpeichern(b: NeuerSpendenbeleg): Promise<strin
 
 // Der Vorstand darf Spendenbelege nur lesen. Das Abhaken läuft deshalb als Superuser,
 // nachdem die Website die Vorstands-Session geprüft hat, und hält fest, wer es war.
-export async function spendenbelegAusgestellt(id: string, vorstandId: string): Promise<void> {
+// "versendet" legt den verschickten Beleg mit ab.
+export async function spendenbelegAbschliessen(
+  id: string,
+  vorstandId: string,
+  status: "ausgestellt" | "versendet" | "abgelehnt",
+  pdf?: PdfAnhang,
+): Promise<void> {
   const pb = await pocketbase();
   if (!pb) throw new Error("PocketBase ist nicht konfiguriert.");
   await pb.collection("spendenbelege").update(id, {
-    status: "ausgestellt",
+    status,
     ausgestellt_von: vorstandId,
     ausgestellt_am: new Date().toISOString().replace("T", " "),
+    ...(pdf ? { beleg_pdf: pdfDatei(pdf) } : {}),
   });
 }

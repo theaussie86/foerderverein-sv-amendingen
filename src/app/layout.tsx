@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { verein } from "@/lib/verein";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -17,11 +18,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Förderverein SV Amendingen e.V.",
+    default: verein.name,
     template: "%s | Förderverein SV Amendingen",
   },
   description:
-    "Der Förderverein SV Amendingen e.V. unterstützt den SV Amendingen finanziell und ideell. Werde Mitglied oder unterstütze uns mit einer Spende.",
+    `Der ${verein.name} unterstützt die Fußballabteilung des SV Amendingen finanziell und ideell. Werde Mitglied oder unterstütze uns mit einer Spende.`,
   keywords: [
     "Förderverein",
     "SV Amendingen",
@@ -31,9 +32,9 @@ export const metadata: Metadata = {
     "Verein",
   ],
   openGraph: {
-    title: "Förderverein SV Amendingen e.V.",
+    title: verein.name,
     description:
-      "Gemeinsam für den Sport in Amendingen. Unterstütze den SV Amendingen als Mitglied oder mit einer Spende.",
+      "Gemeinsam für den Fußball in Amendingen. Unterstütze die Fußballabteilung des SV Amendingen als Mitglied oder mit einer Spende.",
     type: "website",
     locale: "de_DE",
   },
@@ -65,15 +66,17 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "Förderverein SV Amendingen e.V.",
+              name: verein.name,
               description:
-                "Der Förderverein SV Amendingen unterstützt den SV Amendingen finanziell und ideell.",
+                "Der Förderverein unterstützt die Fußballabteilung des SV Amendingen finanziell und ideell.",
               url: "https://foerderverein-sv-amendingen.de",
+              email: verein.email,
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Memmingen",
+                streetAddress: verein.strasse,
+                addressLocality: verein.ort,
                 addressRegion: "Bayern",
-                postalCode: "87700",
+                postalCode: verein.plz,
                 addressCountry: "DE",
               },
               sameAs: ["https://www.sv-amendingen-fussball.de/"],

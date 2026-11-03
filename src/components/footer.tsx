@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { verein } from "@/lib/verein";
 import { CookieEinstellungenButton } from "@/components/cookie-hinweis";
 
 export function Footer() {
@@ -12,9 +13,9 @@ export function Footer() {
               Förderverein
             </h3>
             <p className="text-sm leading-relaxed text-sva-gray-300">
-              Förderverein SV Amendingen e.V. Gemeinsam für den Sport in
-              Amendingen. Wir unterstützen den SV Amendingen finanziell und
-              ideell.
+              {verein.name}. Gemeinsam für den Fußball in Amendingen. Wir
+              unterstützen die Fußballabteilung des SV Amendingen finanziell
+              und ideell.
             </p>
           </div>
 
@@ -86,7 +87,7 @@ export function Footer() {
 
         <div className="mt-10 border-t border-sva-gray-800 pt-6 text-center text-xs text-sva-gray-300">
           <p>
-            &copy; {new Date().getFullYear()} Förderverein SV Amendingen e.V. Alle
+            &copy; {new Date().getFullYear()} {verein.name} Alle
             Rechte vorbehalten.
           </p>
           <p className="mt-2">

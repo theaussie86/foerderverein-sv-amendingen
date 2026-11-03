@@ -64,7 +64,7 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
             <>
               <p className="mt-4 text-sva-gray-300">
                 {gesendet === "vereinfacht"
-                  ? "Vielen Dank! Der Spendenbeleg ist unterwegs in dein Postfach. Heb ihn zusammen mit deinem Kontoauszug für die Steuererklärung auf."
+                  ? "Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir den Spendenbeleg per E-Mail. Heb ihn zusammen mit deinem Kontoauszug für die Steuererklärung auf."
                   : "Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir die Zuwendungsbestätigung zu."}
               </p>
               <button type="button" onClick={schliessen} className="mt-6 w-full rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">
@@ -74,8 +74,8 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
               <p className="text-sm text-sva-gray-300">
-                Bis {spendenGrenzeVereinfacht} € schicken wir dir den Spendenbeleg sofort per E-Mail. Für höhere Beträge
-                stellen wir die Zuwendungsbestätigung aus, sobald deine Überweisung auf unserem Konto eingegangen ist.
+                Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir bis {spendenGrenzeVereinfacht} € den
+                Spendenbeleg per E-Mail. Für höhere Beträge stellen wir eine Zuwendungsbestätigung aus.
               </p>
               <p className="rounded-md border border-sva-gray-700 bg-sva-charcoal px-4 py-3 font-mono text-xs leading-relaxed text-sva-gray-200">
                 {verein.bank.kontoinhaber}<br />
