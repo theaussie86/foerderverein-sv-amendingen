@@ -2,7 +2,7 @@
 
 import { sendMail } from "@/lib/mail";
 import { erzeugeSpendenbelegPdf } from "@/lib/pdf";
-import { spendenbelegSpeichern } from "@/lib/pocketbase";
+import { neueRecordId, spendenbelegSpeichern, type PdfAnhang } from "@/lib/pocketbase";
 import { clientInfo, rateLimit, siteUrl } from "@/lib/request";
 import { quittungSchema, type QuittungFormData } from "@/lib/schemas";
 import { spendenGrenzeVereinfacht, verein } from "@/lib/verein";
@@ -32,14 +32,25 @@ function euro(betrag: number): string {
   return betrag.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
 }
 
-function speichern(d: Spende, art: "vereinfacht" | "zuwendungsbestaetigung", status: "versendet" | "offen") {
-  return spendenbelegSpeichern({ art, status, ...d, ueberwiesenAm: d.datum });
+function speichern(
+  d: Spende,
+  art: "vereinfacht" | "zuwendungsbestaetigung",
+  status: "versendet" | "offen",
+  beleg?: { id: string; pdf: PdfAnhang },
+) {
+  return spendenbelegSpeichern({ art, status, ...d, ueberwiesenAm: d.datum, ...beleg });
 }
 
-// Bis 300 € geht der Beleg sofort per Mail an den Spender und wird nur zur Übersicht gespeichert.
+// Bis 300 € geht der Beleg sofort per Mail an den Spender und wird samt PDF zur Übersicht gespeichert.
+// Die ID des Eintrags steht als Beleg-Nr. im PDF und im Dateinamen, so passen Mail, PDF und Eintrag zusammen.
 async function belegVersenden(d: Spende): Promise<Ergebnis> {
+  const id = neueRecordId();
+  let pdf: PdfAnhang;
   try {
-    const pdf = await erzeugeSpendenbelegPdf({ ...d });
+    pdf = {
+      filename: `Spendenbeleg_${d.datum.replace(/[^0-9-]/g, "")}_${id}.pdf`,
+      content: Buffer.from(await erzeugeSpendenbelegPdf({ ...d, belegNr: id })),
+    };
     await sendMail({
       to: d.email,
       subject: `Dein Spendenbeleg über ${euro(d.betrag)}`,
@@ -49,7 +60,7 @@ async function belegVersenden(d: Spende): Promise<Ergebnis> {
         `Im Anhang findest du den Spendenbeleg. Bis 300 € genügt dem Finanzamt dieser Beleg zusammen mit deinem ` +
         `Kontoauszug, auf dem die Überweisung an uns zu sehen ist. Heb bitte beides für deine Steuererklärung auf.\n\n` +
         `Viele Grüße\n${verein.name}`,
-      attachments: [{ filename: "spendenbeleg.pdf", content: Buffer.from(pdf) }],
+      attachments: [pdf],
     });
   } catch (e) {
     console.error("Spendenbeleg konnte nicht versendet werden", e);
@@ -57,7 +68,7 @@ async function belegVersenden(d: Spende): Promise<Ergebnis> {
   }
 
   try {
-    await speichern(d, "vereinfacht", "versendet");
+    await speichern(d, "vereinfacht", "versendet", { id, pdf });
   } catch (e) {
     console.error("Spendenbeleg versendet, aber nicht gespeichert", e);
   }

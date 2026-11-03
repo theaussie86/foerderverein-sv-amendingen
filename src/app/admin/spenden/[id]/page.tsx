@@ -21,6 +21,7 @@ export default async function SpendenbelegPage({ params }: { params: Promise<{ i
 
   const ausgestelltVon = beleg.expand?.ausgestellt_von;
   const felder: [string, ReactNode][] = [
+    ["Beleg-Nr.", <span key="nr" className="font-mono">{beleg.id}</span>],
     ["Betrag", euro(beleg.betrag)],
     ["Überwiesen am", datum(beleg.ueberwiesen_am)],
     ["Art", BELEG_ART_LABEL[beleg.art]],
@@ -65,10 +66,27 @@ export default async function SpendenbelegPage({ params }: { params: Promise<{ i
       )}
 
       {beleg.status === "versendet" && (
-        <p className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 text-sva-gray-300">
-          Der vereinfachte Spendenbeleg wurde direkt nach der Anfrage automatisch an {beleg.email} geschickt.
-          Hier ist nichts zu tun.
-        </p>
+        <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
+          <p className="text-sva-gray-300">
+            Der vereinfachte Spendenbeleg wurde direkt nach der Anfrage automatisch an {beleg.email} geschickt.
+            Hier ist nichts zu tun.
+          </p>
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-sva-gray-700 pt-4">
+            <span className="text-white">Spendenbeleg (PDF)</span>
+            {beleg.beleg_pdf ? (
+              <span className="flex gap-4 text-sm font-medium">
+                <a href={`/admin/spenden/${beleg.id}/beleg`} target="_blank" rel="noopener" className="text-sva-gold hover:text-sva-gold-light">
+                  Ansehen
+                </a>
+                <a href={`/admin/spenden/${beleg.id}/beleg?download=1`} className="text-sva-gold hover:text-sva-gold-light">
+                  Herunterladen
+                </a>
+              </span>
+            ) : (
+              <span className="text-sm text-sva-gray-400">nicht gespeichert</span>
+            )}
+          </div>
+        </section>
       )}
 
       <section className="mt-6 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
