@@ -99,8 +99,8 @@ export default function SpendenPage() {
         <h2 className="text-lg font-semibold text-white">Spendenquittung</h2>
         <p className="mt-2 text-sm leading-relaxed text-sva-gray-300">
           Der {verein.name} ist als gemeinnützig anerkannt, deine Spende ist steuerlich absetzbar. Bis {spendenGrenzeVereinfacht} € genügt
-          dem Finanzamt dein Kontoauszug zusammen mit unserem Spendenbeleg, den wir dir sofort per E-Mail schicken. Für
-          höhere Beträge stellen wir dir eine Zuwendungsbestätigung aus, sobald deine Überweisung bei uns eingegangen ist.
+          dem Finanzamt dein Kontoauszug zusammen mit unserem Spendenbeleg, den wir dir per E-Mail schicken, sobald deine
+          Überweisung bei uns eingegangen ist. Für höhere Beträge stellen wir dir eine Zuwendungsbestätigung aus.
         </p>
         <QuittungDialog betrag={activeAmount > 0 ? activeAmount : undefined} />
       </div>

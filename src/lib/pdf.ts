@@ -164,7 +164,8 @@ export async function erzeugeMandatPdf(k: Kontext): Promise<Uint8Array> {
 export type Spende = { belegNr: string; name: string; strasse: string; plz: string; ort: string; betrag: number; datum: string };
 
 // Beleg für den vereinfachten Zuwendungsnachweis bis 300 € (§ 50 Abs. 4 Satz 1 Nr. 2 Buchst. b EStDV).
-// Er bestätigt keinen Geldeingang, den belegt der Kontoauszug des Spenders. Deshalb darf er ungeprüft raus.
+// Er bestätigt keinen Geldeingang, den belegt der Kontoauszug des Spenders. Trotzdem geht er erst raus,
+// wenn der Vorstand die Überweisung auf dem Vereinskonto gesehen hat (/admin/spenden).
 export async function erzeugeSpendenbelegPdf(spende: Spende): Promise<Uint8Array> {
   const st = verein.steuer;
   const { doc, s } = await neuesDokument("Spendenbeleg");

@@ -4,7 +4,8 @@ import { BELEG_STATUS_LABEL, type BelegStatus } from "@/lib/spendenbelege";
 const FARBE: Record<BelegStatus, string> = {
   offen: "border-sva-gold/40 bg-sva-gold/10 text-sva-gold-light",
   ausgestellt: "border-sva-green-light/50 bg-sva-green/20 text-green-300",
-  versendet: "border-sva-gray-600 bg-sva-gray-800 text-sva-gray-300",
+  versendet: "border-sva-green-light/50 bg-sva-green/20 text-green-300",
+  abgelehnt: "border-sva-gray-600 bg-sva-gray-800 text-sva-gray-300",
 };
 
 export function BelegStatusBadge({ status, className }: { status: BelegStatus; className?: string }) {

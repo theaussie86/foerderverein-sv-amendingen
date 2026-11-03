@@ -46,8 +46,9 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
           <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Spendenbelege</h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 max-w-2xl text-sva-gray-300">
-            Bis 300 € verschickt die Website den Spendenbeleg automatisch. Darüber bitte den Geldeingang prüfen,
-            die Zuwendungsbestätigung ausstellen und die Anfrage hier als ausgestellt markieren.
+            Bei jeder Anfrage zuerst den Geldeingang auf dem Vereinskonto prüfen. Bis 300 € schickt die Website
+            den Spendenbeleg nach deiner Bestätigung. Darüber die Zuwendungsbestätigung ausstellen und hier als
+            ausgestellt markieren.
           </p>
           <p className="mt-2 text-sm text-sva-gray-400">Angemeldet als {vorstand.name || vorstand.email}.</p>
         </div>
