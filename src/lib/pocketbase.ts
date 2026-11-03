@@ -1,4 +1,5 @@
 import "server-only";
+import { randomBytes } from "node:crypto";
 import PocketBase, { ClientResponseError } from "pocketbase";
 import type { Antrag, Protokoll } from "@/lib/antrag";
 
@@ -107,14 +108,29 @@ export type NeuerSpendenbeleg = {
   email: string;
   betrag: number;
   ueberwiesenAm: string;
+  // Vorab vergebene ID, wenn sie schon im PDF steht (siehe neueRecordId).
+  id?: string;
+  pdf?: PdfAnhang;
 };
+
+// Eine ID im Format von PocketBase (15 Zeichen a-z0-9), damit die Beleg-Nr. im PDF
+// schon vor dem Speichern feststeht und mit dem Eintrag übereinstimmt.
+export function neueRecordId(): string {
+  const zeichen = "abcdefghijklmnopqrstuvwxyz0123456789";
+  return Array.from(randomBytes(15), (b) => zeichen[b % zeichen.length]).join("");
+}
 
 // Gibt die ID des neuen Eintrags zurück, null ohne PocketBase.
 export async function spendenbelegSpeichern(b: NeuerSpendenbeleg): Promise<string | null> {
   const pb = await pocketbase();
   if (!pb) return null;
-  const { ueberwiesenAm, ...rest } = b;
-  const record = await pb.collection("spendenbelege").create({ ...rest, ueberwiesen_am: `${ueberwiesenAm} 00:00:00.000Z` });
+  const { ueberwiesenAm, pdf, id, ...rest } = b;
+  const record = await pb.collection("spendenbelege").create({
+    ...rest,
+    ...(id ? { id } : {}),
+    ...(pdf ? { beleg_pdf: pdfDatei(pdf) } : {}),
+    ueberwiesen_am: `${ueberwiesenAm} 00:00:00.000Z`,
+  });
   return record.id;
 }
 

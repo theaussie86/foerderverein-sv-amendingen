@@ -33,6 +33,7 @@ export type Spendenbeleg = RecordModel & {
   ausgestellt_von: string;
   ausgestellt_am: string;
   notiz: string;
+  beleg_pdf: string;
   created: string;
   expand?: { ausgestellt_von?: Vorstand };
 };
