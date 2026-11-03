@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { verein } from "@/lib/verein";
 
-export const metadata: Metadata = { title: "Impressum", description: "Impressum des Förderverein SV Amendingen e.V." };
+export const metadata: Metadata = { title: "Impressum", description: `Impressum des ${verein.name}` };
 
 export default function ImpressumPage() {
   return (
@@ -11,7 +12,7 @@ export default function ImpressumPage() {
       <div className="mt-8 space-y-8 text-sm leading-relaxed text-sva-gray-200">
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Angaben gemäß § 5 DDG</h2>
-          <p>Förderverein SV Amendingen e.V.<br />Musterstraße 1<br />87700 Memmingen / Amendingen</p>
+          <p>{verein.name}<br />{verein.strasse}<br />{verein.plzOrt}</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Vertreten durch</h2>
@@ -19,7 +20,7 @@ export default function ImpressumPage() {
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Kontakt</h2>
-          <p>E-Mail: foerderverein@sv-amendingen.de</p>
+          <p>E-Mail: <a href={`mailto:${verein.email}`} className="text-sva-gold hover:text-sva-gold-light">{verein.email}</a></p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Registereintrag</h2>
@@ -27,7 +28,7 @@ export default function ImpressumPage() {
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-          <p>Christoph Weissteiner<br />[Anschrift]</p>
+          <p>Christoph Weissteiner<br />Grünenfurterstraße 36<br />87700 Memmingen</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">Haftungsausschluss</h2>

@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { kontaktSchema, type KontaktFormData } from "@/lib/schemas";
+import { verein } from "@/lib/verein";
 
 const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 
@@ -56,11 +57,11 @@ export default function KontaktPage() {
             <dl className="mt-4 space-y-4 text-sm text-sva-gray-200">
               <div>
                 <dt className="font-semibold text-white">Adresse</dt>
-                <dd className="mt-1">Förderverein SV Amendingen e.V.<br />Musterstraße 1<br />87700 Memmingen / Amendingen</dd>
+                <dd className="mt-1">{verein.name}<br />{verein.strasse}<br />{verein.plzOrt}</dd>
               </div>
               <div>
                 <dt className="font-semibold text-white">E-Mail</dt>
-                <dd className="mt-1"><a href="mailto:foerderverein@sv-amendingen.de" className="text-sva-gold hover:text-sva-gold-light">foerderverein@sv-amendingen.de</a></dd>
+                <dd className="mt-1"><a href={`mailto:${verein.email}`} className="text-sva-gold hover:text-sva-gold-light">{verein.email}</a></dd>
               </div>
             </dl>
           </div>

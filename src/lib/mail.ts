@@ -29,6 +29,7 @@ export async function sendMail(mail: Mail): Promise<void> {
   const { error } = await resend.emails.send({
     from: `"${verein.name}" <${process.env.MAIL_FROM}>`,
     to: mail.to.split(",").map((a) => a.trim()).filter(Boolean),
+    replyTo: mail.replyTo ?? verein.email,
     subject: mail.subject,
     text: mail.text,
     attachments: mail.attachments,

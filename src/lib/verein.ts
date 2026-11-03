@@ -1,10 +1,13 @@
 // Stammdaten des Vereins für Beitrittserklärung und SEPA-Mandat.
-// TODO: Platzhalter durch echte Daten ersetzen (Gläubiger-ID, Anschrift).
+// TODO: Platzhalter durch echte Daten ersetzen (Gläubiger-ID, Steuerdaten).
 
 export const verein = {
-  name: "Förderverein SV Amendingen e.V.",
-  strasse: "Musterstraße 1",
-  plzOrt: "87700 Memmingen-Amendingen",
+  name: "Förderverein SV Amendingen / Fußball e.V.",
+  strasse: "Grünenfurterstraße 36",
+  plz: "87700",
+  ort: "Memmingen",
+  plzOrt: "87700 Memmingen",
+  email: "foerderverein.sva@gmx.de",
   glaeubigerId: "DE00ZZZ00000000000",
   // Termin des jährlichen Beitragseinzugs, dient zugleich als Vorabankündigung (Pre-Notification).
   einzugstermin: "15. März",

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { verein } from "@/lib/verein";
 
 export const metadata: Metadata = {
   title: "Über uns",
   description:
-    "Erfahren Sie mehr über den Förderverein SV Amendingen e.V., unsere Geschichte und unsere Mission.",
+    `Erfahren Sie mehr über den ${verein.name}, unsere Geschichte und unsere Mission.`,
 };
 
 export default function UeberUnsPage() {
@@ -15,7 +16,7 @@ export default function UeberUnsPage() {
       <div className="mt-2 h-1 w-16 bg-sva-gold" />
       <div className="mt-8 space-y-6 leading-relaxed text-sva-gray-200">
         <p>
-          Der <strong className="text-white">Förderverein SV Amendingen e.V.</strong> wurde gegründet,
+          Der <strong className="text-white">{verein.name}</strong> wurde gegründet,
           um den SV Amendingen in seiner sportlichen und gesellschaftlichen
           Arbeit zu unterstützen. Als eigenständiger Verein sammeln wir
           finanzielle Mittel durch Mitgliedsbeiträge, Spenden und
@@ -33,8 +34,8 @@ export default function UeberUnsPage() {
           Unsere Ziele
         </h2>
         <ul className="list-inside list-disc space-y-2 text-sva-gray-200">
-          <li>Finanzielle Unterstützung des SV Amendingen in allen Abteilungen</li>
-          <li>Förderung der Jugendarbeit und des Breitensports</li>
+          <li>Finanzielle Unterstützung der Fußballabteilung des SV Amendingen</li>
+          <li>Förderung der Jugendarbeit im Fußball</li>
           <li>Unterstützung bei der Instandhaltung und Verbesserung der Sportanlagen</li>
           <li>Organisation und Mitfinanzierung besonderer Vereinsprojekte</li>
           <li>Stärkung des Gemeinschaftsgefühls in Amendingen</li>

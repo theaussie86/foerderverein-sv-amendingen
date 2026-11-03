@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { verein } from "@/lib/verein";
 
 export const metadata: Metadata = {
   title: "Vorstand",
-  description: "Der Vorstand des Förderverein SV Amendingen e.V.",
+  description: `Der Vorstand des ${verein.name}`,
 };
 
 const members = [

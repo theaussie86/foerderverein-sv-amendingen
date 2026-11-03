@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { verein } from "@/lib/verein";
 
-export const metadata: Metadata = { title: "Datenschutz", description: "Datenschutzerklärung des Förderverein SV Amendingen e.V." };
+export const metadata: Metadata = { title: "Datenschutz", description: `Datenschutzerklärung des ${verein.name}` };
 
 export default function DatenschutzPage() {
   return (
@@ -11,7 +12,7 @@ export default function DatenschutzPage() {
       <div className="mt-8 space-y-8 text-sm leading-relaxed text-sva-gray-200">
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">1. Verantwortlicher</h2>
-          <p>Förderverein SV Amendingen e.V.<br />Musterstraße 1<br />87700 Memmingen / Amendingen<br />E-Mail: foerderverein@sv-amendingen.de</p>
+          <p>{verein.name}<br />{verein.strasse}<br />{verein.plzOrt}<br />E-Mail: {verein.email}</p>
         </section>
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">2. Erhebung und Verarbeitung personenbezogener Daten</h2>
