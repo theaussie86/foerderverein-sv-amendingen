@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { sendMail } from "@/lib/mail";
 import { erzeugeSpendenbelegPdf } from "@/lib/pdf";
-import { spendenbelegAbschliessen, type PdfAnhang } from "@/lib/pocketbase";
-import { belegLaden, euro } from "@/lib/spendenbelege";
+import { beleganfrageAbschliessen, type PdfAnhang } from "@/lib/pocketbase";
+import { anfrageLaden, euro } from "@/lib/beleganfragen";
 import { verein } from "@/lib/verein";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 
@@ -13,7 +13,7 @@ import { vorstandErforderlich } from "@/lib/vorstand-session";
 // noch offene Anfragen abgeschlossen werden. Doppelklicks laufen so ins Leere.
 async function offeneAnfrage(id: string) {
   const { pb, vorstand } = await vorstandErforderlich();
-  const beleg = await belegLaden(pb, id);
+  const beleg = await anfrageLaden(pb, id);
   return { vorstand, beleg: beleg?.status === "offen" ? beleg : null };
 }
 
@@ -26,7 +26,7 @@ function aktualisieren(id: string) {
 export async function alsAusgestelltMarkieren(id: string): Promise<void> {
   const { vorstand, beleg } = await offeneAnfrage(id);
   if (!beleg || beleg.art !== "zuwendungsbestaetigung") return;
-  await spendenbelegAbschliessen(id, vorstand.id, "ausgestellt");
+  await beleganfrageAbschliessen(id, vorstand.id, "ausgestellt");
   aktualisieren(id);
 }
 
@@ -69,14 +69,14 @@ export async function belegFreigeben(id: string): Promise<void> {
     redirect(`/admin/spenden/${id}?fehler=mail`);
   }
 
-  await spendenbelegAbschliessen(id, vorstand.id, "versendet", pdf);
+  await beleganfrageAbschliessen(id, vorstand.id, "versendet", pdf);
   aktualisieren(id);
 }
 
-// Keine passende Überweisung auf dem Konto: Anfrage schließen, es geht nichts raus.
-export async function nichtEingegangen(id: string): Promise<void> {
+// Keine passende Überweisung auf dem Konto: Beleganfrage ablehnen, es geht nichts raus.
+export async function anfrageAblehnen(id: string): Promise<void> {
   const { vorstand, beleg } = await offeneAnfrage(id);
   if (!beleg) return;
-  await spendenbelegAbschliessen(id, vorstand.id, "abgelehnt");
+  await beleganfrageAbschliessen(id, vorstand.id, "abgelehnt");
   aktualisieren(id);
 }

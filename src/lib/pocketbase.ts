@@ -97,7 +97,7 @@ export async function antraegeSeit(datum: Date): Promise<number | null> {
   }
 }
 
-export type NeuerSpendenbeleg = {
+export type NeueBeleganfrage = {
   art: "vereinfacht" | "zuwendungsbestaetigung";
   name: string;
   strasse: string;
@@ -109,7 +109,7 @@ export type NeuerSpendenbeleg = {
 };
 
 // Gibt die ID des neuen Eintrags zurück, null ohne PocketBase.
-export async function spendenbelegSpeichern(b: NeuerSpendenbeleg): Promise<string | null> {
+export async function beleganfrageSpeichern(b: NeueBeleganfrage): Promise<string | null> {
   const pb = await pocketbase();
   if (!pb) return null;
   const { ueberwiesenAm, ...rest } = b;
@@ -125,7 +125,7 @@ export async function spendenbelegSpeichern(b: NeuerSpendenbeleg): Promise<strin
 // Der Vorstand darf Spendenbelege nur lesen. Das Abhaken läuft deshalb als Superuser,
 // nachdem die Website die Vorstands-Session geprüft hat, und hält fest, wer es war.
 // "versendet" legt den verschickten Beleg mit ab.
-export async function spendenbelegAbschliessen(
+export async function beleganfrageAbschliessen(
   id: string,
   vorstandId: string,
   status: "ausgestellt" | "versendet" | "abgelehnt",

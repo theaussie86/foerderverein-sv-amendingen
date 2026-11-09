@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { BankQrCode } from "@/components/bank-qr-code";
 import { spendenGrenzeVereinfacht, verein } from "@/lib/verein";
-import { QuittungDialog } from "./quittung-dialog";
+import { BeleganfrageDialog } from "./beleganfrage-dialog";
 
 const amounts = [10, 25, 50, 100];
 
@@ -96,13 +96,13 @@ export default function SpendenPage() {
       </div>
 
       <div className="mt-6 rounded-lg border border-sva-gray-700 p-6 sm:p-8">
-        <h2 className="text-lg font-semibold text-white">Spendenquittung</h2>
+        <h2 className="text-lg font-semibold text-white">Spendenbeleg</h2>
         <p className="mt-2 text-sm leading-relaxed text-sva-gray-300">
           Der {verein.name} ist als gemeinnützig anerkannt, deine Spende ist steuerlich absetzbar. Bis {spendenGrenzeVereinfacht} € genügt
           dem Finanzamt dein Kontoauszug zusammen mit unserem Spendenbeleg, den wir dir per E-Mail schicken, sobald deine
           Überweisung bei uns eingegangen ist. Für höhere Beträge stellen wir dir eine Zuwendungsbestätigung aus.
         </p>
-        <QuittungDialog betrag={activeAmount > 0 ? activeAmount : undefined} />
+        <BeleganfrageDialog betrag={activeAmount > 0 ? activeAmount : undefined} />
       </div>
 
       <div className="mt-10 text-center">
