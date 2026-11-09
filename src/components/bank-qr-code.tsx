@@ -70,6 +70,7 @@ export function BankQrCode({ amount }: { amount?: number }) {
 
   return (
     <div className="flex flex-col items-center gap-3">
+      {/* eslint-disable-next-line @next/next/no-img-element -- Data-URL, next/image bringt hier nichts */}
       <img
         src={svgDataUrl}
         alt="QR-Code für Banküberweisung"

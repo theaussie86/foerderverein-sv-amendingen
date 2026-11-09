@@ -23,6 +23,7 @@ export function Header() {
       <div className="bg-sva-charcoal-dark border-b border-sva-gray-800">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:justify-center lg:px-8 lg:py-4">
           <Link href="/" className="flex items-center gap-3 sm:gap-4">
+            {/* eslint-disable-next-line @next/next/no-img-element -- kleines Logo mit fester Größe */}
             <img src="/sva-wappen.png" alt="Wappen SV Amendingen" width={48} height={48} className="h-10 w-10 sm:h-12 sm:w-12" />
             <div className="lg:text-center">
               <p className="text-base font-black uppercase tracking-wider text-white sm:text-2xl">
