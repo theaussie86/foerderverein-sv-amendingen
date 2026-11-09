@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { datum, datumZeit } from "@/lib/antraege";
-import { BELEG_STATUS, BELEG_STATUS_LABEL, belegeSuchen, euro, istBelegStatus, type BelegStatus } from "@/lib/spendenbelege";
+import { ANFRAGE_STATUS, ANFRAGE_STATUS_LABEL, anfragenSuchen, euro, istAnfrageStatus, type AnfrageStatus } from "@/lib/beleganfragen";
 import { cn } from "@/lib/utils";
 import { abmelden } from "../actions";
 import { AdminNav } from "../admin-nav";
-import { BelegStatusBadge } from "./status-badge";
+import { AnfrageStatusBadge } from "./status-badge";
 
 export const metadata: Metadata = {
   title: "Spendenbelege",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 type Suchparameter = { q?: string; status?: string; seite?: string };
 
-function listenLink({ q, status, seite }: { q: string; status?: BelegStatus; seite?: number }): string {
+function listenLink({ q, status, seite }: { q: string; status?: AnfrageStatus; seite?: number }): string {
   const p = new URLSearchParams();
   if (q) p.set("q", q);
   if (status) p.set("status", status);
@@ -28,12 +28,12 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
   const { pb, vorstand } = await vorstandErforderlich();
   const params = await searchParams;
   const q = (params.q ?? "").trim().slice(0, 100);
-  const status = istBelegStatus(params.status) ? params.status : undefined;
+  const status = istAnfrageStatus(params.status) ? params.status : undefined;
   const seite = Math.max(1, Number.parseInt(params.seite ?? "1", 10) || 1);
 
-  let liste: Awaited<ReturnType<typeof belegeSuchen>> | null = null;
+  let liste: Awaited<ReturnType<typeof anfragenSuchen>> | null = null;
   try {
-    liste = await belegeSuchen(pb, { suche: q, status, seite });
+    liste = await anfragenSuchen(pb, { suche: q, status, seite });
   } catch (e) {
     console.error("Spendenbelege konnten nicht geladen werden", e instanceof Error ? e.message : e);
   }
@@ -76,7 +76,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
       </form>
 
       <nav aria-label="Nach Status filtern" className="mt-4 flex flex-wrap gap-2">
-        {[undefined, ...BELEG_STATUS].map((s) => (
+        {[undefined, ...ANFRAGE_STATUS].map((s) => (
           <Link
             key={s ?? "alle"}
             href={listenLink({ q, status: s })}
@@ -88,7 +88,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                 : "border-sva-gray-600 text-sva-gray-300 hover:bg-sva-charcoal-light",
             )}
           >
-            {s ? BELEG_STATUS_LABEL[s] : "Alle"}
+            {s ? ANFRAGE_STATUS_LABEL[s] : "Alle"}
           </Link>
         ))}
       </nav>
@@ -131,7 +131,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                     <td className="hidden px-4 py-3 text-sva-gray-300 sm:table-cell">{datum(b.ueberwiesen_am)}</td>
                     <td className="hidden px-4 py-3 text-sva-gray-300 md:table-cell">{b.email}</td>
                     <td className="hidden px-4 py-3 whitespace-nowrap text-sva-gray-300 lg:table-cell">{datumZeit(b.created)}</td>
-                    <td className="px-4 py-3"><BelegStatusBadge status={b.status} /></td>
+                    <td className="px-4 py-3"><AnfrageStatusBadge status={b.status} /></td>
                   </tr>
                 ))}
               </tbody>

@@ -3,17 +3,17 @@ import type PocketBase from "pocketbase";
 import { ClientResponseError, type RecordModel } from "pocketbase";
 import type { Vorstand } from "@/lib/vorstand-session";
 
-// Lesezugriff des Vorstands auf die Anfragen nach Spendenbelegen, mit dem Token
+// Lesezugriff des Vorstands auf die Beleganfragen, mit dem Token
 // des angemeldeten Vorstandsmitglieds.
 
-export const BELEG_STATUS = ["offen", "ausgestellt", "versendet", "abgelehnt"] as const;
-export type BelegStatus = (typeof BELEG_STATUS)[number];
+export const ANFRAGE_STATUS = ["offen", "ausgestellt", "versendet", "abgelehnt"] as const;
+export type AnfrageStatus = (typeof ANFRAGE_STATUS)[number];
 
-export const BELEG_STATUS_LABEL: Record<BelegStatus, string> = {
+export const ANFRAGE_STATUS_LABEL: Record<AnfrageStatus, string> = {
   offen: "Offen",
   ausgestellt: "Ausgestellt",
   versendet: "Beleg versendet",
-  abgelehnt: "Nicht eingegangen",
+  abgelehnt: "Abgelehnt",
 };
 
 export const BELEG_ART_LABEL = {
@@ -21,9 +21,9 @@ export const BELEG_ART_LABEL = {
   zuwendungsbestaetigung: "Zuwendungsbestätigung",
 } as const;
 
-export type Spendenbeleg = RecordModel & {
+export type Beleganfrage = RecordModel & {
   art: keyof typeof BELEG_ART_LABEL;
-  status: BelegStatus;
+  status: AnfrageStatus;
   name: string;
   strasse: string;
   plz: string;
@@ -39,15 +39,15 @@ export type Spendenbeleg = RecordModel & {
   expand?: { ausgestellt_von?: Vorstand };
 };
 
-export function istBelegStatus(wert: string | undefined): wert is BelegStatus {
-  return BELEG_STATUS.includes(wert as BelegStatus);
+export function istAnfrageStatus(wert: string | undefined): wert is AnfrageStatus {
+  return ANFRAGE_STATUS.includes(wert as AnfrageStatus);
 }
 
 export const PRO_SEITE = 25;
 
-export async function belegeSuchen(
+export async function anfragenSuchen(
   pb: PocketBase,
-  { suche, status, seite }: { suche: string; status?: BelegStatus; seite: number },
+  { suche, status, seite }: { suche: string; status?: AnfrageStatus; seite: number },
 ) {
   const teile: string[] = [];
   const params: Record<string, string> = {};
@@ -64,14 +64,14 @@ export async function belegeSuchen(
     teile.push("status = {:status}");
   }
 
-  return pb.collection("spendenbelege").getList<Spendenbeleg>(seite, PRO_SEITE, {
+  return pb.collection("spendenbelege").getList<Beleganfrage>(seite, PRO_SEITE, {
     filter: teile.length ? pb.filter(teile.join(" && "), params) : "",
     sort: "-created",
     fields: "id,art,status,name,ort,email,betrag,ueberwiesen_am,created",
   });
 }
 
-export async function offeneBelege(pb: PocketBase): Promise<number | null> {
+export async function offeneAnfragen(pb: PocketBase): Promise<number | null> {
   try {
     const liste = await pb.collection("spendenbelege").getList(1, 1, { filter: 'status = "offen"', fields: "id" });
     return liste.totalItems;
@@ -80,9 +80,9 @@ export async function offeneBelege(pb: PocketBase): Promise<number | null> {
   }
 }
 
-export async function belegLaden(pb: PocketBase, id: string): Promise<Spendenbeleg | null> {
+export async function anfrageLaden(pb: PocketBase, id: string): Promise<Beleganfrage | null> {
   try {
-    return await pb.collection("spendenbelege").getOne<Spendenbeleg>(id, { expand: "ausgestellt_von" });
+    return await pb.collection("spendenbelege").getOne<Beleganfrage>(id, { expand: "ausgestellt_von" });
   } catch (e) {
     if (e instanceof ClientResponseError && e.status === 404) return null;
     throw e;

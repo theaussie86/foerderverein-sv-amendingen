@@ -1,11 +1,11 @@
 import Link from "next/link";
 import type PocketBase from "pocketbase";
-import { offeneBelege } from "@/lib/spendenbelege";
+import { offeneAnfragen } from "@/lib/beleganfragen";
 import { cn } from "@/lib/utils";
 
 // Umschalter zwischen den Übersichten im internen Bereich. Zeigt offene Zuwendungsbestätigungen als Zahl.
 export async function AdminNav({ pb, aktiv }: { pb: PocketBase; aktiv: "antraege" | "spenden" }) {
-  const offen = await offeneBelege(pb);
+  const offen = await offeneAnfragen(pb);
   const eintraege = [
     { key: "antraege", href: "/admin", label: "Mitgliedsanträge", zahl: null },
     { key: "spenden", href: "/admin/spenden", label: "Spendenbelege", zahl: offen },

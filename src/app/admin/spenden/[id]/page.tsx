@@ -4,9 +4,9 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { datum, datumZeit } from "@/lib/antraege";
-import { BELEG_ART_LABEL, belegLaden, euro } from "@/lib/spendenbelege";
-import { alsAusgestelltMarkieren, belegFreigeben, nichtEingegangen } from "../actions";
-import { BelegStatusBadge } from "../status-badge";
+import { BELEG_ART_LABEL, anfrageLaden, euro } from "@/lib/beleganfragen";
+import { alsAusgestelltMarkieren, belegFreigeben, anfrageAblehnen } from "../actions";
+import { AnfrageStatusBadge } from "../status-badge";
 
 export const metadata: Metadata = {
   title: "Spendenbeleg",
@@ -25,7 +25,7 @@ export default async function SpendenbelegPage({
   const { pb } = await vorstandErforderlich();
   const { id } = await params;
   const { fehler } = await searchParams;
-  const beleg = await belegLaden(pb, id);
+  const beleg = await anfrageLaden(pb, id);
   if (!beleg) notFound();
 
   const ausgestelltVon = beleg.expand?.ausgestellt_von;
@@ -55,7 +55,7 @@ export default async function SpendenbelegPage({
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 text-sva-gray-300">{euro(beleg.betrag)} vom {datum(beleg.ueberwiesen_am)}</p>
         </div>
-        <BelegStatusBadge status={beleg.status} className="px-4 py-1.5 text-sm" />
+        <AnfrageStatusBadge status={beleg.status} className="px-4 py-1.5 text-sm" />
       </div>
 
       {fehler === "mail" && beleg.status === "offen" && (
@@ -82,7 +82,7 @@ export default async function SpendenbelegPage({
                 <li>Doppel für die Vereinsunterlagen aufbewahren.</li>
               </>
             )}
-            <li>Ist keine Überweisung da, die Anfrage als nicht eingegangen schließen. Der Spender bekommt dann nichts.</li>
+            <li>Ist keine Überweisung da, die Anfrage ablehnen. Der Spender bekommt dann nichts.</li>
           </ol>
           <div className="mt-6 flex flex-wrap gap-3">
             {beleg.art === "vereinfacht" ? (
@@ -98,9 +98,9 @@ export default async function SpendenbelegPage({
                 </button>
               </form>
             )}
-            <form action={nichtEingegangen.bind(null, beleg.id)}>
+            <form action={anfrageAblehnen.bind(null, beleg.id)}>
               <button type="submit" className={`${knopf} border border-sva-gray-600 text-sva-gray-300 hover:bg-sva-charcoal`}>
-                Nicht eingegangen
+                Ablehnen
               </button>
             </form>
           </div>

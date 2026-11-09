@@ -3,19 +3,19 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { quittungSchema, type QuittungFormData } from "@/lib/schemas";
+import { beleganfrageSchema, type BeleganfrageFormData } from "@/lib/schemas";
 import { spendenGrenzeVereinfacht, verein } from "@/lib/verein";
-import { quittungAnfordern } from "./actions";
+import { belegAnfordern } from "./actions";
 
 const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 
-export function QuittungDialog({ betrag }: { betrag?: number }) {
+export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [gesendet, setGesendet] = useState<"vereinfacht" | "zuwendungsbestaetigung" | null>(null);
   const [fehler, setFehler] = useState<string | null>(null);
 
-  const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<QuittungFormData>({
-    resolver: zodResolver(quittungSchema),
+  const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<BeleganfrageFormData>({
+    resolver: zodResolver(beleganfrageSchema),
     defaultValues: { name: "", strasse: "", plz: "", ort: "", email: "", datum: "", website: "" },
   });
 
@@ -32,9 +32,9 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
     }
   }
 
-  async function onSubmit(data: QuittungFormData) {
+  async function onSubmit(data: BeleganfrageFormData) {
     setFehler(null);
-    const ergebnis = await quittungAnfordern(data);
+    const ergebnis = await belegAnfordern(data);
     if (ergebnis.ok) setGesendet(ergebnis.art);
     else setFehler(ergebnis.fehler);
   }
@@ -46,7 +46,7 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
         onClick={oeffnen}
         className="mt-6 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light"
       >
-        Jetzt Spendenquittung anfordern
+        Jetzt Spendenbeleg anfordern
       </button>
 
       <dialog
@@ -56,7 +56,7 @@ export function QuittungDialog({ betrag }: { betrag?: number }) {
       >
         <div className="p-6 sm:p-8">
           <div className="flex items-start justify-between gap-4">
-            <h2 className="text-xl font-semibold text-white">Spendenquittung anfordern</h2>
+            <h2 className="text-xl font-semibold text-white">Spendenbeleg anfordern</h2>
             <button type="button" onClick={schliessen} aria-label="Schließen" className="text-2xl leading-none text-sva-gray-400 hover:text-white">&times;</button>
           </div>
 

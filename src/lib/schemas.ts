@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const quittungSchema = z.object({
+export const beleganfrageSchema = z.object({
   name: z.string().min(1, "Name ist erforderlich."),
   strasse: z.string().min(1, "Straße ist erforderlich."),
   plz: z.string().regex(/^\d{5}$/, "Bitte eine gültige 5-stellige PLZ eingeben."),
@@ -13,7 +13,7 @@ export const quittungSchema = z.object({
   website: z.string().optional(),
 });
 
-export type QuittungFormData = z.infer<typeof quittungSchema>;
+export type BeleganfrageFormData = z.infer<typeof beleganfrageSchema>;
 
 export const mitgliedSchema = z.object({
   vorname: z.string().min(1, "Vorname ist erforderlich."),

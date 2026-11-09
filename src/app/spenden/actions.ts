@@ -1,19 +1,19 @@
 "use server";
 
 import { sendMail } from "@/lib/mail";
-import { spendenbelegSpeichern } from "@/lib/pocketbase";
+import { beleganfrageSpeichern } from "@/lib/pocketbase";
 import { clientInfo, rateLimit, siteUrl } from "@/lib/request";
-import { quittungSchema, type QuittungFormData } from "@/lib/schemas";
+import { beleganfrageSchema, type BeleganfrageFormData } from "@/lib/schemas";
 import { spendenGrenzeVereinfacht } from "@/lib/verein";
 
 type Art = "vereinfacht" | "zuwendungsbestaetigung";
 
 export type Ergebnis = { ok: true; art: Art } | { ok: false; fehler: string };
 
-type Spende = Omit<QuittungFormData, "website">;
+type Spende = Omit<BeleganfrageFormData, "website">;
 
-export async function quittungAnfordern(eingabe: unknown): Promise<Ergebnis> {
-  const parsed = quittungSchema.safeParse(eingabe);
+export async function belegAnfordern(eingabe: unknown): Promise<Ergebnis> {
+  const parsed = beleganfrageSchema.safeParse(eingabe);
   if (!parsed.success) return { ok: false, fehler: "Bitte prüf deine Angaben." };
 
   const { website, ...d } = parsed.data;
@@ -39,7 +39,7 @@ function euro(betrag: number): string {
 async function anfrageSpeichern(d: Spende, art: Art): Promise<Ergebnis> {
   let id: string | null = null;
   try {
-    id = await spendenbelegSpeichern({ art, ...d, ueberwiesenAm: d.datum });
+    id = await beleganfrageSpeichern({ art, ...d, ueberwiesenAm: d.datum });
   } catch (e) {
     console.error("Anfrage Spendenbeleg nicht gespeichert", e);
   }

@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { angemeldeterVorstand } from "@/lib/vorstand-session";
-import { belegLaden } from "@/lib/spendenbelege";
+import { anfrageLaden } from "@/lib/beleganfragen";
 
 // Der verschickte Spendenbeleg ist in PocketBase geschützt, und PocketBase ist nicht öffentlich
 // erreichbar. Die Website holt ihn mit dem Token des Vorstands und reicht ihn durch.
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/admin/spende
 
   const { id } = await ctx.params;
   const { pb } = session;
-  const beleg = await belegLaden(pb, id);
+  const beleg = await anfrageLaden(pb, id);
   if (!beleg?.beleg_pdf) return new Response("Nicht gefunden.", { status: 404 });
 
   const token = await pb.files.getToken();
