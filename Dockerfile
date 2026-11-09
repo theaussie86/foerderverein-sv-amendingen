@@ -11,14 +11,13 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN bun run build
 
-FROM oven/bun:1.4.4 AS runtime
+# Laufzeit nur mit dem Standalone-Output (output: "standalone"), ohne vollständige node_modules.
+FROM oven/bun:1.4.4-slim AS runtime
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
-COPY --from=build --chown=bun:bun /app/package.json ./
-COPY --from=build --chown=bun:bun /app/node_modules ./node_modules
-COPY --from=build --chown=bun:bun /app/.next ./.next
+COPY --from=build --chown=bun:bun /app/.next/standalone ./
+COPY --from=build --chown=bun:bun /app/.next/static ./.next/static
 COPY --from=build --chown=bun:bun /app/public ./public
-COPY --from=build --chown=bun:bun /app/next.config.ts ./
 USER bun
 EXPOSE 3000
-CMD ["bun", "run", "start"]
+CMD ["bun", "server.js"]
