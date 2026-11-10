@@ -87,8 +87,30 @@ Einer von wenigen festen Gründen für eine Ablehnung, zum Beispiel „Spende ni
 ## Mitgliedschaft
 
 **Mitglied**:
-Person, die dem Förderverein beigetreten ist. Mitglied ist sie ab ihrer Unterschrift unter den Mitgliedsantrag.
+Natürliche oder juristische Person mit einer Mitgliedschaft im Förderverein, egal ob ihr Mitgliedsantrag online oder auf Papier gestellt wurde.
+_Vermeiden_: Online-Mitglied, Altmitglied, Neumitglied (als Gattung)
+
+**Mitgliedschaft** (Beginn vorläufig, bis die Satzung vorliegt):
+Die Zugehörigkeit eines Mitglieds zum Förderverein. Sie beginnt mit der Aufnahme und endet mit dem Ende der Mitgliedschaft.
 
 **Mitgliedsantrag**:
-Der unterschriebene Beitritt einer Person zum Förderverein, samt SEPA-Lastschriftmandat für den Beitrag.
-_Vermeiden_: Beitrittserklärung, Antrag
+Der unterschriebene Wunsch einer Person, dem Förderverein beizutreten, samt SEPA-Lastschriftmandat für den Beitrag. Ohne Unterschrift gibt es keinen Mitgliedsantrag. Er endet mit Aufnahme oder Ablehnung.
+_Vermeiden_: Beitrittserklärung, Antrag (allein), Anmeldung
+
+**Aufnahme** (vorläufig, bis die Satzung vorliegt):
+Die Annahme eines Mitgliedsantrags durch den Vorstand. Mit ihr beginnt die Mitgliedschaft.
+_Vermeiden_: Annahme, Bestätigung
+
+**Ablehnung eines Mitgliedsantrags**:
+Abschluss eines Mitgliedsantrags ohne Aufnahme. Nicht zu verwechseln mit der Ablehnung einer Beleganfrage.
+
+**Ende der Mitgliedschaft**:
+Oberbegriff für Austritt, Ausschluss und Tod.
+
+**Austritt**:
+Ende der Mitgliedschaft, weil das Mitglied es erklärt.
+_Vermeiden_: Kündigung, Abmeldung
+
+**Ausschluss**:
+Ende der Mitgliedschaft, weil der Förderverein es beschließt.
+_Vermeiden_: Rauswurf, Streichung
