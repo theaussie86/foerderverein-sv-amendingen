@@ -4,11 +4,9 @@ import { sendMail } from "@/lib/mail";
 import { beleganfrageSpeichern } from "@/lib/pocketbase";
 import { clientInfo, rateLimit, siteUrl } from "@/lib/request";
 import { beleganfrageSchema, type BeleganfrageFormData } from "@/lib/schemas";
-import { spendenGrenzeVereinfacht } from "@/lib/verein";
+import { belegArt, type BelegArt } from "@/lib/verein";
 
-type Art = "vereinfacht" | "zuwendungsbestaetigung";
-
-export type Ergebnis = { ok: true; art: Art } | { ok: false; fehler: string };
+export type Ergebnis = { ok: true; art: BelegArt } | { ok: false; fehler: string };
 
 type Spende = Omit<BeleganfrageFormData, "website">;
 
@@ -17,7 +15,7 @@ export async function belegAnfordern(eingabe: unknown): Promise<Ergebnis> {
   if (!parsed.success) return { ok: false, fehler: "Bitte prüf deine Angaben." };
 
   const { website, ...d } = parsed.data;
-  const art = d.betrag <= spendenGrenzeVereinfacht ? "vereinfacht" : "zuwendungsbestaetigung";
+  const art = belegArt(d.betrag);
   // Bots bekommen eine scheinbare Erfolgsmeldung, damit sie nicht weiterprobieren.
   if (website) return { ok: true, art };
 
@@ -36,10 +34,10 @@ function euro(betrag: number): string {
 // Jede Anfrage wird nur gespeichert und dem Vorstand gemeldet. Den Beleg gibt es erst,
 // wenn der Vorstand den Geldeingang auf dem Vereinskonto geprüft hat (/admin/spenden).
 // Sonst könnte jeder einen Beleg für eine Spende anfordern, die nie überwiesen wurde.
-async function anfrageSpeichern(d: Spende, art: Art): Promise<Ergebnis> {
+async function anfrageSpeichern(d: Spende, art: BelegArt): Promise<Ergebnis> {
   let id: string | null = null;
   try {
-    id = await beleganfrageSpeichern({ art, ...d, ueberwiesenAm: d.datum });
+    id = await beleganfrageSpeichern({ art, ...d, tagDerSpende: d.tag_der_spende });
   } catch (e) {
     console.error("Anfrage Spendenbeleg nicht gespeichert", e);
   }
@@ -53,7 +51,7 @@ async function anfrageSpeichern(d: Spende, art: Art): Promise<Ergebnis> {
       text:
         `Über die Website wurde ${vereinfacht ? "ein Spendenbeleg" : "eine Zuwendungsbestätigung"} angefordert.\n\n` +
         `Name: ${d.name}\nAnschrift: ${d.strasse}, ${d.plz} ${d.ort}\nE-Mail: ${d.email}\n` +
-        `Betrag: ${euro(d.betrag)}\nÜberwiesen am: ${new Date(d.datum).toLocaleDateString("de-DE", { timeZone: "UTC" })}\n\n` +
+        `Betrag: ${euro(d.betrag)}\nTag der Spende: ${new Date(d.tag_der_spende).toLocaleDateString("de-DE", { timeZone: "UTC" })}\n\n` +
         `Bitte zuerst den Geldeingang auf dem Vereinskonto prüfen. ` +
         (vereinfacht
           ? `Ist die Spende eingegangen, im internen Bereich bestätigen. Dann geht der Spendenbeleg automatisch an den Spender.`

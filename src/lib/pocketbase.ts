@@ -2,6 +2,7 @@ import "server-only";
 import PocketBase, { ClientResponseError } from "pocketbase";
 import { z } from "zod";
 import type { Antrag, Protokoll } from "@/lib/antrag";
+import type { BelegArt } from "@/lib/verein";
 
 // Die Website spricht PocketBase nur serverseitig und als eigener Superuser an.
 // Ohne POCKETBASE_URL (lokale Entwicklung) wird nichts gespeichert.
@@ -102,26 +103,31 @@ export async function antraegeSeit(datum: Date): Promise<number | null> {
 }
 
 export type NeueBeleganfrage = {
-  art: "vereinfacht" | "zuwendungsbestaetigung";
+  art: BelegArt;
   name: string;
   strasse: string;
   plz: string;
   ort: string;
+  // Leer nur, wenn der Vorstand die Anfrage ohne E-Mail-Adresse erfasst.
   email: string;
   betrag: number;
-  ueberwiesenAm: string;
+  tagDerSpende: string;
+  notiz?: string;
+  // Vorstandsmitglied, das die Anfrage im internen Bereich erfasst hat. Fehlt bei Anfragen über die Website.
+  erfasstVon?: string;
 };
 
 // Gibt die ID des neuen Eintrags zurück, null ohne PocketBase.
 export async function beleganfrageSpeichern(b: NeueBeleganfrage): Promise<string | null> {
   const pb = await pocketbase();
   if (!pb) return null;
-  const { ueberwiesenAm, ...rest } = b;
+  const { tagDerSpende, erfasstVon, ...rest } = b;
   // Jede Anfrage startet offen. Erst wenn der Vorstand den Geldeingang geprüft hat, geht ein Beleg raus.
   const record = await pb.collection("spendenbelege").create({
     ...rest,
     status: "offen",
-    ueberwiesen_am: `${ueberwiesenAm} 00:00:00.000Z`,
+    tag_der_spende: `${tagDerSpende} 00:00:00.000Z`,
+    erfasst_von: erfasstVon ?? "",
   });
   return record.id;
 }

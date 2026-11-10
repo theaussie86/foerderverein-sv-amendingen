@@ -29,6 +29,7 @@ export default async function SpendenbelegPage({
   if (!beleg) notFound();
 
   const ausgestelltVon = beleg.expand?.ausgestellt_von;
+  const erfasstVon = beleg.expand?.erfasst_von;
   const felder: [string, ReactNode][] = [
     [
       "Beleg-Nr.",
@@ -37,15 +38,25 @@ export default async function SpendenbelegPage({
       </span>,
     ],
     ["Betrag", euro(beleg.betrag)],
-    ["Überwiesen am", datum(beleg.ueberwiesen_am)],
+    ["Tag der Spende", datum(beleg.tag_der_spende)],
     ["Art", BELEG_ART_LABEL[beleg.art]],
     ["Name", beleg.name],
     ["Anschrift", `${beleg.strasse}, ${beleg.plz} ${beleg.ort}`],
     [
       "E-Mail",
-      <a key="mail" href={`mailto:${beleg.email}`} className="text-sva-gold hover:text-sva-gold-light">
-        {beleg.email}
-      </a>,
+      beleg.email ? (
+        <a key="mail" href={`mailto:${beleg.email}`} className="text-sva-gold hover:text-sva-gold-light">
+          {beleg.email}
+        </a>
+      ) : (
+        <span key="mail" className="text-sva-gray-400">
+          keine
+        </span>
+      ),
+    ],
+    [
+      "Herkunft",
+      beleg.erfasst_von ? `Erfasst von ${erfasstVon?.name || erfasstVon?.email || "Vorstand"}` : "Über die Website",
     ],
     ["Angefragt", datumZeit(beleg.created)],
   ];
@@ -67,7 +78,7 @@ export default async function SpendenbelegPage({
           <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">{beleg.name}</h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 text-sva-gray-300">
-            {euro(beleg.betrag)} vom {datum(beleg.ueberwiesen_am)}
+            {euro(beleg.betrag)} vom {datum(beleg.tag_der_spende)}
           </p>
         </div>
         <AnfrageStatusBadge status={beleg.status} className="px-4 py-1.5 text-sm" />
@@ -86,11 +97,15 @@ export default async function SpendenbelegPage({
           </h2>
           <ol className="mt-4 list-decimal space-y-1 pl-5 text-sva-gray-300">
             <li>
-              Auf dem Vereinskonto nach einer Überweisung über {euro(beleg.betrag)} von {beleg.name} um den{" "}
-              {datum(beleg.ueberwiesen_am)} suchen.
+              Auf dem Vereinskonto nach einer Spende über {euro(beleg.betrag)} von {beleg.name} um den{" "}
+              {datum(beleg.tag_der_spende)} suchen.
             </li>
             {beleg.art === "vereinfacht" ? (
-              <li>Ist sie da, bestätigen. Dann geht der Spendenbeleg automatisch an {beleg.email}.</li>
+              <li>
+                {beleg.email
+                  ? `Ist sie da, bestätigen. Dann geht der Spendenbeleg automatisch an ${beleg.email}.`
+                  : "Ist sie da, bestätigen. Ohne E-Mail-Adresse geht keine Mail raus, den Spendenbeleg danach hier herunterladen und dem Spender geben."}
+              </li>
             ) : (
               <>
                 <li>
@@ -99,13 +114,13 @@ export default async function SpendenbelegPage({
                 <li>Doppel für die Vereinsunterlagen aufbewahren.</li>
               </>
             )}
-            <li>Ist keine Überweisung da, die Anfrage ablehnen. Der Spender bekommt dann nichts.</li>
+            <li>Ist keine Spende da, die Anfrage ablehnen. Der Spender bekommt dann nichts.</li>
           </ol>
           <div className="mt-6 flex flex-wrap gap-3">
             {beleg.art === "vereinfacht" ? (
               <form action={belegFreigeben.bind(null, beleg.id)}>
                 <button type="submit" className={`${knopf} bg-sva-gold text-sva-charcoal-dark hover:bg-sva-gold-light`}>
-                  Geldeingang bestätigt, Beleg senden
+                  {beleg.email ? "Geldeingang bestätigt, Beleg senden" : "Geldeingang bestätigt, Beleg erzeugen"}
                 </button>
               </form>
             ) : (
@@ -130,8 +145,7 @@ export default async function SpendenbelegPage({
       {beleg.status === "abgelehnt" && (
         <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
           <p className="text-sva-gray-300">
-            Auf dem Vereinskonto war keine passende Überweisung. Die Anfrage ist geschlossen, es wurde kein Beleg
-            verschickt.
+            Auf dem Vereinskonto war keine passende Spende. Die Anfrage ist geschlossen, es wurde kein Beleg verschickt.
           </p>
         </section>
       )}
@@ -139,7 +153,9 @@ export default async function SpendenbelegPage({
       {beleg.status === "versendet" && (
         <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
           <p className="text-sva-gray-300">
-            Der Spendenbeleg wurde an {beleg.email} geschickt. Hier ist nichts mehr zu tun.
+            {beleg.email
+              ? `Der Spendenbeleg wurde an ${beleg.email} geschickt. Hier ist nichts mehr zu tun.`
+              : "Es gab keine E-Mail-Adresse, deshalb ging keine Mail raus. Den Spendenbeleg herunterladen und dem Spender geben."}
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-sva-gray-700 pt-4">
             <span className="text-white">Spendenbeleg (PDF)</span>

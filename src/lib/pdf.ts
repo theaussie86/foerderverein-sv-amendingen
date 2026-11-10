@@ -213,7 +213,7 @@ export async function erzeugeSpendenbelegPdf(spende: Spende): Promise<Uint8Array
   s.feld("Spender/in", spende.name);
   s.feld("Anschrift", `${spende.strasse}, ${spende.plz} ${spende.ort}`);
   s.feld("Betrag", spende.betrag.toLocaleString("de-DE", { style: "currency", currency: "EUR" }));
-  s.feld("Überwiesen am", new Date(spende.datum).toLocaleDateString("de-DE", { timeZone: "UTC" }));
+  s.feld("Tag der Spende", new Date(spende.datum).toLocaleDateString("de-DE", { timeZone: "UTC" }));
   s.feld("Empfänger", `${verein.bank.kontoinhaber}, IBAN ${verein.bank.iban}`);
   s.feld("Art der Zuwendung", "Geldzuwendung (Spende), kein Mitgliedsbeitrag");
   s.abstand(14);

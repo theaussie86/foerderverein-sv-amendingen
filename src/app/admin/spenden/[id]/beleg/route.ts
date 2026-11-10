@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/admin/spende
   }
 
   // Derselbe Name wie im Mailanhang, ohne das Zufallskürzel, das PocketBase beim Speichern anhängt.
-  const name = `Spendenbeleg_${beleg.ueberwiesen_am.slice(0, 10)}_${beleg.id}.pdf`;
+  const name = `Spendenbeleg_${beleg.tag_der_spende.slice(0, 10)}_${beleg.id}.pdf`;
   const art = request.nextUrl.searchParams.has("download") ? "attachment" : "inline";
 
   return new Response(antwort.body, {

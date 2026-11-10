@@ -1,21 +1,41 @@
 import { z } from "zod";
 
-export const beleganfrageSchema = z.object({
+// Angaben zum Spender, gleich für Website und internen Bereich. Betrag und Tag der Spende
+// heißen auf der Website "überwiesen", im internen Bereich neutral.
+const spendeFelder = {
   name: z.string().min(1, "Name ist erforderlich."),
   strasse: z.string().min(1, "Straße ist erforderlich."),
   plz: z.string().regex(/^\d{5}$/, "Bitte eine gültige 5-stellige PLZ eingeben."),
   ort: z.string().min(1, "Ort ist erforderlich."),
+};
+
+export const beleganfrageSchema = z.object({
+  ...spendeFelder,
   email: z.string().email("Bitte eine gültige E-Mail-Adresse eingeben."),
   betrag: z
     .number({ error: "Bitte den überwiesenen Betrag eingeben." })
     .min(1, "Bitte den überwiesenen Betrag eingeben."),
-  datum: z.string().min(1, "Bitte das Datum der Überweisung angeben."),
+  tag_der_spende: z.string().min(1, "Bitte den Tag der Überweisung angeben."),
   // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer. Ohne max(0), damit die
   // Action befüllte Felder erkennt und Bots eine scheinbare Erfolgsmeldung bekommen.
   website: z.string().optional(),
 });
 
 export type BeleganfrageFormData = z.infer<typeof beleganfrageSchema>;
+
+// Der Vorstand erfasst eine Beleganfrage im internen Bereich, etwa nach einer WhatsApp-Nachricht.
+// Ohne E-Mail-Adresse gibt es den Spendenbeleg nur zum Herunterladen. Mit direktFreigeben hat der
+// Vorstand den Geldeingang schon gesehen, die Anfrage wird sofort abgeschlossen.
+export const beleganfrageErfassenSchema = z.object({
+  ...spendeFelder,
+  betrag: z.number({ error: "Bitte den Betrag eingeben." }).min(1, "Bitte den Betrag eingeben."),
+  tag_der_spende: z.string().min(1, "Bitte den Tag der Spende angeben."),
+  email: z.union([z.literal(""), z.string().trim().email("Bitte eine gültige E-Mail-Adresse eingeben.")]),
+  notiz: z.string().max(5000, "Bitte höchstens 5000 Zeichen eingeben."),
+  direktFreigeben: z.boolean(),
+});
+
+export type BeleganfrageErfassenDaten = z.infer<typeof beleganfrageErfassenSchema>;
 
 export const mitgliedSchema = z.object({
   vorname: z.string().min(1, "Vorname ist erforderlich."),
