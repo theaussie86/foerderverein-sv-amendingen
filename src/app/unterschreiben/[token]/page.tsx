@@ -3,7 +3,7 @@ import Link from "next/link";
 import { clientInfo } from "@/lib/request";
 import { formatIban } from "@/lib/schemas";
 import { mandatstext, mitgliedsbeitrag, verein } from "@/lib/verein";
-import { mitgliedsantrag } from "@/packages/mitgliedsantrag/server";
+import { mitgliedsantraegeFuerWebsite } from "@/packages/mitgliedsantrag/server";
 import { UnterschriftFormular } from "./unterschrift-formular";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function UnterschreibenPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
-  const geoeffnet = mitgliedsantrag.oeffnen(token, await clientInfo());
+  const geoeffnet = mitgliedsantraegeFuerWebsite().oeffnen(token, await clientInfo());
 
   if (!geoeffnet) {
     return (

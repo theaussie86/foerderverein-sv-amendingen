@@ -1,5 +1,5 @@
 // Entry Point ohne "server-only": Typen und Labels für die Anzeige der Mitgliedsanträge im Vorstandsbereich.
-import type { RecordModel } from "pocketbase";
+import type { ListResult, RecordModel } from "pocketbase";
 import type { Protokoll } from "./lib/antrag";
 
 export type { Protokoll };
@@ -49,6 +49,8 @@ export type Antragszeile = Pick<
   Mitgliedsantrag,
   "id" | "mandatsreferenz" | "status" | "vorname" | "nachname" | "ort" | "email" | "unterschrieben_am"
 >;
+
+export type Antragsliste = ListResult<Antragszeile>;
 
 // Dateifelder, die über /admin/antraege/[id]/dateien/[feld] ausgeliefert werden.
 export const DATEIEN = {

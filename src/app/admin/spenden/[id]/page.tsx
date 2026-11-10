@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { datum, datumZeit } from "@/lib/format";
-import { BELEG_ART_LABEL, anfrageLaden, euro } from "@/lib/beleganfragen";
+import { BELEG_ART_LABEL, euro } from "@/packages/beleganfrage/anzeige";
+import { beleganfragenFuerVorstand } from "@/packages/beleganfrage/server";
 import { alsAusgestelltMarkieren, belegFreigeben, anfrageAblehnen } from "../actions";
 import { AnfrageStatusBadge } from "../status-badge";
 
@@ -25,11 +26,9 @@ export default async function SpendenbelegPage({
   const { pb } = await vorstandErforderlich();
   const { id } = await params;
   const { fehler } = await searchParams;
-  const beleg = await anfrageLaden(pb, id);
+  const beleg = await beleganfragenFuerVorstand(pb).laden(id);
   if (!beleg) notFound();
 
-  const ausgestelltVon = beleg.expand?.ausgestellt_von;
-  const erfasstVon = beleg.expand?.erfasst_von;
   const felder: [string, ReactNode][] = [
     [
       "Beleg-Nr.",
@@ -38,7 +37,7 @@ export default async function SpendenbelegPage({
       </span>,
     ],
     ["Betrag", euro(beleg.betrag)],
-    ["Tag der Spende", datum(beleg.tag_der_spende)],
+    ["Tag der Spende", datum(beleg.tagDerSpende)],
     ["Art", BELEG_ART_LABEL[beleg.art]],
     ["Name", beleg.name],
     ["Anschrift", `${beleg.strasse}, ${beleg.plz} ${beleg.ort}`],
@@ -54,17 +53,12 @@ export default async function SpendenbelegPage({
         </span>
       ),
     ],
-    [
-      "Herkunft",
-      beleg.erfasst_von ? `Erfasst von ${erfasstVon?.name || erfasstVon?.email || "Vorstand"}` : "Über die Website",
-    ],
-    ["Angefragt", datumZeit(beleg.created)],
+    ["Herkunft", beleg.erfasstVon ? `Erfasst von ${beleg.erfasstVon}` : "Über die Website"],
+    ["Angefragt", datumZeit(beleg.angefragtAm)],
   ];
-  if (beleg.status !== "offen" && beleg.ausgestellt_am) {
-    felder.push([
-      "Erledigt",
-      `${datumZeit(beleg.ausgestellt_am)}${ausgestelltVon ? ` von ${ausgestelltVon.name}` : ""}`,
-    ]);
+  if (beleg.status !== "offen" && beleg.abschluss) {
+    const { am, von } = beleg.abschluss;
+    felder.push(["Erledigt", `${datumZeit(am)}${von ? ` von ${von}` : ""}`]);
   }
 
   return (
@@ -78,7 +72,7 @@ export default async function SpendenbelegPage({
           <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">{beleg.name}</h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 text-sva-gray-300">
-            {euro(beleg.betrag)} vom {datum(beleg.tag_der_spende)}
+            {euro(beleg.betrag)} vom {datum(beleg.tagDerSpende)}
           </p>
         </div>
         <AnfrageStatusBadge status={beleg.status} className="px-4 py-1.5 text-sm" />
@@ -98,7 +92,7 @@ export default async function SpendenbelegPage({
           <ol className="mt-4 list-decimal space-y-1 pl-5 text-sva-gray-300">
             <li>
               Auf dem Vereinskonto nach einer Spende über {euro(beleg.betrag)} von {beleg.name} um den{" "}
-              {datum(beleg.tag_der_spende)} suchen.
+              {datum(beleg.tagDerSpende)} suchen.
             </li>
             {beleg.art === "vereinfacht" ? (
               <li>
@@ -159,7 +153,7 @@ export default async function SpendenbelegPage({
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-sva-gray-700 pt-4">
             <span className="text-white">Spendenbeleg (PDF)</span>
-            {beleg.beleg_pdf ? (
+            {beleg.hatBeleg ? (
               <span className="flex gap-4 text-sm font-medium">
                 <a
                   href={`/admin/spenden/${beleg.id}/beleg`}

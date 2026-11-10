@@ -34,11 +34,11 @@ Läuft auch als Teil von `bun run check`.
 
 ## Muster für Pakete mit Datenbank und Mail
 
-Vorbild ist `mitgliedsantrag/`:
+Vorlagen sind `beleganfrage/` und `mitgliedsantrag/`:
 
 - `index.ts`: Fabrik, die eine **Umgebung** (Ablage, Postausgang, Uhr, IDs …) entgegennimmt und die Anwendungsfälle zurückgibt. Kennt weder PocketBase noch Resend noch Next.js.
-- `server.ts`: baut die Fabrik mit der echten Umgebung (`"server-only"`) und exportiert die fertige Instanz. Seiten und Server Actions holen die Instanz von dort.
-- Weitere Entry Points nach Bedarf, z. B. `anzeige.ts` für Typen und Labels ohne `"server-only"`.
+- `server.ts` (`"server-only"`): baut die Fabrik mit der echten Umgebung, je Zielgruppe eine Funktion, z. B. `…FuerWebsite()` (schreibt als Superuser) und `…FuerVorstand(pb)` (liest mit dem Client des angemeldeten Vorstands).
+- `anzeige.ts`: Typen und Labels ohne `"server-only"`, auch für Client-Komponenten.
 - `tests/fakes.ts`: Umgebung im Speicher. Die Tests laufen über `index.ts` und brauchen weder Netz noch Datenbank.
 
 Server Actions bleiben dünn: Eingabe mit Zod parsen, Web-Belange (Honeypot, Rate-Limit, Request-Header) erledigen, Paket aufrufen.

@@ -3,7 +3,7 @@
 import { clientInfo, rateLimit } from "@/lib/request";
 import { mitgliedSchema } from "@/lib/schemas";
 import type { Ergebnis } from "@/packages/mitgliedsantrag";
-import { mitgliedsantrag } from "@/packages/mitgliedsantrag/server";
+import { mitgliedsantraegeFuerWebsite } from "@/packages/mitgliedsantrag/server";
 
 export async function antragEinreichen(eingabe: unknown): Promise<Ergebnis> {
   const parsed = mitgliedSchema.safeParse(eingabe);
@@ -18,5 +18,5 @@ export async function antragEinreichen(eingabe: unknown): Promise<Ergebnis> {
     return { ok: false, fehler: "Zu viele Anträge in kurzer Zeit. Bitte versuch es später erneut." };
   }
 
-  return mitgliedsantrag.einreichen(daten, herkunft);
+  return mitgliedsantraegeFuerWebsite().einreichen(daten, herkunft);
 }

@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { angemeldeterVorstand } from "@/lib/vorstand-session";
-import { antragsverwaltung } from "@/packages/mitgliedsantrag/vorstand";
+import { mitgliedsantraegeFuerVorstand } from "@/packages/mitgliedsantrag/server";
 
 // Liefert Beitrittserklärung, Mandat oder Unterschrift an den angemeldeten Vorstand aus.
 // Mit ?download=1 als Anhang, sonst zum Ansehen im Browser.
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/admin/antrae
   if (!session) return new Response("Nicht angemeldet.", { status: 401 });
 
   const { id, feld } = await ctx.params;
-  const datei = await antragsverwaltung(session.pb).datei(id, feld);
+  const datei = await mitgliedsantraegeFuerVorstand(session.pb).datei(id, feld);
   if (!datei.ok) {
     return datei.grund === "nicht-gefunden"
       ? new Response("Nicht gefunden.", { status: 404 })

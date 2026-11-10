@@ -5,11 +5,12 @@ import { datum, datumZeit } from "@/lib/format";
 import {
   ANFRAGE_STATUS,
   ANFRAGE_STATUS_LABEL,
-  anfragenSuchen,
   euro,
   istAnfrageStatus,
   type AnfrageStatus,
-} from "@/lib/beleganfragen";
+  type Trefferliste,
+} from "@/packages/beleganfrage/anzeige";
+import { beleganfragenFuerVorstand } from "@/packages/beleganfrage/server";
 import { cn } from "@/lib/utils";
 import { abmelden } from "../actions";
 import { AdminNav } from "../admin-nav";
@@ -38,9 +39,9 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
   const status = istAnfrageStatus(params.status) ? params.status : undefined;
   const seite = Math.max(1, Number.parseInt(params.seite ?? "1", 10) || 1);
 
-  let liste: Awaited<ReturnType<typeof anfragenSuchen>> | null = null;
+  let liste: Trefferliste | null = null;
   try {
-    liste = await anfragenSuchen(pb, { suche: q, status, seite });
+    liste = await beleganfragenFuerVorstand(pb).suchen({ suche: q, status, seite });
   } catch (e) {
     console.error("Spendenbelege konnten nicht geladen werden", e instanceof Error ? e.message : e);
   }
@@ -120,14 +121,14 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
         <p role="alert" className="mt-10 rounded-lg border border-red-500/40 bg-red-500/10 p-6 text-red-300">
           Die Spendenbelege konnten gerade nicht geladen werden. Bitte später erneut probieren.
         </p>
-      ) : liste.items.length === 0 ? (
+      ) : liste.eintraege.length === 0 ? (
         <p className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 text-sva-gray-300">
           {q || status ? "Keine Anfragen gefunden, die zur Suche passen." : "Bisher sind keine Anfragen eingegangen."}
         </p>
       ) : (
         <>
           <p className="mt-8 text-sm text-sva-gray-400">
-            {liste.totalItems === 1 ? "1 Anfrage" : `${liste.totalItems} Anfragen`}
+            {liste.anzahl === 1 ? "1 Anfrage" : `${liste.anzahl} Anfragen`}
           </p>
           <div className="mt-3 overflow-x-auto rounded-lg border border-sva-gray-700">
             <table className="w-full text-left text-sm">
@@ -154,7 +155,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                 </tr>
               </thead>
               <tbody className="divide-y divide-sva-gray-700 bg-sva-charcoal-light">
-                {liste.items.map((b) => (
+                {liste.eintraege.map((b) => (
                   <tr key={b.id} className="relative transition-colors hover:bg-sva-gray-700/50">
                     <td className="px-4 py-3 font-medium text-white">
                       {/* Der Link überspannt per ::after die ganze Zeile. */}
@@ -163,10 +164,10 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-right whitespace-nowrap text-white tabular-nums">{euro(b.betrag)}</td>
-                    <td className="hidden px-4 py-3 text-sva-gray-300 sm:table-cell">{datum(b.tag_der_spende)}</td>
+                    <td className="hidden px-4 py-3 text-sva-gray-300 sm:table-cell">{datum(b.tagDerSpende)}</td>
                     <td className="hidden px-4 py-3 text-sva-gray-300 md:table-cell">{b.email || "-"}</td>
                     <td className="hidden px-4 py-3 whitespace-nowrap text-sva-gray-300 lg:table-cell">
-                      {datumZeit(b.created)}
+                      {datumZeit(b.angefragtAm)}
                     </td>
                     <td className="px-4 py-3">
                       <AnfrageStatusBadge status={b.status} />
@@ -177,7 +178,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
             </table>
           </div>
 
-          {liste.totalPages > 1 && (
+          {liste.seiten > 1 && (
             <nav aria-label="Seiten" className="mt-6 flex items-center justify-between text-sm">
               {seite > 1 ? (
                 <Link
@@ -190,9 +191,9 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                 <span />
               )}
               <span className="text-sva-gray-400">
-                Seite {seite} von {liste.totalPages}
+                Seite {seite} von {liste.seiten}
               </span>
-              {seite < liste.totalPages ? (
+              {seite < liste.seiten ? (
                 <Link
                   href={listenLink({ q, status, seite: seite + 1 })}
                   className="font-medium text-sva-gold hover:text-sva-gold-light"
