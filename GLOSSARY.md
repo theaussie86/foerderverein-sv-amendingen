@@ -2,6 +2,53 @@
 
 Website des Fördervereins: Mitglieder gewinnen, Spenden annehmen und dem Vorstand die Verwaltung von Mitgliedsanträgen und Spendenbelegen abnehmen.
 
+## Verein und Organe
+
+**Förderverein**:
+Der eingetragene Verein, um den es hier geht. Rechtlich eigenständig, nicht Teil des SV Amendingen.
+_Vermeiden_: Verein (allein, mehrdeutig)
+
+**SV Amendingen**:
+Der Sportverein, dessen Fußballabteilung der Förderverein unterstützt. Ein eigener Verein mit eigenen Organen.
+_Vermeiden_: Hauptverein, Stammverein, Verein (allein)
+
+**Fußballabteilung**:
+Die Abteilung des SV Amendingen, die der Förderverein unterstützt.
+_Vermeiden_: Abteilung (allein), die Fußballer
+
+**Mitgliederversammlung**:
+Organ des Fördervereins aus allen Mitgliedern. Wählt den Vorstand und die Kassenprüfer.
+_Vermeiden_: Jahreshauptversammlung, JHV, Generalversammlung
+
+**Vorstand**:
+Das gewählte Gremium aller Amtsträger: 1. Vorsitz, 2. Vorsitz, Kasse, Schriftführung und Beisitz.
+_Vermeiden_: Gesamtvorstand, erweiterter Vorstand, geschäftsführender Vorstand
+
+**Vertretungsvorstand** (vorläufig, bis die Satzung vorliegt):
+Der Teil des Vorstands, der den Förderverein nach außen vertritt und im Vereinsregister steht (Vorstand im Sinne von § 26 BGB).
+_Vermeiden_: Vorstand (für diesen Teil), BGB-Vorstand
+
+**Amt**:
+Eine Funktion im Vorstand. Ämter sind 1. Vorsitz, 2. Vorsitz, Kasse, Schriftführung und Beisitz.
+
+**1. Vorsitz** / **2. Vorsitz**:
+Die beiden Ämter an der Spitze des Vorstands.
+_Vermeiden_: 1. Vorstand, 2. Vorstand
+
+**Kasse**:
+Das Amt, das die Finanzen des Fördervereins führt.
+_Vermeiden_: Kassenwart, Schatzmeister, Kassier
+
+**Schriftführung**:
+Das Amt, das Protokolle und Schriftverkehr führt.
+
+**Beisitz**:
+Ein Amt im Vorstand ohne festen Aufgabenbereich. Kann mehrfach besetzt sein.
+
+**Kassenprüfer** (vorläufig, Bestand noch offen):
+Von der Mitgliederversammlung gewählte Person außerhalb des Vorstands, die die Kasse prüft.
+_Vermeiden_: Revisor, Rechnungsprüfer
+
 ## Spenden
 
 **Spende**:
