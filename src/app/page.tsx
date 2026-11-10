@@ -7,7 +7,8 @@ import { mitgliedsbeitrag, verein } from "@/lib/verein";
 export const revalidate = 3600;
 
 const gruendungsjahr = 1946;
-const teilenText = "Für 20 € im Jahr den Jugendfußball beim SV Amendingen unterstützen: https://foerderverein-sv-amendingen.de";
+const teilenText =
+  "Für 20 € im Jahr den Jugendfußball beim SV Amendingen unterstützen: https://foerderverein-sv-amendingen.de";
 
 const projekte = [
   {
@@ -66,11 +67,17 @@ const fragen = [
   },
 ];
 
-function MitgliedButton({ className = "", children = "Jetzt Mitglied werden" }: { className?: string; children?: React.ReactNode }) {
+function MitgliedButton({
+  className = "",
+  children = "Jetzt Mitglied werden",
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) {
   return (
     <Link
       href="/mitglied-werden"
-      className={`inline-block rounded-md bg-sva-gold px-8 py-4 text-center text-sm font-black uppercase tracking-wide text-sva-charcoal-dark shadow-lg shadow-sva-gold/10 transition-colors hover:bg-sva-gold-light ${className}`}
+      className={`inline-block rounded-md bg-sva-gold px-8 py-4 text-center text-sm font-black tracking-wide text-sva-charcoal-dark uppercase shadow-lg shadow-sva-gold/10 transition-colors hover:bg-sva-gold-light ${className}`}
     >
       {children}
     </Link>
@@ -79,7 +86,15 @@ function MitgliedButton({ className = "", children = "Jetzt Mitglied werden" }: 
 
 const h2Cls = "text-balance text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl";
 
-function Abschnitt({ titel, children, className = "" }: { titel: string; children: React.ReactNode; className?: string }) {
+function Abschnitt({
+  titel,
+  children,
+  className = "",
+}: {
+  titel: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <section className={`py-20 sm:py-24 ${className}`}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -94,20 +109,31 @@ function Zaehler({ stand }: { stand: Mitgliederstand }) {
   const prozent = Math.min(100, Math.round((stand.gesamt / stand.ziel) * 100));
   return (
     <div className="rounded-xl border border-sva-gray-700 bg-sva-charcoal-light/80 p-6 sm:p-8">
-      <p className="text-sm font-bold uppercase tracking-widest text-sva-gray-300">Wir sind schon</p>
-      <p className="mt-1 text-6xl font-black tabular-nums text-white sm:text-7xl">{stand.gesamt}</p>
-      <p className="text-lg font-bold uppercase text-sva-gold">Mitglieder</p>
+      <p className="text-sm font-bold tracking-widest text-sva-gray-300 uppercase">Wir sind schon</p>
+      <p className="mt-1 text-6xl font-black text-white tabular-nums sm:text-7xl">{stand.gesamt}</p>
+      <p className="text-lg font-bold text-sva-gold uppercase">Mitglieder</p>
       {stand.zuwachs && (
         <p className="mt-3 inline-block rounded-full bg-sva-green/30 px-3 py-1 text-sm font-semibold text-white">
           +{stand.zuwachs.anzahl} {stand.zuwachs.zeitraum}
         </p>
       )}
       <div className="mt-6">
-        <div className="h-3 overflow-hidden rounded-full bg-sva-gray-700" role="progressbar" aria-valuemin={0} aria-valuemax={stand.ziel} aria-valuenow={stand.gesamt} aria-label="Mitglieder bis zum Ziel">
-          <div className="h-full rounded-full bg-gradient-to-r from-sva-green to-sva-gold" style={{ width: `${prozent}%` }} />
+        <div
+          className="h-3 overflow-hidden rounded-full bg-sva-gray-700"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={stand.ziel}
+          aria-valuenow={stand.gesamt}
+          aria-label="Mitglieder bis zum Ziel"
+        >
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-sva-green to-sva-gold"
+            style={{ width: `${prozent}%` }}
+          />
         </div>
         <p className="mt-2 text-sm text-sva-gray-300">
-          Unser Ziel: <strong className="text-white">{stand.ziel} Mitglieder</strong>. Noch {Math.max(0, stand.ziel - stand.gesamt)} fehlen.
+          Unser Ziel: <strong className="text-white">{stand.ziel} Mitglieder</strong>. Noch{" "}
+          {Math.max(0, stand.ziel - stand.gesamt)} fehlen.
         </p>
       </div>
     </div>
@@ -116,7 +142,10 @@ function Zaehler({ stand }: { stand: Mitgliederstand }) {
 
 export default async function HomePage() {
   const stand = await mitgliederstand();
-  const proMonat = (mitgliedsbeitrag / 12).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const proMonat = (mitgliedsbeitrag / 12).toLocaleString("de-DE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   return (
     <>
@@ -125,18 +154,18 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-sva-green-dark/40 via-sva-charcoal-dark to-sva-charcoal-dark" />
         <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-balance text-4xl font-black uppercase leading-[1.05] text-white sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl leading-[1.05] font-black text-balance text-white uppercase sm:text-5xl lg:text-6xl">
               Für {mitgliedsbeitrag} € im Jahr stehst du hinter jedem Kind auf unserem Platz.
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-sva-gray-300 sm:text-xl">
-              Der Förderverein finanziert die kleinen Dinge, für die sich in der Jugend kein Sponsor findet:
-              Material, Zuschüsse, gemeinsame Fahrten. Werde Mitglied und mach den SVA stärker.
+              Der Förderverein finanziert die kleinen Dinge, für die sich in der Jugend kein Sponsor findet: Material,
+              Zuschüsse, gemeinsame Fahrten. Werde Mitglied und mach den SVA stärker.
             </p>
           </div>
 
           <div className="mx-auto mt-10 max-w-4xl">
             <video
-              className="aspect-video w-full rounded-xl bg-sva-charcoal shadow-2xl shadow-black/40 ring-1 ring-sva-gray-700"
+              className="aspect-video w-full rounded-xl bg-sva-charcoal shadow-2xl ring-1 shadow-black/40 ring-sva-gray-700"
               controls
               playsInline
               preload="none"
@@ -148,7 +177,9 @@ export default async function HomePage() {
             </video>
 
             <div className="mt-8 text-center">
-              <MitgliedButton className="w-full sm:w-auto">Jetzt Mitglied werden · {mitgliedsbeitrag} € im Jahr</MitgliedButton>
+              <MitgliedButton className="w-full sm:w-auto">
+                Jetzt Mitglied werden · {mitgliedsbeitrag} € im Jahr
+              </MitgliedButton>
               <p className="mt-4 text-sm text-sva-gray-300">
                 In 2 Minuten online · ohne Papierkram · nur {proMonat} € im Monat
               </p>
@@ -168,10 +199,10 @@ export default async function HomePage() {
           Ohne dieses Ehrenamt gäbe es keinen SVA.
         </p>
         <p>
-          Aber Ehrenamt kauft keine Bälle. Es bezahlt keine Trainingsanzüge und keinen Bus zum Ausflug. Bei den
-          Senioren helfen größere Sponsoren.
+          Aber Ehrenamt kauft keine Bälle. Es bezahlt keine Trainingsanzüge und keinen Bus zum Ausflug. Bei den Senioren
+          helfen größere Sponsoren.
         </p>
-        <p className="text-balance pt-4 text-2xl font-black leading-snug text-white sm:text-3xl">
+        <p className="pt-4 text-2xl leading-snug font-black text-balance text-white sm:text-3xl">
           In der Jugend sind es oft kleine Beträge, für die sich <span className="text-sva-gold">niemand findet.</span>
         </p>
       </Abschnitt>
@@ -179,8 +210,8 @@ export default async function HomePage() {
       {/* 3. Lösung */}
       <Abschnitt titel="Dafür gibt es den Förderverein" className="bg-sva-charcoal-dark">
         <p>
-          Der {verein.name} ist ein eigenständiger, eingetragener und gemeinnütziger Verein mit genau einer Aufgabe:
-          den SV Amendingen zu unterstützen. Vor allem dort, wo sonst kein Geld herkommt.
+          Der {verein.name} ist ein eigenständiger, eingetragener und gemeinnütziger Verein mit genau einer Aufgabe: den
+          SV Amendingen zu unterstützen. Vor allem dort, wo sonst kein Geld herkommt.
         </p>
         <p>
           Wir sammeln Mitgliedsbeiträge und Spenden und geben sie dort aus, wo der SVA sie braucht.{" "}
@@ -217,11 +248,12 @@ export default async function HomePage() {
           <ul className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
             {hebel.map((h) => (
               <li key={h.mitglieder} className="border-t border-white/20 pt-6">
-                <p className="text-7xl font-black leading-none tracking-tight tabular-nums text-sva-gold-light sm:text-8xl">
+                <p className="text-7xl leading-none font-black tracking-tight text-sva-gold-light tabular-nums sm:text-8xl">
                   {h.mitglieder}
                 </p>
-                <p className="mt-3 text-sm font-bold uppercase tracking-wide text-green-50/90">
-                  {h.mitglieder === 1 ? "Mitglied" : "Mitglieder"} = {(h.mitglieder * mitgliedsbeitrag).toLocaleString("de-DE")} €
+                <p className="mt-3 text-sm font-bold tracking-wide text-green-50/90 uppercase">
+                  {h.mitglieder === 1 ? "Mitglied" : "Mitglieder"} ={" "}
+                  {(h.mitglieder * mitgliedsbeitrag).toLocaleString("de-DE")} €
                 </p>
                 <p className="mt-2 text-lg font-semibold text-white">{h.text}</p>
               </li>
@@ -237,7 +269,10 @@ export default async function HomePage() {
       <Abschnitt titel="Ein Verein, auf den Amendingen stolz sein kann" className="bg-sva-charcoal-dark">
         <dl className="grid gap-8 sm:grid-cols-2">
           {[
-            { zahl: String(gruendungsjahr), text: `Seit ${new Date().getFullYear() - gruendungsjahr} Jahren Fußball in Amendingen` },
+            {
+              zahl: String(gruendungsjahr),
+              text: `Seit ${new Date().getFullYear() - gruendungsjahr} Jahren Fußball in Amendingen`,
+            },
             { zahl: "FC Bayern", text: "Einziger Kooperationsverein der Region" },
           ].map((f) => (
             <div key={f.text} className="flex flex-col-reverse">
@@ -257,11 +292,24 @@ export default async function HomePage() {
         <ul className="space-y-4">
           {[
             { titel: "Du gehörst dazu.", text: "Du bist Teil der Gemeinschaft, die den SVA im Hintergrund trägt." },
-            { titel: "Du redest mit.", text: "Bei der Mitgliederversammlung entscheidest du mit, wofür das Geld ausgegeben wird." },
-            { titel: "Du weißt, wo dein Geld ankommt.", text: "Bei den Kindern und Jugendlichen auf unserem Platz. Nirgendwo sonst." },
+            {
+              titel: "Du redest mit.",
+              text: "Bei der Mitgliederversammlung entscheidest du mit, wofür das Geld ausgegeben wird.",
+            },
+            {
+              titel: "Du weißt, wo dein Geld ankommt.",
+              text: "Bei den Kindern und Jugendlichen auf unserem Platz. Nirgendwo sonst.",
+            },
           ].map((v) => (
             <li key={v.titel} className="flex gap-4">
-              <svg className="mt-1 h-6 w-6 shrink-0 text-sva-gold" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden="true">
+              <svg
+                className="mt-1 h-6 w-6 shrink-0 text-sva-gold"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2.5}
+                stroke="currentColor"
+                aria-hidden="true"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
               </svg>
               <p>
@@ -279,7 +327,9 @@ export default async function HomePage() {
           <ol className="mt-10 grid gap-6 sm:grid-cols-3">
             {schritte.map((s, i) => (
               <li key={s.titel} className="rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sva-green text-lg font-black text-white">{i + 1}</span>
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sva-green text-lg font-black text-white">
+                  {i + 1}
+                </span>
                 <h3 className="mt-4 text-lg font-bold text-white">{s.titel}</h3>
                 <p className="mt-2 leading-relaxed text-sva-gray-300">{s.text}</p>
               </li>
@@ -295,10 +345,20 @@ export default async function HomePage() {
       <Abschnitt titel="Häufige Fragen" className="bg-sva-charcoal">
         <div className="space-y-3">
           {fragen.map((f) => (
-            <details key={f.frage} className="group rounded-lg border border-sva-gray-700 bg-sva-charcoal-light px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
+            <details
+              key={f.frage}
+              className="group rounded-lg border border-sva-gray-700 bg-sva-charcoal-light px-5 py-4 [&_summary::-webkit-details-marker]:hidden"
+            >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-white">
                 {f.frage}
-                <svg className="h-5 w-5 shrink-0 text-sva-gold transition-transform duration-200 group-open:rotate-45" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" aria-hidden="true">
+                <svg
+                  className="h-5 w-5 shrink-0 text-sva-gold transition-transform duration-200 group-open:rotate-45"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
                   <path strokeLinecap="round" d="M12 5v14M5 12h14" />
                 </svg>
               </summary>
@@ -311,9 +371,7 @@ export default async function HomePage() {
       {/* 10. Abschluss */}
       <section className="bg-sva-green py-20 sm:py-24">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className={h2Cls}>
-            Der SVA lebt von Menschen, die mehr tun als zuschauen.
-          </h2>
+          <h2 className={h2Cls}>Der SVA lebt von Menschen, die mehr tun als zuschauen.</h2>
           <p className="mx-auto mt-4 max-w-xl text-xl text-green-100">Werde einer davon.</p>
           <div className="mt-10">
             <MitgliedButton>Jetzt Mitglied werden · {mitgliedsbeitrag} € im Jahr</MitgliedButton>
@@ -334,8 +392,19 @@ export default async function HomePage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-md bg-sva-charcoal-light px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-sva-gray-700"
           >
-            <svg className="h-5 w-5 text-sva-gold" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+            <svg
+              className="h-5 w-5 text-sva-gold"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+              />
             </svg>
             Per WhatsApp teilen
           </a>
@@ -346,7 +415,7 @@ export default async function HomePage() {
             </p>
             <Link
               href="/spenden"
-              className="shrink-0 rounded-md border-2 border-sva-gold px-8 py-4 text-center text-sm font-black uppercase tracking-wide text-sva-gold transition-colors hover:bg-sva-gold hover:text-sva-charcoal-dark"
+              className="shrink-0 rounded-md border-2 border-sva-gold px-8 py-4 text-center text-sm font-black tracking-wide text-sva-gold uppercase transition-colors hover:bg-sva-gold hover:text-sva-charcoal-dark"
             >
               Einmalig spenden
             </Link>

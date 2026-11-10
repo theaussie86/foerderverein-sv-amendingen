@@ -87,22 +87,19 @@ function CookieDialog() {
       className="m-auto w-[calc(100%-2rem)] max-w-lg rounded-xl border border-sva-gray-800 bg-sva-charcoal-dark p-0 text-sva-gray-200 backdrop:bg-black/70"
     >
       <div className="p-6 sm:p-8">
-        <h2 id="cookie-dialog-titel" className="text-xl font-black uppercase text-white">
+        <h2 id="cookie-dialog-titel" className="text-xl font-black text-white uppercase">
           Cookie-Einstellungen
         </h2>
         <div className="mt-2 h-1 w-12 bg-sva-gold" />
         <p className="mt-5 text-sm leading-relaxed">
-          Wir verwenden keine Analyse-, Tracking- oder Marketing-Dienste. Gespeichert wird nur,
-          was für den Betrieb der Seite technisch notwendig ist. Eine Einwilligung ist dafür
-          nicht nötig.
+          Wir verwenden keine Analyse-, Tracking- oder Marketing-Dienste. Gespeichert wird nur, was für den Betrieb der
+          Seite technisch notwendig ist. Eine Einwilligung ist dafür nicht nötig.
         </p>
 
         <div className="mt-6 rounded-lg border border-sva-gray-800 p-4">
           <div className="flex items-center justify-between gap-4">
             <span className="font-semibold text-white">Technisch notwendig</span>
-            <span className="rounded border border-sva-gold/40 px-2 py-0.5 text-xs text-sva-gold">
-              Immer aktiv
-            </span>
+            <span className="rounded border border-sva-gold/40 px-2 py-0.5 text-xs text-sva-gold">Immer aktiv</span>
           </div>
           <ul className="mt-4 space-y-3 text-sm">
             {COOKIES.map((c) => (
@@ -140,7 +137,11 @@ function CookieDialog() {
 
 export function CookieHinweis() {
   const bestaetigt = useSyncExternalStore(abonnieren, hinweisBestaetigt, () => true);
-  const offen = useSyncExternalStore(abonnieren, () => dialogOffen, () => false);
+  const offen = useSyncExternalStore(
+    abonnieren,
+    () => dialogOffen,
+    () => false,
+  );
 
   if (offen) return <CookieDialog />;
   if (bestaetigt) return null;

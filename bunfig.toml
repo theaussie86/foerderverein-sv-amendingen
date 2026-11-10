@@ -1,0 +1,5 @@
+[test]
+# Stellt Module bereit, die nur innerhalb von Next.js funktionieren (z. B. "server-only").
+preload = ["./test/setup.ts"]
+# Remotion-Projekt und Next-Build nicht nach Tests durchsuchen.
+pathIgnorePatterns = ["video/**", ".next/**"]

@@ -10,7 +10,9 @@ const FARBE: Record<Status, string> = {
 
 export function StatusBadge({ status, className }: { status: Status; className?: string }) {
   return (
-    <span className={cn("inline-block rounded-full border px-2.5 py-0.5 text-xs font-semibold", FARBE[status], className)}>
+    <span
+      className={cn("inline-block rounded-full border px-2.5 py-0.5 text-xs font-semibold", FARBE[status], className)}
+    >
       {STATUS_LABEL[status] ?? status}
     </span>
   );

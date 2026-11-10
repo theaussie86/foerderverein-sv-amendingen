@@ -10,7 +10,13 @@ const FARBE: Record<AnfrageStatus, string> = {
 
 export function AnfrageStatusBadge({ status, className }: { status: AnfrageStatus; className?: string }) {
   return (
-    <span className={cn("inline-block whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold", FARBE[status], className)}>
+    <span
+      className={cn(
+        "inline-block rounded-full border px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap",
+        FARBE[status],
+        className,
+      )}
+    >
       {ANFRAGE_STATUS_LABEL[status] ?? status}
     </span>
   );

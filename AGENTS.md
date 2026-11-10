@@ -21,3 +21,24 @@ Die fünf Standard-Labels (`needs-triage`, `needs-info`, `ready-for-agent`, `rea
 ### Domain docs
 
 Single-context: `GLOSSARY.md` und `docs/adr/` im Repo-Root. See `docs/agents/domain.md`.
+
+## Checks
+
+Vor jedem Commit `bun run check` ausführen und erst bei grünem Ergebnis committen. Der Befehl prüft Formatierung, Lint (ohne Warnungen), Typen und Tests.
+
+- Formatierung macht Prettier (`.prettierrc.json`, Breite 120, Tailwind-Klassen sortiert). Der Pre-commit-Hook (Husky + lint-staged) formatiert gestagte Dateien automatisch. `bun run format` formatiert alles. Markdown bleibt unformatiert. Die CI (`.github/workflows/ci.yml`) führt dasselbe auf jedem Push aus und baut zusätzlich mit `bun run build`.
+
+- `lint` und `typecheck` erzeugen zuerst die Next-Routentypen (`bun run typegen`). Ein nacktes `eslint` oder `tsc` scheitert ohne sie an `RouteContext`.
+- Tests laufen mit `bun test` und liegen als `*.test.ts` neben dem Code. `test/setup.ts` neutralisiert `server-only` und setzt einen Test-`ANTRAG_SECRET`.
+- Neue reine Logik in `src/lib/` bekommt einen Test. PocketBase, Resend und Server Actions sind nicht abgedeckt.
+
+## Typen und Validierung
+
+ESLint läuft mit Typinformation und erzwingt:
+
+- Kein `any`, kein Non-Null-`!`, keine Casts mit `as` (nur `as const`). Ungeprüfte `any`-Werte (z. B. aus `JSON.parse`) dürfen nicht weiterfließen.
+- Promises werden abgewartet. In JSX-Handlern `void` davor: `onSubmit={(e) => void handleSubmit(onSubmit)(e)}`.
+
+Daten unbekannter Form werden mit Zod geparst, der Typ kommt per `z.infer` aus dem Schema. Das gilt für Formulareingaben, Server-Action-Argumente, `FormData`, Token-Inhalte (`unseal(token, schema)`) und Fehlerantworten fremder Dienste.
+
+Jedes Formular prüft im Browser und in der Server Action mit demselben Schema aus `src/lib/schemas.ts`. Im Browser per react-hook-form mit `zodResolver`, wo das nicht passt (Admin-Login mit `useActionState`, Unterschrift) per `safeParse` vor dem Senden. Server Actions nehmen `eingabe: unknown` und rufen zuerst `safeParse`.

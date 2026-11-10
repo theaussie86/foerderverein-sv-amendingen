@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
-import { antragLaden, DATEIEN, datum, datumZeit, type Dateifeld } from "@/lib/antraege";
+import { antragLaden, DATEIEN, datum, datumZeit, istDateifeld, type Dateifeld } from "@/lib/antraege";
 import { formatIban } from "@/lib/schemas";
 import { StatusBadge } from "../../status-badge";
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) {
   return (
     <section className="rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-sva-gold">{titel}</h2>
+      <h2 className="text-sm font-bold tracking-wide text-sva-gold uppercase">{titel}</h2>
       <div className="mt-4">{children}</div>
     </section>
   );
@@ -51,7 +51,7 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
 
       <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">
+          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">
             {antrag.vorname} {antrag.nachname}
           </h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
@@ -65,23 +65,30 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
       <div className="mt-10 grid gap-6">
         <Abschnitt titel="Dokumente">
           <ul className="divide-y divide-sva-gray-700">
-            {(Object.keys(DATEIEN) as Dateifeld[]).map((feld) => (
-              <li key={feld} className="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0">
-                <span className="text-white">{DATEIEN[feld]}</span>
-                {antrag[feld] ? (
-                  <span className="flex gap-4 text-sm font-medium">
-                    <a href={dateiLink(feld)} target="_blank" rel="noopener" className="text-sva-gold hover:text-sva-gold-light">
-                      Ansehen
-                    </a>
-                    <a href={`${dateiLink(feld)}?download=1`} className="text-sva-gold hover:text-sva-gold-light">
-                      Herunterladen
-                    </a>
-                  </span>
-                ) : (
-                  <span className="text-sm text-sva-gray-400">nicht vorhanden</span>
-                )}
-              </li>
-            ))}
+            {Object.keys(DATEIEN)
+              .filter(istDateifeld)
+              .map((feld) => (
+                <li key={feld} className="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0">
+                  <span className="text-white">{DATEIEN[feld]}</span>
+                  {antrag[feld] ? (
+                    <span className="flex gap-4 text-sm font-medium">
+                      <a
+                        href={dateiLink(feld)}
+                        target="_blank"
+                        rel="noopener"
+                        className="text-sva-gold hover:text-sva-gold-light"
+                      >
+                        Ansehen
+                      </a>
+                      <a href={`${dateiLink(feld)}?download=1`} className="text-sva-gold hover:text-sva-gold-light">
+                        Herunterladen
+                      </a>
+                    </span>
+                  ) : (
+                    <span className="text-sm text-sva-gray-400">nicht vorhanden</span>
+                  )}
+                </li>
+              ))}
           </ul>
         </Abschnitt>
 
@@ -92,7 +99,12 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
               ["Nachname", antrag.nachname],
               ["Straße", antrag.strasse],
               ["PLZ und Ort", `${antrag.plz} ${antrag.ort}`],
-              ["E-Mail", <a key="mail" href={`mailto:${antrag.email}`} className="text-sva-gold hover:text-sva-gold-light">{antrag.email}</a>],
+              [
+                "E-Mail",
+                <a key="mail" href={`mailto:${antrag.email}`} className="text-sva-gold hover:text-sva-gold-light">
+                  {antrag.email}
+                </a>,
+              ],
               ["Geburtsdatum", datum(antrag.geburtsdatum)],
             ]}
           />
@@ -103,8 +115,18 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
             felder={[
               ["Jahresbeitrag", antrag.jahresbeitrag.toLocaleString("de-DE", { style: "currency", currency: "EUR" })],
               ["Kontoinhaber", antrag.kontoinhaber],
-              ["IBAN", <span key="iban" className="font-mono">{formatIban(antrag.iban)}</span>],
-              ["Mandatsreferenz", <span key="ref" className="font-mono">{antrag.mandatsreferenz}</span>],
+              [
+                "IBAN",
+                <span key="iban" className="font-mono">
+                  {formatIban(antrag.iban)}
+                </span>,
+              ],
+              [
+                "Mandatsreferenz",
+                <span key="ref" className="font-mono">
+                  {antrag.mandatsreferenz}
+                </span>,
+              ],
             ]}
           />
         </Abschnitt>
@@ -114,10 +136,30 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
             felder={[
               ["Eingereicht", p?.eingereicht && `${datumZeit(p.eingereicht.zeit)} · IP ${p.eingereicht.ip}`],
               ["Link geöffnet", p?.geoeffnet && `${datumZeit(p.geoeffnet.zeit)} · IP ${p.geoeffnet.ip}`],
-              ["Unterschrieben", p?.unterschrieben && `${datumZeit(p.unterschrieben.zeit)} · IP ${p.unterschrieben.ip}`],
-              ["Browser", p?.unterschrieben?.userAgent && <span key="ua" className="text-sm text-sva-gray-300">{p.unterschrieben.userAgent}</span>],
-              ["Prüfsumme", <span key="hash" className="font-mono text-xs text-sva-gray-300">{antrag.pruefsumme}</span>],
-              ["Antrags-ID", <span key="aid" className="font-mono text-xs text-sva-gray-300">{antrag.antrag_id}</span>],
+              [
+                "Unterschrieben",
+                p?.unterschrieben && `${datumZeit(p.unterschrieben.zeit)} · IP ${p.unterschrieben.ip}`,
+              ],
+              [
+                "Browser",
+                p?.unterschrieben?.userAgent && (
+                  <span key="ua" className="text-sm text-sva-gray-300">
+                    {p.unterschrieben.userAgent}
+                  </span>
+                ),
+              ],
+              [
+                "Prüfsumme",
+                <span key="hash" className="font-mono text-xs text-sva-gray-300">
+                  {antrag.pruefsumme}
+                </span>,
+              ],
+              [
+                "Antrags-ID",
+                <span key="aid" className="font-mono text-xs text-sva-gray-300">
+                  {antrag.antrag_id}
+                </span>,
+              ],
             ]}
           />
         </Abschnitt>

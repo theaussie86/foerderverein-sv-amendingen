@@ -28,7 +28,10 @@ export async function sendMail(mail: Mail): Promise<void> {
   // MAIL_FROM enthält nur die Adresse, der Anzeigename kommt aus den Vereinsdaten.
   const { error } = await resend.emails.send({
     from: `"${verein.name}" <${process.env.MAIL_FROM}>`,
-    to: mail.to.split(",").map((a) => a.trim()).filter(Boolean),
+    to: mail.to
+      .split(",")
+      .map((a) => a.trim())
+      .filter(Boolean),
     replyTo: mail.replyTo ?? verein.email,
     subject: mail.subject,
     text: mail.text,
