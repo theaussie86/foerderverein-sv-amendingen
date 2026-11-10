@@ -198,3 +198,36 @@ _Vermeiden_: Gläubiger-Identifikationsnummer, Creditor-ID
 **Kontoinhaber**:
 Die Person, von deren Konto die Lastschrift abgeht und die das Mandat unterschreibt. Muss nicht das Mitglied sein.
 _Vermeiden_: Zahler, Zahlungspflichtiger, Debitor
+
+## Mittelverwendung
+
+**Mittel**:
+Alle Einnahmen des Fördervereins, also Mitgliedsbeiträge, Spenden und Sponsoring.
+_Vermeiden_: Gelder, Vereinsvermögen
+
+**Mittelverwendung**:
+Oberbegriff dafür, wofür der Förderverein seine Mittel ausgibt.
+_Vermeiden_: Ausgaben, Investitionen, Ausschüttung
+
+**Förderzweck** (vorläufig, bis die Satzung vorliegt):
+Der in der Satzung festgelegte Zweck des Fördervereins: die Fußballabteilung des SV Amendingen zu fördern. Die Jugend ist ein Schwerpunkt, keine Grenze. Jedes Förderprojekt muss zum Förderzweck passen.
+_Vermeiden_: Vereinszweck, Satzungszweck
+
+**Förderprojekt**:
+Eine einzelne Mittelverwendung mit Titel, Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung.
+_Vermeiden_: Spendenprojekt, Maßnahme, Aktion
+
+**Zuschuss** (vorläufig, bis der Vorstand bestätigt):
+Förderprojekt, bei dem der Förderverein Geld an den SV Amendingen gibt und der SV Amendingen selbst bezahlt. Empfänger ist rechtlich der SV Amendingen, bestimmt ist das Geld für die Fußballabteilung. Rechtlich eine Mittelweitergabe.
+_Vermeiden_: Mittelweitergabe (im Alltag), Überweisung an den Verein
+
+**Anschaffung** (vorläufig, bis der Vorstand bestätigt):
+Förderprojekt, bei dem der Förderverein selbst einkauft und die Sache an die Fußballabteilung übergibt, zum Beispiel Bälle und Hütchen.
+_Vermeiden_: Kauf, Beschaffung
+
+**Zweckgebundene Spende** (vorläufig, bis der Vorstand entscheidet):
+Spende, deren Verwendung der Spender verbindlich festlegt, zum Beispiel „für die Trikots der C-Jugend“. Der Förderverein darf sie nur dafür ausgeben. Er nimmt sie nur an, wenn die Verwendung zum Förderzweck passt.
+_Vermeiden_: Zweckspende, Spende mit Auflage
+
+**Verwendungswunsch**:
+Unverbindliche Bitte eines Spenders, wofür seine Spende eingesetzt werden soll. Bindet den Förderverein nicht, anders als eine zweckgebundene Spende.
