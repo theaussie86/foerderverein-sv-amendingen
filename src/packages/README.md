@@ -11,7 +11,7 @@ src/packages/
     tests/          ← Tests und Fixtures (Unterordner, also privat).
 ```
 
-`src/packages/example/` ist eine Vorlage zum Kopieren oder Löschen.
+`src/packages/beleganfrage/` ist das erste Paket und taugt als Vorlage.
 
 **Keine Barrel-Dateien.** Statt einen ganzen Unterbaum über eine große `index.ts` zu re-exportieren, lieber mehrere kleine Entry Points (`index.ts`, `client.ts`, `server.ts`) anlegen. Ein neuer Entry Point ist einfach eine neue Datei im Paketordner.
 

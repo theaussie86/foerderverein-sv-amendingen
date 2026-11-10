@@ -4,7 +4,8 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { beleganfrageSchema, type BeleganfrageFormData } from "@/lib/schemas";
-import { spendenGrenzeVereinfacht, verein } from "@/lib/verein";
+import { spendenGrenzeVereinfacht } from "@/packages/beleganfrage/anzeige";
+import { verein } from "@/lib/verein";
 import { belegAnfordern } from "./actions";
 
 const inputCls =
