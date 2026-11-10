@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { Antrag, Sitzung } from "@/lib/antrag";
+import { antragSchema, type Sitzung } from "@/lib/antrag";
 import { clientInfo } from "@/lib/request";
 import { formatIban } from "@/lib/schemas";
 import { seal, unseal } from "@/lib/token";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function UnterschreibenPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
-  const antrag = unseal<Antrag>(token);
+  const antrag = unseal(token, antragSchema);
 
   if (!antrag) {
     return (
@@ -41,8 +41,8 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
     ["Name", `${d.vorname} ${d.nachname}`],
     ["Anschrift", `${d.strasse}, ${d.plz} ${d.ort}`],
     ["E-Mail", d.email],
-    ...(d.geburtsdatum ? [["Geburtsdatum", new Date(d.geburtsdatum).toLocaleDateString("de-DE")] as [string, string]] : []),
   ];
+  if (d.geburtsdatum) zeilen.push(["Geburtsdatum", new Date(d.geburtsdatum).toLocaleDateString("de-DE")]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">

@@ -1,29 +1,28 @@
 "use server";
 
-import type { Antrag, Protokoll, Sitzung } from "@/lib/antrag";
+import { antragSchema, sitzungSchema, type Protokoll } from "@/lib/antrag";
 import { sendMail } from "@/lib/mail";
 import { erzeugeBeitrittPdf, erzeugeMandatPdf, pruefsumme } from "@/lib/pdf";
 import { antragSpeichern } from "@/lib/pocketbase";
 import { clientInfo } from "@/lib/request";
+import { UNTERSCHRIFT_PREFIX, unterschriftSchema } from "@/lib/schemas";
 import { unseal } from "@/lib/token";
 import { mitgliedsbeitrag, verein } from "@/lib/verein";
 
 const MAX_BILD_BYTES = 500_000;
 
-export async function unterschreiben(
-  token: string,
-  sitzungToken: string,
-  unterschriftDataUrl: string,
-): Promise<{ ok: true } | { ok: false; fehler: string }> {
-  const antrag = unseal<Antrag>(token);
-  const sitzung = unseal<Sitzung>(sitzungToken);
+export async function unterschreiben(eingabe: unknown): Promise<{ ok: true } | { ok: false; fehler: string }> {
+  const parsed = unterschriftSchema.safeParse(eingabe);
+  if (!parsed.success) return { ok: false, fehler: parsed.error.issues[0]?.message ?? "Bitte prüf deine Unterschrift." };
+  const { token, sitzungToken, unterschrift } = parsed.data;
+
+  const antrag = unseal(token, antragSchema);
+  const sitzung = unseal(sitzungToken, sitzungSchema);
   if (!antrag || !sitzung || sitzung.antragId !== antrag.id) {
     return { ok: false, fehler: "Der Link ist abgelaufen oder ungültig. Bitte stell den Antrag erneut." };
   }
 
-  const prefix = "data:image/png;base64,";
-  if (!unterschriftDataUrl.startsWith(prefix)) return { ok: false, fehler: "Bitte unterschreib im Feld." };
-  const png = Buffer.from(unterschriftDataUrl.slice(prefix.length), "base64");
+  const png = Buffer.from(unterschrift.slice(UNTERSCHRIFT_PREFIX.length), "base64");
   if (png.length === 0 || png.length > MAX_BILD_BYTES) return { ok: false, fehler: "Die Unterschrift konnte nicht verarbeitet werden." };
 
   const { ip, userAgent } = await clientInfo();

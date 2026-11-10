@@ -1,11 +1,15 @@
 import "server-only";
 import PocketBase, { ClientResponseError } from "pocketbase";
+import { z } from "zod";
 import type { Antrag, Protokoll } from "@/lib/antrag";
 
 // Die Website spricht PocketBase nur serverseitig und als eigener Superuser an.
 // Ohne POCKETBASE_URL (lokale Entwicklung) wird nichts gespeichert.
 
 let client: PocketBase | null = null;
+
+// Antwort von PocketBase bei Validierungsfehlern: { data: { feld: { code, message } } }.
+const feldfehler = z.object({ data: z.record(z.string(), z.object({ code: z.string() }).partial()) });
 
 async function pocketbase(): Promise<PocketBase | null> {
   const url = process.env.POCKETBASE_URL;
@@ -70,7 +74,7 @@ export async function antragSpeichern(
     return "gespeichert";
   } catch (e) {
     // Derselbe Link wurde schon einmal unterschrieben. PocketBase meldet nicht immer jedes Unique-Feld.
-    const felder = e instanceof ClientResponseError ? e.response?.data : undefined;
+    const felder = e instanceof ClientResponseError ? feldfehler.safeParse(e.response).data?.data : undefined;
     if (["antrag_id", "mandatsreferenz"].some((f) => felder?.[f]?.code === "validation_not_unique")) {
       return "bereits-vorhanden";
     }

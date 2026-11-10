@@ -18,7 +18,7 @@ export default function MitgliedWerdenPage() {
 
   const { register, handleSubmit, trigger, getValues, setValue, formState: { errors, isSubmitting } } = useForm<MitgliedFormData>({
     resolver: zodResolver(mitgliedSchema),
-    defaultValues: { vorname: "", nachname: "", strasse: "", plz: "", ort: "", email: "", geburtsdatum: "", kontoinhaber: "", iban: "", website: "", mandat: undefined as unknown as true, datenschutz: undefined as unknown as true },
+    defaultValues: { vorname: "", nachname: "", strasse: "", plz: "", ort: "", email: "", geburtsdatum: "", kontoinhaber: "", iban: "", website: "", mandat: false, datenschutz: false },
   });
 
   async function goToStep2() {
@@ -74,7 +74,7 @@ export default function MitgliedWerdenPage() {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 sm:p-8">
+      <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className="mt-8 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 sm:p-8">
         {step === 1 && (
           <>
             <h2 className="text-xl font-semibold text-white">Persönliche Daten</h2>
@@ -121,7 +121,7 @@ export default function MitgliedWerdenPage() {
               </div>
             </div>
             <div className="mt-8 flex gap-3">
-              <button type="button" onClick={goToStep2} className="flex-1 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">Weiter zum Lastschriftmandat</button>
+              <button type="button" onClick={() => void goToStep2()} className="flex-1 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">Weiter zum Lastschriftmandat</button>
             </div>
           </>
         )}

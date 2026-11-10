@@ -40,7 +40,7 @@ export type Beleganfrage = RecordModel & {
 };
 
 export function istAnfrageStatus(wert: string | undefined): wert is AnfrageStatus {
-  return ANFRAGE_STATUS.includes(wert as AnfrageStatus);
+  return ANFRAGE_STATUS.some((s) => s === wert);
 }
 
 export const PRO_SEITE = 25;

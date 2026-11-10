@@ -29,12 +29,9 @@ export const mitgliedSchema = z.object({
   iban: z
     .string()
     .refine((v) => isValidIban(normalizeIban(v)), "Bitte eine gültige IBAN eingeben."),
-  mandat: z.literal(true, {
-    error: "Bitte erteil das SEPA-Lastschriftmandat.",
-  }),
-  datenschutz: z.literal(true, {
-    error: "Bitte stimm der Datenschutzerklärung zu.",
-  }),
+  // boolean statt literal(true), damit das Formular mit false starten kann.
+  mandat: z.boolean().refine((v) => v, "Bitte erteil das SEPA-Lastschriftmandat."),
+  datenschutz: z.boolean().refine((v) => v, "Bitte stimm der Datenschutzerklärung zu."),
   // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer.
   website: z.string().max(0).optional(),
 });
@@ -69,3 +66,32 @@ export const kontaktSchema = z.object({
 });
 
 export type KontaktFormData = z.infer<typeof kontaktSchema>;
+
+// Unterschrift auf /unterschreiben/[token]. Browser und Server Action prüfen mit demselben Schema.
+export const UNTERSCHRIFT_PREFIX = "data:image/png;base64,";
+export const unterschriftSchema = z.object({
+  token: z.string().min(1),
+  sitzungToken: z.string().min(1),
+  unterschrift: z.string().startsWith(UNTERSCHRIFT_PREFIX, "Bitte unterschreib im Feld."),
+  bestaetigt: z.literal(true, { error: "Bitte bestätige, dass du verbindlich unterschreibst." }),
+});
+
+export type UnterschriftEingabe = z.infer<typeof unterschriftSchema>;
+
+// Anmeldung im internen Bereich per Einmal-Code. Zwei Schritte, unterschieden über "modus".
+const loginEmail = z.string().trim().email("Bitte eine gültige E-Mail-Adresse eingeben.");
+
+export const loginSchema = z.discriminatedUnion("modus", [
+  z.object({ modus: z.literal("code-anfordern"), email: loginEmail }),
+  z.object({
+    modus: z.literal("code-pruefen"),
+    email: loginEmail,
+    otpId: z.string().min(1),
+    code: z
+      .string()
+      .transform((c) => c.replace(/\s/g, ""))
+      .pipe(z.string().regex(/^\d{6}$/, "Der Code hat 6 Ziffern.")),
+  }),
+]);
+
+export type LoginEingabe = z.infer<typeof loginSchema>;

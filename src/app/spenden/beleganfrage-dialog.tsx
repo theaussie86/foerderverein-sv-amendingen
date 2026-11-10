@@ -72,7 +72,7 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
               </button>
             </>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
+            <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className="mt-4 space-y-4">
               <p className="text-sm text-sva-gray-300">
                 Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir bis {spendenGrenzeVereinfacht} € den
                 Spendenbeleg per E-Mail. Für höhere Beträge stellen wir eine Zuwendungsbestätigung aus.

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import SignaturePad from "signature_pad";
+import { unterschriftSchema } from "@/lib/schemas";
 import { unterschreiben } from "./actions";
 
 type Status = "offen" | "sendet" | "fertig";
@@ -128,9 +129,14 @@ function UnterschriftModal({
   async function absenden() {
     const pad = padRef.current;
     if (!pad || pad.isEmpty()) return;
+    const eingabe = unterschriftSchema.safeParse({ token, sitzungToken, unterschrift: pad.toDataURL("image/png"), bestaetigt });
+    if (!eingabe.success) {
+      setFehler(eingabe.error.issues[0]?.message ?? "Bitte prüf deine Unterschrift.");
+      return;
+    }
     onStatus("sendet");
     setFehler(null);
-    const ergebnis = await unterschreiben(token, sitzungToken, pad.toDataURL("image/png"));
+    const ergebnis = await unterschreiben(eingabe.data);
     if (ergebnis.ok) {
       onStatus("fertig");
     } else {
@@ -177,7 +183,7 @@ function UnterschriftModal({
           </button>
           <button
             type="button"
-            onClick={absenden}
+            onClick={() => void absenden()}
             disabled={leer || !bestaetigt || sendet}
             className="flex-1 rounded-md bg-sva-gold px-6 py-3 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:cursor-not-allowed disabled:opacity-50"
           >

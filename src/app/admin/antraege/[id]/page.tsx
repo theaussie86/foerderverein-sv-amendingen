@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
-import { antragLaden, DATEIEN, datum, datumZeit, type Dateifeld } from "@/lib/antraege";
+import { antragLaden, DATEIEN, datum, datumZeit, istDateifeld, type Dateifeld } from "@/lib/antraege";
 import { formatIban } from "@/lib/schemas";
 import { StatusBadge } from "../../status-badge";
 
@@ -65,7 +65,7 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
       <div className="mt-10 grid gap-6">
         <Abschnitt titel="Dokumente">
           <ul className="divide-y divide-sva-gray-700">
-            {(Object.keys(DATEIEN) as Dateifeld[]).map((feld) => (
+            {Object.keys(DATEIEN).filter(istDateifeld).map((feld) => (
               <li key={feld} className="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0">
                 <span className="text-white">{DATEIEN[feld]}</span>
                 {antrag[feld] ? (

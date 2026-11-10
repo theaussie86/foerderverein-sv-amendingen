@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, type FormEvent } from "react";
+import { loginSchema } from "@/lib/schemas";
 import { anmelden, type LoginZustand } from "../actions";
 
 const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
@@ -10,11 +11,25 @@ const formCls = "mt-8 space-y-5 rounded-lg border border-sva-gray-700 bg-sva-cha
 
 export function LoginFormular() {
   const [zustand, aktion, laeuft] = useActionState<LoginZustand, FormData>(anmelden, { schritt: "start" });
-  const fehler = zustand.fehler && <p role="alert" className="text-sm text-red-400">{zustand.fehler}</p>;
+  const [eingabefehler, setEingabefehler] = useState<string | null>(null);
+  const meldung = eingabefehler ?? zustand.fehler;
+  const fehler = meldung && <p role="alert" className="text-sm text-red-400">{meldung}</p>;
+
+  // Dasselbe Schema wie die Server Action. Bei Fehlern wird nichts gesendet.
+  function pruefen(e: FormEvent<HTMLFormElement>) {
+    const submitter = e.nativeEvent instanceof SubmitEvent ? e.nativeEvent.submitter : null;
+    const ergebnis = loginSchema.safeParse(Object.fromEntries(new FormData(e.currentTarget, submitter)));
+    if (ergebnis.success) {
+      setEingabefehler(null);
+    } else {
+      e.preventDefault();
+      setEingabefehler(ergebnis.error.issues[0]?.message ?? "Bitte die Eingaben prüfen.");
+    }
+  }
 
   if (zustand.schritt === "code") {
     return (
-      <form action={aktion} className={formCls}>
+      <form action={aktion} onSubmit={pruefen} className={formCls}>
         <input type="hidden" name="email" value={zustand.email} />
         <input type="hidden" name="otpId" value={zustand.otpId} />
         <p className="text-sm text-sva-gray-300">
@@ -37,7 +52,7 @@ export function LoginFormular() {
   }
 
   return (
-    <form action={aktion} className={formCls}>
+    <form action={aktion} onSubmit={pruefen} className={formCls}>
       <div>
         <label htmlFor="email" className="text-sm font-medium text-sva-gray-200">E-Mail</label>
         <input id="email" name="email" type="email" autoComplete="email" required autoFocus defaultValue={zustand.email} className={inputCls} />

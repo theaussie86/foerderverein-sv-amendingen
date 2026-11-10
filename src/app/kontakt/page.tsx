@@ -42,7 +42,7 @@ export default function KontaktPage() {
               <button type="button" onClick={() => setGesendet(false)} className="mt-4 text-sm text-sva-gold hover:text-sva-gold-light">Weitere Nachricht schreiben</button>
             </div>
           ) : (
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
+          <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className="mt-6 space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="contact-name" className="block text-sm font-medium text-sva-gray-300">Name *</label>
