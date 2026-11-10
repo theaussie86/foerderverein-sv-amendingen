@@ -52,7 +52,28 @@ _Vermeiden_: Revisor, Rechnungsprüfer
 ## Spenden
 
 **Spende**:
-Eine einzelne Überweisung eines Spenders auf das Vereinskonto.
+Eine freiwillige Zuwendung an den Förderverein ohne Gegenleistung, als Geldspende oder Sachspende. Eine Spende braucht keine Beleganfrage, die meisten haben keine.
+
+**Geldspende**:
+Spende in Geld, per Überweisung auf das Vereinskonto oder bar.
+_Vermeiden_: Barspende (als eigener Begriff)
+
+**Sachspende** (vorläufig, ob es sie gibt, ist noch offen):
+Spende in Form einer Sache statt Geld, zum Beispiel Trikots oder Bälle.
+
+**Aufwandsspende** (vorläufig, ob es sie gibt, ist noch offen):
+Verzicht eines Ehrenamtlichen auf eine Erstattung, die ihm der Förderverein vorher zugesagt hat, zum Beispiel für Fahrtkosten. Gilt als Geldspende.
+
+**Spender**:
+Die Person, von der eine Spende kommt und auf die der Spendenbeleg ausgestellt wird. Ein Mitglied ist bei einer zusätzlichen Spende auch Spender. Wer das Geld überweist, ist nicht automatisch der Spender.
+_Vermeiden_: Gönner, Sponsor, Förderer
+
+**Zuwendung**:
+Gesetzlicher Oberbegriff für Spende und Mitgliedsbeitrag. Der Förderverein benutzt das Wort nur in „Zuwendungsbestätigung“ und sagt sonst Spende.
+_Vermeiden_: Zuwendung (allein, für eine Spende)
+
+**Sponsoring**:
+Zahlung mit Gegenleistung, etwa Werbung auf Trikot oder Bande. Keine Spende, bekommt keinen Spendenbeleg.
 
 **Spendenbeleg**:
 Oberbegriff für das Dokument, mit dem ein Spender seine Spende beim Finanzamt nachweist. Es gilt immer für genau eine Spende.
@@ -60,12 +81,21 @@ _Vermeiden_: Quittung, Spendenquittung, Spendenbescheinigung
 
 **Vereinfachter Spendenbeleg**:
 Spendenbeleg für eine Spende bis 300 €, der zusammen mit dem Kontoauszug des Spenders gilt.
+_Vermeiden_: vereinfachter Zuwendungsnachweis
 
-**Zuwendungsbestätigung**:
-Spendenbeleg nach amtlichem Muster für eine Spende über 300 €, ausgestellt vom Vorstand.
+**Zuwendungsbestätigung** (Betragsgrenze vorläufig):
+Spendenbeleg nach amtlichem Muster, für jeden Betrag zulässig. Der Förderverein stellt sie nur für Spenden über 300 € aus.
+
+**Sammelbestätigung** (vorläufig):
+Zuwendungsbestätigung über mehrere Spenden eines Spenders. Gibt es beim Förderverein nicht.
+_Vermeiden_: Jahresbeleg, Jahresbescheinigung
+
+**Belegnummer**:
+Eindeutige Kennung eines Spendenbelegs, steht auf dem Beleg. Muss nicht fortlaufend sein.
+_Vermeiden_: Beleg-Nr. (in Texten)
 
 **Beleganfrage**:
-Der Wunsch eines Spenders, für eine bestimmte Spende einen Spendenbeleg zu bekommen. Mehrere Spenden ergeben mehrere Beleganfragen.
+Der Wunsch eines Spenders, für eine bestimmte Spende einen Spendenbeleg zu bekommen. Mehrere Spenden ergeben mehrere Beleganfragen. Der Spender stellt sie über die Website, oder der Vorstand erfasst sie für ihn, wenn der Wunsch per Mail oder mündlich kommt.
 
 **Offen**:
 Beleganfrage, die noch niemand vom Vorstand geprüft hat.
