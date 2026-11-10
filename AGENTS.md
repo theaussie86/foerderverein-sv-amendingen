@@ -22,6 +22,10 @@ Die fünf Standard-Labels (`needs-triage`, `needs-info`, `ready-for-agent`, `rea
 
 Single-context: `GLOSSARY.md` und `docs/adr/` im Repo-Root. See `docs/agents/domain.md`.
 
+## Pakete
+
+Pakete sind Deep Modules: vor dem Anlegen oder Importieren eines Pakets [src/packages/README.md](./src/packages/README.md) lesen.
+
 ## Checks
 
 Vor jedem Commit `bun run check` ausführen und erst bei grünem Ergebnis committen. Der Befehl prüft Formatierung, Lint (ohne Warnungen), Typen und Tests.

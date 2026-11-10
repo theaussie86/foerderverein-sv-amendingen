@@ -15,8 +15,9 @@
     "format:check": "prettier --check .",
     "lint": "bun run typegen && eslint . --max-warnings=0",
     "typecheck": "bun run typegen && tsc --noEmit",
+    "lint:boundaries": "depcruise src",
     "test": "bun test",
-    "check": "bun run format:check && bun run lint && bun run typecheck && bun run test"
+    "check": "bun run format:check && bun run lint && bun run typecheck && bun run lint:boundaries && bun run test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -41,6 +42,7 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dependency-cruiser": "^18.7.2",
     "eslint": "^9",
     "eslint-config-next": "^16",
     "husky": "^9.1.7",
