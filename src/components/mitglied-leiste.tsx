@@ -32,7 +32,7 @@ export function MitgliedLeiste({ beitrag }: { beitrag: number }) {
       <Link
         href="/mitglied-werden"
         tabIndex={sichtbar ? 0 : -1}
-        className="block rounded-md bg-sva-gold px-6 py-3.5 text-center text-sm font-black uppercase tracking-wide text-sva-charcoal-dark"
+        className="block rounded-md bg-sva-gold px-6 py-3.5 text-center text-sm font-black tracking-wide text-sva-charcoal-dark uppercase"
       >
         Mitglied werden · {beitrag} € im Jahr
       </Link>

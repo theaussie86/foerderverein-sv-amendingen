@@ -7,14 +7,21 @@ import { beleganfrageSchema, type BeleganfrageFormData } from "@/lib/schemas";
 import { spendenGrenzeVereinfacht, verein } from "@/lib/verein";
 import { belegAnfordern } from "./actions";
 
-const inputCls = "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
+const inputCls =
+  "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 
 export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [gesendet, setGesendet] = useState<"vereinfacht" | "zuwendungsbestaetigung" | null>(null);
   const [fehler, setFehler] = useState<string | null>(null);
 
-  const { register, handleSubmit, reset, setValue, formState: { errors, isSubmitting } } = useForm<BeleganfrageFormData>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<BeleganfrageFormData>({
     resolver: zodResolver(beleganfrageSchema),
     defaultValues: { name: "", strasse: "", plz: "", ort: "", email: "", datum: "", website: "" },
   });
@@ -44,7 +51,7 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
       <button
         type="button"
         onClick={oeffnen}
-        className="mt-6 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light"
+        className="mt-6 rounded-md bg-sva-green px-6 py-3 text-sm font-semibold text-white uppercase transition-colors hover:bg-sva-green-light"
       >
         Jetzt Spendenbeleg anfordern
       </button>
@@ -57,7 +64,14 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
         <div className="p-6 sm:p-8">
           <div className="flex items-start justify-between gap-4">
             <h2 className="text-xl font-semibold text-white">Spendenbeleg anfordern</h2>
-            <button type="button" onClick={schliessen} aria-label="Schließen" className="text-2xl leading-none text-sva-gray-400 hover:text-white">&times;</button>
+            <button
+              type="button"
+              onClick={schliessen}
+              aria-label="Schließen"
+              className="text-2xl leading-none text-sva-gray-400 hover:text-white"
+            >
+              &times;
+            </button>
           </div>
 
           {gesendet ? (
@@ -67,56 +81,105 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
                   ? "Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir den Spendenbeleg per E-Mail. Heb ihn zusammen mit deinem Kontoauszug für die Steuererklärung auf."
                   : "Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir die Zuwendungsbestätigung zu."}
               </p>
-              <button type="button" onClick={schliessen} className="mt-6 w-full rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-sva-green-light">
+              <button
+                type="button"
+                onClick={schliessen}
+                className="mt-6 w-full rounded-md bg-sva-green px-6 py-3 text-sm font-semibold text-white uppercase transition-colors hover:bg-sva-green-light"
+              >
                 Schließen
               </button>
             </>
           ) : (
             <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className="mt-4 space-y-4">
               <p className="text-sm text-sva-gray-300">
-                Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir bis {spendenGrenzeVereinfacht} € den
-                Spendenbeleg per E-Mail. Für höhere Beträge stellen wir eine Zuwendungsbestätigung aus.
+                Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir bis{" "}
+                {spendenGrenzeVereinfacht} € den Spendenbeleg per E-Mail. Für höhere Beträge stellen wir eine
+                Zuwendungsbestätigung aus.
               </p>
               <p className="rounded-md border border-sva-gray-700 bg-sva-charcoal px-4 py-3 font-mono text-xs leading-relaxed text-sva-gray-200">
-                {verein.bank.kontoinhaber}<br />
-                IBAN {verein.bank.iban}<br />
+                {verein.bank.kontoinhaber}
+                <br />
+                IBAN {verein.bank.iban}
+                <br />
                 BIC {verein.bank.bic}, {verein.bank.name}
               </p>
               <div>
-                <label htmlFor="q-name" className="block text-sm font-medium text-sva-gray-300">Vor- und Nachname *</label>
+                <label htmlFor="q-name" className="block text-sm font-medium text-sva-gray-300">
+                  Vor- und Nachname *
+                </label>
                 <input id="q-name" type="text" autoComplete="name" {...register("name")} className={inputCls} />
                 {errors.name && <p className="mt-1 text-xs text-red-400">{errors.name.message}</p>}
               </div>
               <div>
-                <label htmlFor="q-strasse" className="block text-sm font-medium text-sva-gray-300">Straße & Hausnummer *</label>
-                <input id="q-strasse" type="text" autoComplete="street-address" {...register("strasse")} className={inputCls} />
+                <label htmlFor="q-strasse" className="block text-sm font-medium text-sva-gray-300">
+                  Straße & Hausnummer *
+                </label>
+                <input
+                  id="q-strasse"
+                  type="text"
+                  autoComplete="street-address"
+                  {...register("strasse")}
+                  className={inputCls}
+                />
                 {errors.strasse && <p className="mt-1 text-xs text-red-400">{errors.strasse.message}</p>}
               </div>
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
-                  <label htmlFor="q-plz" className="block text-sm font-medium text-sva-gray-300">PLZ *</label>
-                  <input id="q-plz" type="text" inputMode="numeric" maxLength={5} autoComplete="postal-code" {...register("plz")} className={inputCls} />
+                  <label htmlFor="q-plz" className="block text-sm font-medium text-sva-gray-300">
+                    PLZ *
+                  </label>
+                  <input
+                    id="q-plz"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={5}
+                    autoComplete="postal-code"
+                    {...register("plz")}
+                    className={inputCls}
+                  />
                   {errors.plz && <p className="mt-1 text-xs text-red-400">{errors.plz.message}</p>}
                 </div>
                 <div className="sm:col-span-2">
-                  <label htmlFor="q-ort" className="block text-sm font-medium text-sva-gray-300">Ort *</label>
-                  <input id="q-ort" type="text" autoComplete="address-level2" {...register("ort")} className={inputCls} />
+                  <label htmlFor="q-ort" className="block text-sm font-medium text-sva-gray-300">
+                    Ort *
+                  </label>
+                  <input
+                    id="q-ort"
+                    type="text"
+                    autoComplete="address-level2"
+                    {...register("ort")}
+                    className={inputCls}
+                  />
                   {errors.ort && <p className="mt-1 text-xs text-red-400">{errors.ort.message}</p>}
                 </div>
               </div>
               <div>
-                <label htmlFor="q-email" className="block text-sm font-medium text-sva-gray-300">E-Mail *</label>
+                <label htmlFor="q-email" className="block text-sm font-medium text-sva-gray-300">
+                  E-Mail *
+                </label>
                 <input id="q-email" type="email" autoComplete="email" {...register("email")} className={inputCls} />
                 {errors.email && <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>}
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="q-betrag" className="block text-sm font-medium text-sva-gray-300">Überwiesener Betrag (€) *</label>
-                  <input id="q-betrag" type="number" min="1" step="0.01" inputMode="decimal" {...register("betrag", { valueAsNumber: true })} className={inputCls} />
+                  <label htmlFor="q-betrag" className="block text-sm font-medium text-sva-gray-300">
+                    Überwiesener Betrag (€) *
+                  </label>
+                  <input
+                    id="q-betrag"
+                    type="number"
+                    min="1"
+                    step="0.01"
+                    inputMode="decimal"
+                    {...register("betrag", { valueAsNumber: true })}
+                    className={inputCls}
+                  />
                   {errors.betrag && <p className="mt-1 text-xs text-red-400">{errors.betrag.message}</p>}
                 </div>
                 <div>
-                  <label htmlFor="q-datum" className="block text-sm font-medium text-sva-gray-300">Überwiesen am *</label>
+                  <label htmlFor="q-datum" className="block text-sm font-medium text-sva-gray-300">
+                    Überwiesen am *
+                  </label>
                   <input id="q-datum" type="date" {...register("datum")} className={inputCls} />
                   {errors.datum && <p className="mt-1 text-xs text-red-400">{errors.datum.message}</p>}
                 </div>
@@ -128,9 +191,16 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
               </div>
               <p className="text-xs text-sva-gray-400">
                 Deine Angaben verwenden wir nur für die Zuwendungsbestätigung, siehe{" "}
-                <a href="/datenschutz" className="text-sva-gold underline hover:text-sva-gold-light">Datenschutzerklärung</a>.
+                <a href="/datenschutz" className="text-sva-gold underline hover:text-sva-gold-light">
+                  Datenschutzerklärung
+                </a>
+                .
               </p>
-              <button type="submit" disabled={isSubmitting} className="w-full rounded-md bg-sva-gold px-6 py-3 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-50">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light disabled:opacity-50"
+              >
                 {isSubmitting ? "Wird gesendet …" : "Anfrage senden"}
               </button>
               {fehler && <p className="text-sm text-red-400">{fehler}</p>}

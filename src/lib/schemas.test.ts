@@ -70,14 +70,31 @@ describe("mitgliedSchema", () => {
 
 describe("beleganfrageSchema und kontaktSchema", () => {
   test("Honeypot bleibt erlaubt, damit die Action Bots erkennen kann", () => {
-    const anfrage = { name: "A", strasse: "B", plz: "87719", ort: "C", email: "a@example.org", betrag: 50, datum: "2026-11-01", website: "spam" };
+    const anfrage = {
+      name: "A",
+      strasse: "B",
+      plz: "87719",
+      ort: "C",
+      email: "a@example.org",
+      betrag: 50,
+      datum: "2026-11-01",
+      website: "spam",
+    };
     expect(beleganfrageSchema.safeParse(anfrage).success).toBe(true);
     const kontakt = { name: "A", email: "a@example.org", nachricht: "Mindestens zehn Zeichen", website: "spam" };
     expect(kontaktSchema.safeParse(kontakt).success).toBe(true);
   });
 
   test("Beleganfrage verlangt Betrag ab 1 Euro", () => {
-    const anfrage = { name: "A", strasse: "B", plz: "87719", ort: "C", email: "a@example.org", betrag: 0, datum: "2026-11-01" };
+    const anfrage = {
+      name: "A",
+      strasse: "B",
+      plz: "87719",
+      ort: "C",
+      email: "a@example.org",
+      betrag: 0,
+      datum: "2026-11-01",
+    };
     expect(beleganfrageSchema.safeParse(anfrage).success).toBe(false);
   });
 });
@@ -94,7 +111,9 @@ describe("unterschriftSchema", () => {
   });
 
   test("lehnt andere Bildformate ab", () => {
-    expect(unterschriftSchema.safeParse({ ...eingabe, unterschrift: "data:image/jpeg;base64,AAAA" }).success).toBe(false);
+    expect(unterschriftSchema.safeParse({ ...eingabe, unterschrift: "data:image/jpeg;base64,AAAA" }).success).toBe(
+      false,
+    );
   });
 });
 

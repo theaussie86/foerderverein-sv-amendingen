@@ -56,7 +56,11 @@ export async function anmelden(_: LoginZustand, formData: FormData): Promise<Log
     return { schritt: "code", email, otpId };
   } catch (e) {
     console.error("Anmeldecode konnte nicht angefordert werden", e instanceof Error ? e.message : e);
-    return { schritt: "start", email, fehler: "Der Code konnte nicht verschickt werden. Bitte später erneut probieren." };
+    return {
+      schritt: "start",
+      email,
+      fehler: "Der Code konnte nicht verschickt werden. Bitte später erneut probieren.",
+    };
   }
 }
 

@@ -13,7 +13,8 @@ const MAX_BILD_BYTES = 500_000;
 
 export async function unterschreiben(eingabe: unknown): Promise<{ ok: true } | { ok: false; fehler: string }> {
   const parsed = unterschriftSchema.safeParse(eingabe);
-  if (!parsed.success) return { ok: false, fehler: parsed.error.issues[0]?.message ?? "Bitte prüf deine Unterschrift." };
+  if (!parsed.success)
+    return { ok: false, fehler: parsed.error.issues[0]?.message ?? "Bitte prüf deine Unterschrift." };
   const { token, sitzungToken, unterschrift } = parsed.data;
 
   const antrag = unseal(token, antragSchema);
@@ -23,7 +24,8 @@ export async function unterschreiben(eingabe: unknown): Promise<{ ok: true } | {
   }
 
   const png = Buffer.from(unterschrift.slice(UNTERSCHRIFT_PREFIX.length), "base64");
-  if (png.length === 0 || png.length > MAX_BILD_BYTES) return { ok: false, fehler: "Die Unterschrift konnte nicht verarbeitet werden." };
+  if (png.length === 0 || png.length > MAX_BILD_BYTES)
+    return { ok: false, fehler: "Die Unterschrift konnte nicht verarbeitet werden." };
 
   const { ip, userAgent } = await clientInfo();
   const protokoll: Protokoll = {
@@ -42,7 +44,15 @@ export async function unterschreiben(eingabe: unknown): Promise<{ ok: true } | {
 
   // Fällt PocketBase aus, gehen die Mails trotzdem raus. Die PDFs hängen an der Mail an den Vorstand.
   try {
-    const ergebnis = await antragSpeichern(antrag, png, anhaenge[0], anhaenge[1], protokoll, pruefsumme(antrag, png), mitgliedsbeitrag);
+    const ergebnis = await antragSpeichern(
+      antrag,
+      png,
+      anhaenge[0],
+      anhaenge[1],
+      protokoll,
+      pruefsumme(antrag, png),
+      mitgliedsbeitrag,
+    );
     if (ergebnis === "bereits-vorhanden") return { ok: true };
   } catch (e) {
     console.error(`Speichern des Antrags ${antrag.id} in PocketBase fehlgeschlagen`, e);

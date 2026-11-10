@@ -19,12 +19,15 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
   if (!antrag) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Link ungültig</h1>
+        <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Link ungültig</h1>
         <div className="mt-2 h-1 w-16 bg-sva-gold" />
         <p className="mt-6 text-lg text-sva-gray-300">
           Dieser Link ist abgelaufen oder ungültig. Bitte füll den Mitgliedsantrag erneut aus.
         </p>
-        <Link href="/mitglied-werden" className="mt-8 inline-block rounded-md bg-sva-green px-6 py-3 text-sm font-semibold uppercase text-white hover:bg-sva-green-light">
+        <Link
+          href="/mitglied-werden"
+          className="mt-8 inline-block rounded-md bg-sva-green px-6 py-3 text-sm font-semibold text-white uppercase hover:bg-sva-green-light"
+        >
           Zum Mitgliedsantrag
         </Link>
       </div>
@@ -46,7 +49,7 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Beitrittserklärung unterschreiben</h1>
+      <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Beitrittserklärung unterschreiben</h1>
       <div className="mt-2 h-1 w-16 bg-sva-gold" />
       <p className="mt-4 text-lg text-sva-gray-300">Bitte prüf deine Angaben und unterschreib unten.</p>
 

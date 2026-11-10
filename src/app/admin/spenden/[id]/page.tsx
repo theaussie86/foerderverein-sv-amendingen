@@ -30,17 +30,30 @@ export default async function SpendenbelegPage({
 
   const ausgestelltVon = beleg.expand?.ausgestellt_von;
   const felder: [string, ReactNode][] = [
-    ["Beleg-Nr.", <span key="nr" className="font-mono">{beleg.id}</span>],
+    [
+      "Beleg-Nr.",
+      <span key="nr" className="font-mono">
+        {beleg.id}
+      </span>,
+    ],
     ["Betrag", euro(beleg.betrag)],
     ["Überwiesen am", datum(beleg.ueberwiesen_am)],
     ["Art", BELEG_ART_LABEL[beleg.art]],
     ["Name", beleg.name],
     ["Anschrift", `${beleg.strasse}, ${beleg.plz} ${beleg.ort}`],
-    ["E-Mail", <a key="mail" href={`mailto:${beleg.email}`} className="text-sva-gold hover:text-sva-gold-light">{beleg.email}</a>],
+    [
+      "E-Mail",
+      <a key="mail" href={`mailto:${beleg.email}`} className="text-sva-gold hover:text-sva-gold-light">
+        {beleg.email}
+      </a>,
+    ],
     ["Angefragt", datumZeit(beleg.created)],
   ];
   if (beleg.status !== "offen" && beleg.ausgestellt_am) {
-    felder.push(["Erledigt", `${datumZeit(beleg.ausgestellt_am)}${ausgestelltVon ? ` von ${ausgestelltVon.name}` : ""}`]);
+    felder.push([
+      "Erledigt",
+      `${datumZeit(beleg.ausgestellt_am)}${ausgestelltVon ? ` von ${ausgestelltVon.name}` : ""}`,
+    ]);
   }
 
   return (
@@ -51,9 +64,11 @@ export default async function SpendenbelegPage({
 
       <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">{beleg.name}</h1>
+          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">{beleg.name}</h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
-          <p className="mt-4 text-sva-gray-300">{euro(beleg.betrag)} vom {datum(beleg.ueberwiesen_am)}</p>
+          <p className="mt-4 text-sva-gray-300">
+            {euro(beleg.betrag)} vom {datum(beleg.ueberwiesen_am)}
+          </p>
         </div>
         <AnfrageStatusBadge status={beleg.status} className="px-4 py-1.5 text-sm" />
       </div>
@@ -66,7 +81,7 @@ export default async function SpendenbelegPage({
 
       {beleg.status === "offen" && (
         <section className="mt-10 rounded-lg border-2 border-sva-gold/60 bg-sva-charcoal-light p-6">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-sva-gold">
+          <h2 className="text-sm font-bold tracking-wide text-sva-gold uppercase">
             {beleg.art === "vereinfacht" ? "Geldeingang prüfen" : "Zuwendungsbestätigung ausstellen"}
           </h2>
           <ol className="mt-4 list-decimal space-y-1 pl-5 text-sva-gray-300">
@@ -78,7 +93,9 @@ export default async function SpendenbelegPage({
               <li>Ist sie da, bestätigen. Dann geht der Spendenbeleg automatisch an {beleg.email}.</li>
             ) : (
               <>
-                <li>Zuwendungsbestätigung nach amtlichem Muster ausstellen, unterschreiben und an den Spender schicken.</li>
+                <li>
+                  Zuwendungsbestätigung nach amtlichem Muster ausstellen, unterschreiben und an den Spender schicken.
+                </li>
                 <li>Doppel für die Vereinsunterlagen aufbewahren.</li>
               </>
             )}
@@ -99,7 +116,10 @@ export default async function SpendenbelegPage({
               </form>
             )}
             <form action={anfrageAblehnen.bind(null, beleg.id)}>
-              <button type="submit" className={`${knopf} border border-sva-gray-600 text-sva-gray-300 hover:bg-sva-charcoal`}>
+              <button
+                type="submit"
+                className={`${knopf} border border-sva-gray-600 text-sva-gray-300 hover:bg-sva-charcoal`}
+              >
                 Ablehnen
               </button>
             </form>
@@ -110,7 +130,8 @@ export default async function SpendenbelegPage({
       {beleg.status === "abgelehnt" && (
         <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
           <p className="text-sva-gray-300">
-            Auf dem Vereinskonto war keine passende Überweisung. Die Anfrage ist geschlossen, es wurde kein Beleg verschickt.
+            Auf dem Vereinskonto war keine passende Überweisung. Die Anfrage ist geschlossen, es wurde kein Beleg
+            verschickt.
           </p>
         </section>
       )}
@@ -124,10 +145,18 @@ export default async function SpendenbelegPage({
             <span className="text-white">Spendenbeleg (PDF)</span>
             {beleg.beleg_pdf ? (
               <span className="flex gap-4 text-sm font-medium">
-                <a href={`/admin/spenden/${beleg.id}/beleg`} target="_blank" rel="noopener" className="text-sva-gold hover:text-sva-gold-light">
+                <a
+                  href={`/admin/spenden/${beleg.id}/beleg`}
+                  target="_blank"
+                  rel="noopener"
+                  className="text-sva-gold hover:text-sva-gold-light"
+                >
                   Ansehen
                 </a>
-                <a href={`/admin/spenden/${beleg.id}/beleg?download=1`} className="text-sva-gold hover:text-sva-gold-light">
+                <a
+                  href={`/admin/spenden/${beleg.id}/beleg?download=1`}
+                  className="text-sva-gold hover:text-sva-gold-light"
+                >
                   Herunterladen
                 </a>
               </span>
@@ -139,7 +168,7 @@ export default async function SpendenbelegPage({
       )}
 
       <section className="mt-6 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-sva-gold">Angaben</h2>
+        <h2 className="text-sm font-bold tracking-wide text-sva-gold uppercase">Angaben</h2>
         <dl className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-[minmax(0,12rem)_1fr]">
           {felder.map(([label, wert]) => (
             <div key={label} className="contents">

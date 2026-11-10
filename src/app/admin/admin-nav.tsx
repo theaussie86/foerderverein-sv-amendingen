@@ -19,13 +19,16 @@ export async function AdminNav({ pb, aktiv }: { pb: PocketBase; aktiv: "antraege
           href={e.href}
           aria-current={e.key === aktiv ? "page" : undefined}
           className={cn(
-            "-mb-px flex items-center gap-2 border-b-2 pb-3 text-sm font-semibold uppercase tracking-wide transition-colors",
+            "-mb-px flex items-center gap-2 border-b-2 pb-3 text-sm font-semibold tracking-wide uppercase transition-colors",
             e.key === aktiv ? "border-sva-gold text-white" : "border-transparent text-sva-gray-400 hover:text-white",
           )}
         >
           {e.label}
           {!!e.zahl && (
-            <span className="rounded-full bg-sva-gold px-2 py-0.5 text-xs font-bold text-sva-charcoal-dark" aria-label={`${e.zahl} offen`}>
+            <span
+              className="rounded-full bg-sva-gold px-2 py-0.5 text-xs font-bold text-sva-charcoal-dark"
+              aria-label={`${e.zahl} offen`}
+            >
               {e.zahl}
             </span>
           )}
