@@ -2,7 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { datum, datumZeit } from "@/lib/antraege";
-import { ANFRAGE_STATUS, ANFRAGE_STATUS_LABEL, anfragenSuchen, euro, istAnfrageStatus, type AnfrageStatus } from "@/lib/beleganfragen";
+import {
+  ANFRAGE_STATUS,
+  ANFRAGE_STATUS_LABEL,
+  anfragenSuchen,
+  euro,
+  istAnfrageStatus,
+  type AnfrageStatus,
+} from "@/lib/beleganfragen";
 import { cn } from "@/lib/utils";
 import { abmelden } from "../actions";
 import { AdminNav } from "../admin-nav";
@@ -43,17 +50,20 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
       <AdminNav pb={pb} aktiv="spenden" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Spendenbelege</h1>
+          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Spendenbelege</h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 max-w-2xl text-sva-gray-300">
-            Bei jeder Anfrage zuerst den Geldeingang auf dem Vereinskonto prüfen. Bis 300 € schickt die Website
-            den Spendenbeleg nach deiner Bestätigung. Darüber die Zuwendungsbestätigung ausstellen und hier als
-            ausgestellt markieren.
+            Bei jeder Anfrage zuerst den Geldeingang auf dem Vereinskonto prüfen. Bis 300 € schickt die Website den
+            Spendenbeleg nach deiner Bestätigung. Darüber die Zuwendungsbestätigung ausstellen und hier als ausgestellt
+            markieren.
           </p>
           <p className="mt-2 text-sm text-sva-gray-400">Angemeldet als {vorstand.name || vorstand.email}.</p>
         </div>
         <form action={abmelden}>
-          <button type="submit" className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light">
+          <button
+            type="submit"
+            className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light"
+          >
             Abmelden
           </button>
         </form>
@@ -61,16 +71,21 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
 
       <form action="/admin/spenden" role="search" className="mt-10 flex flex-col gap-3 sm:flex-row">
         {status && <input type="hidden" name="status" value={status} />}
-        <label htmlFor="q" className="sr-only">Spendenbelege durchsuchen</label>
+        <label htmlFor="q" className="sr-only">
+          Spendenbelege durchsuchen
+        </label>
         <input
           id="q"
           name="q"
           type="search"
           defaultValue={q}
           placeholder="Name, E-Mail, Ort oder Straße"
-          className="w-full rounded-md border border-sva-gray-600 bg-sva-charcoal-light px-4 py-2.5 text-white placeholder:text-sva-gray-400 focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold"
+          className="w-full rounded-md border border-sva-gray-600 bg-sva-charcoal-light px-4 py-2.5 text-white placeholder:text-sva-gray-400 focus:border-sva-gold focus:ring-1 focus:ring-sva-gold focus:outline-none"
         />
-        <button type="submit" className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light">
+        <button
+          type="submit"
+          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+        >
           Suchen
         </button>
       </form>
@@ -84,7 +99,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
             className={cn(
               "rounded-full border px-4 py-1.5 text-sm transition-colors",
               s === status
-                ? "border-sva-gold bg-sva-gold text-sva-charcoal-dark font-semibold"
+                ? "border-sva-gold bg-sva-gold font-semibold text-sva-charcoal-dark"
                 : "border-sva-gray-600 text-sva-gray-300 hover:bg-sva-charcoal-light",
             )}
           >
@@ -108,14 +123,26 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
           </p>
           <div className="mt-3 overflow-x-auto rounded-lg border border-sva-gray-700">
             <table className="w-full text-left text-sm">
-              <thead className="bg-sva-charcoal-dark text-xs uppercase tracking-wide text-sva-gray-400">
+              <thead className="bg-sva-charcoal-dark text-xs tracking-wide text-sva-gray-400 uppercase">
                 <tr>
-                  <th scope="col" className="px-4 py-3 font-semibold">Name</th>
-                  <th scope="col" className="px-4 py-3 text-right font-semibold">Betrag</th>
-                  <th scope="col" className="hidden px-4 py-3 font-semibold sm:table-cell">Überwiesen am</th>
-                  <th scope="col" className="hidden px-4 py-3 font-semibold md:table-cell">E-Mail</th>
-                  <th scope="col" className="hidden px-4 py-3 font-semibold lg:table-cell">Angefragt</th>
-                  <th scope="col" className="px-4 py-3 font-semibold">Status</th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Name
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-right font-semibold">
+                    Betrag
+                  </th>
+                  <th scope="col" className="hidden px-4 py-3 font-semibold sm:table-cell">
+                    Überwiesen am
+                  </th>
+                  <th scope="col" className="hidden px-4 py-3 font-semibold md:table-cell">
+                    E-Mail
+                  </th>
+                  <th scope="col" className="hidden px-4 py-3 font-semibold lg:table-cell">
+                    Angefragt
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-sva-gray-700 bg-sva-charcoal-light">
@@ -127,11 +154,15 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                         {b.name}
                       </Link>
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-right tabular-nums text-white">{euro(b.betrag)}</td>
+                    <td className="px-4 py-3 text-right whitespace-nowrap text-white tabular-nums">{euro(b.betrag)}</td>
                     <td className="hidden px-4 py-3 text-sva-gray-300 sm:table-cell">{datum(b.ueberwiesen_am)}</td>
                     <td className="hidden px-4 py-3 text-sva-gray-300 md:table-cell">{b.email}</td>
-                    <td className="hidden px-4 py-3 whitespace-nowrap text-sva-gray-300 lg:table-cell">{datumZeit(b.created)}</td>
-                    <td className="px-4 py-3"><AnfrageStatusBadge status={b.status} /></td>
+                    <td className="hidden px-4 py-3 whitespace-nowrap text-sva-gray-300 lg:table-cell">
+                      {datumZeit(b.created)}
+                    </td>
+                    <td className="px-4 py-3">
+                      <AnfrageStatusBadge status={b.status} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -141,16 +172,28 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
           {liste.totalPages > 1 && (
             <nav aria-label="Seiten" className="mt-6 flex items-center justify-between text-sm">
               {seite > 1 ? (
-                <Link href={listenLink({ q, status, seite: seite - 1 })} className="font-medium text-sva-gold hover:text-sva-gold-light">
+                <Link
+                  href={listenLink({ q, status, seite: seite - 1 })}
+                  className="font-medium text-sva-gold hover:text-sva-gold-light"
+                >
                   ← Zurück
                 </Link>
-              ) : <span />}
-              <span className="text-sva-gray-400">Seite {seite} von {liste.totalPages}</span>
+              ) : (
+                <span />
+              )}
+              <span className="text-sva-gray-400">
+                Seite {seite} von {liste.totalPages}
+              </span>
               {seite < liste.totalPages ? (
-                <Link href={listenLink({ q, status, seite: seite + 1 })} className="font-medium text-sva-gold hover:text-sva-gold-light">
+                <Link
+                  href={listenLink({ q, status, seite: seite + 1 })}
+                  className="font-medium text-sva-gold hover:text-sva-gold-light"
+                >
                   Weiter →
                 </Link>
-              ) : <span />}
+              ) : (
+                <span />
+              )}
             </nav>
           )}
         </>

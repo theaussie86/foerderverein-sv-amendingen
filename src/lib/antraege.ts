@@ -60,7 +60,7 @@ export function istDateifeld(feld: string): feld is Dateifeld {
 }
 
 export function istStatus(wert: string | undefined): wert is Status {
-  return STATUS.includes(wert as Status);
+  return STATUS.some((s) => s === wert);
 }
 
 const SUCHFELDER = ["vorname", "nachname", "email", "ort", "plz", "strasse", "mandatsreferenz", "iban", "kontoinhaber"];

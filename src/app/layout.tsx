@@ -21,16 +21,8 @@ export const metadata: Metadata = {
     default: verein.name,
     template: "%s | Förderverein SV Amendingen",
   },
-  description:
-    `Der ${verein.name} unterstützt die Fußballabteilung des SV Amendingen finanziell und ideell. Werde Mitglied oder unterstütze uns mit einer Spende.`,
-  keywords: [
-    "Förderverein",
-    "SV Amendingen",
-    "Spenden",
-    "Fußball",
-    "Amendingen",
-    "Verein",
-  ],
+  description: `Der ${verein.name} unterstützt die Fußballabteilung des SV Amendingen finanziell und ideell. Werde Mitglied oder unterstütze uns mit einer Spende.`,
+  keywords: ["Förderverein", "SV Amendingen", "Spenden", "Fußball", "Amendingen", "Verein"],
   openGraph: {
     title: verein.name,
     description:
@@ -40,24 +32,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-sva-green focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-sva-green focus:px-4 focus:py-2 focus:text-white"
         >
           Zum Inhalt springen
         </a>
         <Header />
-        <main id="main-content" className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
         <Footer />
         <CookieHinweis />
         <script
@@ -67,8 +55,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: verein.name,
-              description:
-                "Der Förderverein unterstützt die Fußballabteilung des SV Amendingen finanziell und ideell.",
+              description: "Der Förderverein unterstützt die Fußballabteilung des SV Amendingen finanziell und ideell.",
               url: "https://foerderverein-sv-amendingen.de",
               email: verein.email,
               address: {

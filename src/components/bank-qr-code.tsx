@@ -78,7 +78,7 @@ export function BankQrCode({ amount }: { amount?: number }) {
         height={200}
         className="rounded-lg border border-sva-gray-200"
       />
-      <p className="text-xs text-sva-gray-600 text-center max-w-[200px]">
+      <p className="max-w-[200px] text-center text-xs text-sva-gray-600">
         QR-Code scannen für Überweisung
         {amount && amount > 0 ? ` (${amount} €)` : ""}
       </p>

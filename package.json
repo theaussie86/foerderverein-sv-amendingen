@@ -9,7 +9,14 @@
     "dev": "bun --bun next dev --turbopack",
     "build": "bun --bun next build",
     "start": "bun --bun next start",
-    "lint": "eslint ."
+    "prepare": "husky",
+    "typegen": "bun --bun next typegen",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "bun run typegen && eslint . --max-warnings=0",
+    "typecheck": "bun run typegen && tsc --noEmit",
+    "test": "bun test",
+    "check": "bun run format:check && bun run lint && bun run typecheck && bun run test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -30,13 +37,22 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bun": "^1.4.4",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^16",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.72.2"
   },
-  "packageManager": "bun@1.4.4"
+  "packageManager": "bun@1.4.4",
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
+  }
 }

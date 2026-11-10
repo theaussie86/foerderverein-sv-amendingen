@@ -21,13 +21,23 @@ export function pruefsumme(antrag: Antrag, unterschriftPng: Uint8Array): string 
 
 class Schreiber {
   y = A4[1] - RAND;
-  constructor(public page: PDFPage, private font: PDFFont, private bold: PDFFont) {}
+  constructor(
+    public page: PDFPage,
+    private font: PDFFont,
+    private bold: PDFFont,
+  ) {}
 
   text(s: string, opts: { size?: number; bold?: boolean; grau?: boolean } = {}) {
     const size = opts.size ?? 10;
     const font = opts.bold ? this.bold : this.font;
     for (const zeile of umbrechen(s, font, size, BREITE)) {
-      this.page.drawText(zeile, { x: RAND, y: this.y - size, size, font, color: opts.grau ? rgb(0.4, 0.4, 0.4) : rgb(0, 0, 0) });
+      this.page.drawText(zeile, {
+        x: RAND,
+        y: this.y - size,
+        size,
+        font,
+        color: opts.grau ? rgb(0.4, 0.4, 0.4) : rgb(0, 0, 0),
+      });
       this.y -= size * 1.4;
     }
   }
@@ -45,7 +55,12 @@ class Schreiber {
   }
 
   linie() {
-    this.page.drawLine({ start: { x: RAND, y: this.y }, end: { x: A4[0] - RAND, y: this.y }, thickness: 0.5, color: rgb(0.7, 0.7, 0.7) });
+    this.page.drawLine({
+      start: { x: RAND, y: this.y },
+      end: { x: A4[0] - RAND, y: this.y },
+      thickness: 0.5,
+      color: rgb(0.7, 0.7, 0.7),
+    });
     this.y -= 12;
   }
 }
@@ -83,7 +98,12 @@ async function neuesDokument(titel: string) {
   return { doc, font, bold, s };
 }
 
-async function unterschrift(doc: PDFDocument, s: Schreiber, { antrag, unterschriftPng, protokoll }: Kontext, name: string) {
+async function unterschrift(
+  doc: PDFDocument,
+  s: Schreiber,
+  { antrag, unterschriftPng, protokoll }: Kontext,
+  name: string,
+) {
   const datum = new Date(protokoll.unterschrieben.zeit).toLocaleDateString("de-DE", { timeZone: "Europe/Berlin" });
   s.feld("Ort, Datum", `${antrag.daten.ort}, ${datum}`);
   s.abstand(10);
@@ -94,10 +114,18 @@ async function unterschrift(doc: PDFDocument, s: Schreiber, { antrag, unterschri
   s.page.drawImage(bild, { x: RAND, y: s.y, width: breite, height: hoehe });
   s.abstand(4);
   s.linie();
-  s.text(`${name}, elektronisch unterschrieben am ${formatZeit(protokoll.unterschrieben.zeit)}`, { size: 8, grau: true });
+  s.text(`${name}, elektronisch unterschrieben am ${formatZeit(protokoll.unterschrieben.zeit)}`, {
+    size: 8,
+    grau: true,
+  });
 }
 
-function protokollSeite(doc: PDFDocument, font: PDFFont, bold: PDFFont, { antrag, unterschriftPng, protokoll }: Kontext) {
+function protokollSeite(
+  doc: PDFDocument,
+  font: PDFFont,
+  bold: PDFFont,
+  { antrag, unterschriftPng, protokoll }: Kontext,
+) {
   const d = antrag.daten;
   const p = new Schreiber(doc.addPage(A4), font, bold);
   p.text("Protokoll der elektronischen Unterschrift", { size: 16, bold: true });
@@ -151,7 +179,9 @@ export async function erzeugeMandatPdf(k: Kontext): Promise<Uint8Array> {
   s.abstand(8);
   s.text(mandatstext());
   s.abstand(4);
-  s.text(`Der Jahresbeitrag wird jeweils zum ${verein.einzugstermin} eingezogen (fällt dieser Tag nicht auf einen Bankarbeitstag, am folgenden Bankarbeitstag).`);
+  s.text(
+    `Der Jahresbeitrag wird jeweils zum ${verein.einzugstermin} eingezogen (fällt dieser Tag nicht auf einen Bankarbeitstag, am folgenden Bankarbeitstag).`,
+  );
   s.abstand(10);
   s.feld("Kontoinhaber", d.kontoinhaber);
   s.feld("IBAN", formatIban(d.iban));
@@ -161,7 +191,15 @@ export async function erzeugeMandatPdf(k: Kontext): Promise<Uint8Array> {
   return doc.save();
 }
 
-export type Spende = { belegNr: string; name: string; strasse: string; plz: string; ort: string; betrag: number; datum: string };
+export type Spende = {
+  belegNr: string;
+  name: string;
+  strasse: string;
+  plz: string;
+  ort: string;
+  betrag: number;
+  datum: string;
+};
 
 // Beleg für den vereinfachten Zuwendungsnachweis bis 300 € (§ 50 Abs. 4 Satz 1 Nr. 2 Buchst. b EStDV).
 // Er bestätigt keinen Geldeingang, den belegt der Kontoauszug des Spenders. Trotzdem geht er erst raus,

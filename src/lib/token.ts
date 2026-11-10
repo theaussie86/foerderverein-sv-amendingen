@@ -1,5 +1,6 @@
 import "server-only";
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "node:crypto";
+import { z } from "zod";
 
 // Verschlüsselte, zeitlich begrenzte Tokens (AES-256-GCM). Damit tragen die Links
 // in den Mails die Antragsdaten selbst, und der Server braucht keine Datenbank.
@@ -20,14 +21,16 @@ export function seal(payload: unknown, ttlSeconds: number): string {
   return Buffer.concat([iv, cipher.getAuthTag(), enc]).toString("base64url");
 }
 
-export function unseal<T>(token: string): T | null {
+// Der Inhalt wird mit dem Schema geprüft. Tokens mit veralteter Form gelten als ungültig.
+export function unseal<T>(token: string, schema: z.ZodType<T>): T | null {
   try {
     const raw = Buffer.from(token, "base64url");
     const decipher = createDecipheriv("aes-256-gcm", key(), raw.subarray(0, 12));
     decipher.setAuthTag(raw.subarray(12, 28));
     const body = Buffer.concat([decipher.update(raw.subarray(28)), decipher.final()]).toString("utf8");
-    const { p, exp } = JSON.parse(body) as { p: T; exp: number };
-    return Date.now() > exp ? null : p;
+    const umschlag = z.object({ p: schema, exp: z.number() }).safeParse(JSON.parse(body));
+    if (!umschlag.success || Date.now() > umschlag.data.exp) return null;
+    return umschlag.data.p;
   } catch {
     return null;
   }

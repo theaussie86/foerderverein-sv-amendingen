@@ -9,29 +9,24 @@ export function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Verein */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-sva-gold">
-              Förderverein
-            </h3>
+            <h3 className="mb-4 text-sm font-semibold tracking-wider text-sva-gold uppercase">Förderverein</h3>
             <p className="text-sm leading-relaxed text-sva-gray-300">
-              {verein.name}. Gemeinsam für den Fußball in Amendingen. Wir
-              unterstützen die Fußballabteilung des SV Amendingen finanziell
-              und ideell.
+              {verein.name}. Gemeinsam für den Fußball in Amendingen. Wir unterstützen die Fußballabteilung des SV
+              Amendingen finanziell und ideell.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-sva-gold">
-              Navigation
-            </h3>
+            <h3 className="mb-4 text-sm font-semibold tracking-wider text-sva-gold uppercase">Navigation</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/ueber-uns" className="text-sva-gray-300 hover:text-white transition-colors">
+                <Link href="/ueber-uns" className="text-sva-gray-300 transition-colors hover:text-white">
                   Über uns
                 </Link>
               </li>
               <li>
-                <Link href="/vorstand" className="text-sva-gray-300 hover:text-white transition-colors">
+                <Link href="/vorstand" className="text-sva-gray-300 transition-colors hover:text-white">
                   Vorstand
                 </Link>
               </li>
@@ -40,22 +35,20 @@ export function Footer() {
 
           {/* Mitmachen */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-sva-gold">
-              Mitmachen
-            </h3>
+            <h3 className="mb-4 text-sm font-semibold tracking-wider text-sva-gold uppercase">Mitmachen</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/spenden" className="text-sva-gray-300 hover:text-white transition-colors">
+                <Link href="/spenden" className="text-sva-gray-300 transition-colors hover:text-white">
                   Spenden
                 </Link>
               </li>
               <li>
-                <Link href="/mitglied-werden" className="text-sva-gray-300 hover:text-white transition-colors">
+                <Link href="/mitglied-werden" className="text-sva-gray-300 transition-colors hover:text-white">
                   Mitglied werden
                 </Link>
               </li>
               <li>
-                <Link href="/kontakt" className="text-sva-gray-300 hover:text-white transition-colors">
+                <Link href="/kontakt" className="text-sva-gray-300 transition-colors hover:text-white">
                   Kontakt
                 </Link>
               </li>
@@ -64,22 +57,20 @@ export function Footer() {
 
           {/* Rechtliches */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-sva-gold">
-              Rechtliches
-            </h3>
+            <h3 className="mb-4 text-sm font-semibold tracking-wider text-sva-gold uppercase">Rechtliches</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/impressum" className="text-sva-gray-300 hover:text-white transition-colors">
+                <Link href="/impressum" className="text-sva-gray-300 transition-colors hover:text-white">
                   Impressum
                 </Link>
               </li>
               <li>
-                <Link href="/datenschutz" className="text-sva-gray-300 hover:text-white transition-colors">
+                <Link href="/datenschutz" className="text-sva-gray-300 transition-colors hover:text-white">
                   Datenschutz
                 </Link>
               </li>
               <li>
-                <CookieEinstellungenButton className="text-sva-gray-300 hover:text-white transition-colors" />
+                <CookieEinstellungenButton className="text-sva-gray-300 transition-colors hover:text-white" />
               </li>
             </ul>
           </div>
@@ -87,8 +78,7 @@ export function Footer() {
 
         <div className="mt-10 border-t border-sva-gray-800 pt-6 text-center text-xs text-sva-gray-300">
           <p>
-            &copy; {new Date().getFullYear()} {verein.name} Alle
-            Rechte vorbehalten.
+            &copy; {new Date().getFullYear()} {verein.name} Alle Rechte vorbehalten.
           </p>
           <p className="mt-2">
             Website erstellt von{" "}
@@ -96,7 +86,7 @@ export function Footer() {
               href="https://weissteiner-automation.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sva-gold hover:text-white transition-colors"
+              className="text-sva-gold transition-colors hover:text-white"
             >
               Weissteiner Automation
             </a>

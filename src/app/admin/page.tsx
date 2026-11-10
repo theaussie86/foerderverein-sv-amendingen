@@ -42,12 +42,15 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       <AdminNav pb={pb} aktiv="antraege" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">Mitgliedsanträge</h1>
+          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Mitgliedsanträge</h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 text-sva-gray-300">Angemeldet als {vorstand.name || vorstand.email}.</p>
         </div>
         <form action={abmelden}>
-          <button type="submit" className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light">
+          <button
+            type="submit"
+            className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light"
+          >
             Abmelden
           </button>
         </form>
@@ -55,16 +58,21 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 
       <form action="/admin" role="search" className="mt-10 flex flex-col gap-3 sm:flex-row">
         {status && <input type="hidden" name="status" value={status} />}
-        <label htmlFor="q" className="sr-only">Anträge durchsuchen</label>
+        <label htmlFor="q" className="sr-only">
+          Anträge durchsuchen
+        </label>
         <input
           id="q"
           name="q"
           type="search"
           defaultValue={q}
           placeholder="Name, E-Mail, Ort, IBAN oder Mandatsreferenz"
-          className="w-full rounded-md border border-sva-gray-600 bg-sva-charcoal-light px-4 py-2.5 text-white placeholder:text-sva-gray-400 focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold"
+          className="w-full rounded-md border border-sva-gray-600 bg-sva-charcoal-light px-4 py-2.5 text-white placeholder:text-sva-gray-400 focus:border-sva-gold focus:ring-1 focus:ring-sva-gold focus:outline-none"
         />
-        <button type="submit" className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light">
+        <button
+          type="submit"
+          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+        >
           Suchen
         </button>
       </form>
@@ -78,7 +86,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             className={cn(
               "rounded-full border px-4 py-1.5 text-sm transition-colors",
               s === status
-                ? "border-sva-gold bg-sva-gold text-sva-charcoal-dark font-semibold"
+                ? "border-sva-gold bg-sva-gold font-semibold text-sva-charcoal-dark"
                 : "border-sva-gray-600 text-sva-gray-300 hover:bg-sva-charcoal-light",
             )}
           >
@@ -102,14 +110,26 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           </p>
           <div className="mt-3 overflow-x-auto rounded-lg border border-sva-gray-700">
             <table className="w-full text-left text-sm">
-              <thead className="bg-sva-charcoal-dark text-xs uppercase tracking-wide text-sva-gray-400">
+              <thead className="bg-sva-charcoal-dark text-xs tracking-wide text-sva-gray-400 uppercase">
                 <tr>
-                  <th scope="col" className="px-4 py-3 font-semibold">Name</th>
-                  <th scope="col" className="hidden px-4 py-3 font-semibold md:table-cell">E-Mail</th>
-                  <th scope="col" className="hidden px-4 py-3 font-semibold sm:table-cell">Ort</th>
-                  <th scope="col" className="hidden px-4 py-3 font-semibold lg:table-cell">Mandatsreferenz</th>
-                  <th scope="col" className="px-4 py-3 font-semibold">Unterschrieben</th>
-                  <th scope="col" className="px-4 py-3 font-semibold">Status</th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Name
+                  </th>
+                  <th scope="col" className="hidden px-4 py-3 font-semibold md:table-cell">
+                    E-Mail
+                  </th>
+                  <th scope="col" className="hidden px-4 py-3 font-semibold sm:table-cell">
+                    Ort
+                  </th>
+                  <th scope="col" className="hidden px-4 py-3 font-semibold lg:table-cell">
+                    Mandatsreferenz
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Unterschrieben
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-sva-gray-700 bg-sva-charcoal-light">
@@ -123,9 +143,13 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                     </td>
                     <td className="hidden px-4 py-3 text-sva-gray-300 md:table-cell">{a.email}</td>
                     <td className="hidden px-4 py-3 text-sva-gray-300 sm:table-cell">{a.ort}</td>
-                    <td className="hidden px-4 py-3 font-mono text-xs text-sva-gray-300 lg:table-cell">{a.mandatsreferenz}</td>
+                    <td className="hidden px-4 py-3 font-mono text-xs text-sva-gray-300 lg:table-cell">
+                      {a.mandatsreferenz}
+                    </td>
                     <td className="px-4 py-3 whitespace-nowrap text-sva-gray-300">{datumZeit(a.unterschrieben_am)}</td>
-                    <td className="px-4 py-3"><StatusBadge status={a.status} /></td>
+                    <td className="px-4 py-3">
+                      <StatusBadge status={a.status} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -135,16 +159,28 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           {liste.totalPages > 1 && (
             <nav aria-label="Seiten" className="mt-6 flex items-center justify-between text-sm">
               {seite > 1 ? (
-                <Link href={listenLink({ q, status, seite: seite - 1 })} className="font-medium text-sva-gold hover:text-sva-gold-light">
+                <Link
+                  href={listenLink({ q, status, seite: seite - 1 })}
+                  className="font-medium text-sva-gold hover:text-sva-gold-light"
+                >
                   ← Zurück
                 </Link>
-              ) : <span />}
-              <span className="text-sva-gray-400">Seite {seite} von {liste.totalPages}</span>
+              ) : (
+                <span />
+              )}
+              <span className="text-sva-gray-400">
+                Seite {seite} von {liste.totalPages}
+              </span>
               {seite < liste.totalPages ? (
-                <Link href={listenLink({ q, status, seite: seite + 1 })} className="font-medium text-sva-gold hover:text-sva-gold-light">
+                <Link
+                  href={listenLink({ q, status, seite: seite + 1 })}
+                  className="font-medium text-sva-gold hover:text-sva-gold-light"
+                >
                   Weiter →
                 </Link>
-              ) : <span />}
+              ) : (
+                <span />
+              )}
             </nav>
           )}
         </>
