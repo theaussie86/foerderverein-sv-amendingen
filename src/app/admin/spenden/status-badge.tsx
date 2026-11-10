@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ANFRAGE_STATUS_LABEL, type AnfrageStatus } from "@/lib/beleganfragen";
+import { ANFRAGE_STATUS_LABEL, type AnfrageStatus } from "@/packages/beleganfrage/anzeige";
 
 const FARBE: Record<AnfrageStatus, string> = {
   offen: "border-sva-gold/40 bg-sva-gold/10 text-sva-gold-light",

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BankQrCode } from "@/components/bank-qr-code";
-import { spendenGrenzeVereinfacht, verein } from "@/lib/verein";
+import { spendenGrenzeVereinfacht } from "@/packages/beleganfrage/anzeige";
+import { verein } from "@/lib/verein";
 import { BeleganfrageDialog } from "./beleganfrage-dialog";
 
 const amounts = [10, 25, 50, 100];

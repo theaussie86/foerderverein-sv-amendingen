@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { beleganfrageErfassenSchema, type BeleganfrageErfassenDaten } from "@/lib/schemas";
-import { belegArt, spendenGrenzeVereinfacht } from "@/lib/verein";
+import { belegArt, spendenGrenzeVereinfacht } from "@/packages/beleganfrage/anzeige";
 import { beleganfrageErfassen } from "../actions";
 
 const inputCls =
