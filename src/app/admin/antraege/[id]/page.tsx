@@ -3,7 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
-import { antragLaden, DATEIEN, datum, datumZeit, istDateifeld, type Dateifeld } from "@/lib/antraege";
+import { datum, datumZeit } from "@/lib/format";
+import { DATEIEN, istDateifeld, type Dateifeld } from "@/packages/mitgliedsantrag/anzeige";
+import { mitgliedsantraegeFuerVorstand } from "@/packages/mitgliedsantrag/server";
 import { formatIban } from "@/lib/schemas";
 import { StatusBadge } from "../../status-badge";
 
@@ -37,7 +39,7 @@ function Felder({ felder }: { felder: [string, ReactNode][] }) {
 export default async function AntragPage({ params }: { params: Promise<{ id: string }> }) {
   const { pb } = await vorstandErforderlich();
   const { id } = await params;
-  const antrag = await antragLaden(pb, id);
+  const antrag = await mitgliedsantraegeFuerVorstand(pb).laden(id);
   if (!antrag) notFound();
 
   const p = antrag.protokoll;

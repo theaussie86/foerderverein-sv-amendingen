@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { STATUS_LABEL, type Status } from "@/lib/antraege";
+import { STATUS_LABEL, type Status } from "@/packages/mitgliedsantrag/anzeige";
 
 const FARBE: Record<Status, string> = {
   eingegangen: "border-sva-gold/40 bg-sva-gold/10 text-sva-gold-light",
