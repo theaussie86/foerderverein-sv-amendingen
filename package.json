@@ -9,8 +9,9 @@
     "dev": "bun --bun next dev --turbopack",
     "build": "bun --bun next build",
     "start": "bun --bun next start",
-    "lint": "eslint . --max-warnings=0",
-    "typecheck": "bun --bun next typegen && tsc --noEmit",
+    "typegen": "bun --bun next typegen",
+    "lint": "bun run typegen && eslint . --max-warnings=0",
+    "typecheck": "bun run typegen && tsc --noEmit",
     "test": "bun test",
     "check": "bun run lint && bun run typecheck && bun run test"
   },

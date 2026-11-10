@@ -26,7 +26,7 @@ Single-context: `GLOSSARY.md` und `docs/adr/` im Repo-Root. See `docs/agents/dom
 
 Vor jedem Commit `bun run check` ausführen und erst bei grünem Ergebnis committen. Der Befehl prüft Lint (ohne Warnungen), Typen und Tests. Die CI (`.github/workflows/ci.yml`) führt dasselbe auf jedem Push aus und baut zusätzlich mit `bun run build`.
 
-- `bun run typecheck` erzeugt zuerst die Next-Routentypen (`next typegen`). Ein nacktes `tsc` scheitert ohne sie an `RouteContext`.
+- `lint` und `typecheck` erzeugen zuerst die Next-Routentypen (`bun run typegen`). Ein nacktes `eslint` oder `tsc` scheitert ohne sie an `RouteContext`.
 - Tests laufen mit `bun test` und liegen als `*.test.ts` neben dem Code. `test/setup.ts` neutralisiert `server-only` und setzt einen Test-`ANTRAG_SECRET`.
 - Neue reine Logik in `src/lib/` bekommt einen Test. PocketBase, Resend und Server Actions sind nicht abgedeckt.
 
