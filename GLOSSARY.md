@@ -94,7 +94,7 @@ _Vermeiden_: Online-Mitglied, Altmitglied, Neumitglied (als Gattung)
 Die Zugehörigkeit eines Mitglieds zum Förderverein. Sie beginnt mit der Aufnahme und endet mit dem Ende der Mitgliedschaft.
 
 **Mitgliedsantrag**:
-Der unterschriebene Wunsch einer Person, dem Förderverein beizutreten, samt SEPA-Lastschriftmandat für den Beitrag. Ohne Unterschrift gibt es keinen Mitgliedsantrag. Er endet mit Aufnahme oder Ablehnung.
+Der unterschriebene Wunsch einer Person, dem Förderverein beizutreten, samt erstem Mandat für den Mitgliedsbeitrag. Ohne Unterschrift gibt es keinen Mitgliedsantrag. Er endet mit Aufnahme oder Ablehnung.
 _Vermeiden_: Beitrittserklärung, Antrag (allein), Anmeldung
 
 **Aufnahme** (vorläufig, bis die Satzung vorliegt):
@@ -114,3 +114,57 @@ _Vermeiden_: Kündigung, Abmeldung
 **Ausschluss**:
 Ende der Mitgliedschaft, weil der Förderverein es beschließt.
 _Vermeiden_: Rauswurf, Streichung
+
+## Beitrag und Einzug
+
+**Mitgliedsbeitrag**:
+Der feste Betrag, den ein Mitglied für jedes Beitragsjahr an den Förderverein zahlt. Ein Mitgliedsbeitrag ist keine Spende und bekommt keinen Spendenbeleg. Einen anteiligen Mitgliedsbeitrag bei Beitritt im laufenden Jahr gibt es nicht.
+_Vermeiden_: Jahresbeitrag, Beitrag (allein), Gebühr, anteiliger Beitrag
+
+**Beitragsjahr**:
+Das Kalenderjahr, für das ein Mitgliedsbeitrag gilt. Pro Beitragsjahr schuldet ein Mitglied genau einen Mitgliedsbeitrag.
+
+**Beitragsrückstand**:
+Ein Mitgliedsbeitrag für ein Beitragsjahr, der nach dem Einzugstermin nicht bezahlt ist.
+
+**Einzugstermin**:
+Der feste Tag im Jahr, an dem der Förderverein die Mitgliedsbeiträge per Lastschrift einzieht. Ist er kein Bankarbeitstag, gilt der nächste Bankarbeitstag.
+_Vermeiden_: Fälligkeitsdatum, Abbuchungstag, Stichtag
+
+**Beitragseinzug**:
+Der jährliche Einzug der Mitgliedsbeiträge aller Mitglieder zum Einzugstermin. Er besteht aus einer Lastschrift je Mitglied.
+_Vermeiden_: Sammeleinzug, Bankeinzug
+
+**Lastschrift**:
+Die einzelne Abbuchung eines Mitgliedsbeitrags vom Konto eines Kontoinhabers aufgrund eines Mandats.
+_Vermeiden_: Abbuchung, Bankeinzug
+
+**Rücklastschrift**:
+Eine Lastschrift, die nicht eingelöst oder später zurückgeholt wird, egal aus welchem Grund, auch wenn der Kontoinhaber sie innerhalb von acht Wochen zurückfordert.
+_Vermeiden_: Rückbuchung, Retoure, geplatzte Lastschrift
+
+**Vorabankündigung**:
+Die Mitteilung von Betrag und Einzugstermin an den Kontoinhaber vor einer Lastschrift. Der Förderverein kündigt einmal beim Erteilen des Mandats an, ein eigenes Schreiben vor jedem Beitragseinzug gibt es nicht.
+_Vermeiden_: Vorabinformation, Pre-Notification
+
+**Mandat**:
+Die Erlaubnis des Kontoinhabers, Mitgliedsbeiträge per Lastschrift von seinem Konto einzuziehen. Das erste Mandat entsteht mit dem Mitgliedsantrag. Ein neues Mandat ersetzt es, etwa bei Kontowechsel, ohne neuen Mitgliedsantrag. Es endet durch Widerruf, Verfall oder das Ende der Mitgliedschaft.
+_Vermeiden_: Einzugsermächtigung, Abbuchungsauftrag, Lastschriftmandat
+
+**Widerruf**:
+Ende eines Mandats, weil der Kontoinhaber es zurücknimmt. Die Mitgliedschaft bleibt davon unberührt.
+_Vermeiden_: Kündigung (des Mandats)
+
+**Verfall**:
+Ende eines Mandats, weil 36 Monate lang keine Lastschrift darauf eingereicht wurde.
+
+**Mandatsreferenz**:
+Die Kennung, unter der der Förderverein ein Mandat führt. Zusammen mit der Gläubiger-ID bestimmt sie das Mandat eindeutig.
+
+**Gläubiger-ID**:
+Die Kennung des Fördervereins als Einreicher von Lastschriften.
+_Vermeiden_: Gläubiger-Identifikationsnummer, Creditor-ID
+
+**Kontoinhaber**:
+Die Person, von deren Konto die Lastschrift abgeht und die das Mandat unterschreibt. Muss nicht das Mitglied sein.
+_Vermeiden_: Zahler, Zahlungspflichtiger, Debitor
