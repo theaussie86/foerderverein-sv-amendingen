@@ -1,4 +1,5 @@
 // Entry Point ohne "server-only": Typen, Labels und Formatierung für Seiten und Client-Komponenten.
+import { spendenGrenzeVereinfacht } from "./lib/regeln";
 import { ANFRAGE_STATUS, type AnfrageStatus } from "./lib/typen";
 
 export { ANFRAGE_STATUS } from "./lib/typen";
@@ -14,7 +15,7 @@ export const ANFRAGE_STATUS_LABEL: Record<AnfrageStatus, string> = {
 };
 
 export const BELEG_ART_LABEL = {
-  vereinfacht: "Vereinfachter Beleg (bis 300 €)",
+  vereinfacht: `Vereinfachter Beleg (bis ${spendenGrenzeVereinfacht} €)`,
   zuwendungsbestaetigung: "Zuwendungsbestätigung",
 } as const;
 

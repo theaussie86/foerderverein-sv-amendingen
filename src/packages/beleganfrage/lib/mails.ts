@@ -1,5 +1,5 @@
 import { verein } from "@/lib/verein";
-import { euro } from "./format";
+import { euro, tagAnzeigen } from "./format";
 import { spendenGrenzeVereinfacht } from "./regeln";
 import type { BelegArt, Spenderangaben } from "./typen";
 
@@ -13,7 +13,7 @@ export function vorstandMail(d: Spenderangaben, art: BelegArt, link: string | nu
     text:
       `Über die Website wurde ${vereinfacht ? "ein Spendenbeleg" : "eine Zuwendungsbestätigung"} angefordert.\n\n` +
       `Name: ${d.name}\nAnschrift: ${d.strasse}, ${d.plz} ${d.ort}\nE-Mail: ${d.email}\n` +
-      `Betrag: ${euro(d.betrag)}\nTag der Spende: ${new Date(d.tagDerSpende).toLocaleDateString("de-DE", { timeZone: "UTC" })}\n\n` +
+      `Betrag: ${euro(d.betrag)}\nTag der Spende: ${tagAnzeigen(d.tagDerSpende)}\n\n` +
       `Bitte zuerst den Geldeingang auf dem Vereinskonto prüfen. ` +
       (vereinfacht
         ? `Ist die Spende eingegangen, im internen Bereich bestätigen. Dann geht der Spendenbeleg automatisch an den Spender.`

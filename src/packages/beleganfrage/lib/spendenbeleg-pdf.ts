@@ -1,6 +1,6 @@
 import { neuesDokument } from "@/lib/pdf";
 import { verein } from "@/lib/verein";
-import { euro } from "./format";
+import { euro, tagAnzeigen } from "./format";
 import type { Beleganfrage } from "./typen";
 
 // Beleg für den vereinfachten Zuwendungsnachweis bis 300 € (§ 50 Abs. 4 Satz 1 Nr. 2 Buchst. b EStDV).
@@ -16,7 +16,7 @@ export async function spendenbelegPdf(anfrage: Beleganfrage): Promise<Uint8Array
   s.feld("Spender/in", anfrage.name);
   s.feld("Anschrift", `${anfrage.strasse}, ${anfrage.plz} ${anfrage.ort}`);
   s.feld("Betrag", euro(anfrage.betrag));
-  s.feld("Tag der Spende", new Date(anfrage.tagDerSpende).toLocaleDateString("de-DE", { timeZone: "UTC" }));
+  s.feld("Tag der Spende", tagAnzeigen(anfrage.tagDerSpende));
   s.feld("Empfänger", `${verein.bank.kontoinhaber}, IBAN ${verein.bank.iban}`);
   s.feld("Art der Zuwendung", "Geldzuwendung (Spende), kein Mitgliedsbeitrag");
   s.abstand(14);

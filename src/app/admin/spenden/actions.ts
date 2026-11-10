@@ -13,7 +13,7 @@ async function alsVorstand() {
 }
 
 // Nicht offen oder falsche Art (Doppelklick, veraltete Seite) läuft still ins Leere.
-function abschluss(id: string, ergebnis: AbschlussErgebnis): void {
+function nachAbschluss(id: string, ergebnis: AbschlussErgebnis): void {
   if (!ergebnis.ok && ergebnis.grund === "mail") redirect(`/admin/spenden/${id}?fehler=mail`);
   revalidatePath("/admin/spenden");
   revalidatePath(`/admin/spenden/${id}`);
@@ -21,23 +21,23 @@ function abschluss(id: string, ergebnis: AbschlussErgebnis): void {
 
 export async function alsAusgestelltMarkieren(id: string): Promise<void> {
   const { anfragen, vorstandId } = await alsVorstand();
-  abschluss(id, await anfragen.alsAusgestelltMarkieren(id, vorstandId));
+  nachAbschluss(id, await anfragen.alsAusgestelltMarkieren(id, vorstandId));
 }
 
 export async function belegFreigeben(id: string): Promise<void> {
   const { anfragen, vorstandId } = await alsVorstand();
-  abschluss(id, await anfragen.freigeben(id, vorstandId));
+  nachAbschluss(id, await anfragen.freigeben(id, vorstandId));
 }
 
 export async function anfrageAblehnen(id: string): Promise<void> {
   const { anfragen, vorstandId } = await alsVorstand();
-  abschluss(id, await anfragen.ablehnen(id, vorstandId));
+  nachAbschluss(id, await anfragen.ablehnen(id, vorstandId));
 }
 
-export type ErfassenErgebnis = { ok: false; fehler: string };
+export type ErfassenFehler = { ok: false; fehler: string };
 
 // Bei Erfolg geht es weiter zur Detailansicht.
-export async function beleganfrageErfassen(eingabe: unknown): Promise<ErfassenErgebnis> {
+export async function beleganfrageErfassen(eingabe: unknown): Promise<ErfassenFehler> {
   const { anfragen, vorstandId } = await alsVorstand();
   const parsed = beleganfrageErfassenSchema.safeParse(eingabe);
   if (!parsed.success) return { ok: false, fehler: "Bitte prüf die Angaben." };

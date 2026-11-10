@@ -159,6 +159,17 @@ describe("Beleganfragen im internen Bereich", () => {
   });
 
   describe("freigeben", () => {
+    test("erzeugt ein lesbares PDF, auch mit Umlauten", async () => {
+      const ergebnis = await vorstand.erfassen(
+        { ...angaben, name: "Jürgen Größer", strasse: "Hauptstraße 1", ort: "Mindelheim" },
+        "v1",
+        { direktFreigeben: true },
+      );
+      expect(ergebnis.ok).toBe(true);
+      const [anhang] = post.gesendet[0].attachments ?? [];
+      expect((await PDFDocument.load(anhang.inhalt)).getPageCount()).toBeGreaterThanOrEqual(1);
+    });
+
     test("schickt den Spendenbeleg als PDF an den Spender und schließt die Anfrage ab", async () => {
       const id = await offen();
       expect(await vorstand.freigeben(id, "v1")).toEqual({ ok: true });
@@ -169,6 +180,7 @@ describe("Beleganfragen im internen Bereich", () => {
       const [anhang] = mail.attachments ?? [];
       expect(anhang.dateiname).toBe(`Spendenbeleg_2026-11-01_${id}.pdf`);
       const pdf = await PDFDocument.load(anhang.inhalt);
+      expect(pdf.getPageCount()).toBeGreaterThanOrEqual(1);
       expect(pdf.getTitle()).toBe("Spendenbeleg");
 
       expect(await vorstand.laden(id)).toMatchObject({
