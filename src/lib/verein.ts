@@ -33,6 +33,13 @@ export const verein = {
 // Bis zu diesem Betrag genügt dem Finanzamt Kontoauszug plus Vereinsbeleg (§ 50 Abs. 4 EStDV).
 export const spendenGrenzeVereinfacht = 300;
 
+export type BelegArt = "vereinfacht" | "zuwendungsbestaetigung";
+
+// Welchen Beleg eine Beleganfrage bekommt, hängt nur vom Betrag ab.
+export function belegArt(betrag: number): BelegArt {
+  return betrag <= spendenGrenzeVereinfacht ? "vereinfacht" : "zuwendungsbestaetigung";
+}
+
 // Es gibt nur eine Mitgliedschaft mit festem Jahresbeitrag.
 export const mitgliedsbeitrag = 20;
 

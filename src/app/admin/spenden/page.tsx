@@ -59,14 +59,22 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
           </p>
           <p className="mt-2 text-sm text-sva-gray-400">Angemeldet als {vorstand.name || vorstand.email}.</p>
         </div>
-        <form action={abmelden}>
-          <button
-            type="submit"
-            className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light"
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/admin/spenden/neu"
+            className="rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
           >
-            Abmelden
-          </button>
-        </form>
+            Beleganfrage erfassen
+          </Link>
+          <form action={abmelden}>
+            <button
+              type="submit"
+              className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light"
+            >
+              Abmelden
+            </button>
+          </form>
+        </div>
       </div>
 
       <form action="/admin/spenden" role="search" className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -132,7 +140,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                     Betrag
                   </th>
                   <th scope="col" className="hidden px-4 py-3 font-semibold sm:table-cell">
-                    Überwiesen am
+                    Tag der Spende
                   </th>
                   <th scope="col" className="hidden px-4 py-3 font-semibold md:table-cell">
                     E-Mail
@@ -155,8 +163,8 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-right whitespace-nowrap text-white tabular-nums">{euro(b.betrag)}</td>
-                    <td className="hidden px-4 py-3 text-sva-gray-300 sm:table-cell">{datum(b.ueberwiesen_am)}</td>
-                    <td className="hidden px-4 py-3 text-sva-gray-300 md:table-cell">{b.email}</td>
+                    <td className="hidden px-4 py-3 text-sva-gray-300 sm:table-cell">{datum(b.tag_der_spende)}</td>
+                    <td className="hidden px-4 py-3 text-sva-gray-300 md:table-cell">{b.email || "-"}</td>
                     <td className="hidden px-4 py-3 whitespace-nowrap text-sva-gray-300 lg:table-cell">
                       {datumZeit(b.created)}
                     </td>

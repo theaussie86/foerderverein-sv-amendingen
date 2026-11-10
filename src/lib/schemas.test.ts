@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import {
+  beleganfrageErfassenSchema,
   beleganfrageSchema,
   formatIban,
   isValidIban,
@@ -77,7 +78,7 @@ describe("beleganfrageSchema und kontaktSchema", () => {
       ort: "C",
       email: "a@example.org",
       betrag: 50,
-      datum: "2026-11-01",
+      tag_der_spende: "2026-11-01",
       website: "spam",
     };
     expect(beleganfrageSchema.safeParse(anfrage).success).toBe(true);
@@ -93,9 +94,39 @@ describe("beleganfrageSchema und kontaktSchema", () => {
       ort: "C",
       email: "a@example.org",
       betrag: 0,
-      datum: "2026-11-01",
+      tag_der_spende: "2026-11-01",
     };
     expect(beleganfrageSchema.safeParse(anfrage).success).toBe(false);
+  });
+});
+
+describe("beleganfrageErfassenSchema", () => {
+  const erfasst = {
+    name: "A",
+    strasse: "B",
+    plz: "87719",
+    ort: "C",
+    email: "",
+    betrag: 50,
+    tag_der_spende: "2026-11-01",
+    notiz: "",
+    direktFreigeben: false,
+  };
+
+  test("Vorstand darf ohne E-Mail-Adresse erfassen", () => {
+    expect(beleganfrageErfassenSchema.safeParse(erfasst).success).toBe(true);
+  });
+
+  test("eine angegebene E-Mail-Adresse muss gültig sein", () => {
+    expect(beleganfrageErfassenSchema.safeParse({ ...erfasst, email: "kaputt" }).success).toBe(false);
+  });
+
+  test("Tag der Spende ist Pflicht", () => {
+    expect(beleganfrageErfassenSchema.safeParse({ ...erfasst, tag_der_spende: "" }).success).toBe(false);
+  });
+
+  test("Betrag ab 1 Euro", () => {
+    expect(beleganfrageErfassenSchema.safeParse({ ...erfasst, betrag: 0 }).success).toBe(false);
   });
 });
 

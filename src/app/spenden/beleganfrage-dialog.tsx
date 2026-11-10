@@ -23,7 +23,7 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
     formState: { errors, isSubmitting },
   } = useForm<BeleganfrageFormData>({
     resolver: zodResolver(beleganfrageSchema),
-    defaultValues: { name: "", strasse: "", plz: "", ort: "", email: "", datum: "", website: "" },
+    defaultValues: { name: "", strasse: "", plz: "", ort: "", email: "", tag_der_spende: "", website: "" },
   });
 
   function oeffnen() {
@@ -178,10 +178,12 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
                 </div>
                 <div>
                   <label htmlFor="q-datum" className="block text-sm font-medium text-sva-gray-300">
-                    Überwiesen am *
+                    Tag der Überweisung *
                   </label>
-                  <input id="q-datum" type="date" {...register("datum")} className={inputCls} />
-                  {errors.datum && <p className="mt-1 text-xs text-red-400">{errors.datum.message}</p>}
+                  <input id="q-datum" type="date" {...register("tag_der_spende")} className={inputCls} />
+                  {errors.tag_der_spende && (
+                    <p className="mt-1 text-xs text-red-400">{errors.tag_der_spende.message}</p>
+                  )}
                 </div>
               </div>
               {/* Honeypot gegen Bots */}
