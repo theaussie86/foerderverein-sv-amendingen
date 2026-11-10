@@ -58,6 +58,10 @@ Eine freiwillige Zuwendung an den Förderverein ohne Gegenleistung, als Geldspen
 Spende in Geld, per Überweisung auf das Vereinskonto oder bar.
 _Vermeiden_: Barspende (als eigener Begriff)
 
+**Tag der Spende**:
+Der Tag, an dem der Spender das Geld überwiesen oder bar übergeben hat. Nicht der Tag der Gutschrift auf dem Vereinskonto.
+_Vermeiden_: Überweisungsdatum, Datum (allein)
+
 **Sachspende** (vorläufig, ob es sie gibt, ist noch offen):
 Spende in Form einer Sache statt Geld, zum Beispiel Trikots oder Bälle.
 
@@ -79,7 +83,7 @@ Zahlung mit Gegenleistung, etwa Werbung auf Trikot oder Bande. Keine Spende, bek
 Oberbegriff für das Dokument, mit dem ein Spender seine Spende beim Finanzamt nachweist. Es gilt immer für genau eine Spende.
 _Vermeiden_: Quittung, Spendenquittung, Spendenbescheinigung
 
-**Vereinfachter Spendenbeleg**:
+**Vereinfachter Spendenbeleg** (vorläufig, ob er für eine Geldspende in bar gilt, ist noch offen):
 Spendenbeleg für eine Spende bis 300 €, der zusammen mit dem Kontoauszug des Spenders gilt.
 _Vermeiden_: vereinfachter Zuwendungsnachweis
 
@@ -98,7 +102,8 @@ _Vermeiden_: Beleg-Nr. (in Texten)
 Der Wunsch eines Spenders, für eine bestimmte Spende einen Spendenbeleg zu bekommen. Mehrere Spenden ergeben mehrere Beleganfragen. Der Spender stellt sie über die Website, oder der Vorstand erfasst sie für ihn, wenn der Wunsch per Mail oder mündlich kommt.
 
 **Offen**:
-Beleganfrage, die noch niemand vom Vorstand geprüft hat.
+Beleganfrage, die noch niemand vom Vorstand geprüft hat. Solange sie offen ist, gibt es noch keinen Spendenbeleg.
+_Vermeiden_: Entwurf, offener Spendenbeleg
 
 **Wartend**:
 Beleganfrage, bei der der Vorstand das Vereinskonto geprüft und die Spende noch nicht gefunden hat. Endet nur durch erneute Prüfung von Hand.
