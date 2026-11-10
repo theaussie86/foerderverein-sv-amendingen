@@ -1,0 +1,13 @@
+# Generiert oder fremd
+.next/
+node_modules/
+bun.lock
+next-env.d.ts
+pocketbase/pb_migrations/
+# Eigenes Remotion-Projekt
+video/
+# Lokal installierte Agent-Skills
+.agents/
+.claude/
+# Prosa bleibt, wie sie geschrieben ist
+*.md

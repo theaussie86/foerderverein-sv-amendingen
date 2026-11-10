@@ -24,7 +24,9 @@ Single-context: `GLOSSARY.md` und `docs/adr/` im Repo-Root. See `docs/agents/dom
 
 ## Checks
 
-Vor jedem Commit `bun run check` ausführen und erst bei grünem Ergebnis committen. Der Befehl prüft Lint (ohne Warnungen), Typen und Tests. Die CI (`.github/workflows/ci.yml`) führt dasselbe auf jedem Push aus und baut zusätzlich mit `bun run build`.
+Vor jedem Commit `bun run check` ausführen und erst bei grünem Ergebnis committen. Der Befehl prüft Formatierung, Lint (ohne Warnungen), Typen und Tests.
+
+- Formatierung macht Prettier (`.prettierrc.json`, Breite 120, Tailwind-Klassen sortiert). Der Pre-commit-Hook (Husky + lint-staged) formatiert gestagte Dateien automatisch. `bun run format` formatiert alles. Markdown bleibt unformatiert. Die CI (`.github/workflows/ci.yml`) führt dasselbe auf jedem Push aus und baut zusätzlich mit `bun run build`.
 
 - `lint` und `typecheck` erzeugen zuerst die Next-Routentypen (`bun run typegen`). Ein nacktes `eslint` oder `tsc` scheitert ohne sie an `RouteContext`.
 - Tests laufen mit `bun test` und liegen als `*.test.ts` neben dem Code. `test/setup.ts` neutralisiert `server-only` und setzt einen Test-`ANTRAG_SECRET`.
