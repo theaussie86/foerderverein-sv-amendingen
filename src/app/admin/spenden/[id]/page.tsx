@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
-import { datum, datumZeit } from "@/lib/antraege";
+import { datum, datumZeit } from "@/lib/format";
 import { BELEG_ART_LABEL, anfrageLaden, euro } from "@/lib/beleganfragen";
 import { alsAusgestelltMarkieren, belegFreigeben, anfrageAblehnen } from "../actions";
 import { AnfrageStatusBadge } from "../status-badge";

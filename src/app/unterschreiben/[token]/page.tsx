@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { antragSchema, type Sitzung } from "@/lib/antrag";
 import { clientInfo } from "@/lib/request";
 import { formatIban } from "@/lib/schemas";
-import { seal, unseal } from "@/lib/token";
 import { mandatstext, mitgliedsbeitrag, verein } from "@/lib/verein";
+import { mitgliedsantrag } from "@/packages/mitgliedsantrag/server";
 import { UnterschriftFormular } from "./unterschrift-formular";
 
 export const metadata: Metadata = {
@@ -14,9 +13,9 @@ export const metadata: Metadata = {
 
 export default async function UnterschreibenPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
-  const antrag = unseal(token, antragSchema);
+  const geoeffnet = mitgliedsantrag.oeffnen(token, await clientInfo());
 
-  if (!antrag) {
+  if (!geoeffnet) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Link ungültig</h1>
@@ -34,9 +33,7 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
     );
   }
 
-  const { ip } = await clientInfo();
-  const sitzung: Sitzung = { antragId: antrag.id, geoeffnet: { zeit: new Date().toISOString(), ip } };
-  const sitzungToken = seal(sitzung, 24 * 60 * 60);
+  const { antrag, sitzungToken } = geoeffnet;
   const d = antrag.daten;
 
   const zeilen: [string, string][] = [

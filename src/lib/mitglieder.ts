@@ -1,5 +1,5 @@
 import "server-only";
-import { antraegeSeit } from "@/lib/pocketbase";
+import { mitgliedsantrag } from "@/packages/mitgliedsantrag/server";
 import { mitgliederbasis, mitgliederziel } from "@/lib/verein";
 
 export type Mitgliederstand = {
@@ -19,7 +19,7 @@ const zeitraeume = [
 
 export async function mitgliederstand(): Promise<Mitgliederstand> {
   const stichtag = new Date(`${mitgliederbasis.stichtag}T00:00:00Z`);
-  const seitStichtag = (await antraegeSeit(stichtag)) ?? 0;
+  const seitStichtag = (await mitgliedsantrag.anzahlSeit(stichtag)) ?? 0;
   const gesamt = mitgliederbasis.anzahl + seitStichtag;
   const ziel = Math.max(mitgliederziel, Math.ceil((gesamt + 1) / 50) * 50);
 
@@ -27,7 +27,7 @@ export async function mitgliederstand(): Promise<Mitgliederstand> {
   if (seitStichtag > 0) {
     for (const z of zeitraeume) {
       const seit = new Date(Math.max(Date.now() - z.tage * TAG, stichtag.getTime()));
-      const anzahl = (await antraegeSeit(seit)) ?? 0;
+      const anzahl = (await mitgliedsantrag.anzahlSeit(seit)) ?? 0;
       if (anzahl > 0) {
         zuwachs = { anzahl, zeitraum: z.text };
         break;

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
-import { antraegeSuchen, datumZeit, istStatus, STATUS, STATUS_LABEL, type Status } from "@/lib/antraege";
+import { datumZeit } from "@/lib/format";
+import { istStatus, STATUS, STATUS_LABEL, type Status } from "@/packages/mitgliedsantrag/anzeige";
+import { antragsverwaltung, type Antragsliste } from "@/packages/mitgliedsantrag/vorstand";
 import { cn } from "@/lib/utils";
 import { abmelden } from "./actions";
 import { AdminNav } from "./admin-nav";
@@ -30,9 +32,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   const status = istStatus(params.status) ? params.status : undefined;
   const seite = Math.max(1, Number.parseInt(params.seite ?? "1", 10) || 1);
 
-  let liste: Awaited<ReturnType<typeof antraegeSuchen>> | null = null;
+  let liste: Antragsliste | null = null;
   try {
-    liste = await antraegeSuchen(pb, { suche: q, status, seite });
+    liste = await antragsverwaltung(pb).suchen({ suche: q, status, seite });
   } catch (e) {
     console.error("Antragsliste konnte nicht geladen werden", e instanceof Error ? e.message : e);
   }

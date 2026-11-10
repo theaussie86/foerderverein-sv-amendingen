@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
-import { datum, datumZeit } from "@/lib/antraege";
+import { datum, datumZeit } from "@/lib/format";
 import {
   ANFRAGE_STATUS,
   ANFRAGE_STATUS_LABEL,

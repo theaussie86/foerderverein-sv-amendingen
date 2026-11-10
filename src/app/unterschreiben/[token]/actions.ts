@@ -1,91 +1,14 @@
 "use server";
 
-import { antragSchema, sitzungSchema, type Protokoll } from "@/lib/antrag";
-import { sendMail } from "@/lib/mail";
-import { erzeugeBeitrittPdf, erzeugeMandatPdf, pruefsumme } from "@/lib/pdf";
-import { antragSpeichern } from "@/lib/pocketbase";
 import { clientInfo } from "@/lib/request";
-import { UNTERSCHRIFT_PREFIX, unterschriftSchema } from "@/lib/schemas";
-import { unseal } from "@/lib/token";
-import { mitgliedsbeitrag, verein } from "@/lib/verein";
+import { unterschriftSchema } from "@/lib/schemas";
+import type { Ergebnis } from "@/packages/mitgliedsantrag";
+import { mitgliedsantrag } from "@/packages/mitgliedsantrag/server";
 
-const MAX_BILD_BYTES = 500_000;
-
-export async function unterschreiben(eingabe: unknown): Promise<{ ok: true } | { ok: false; fehler: string }> {
+export async function unterschreiben(eingabe: unknown): Promise<Ergebnis> {
   const parsed = unterschriftSchema.safeParse(eingabe);
   if (!parsed.success)
     return { ok: false, fehler: parsed.error.issues[0]?.message ?? "Bitte prüf deine Unterschrift." };
-  const { token, sitzungToken, unterschrift } = parsed.data;
 
-  const antrag = unseal(token, antragSchema);
-  const sitzung = unseal(sitzungToken, sitzungSchema);
-  if (!antrag || !sitzung || sitzung.antragId !== antrag.id) {
-    return { ok: false, fehler: "Der Link ist abgelaufen oder ungültig. Bitte stell den Antrag erneut." };
-  }
-
-  const png = Buffer.from(unterschrift.slice(UNTERSCHRIFT_PREFIX.length), "base64");
-  if (png.length === 0 || png.length > MAX_BILD_BYTES)
-    return { ok: false, fehler: "Die Unterschrift konnte nicht verarbeitet werden." };
-
-  const { ip, userAgent } = await clientInfo();
-  const protokoll: Protokoll = {
-    eingereicht: antrag.eingereicht,
-    geoeffnet: sitzung.geoeffnet,
-    unterschrieben: { zeit: new Date().toISOString(), ip, userAgent },
-  };
-
-  const d = antrag.daten;
-  const kontext = { antrag, unterschriftPng: png, protokoll };
-  const name = `${d.nachname}_${d.vorname}`.replace(/[^\w-]/g, "_");
-  const anhaenge = [
-    { filename: `Beitrittserklaerung_${name}.pdf`, content: Buffer.from(await erzeugeBeitrittPdf(kontext)) },
-    { filename: `SEPA-Lastschriftmandat_${name}.pdf`, content: Buffer.from(await erzeugeMandatPdf(kontext)) },
-  ];
-
-  // Fällt PocketBase aus, gehen die Mails trotzdem raus. Die PDFs hängen an der Mail an den Vorstand.
-  try {
-    const ergebnis = await antragSpeichern(
-      antrag,
-      png,
-      anhaenge[0],
-      anhaenge[1],
-      protokoll,
-      pruefsumme(antrag, png),
-      mitgliedsbeitrag,
-    );
-    if (ergebnis === "bereits-vorhanden") return { ok: true };
-  } catch (e) {
-    console.error(`Speichern des Antrags ${antrag.id} in PocketBase fehlgeschlagen`, e);
-  }
-
-  try {
-    await sendMail({
-      to: process.env.ANTRAG_EMPFAENGER ?? "",
-      subject: `Neuer Mitgliedsantrag: ${d.vorname} ${d.nachname}`,
-      text:
-        `Neuer unterschriebener Mitgliedsantrag über die Website.\n\n` +
-        `Name: ${d.vorname} ${d.nachname}\nE-Mail: ${d.email}\nJahresbeitrag: ${mitgliedsbeitrag} €\n` +
-        `Mandatsreferenz: ${antrag.mandatsreferenz}\nAntrags-ID: ${antrag.id}\nPrüfsumme: ${pruefsumme(antrag, png)}\n\n` +
-        `Beitrittserklärung und SEPA-Mandat (jeweils mit Protokoll) sind als PDF angehängt. ` +
-        `Bitte das Mandat als Nachweis aufbewahren (bis mindestens 14 Monate nach der letzten Lastschrift).`,
-      attachments: anhaenge,
-    });
-    await sendMail({
-      to: d.email,
-      subject: "Willkommen im Förderverein SV Amendingen!",
-      text:
-        `Hallo ${d.vorname},\n\n` +
-        `vielen Dank, deine Beitrittserklärung ist bei uns eingegangen. Im Anhang findest du deine unterschriebene ` +
-        `Beitrittserklärung und dein SEPA-Lastschriftmandat für deine Unterlagen.\n\n` +
-        `Vorabinformation zum Lastschrifteinzug: Wir ziehen den Jahresbeitrag von ${mitgliedsbeitrag} € jeweils zum ` +
-        `${verein.einzugstermin} unter der Gläubiger-ID ${verein.glaeubigerId} und der Mandatsreferenz ` +
-        `${antrag.mandatsreferenz} von deinem Konto ein.\n\n` +
-        `Sportliche Grüße\n${verein.name}`,
-      attachments: anhaenge,
-    });
-  } catch (e) {
-    console.error("Versand des Antrags fehlgeschlagen", e);
-    return { ok: false, fehler: "Der Antrag konnte nicht versendet werden. Bitte versuch es später erneut." };
-  }
-  return { ok: true };
+  return mitgliedsantrag.unterschreiben(parsed.data, await clientInfo());
 }

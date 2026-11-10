@@ -11,8 +11,6 @@ src/packages/
     tests/          ← Tests und Fixtures (Unterordner, also privat).
 ```
 
-`src/packages/example/` ist eine Vorlage zum Kopieren oder Löschen.
-
 **Keine Barrel-Dateien.** Statt einen ganzen Unterbaum über eine große `index.ts` zu re-exportieren, lieber mehrere kleine Entry Points (`index.ts`, `client.ts`, `server.ts`) anlegen. Ein neuer Entry Point ist einfach eine neue Datei im Paketordner.
 
 ## Regeln
@@ -33,3 +31,14 @@ bun run lint:boundaries
 ```
 
 Läuft auch als Teil von `bun run check`.
+
+## Muster für Pakete mit Datenbank und Mail
+
+Vorbild ist `mitgliedsantrag/`:
+
+- `index.ts`: Fabrik, die eine **Umgebung** (Ablage, Postausgang, Uhr, IDs …) entgegennimmt und die Anwendungsfälle zurückgibt. Kennt weder PocketBase noch Resend noch Next.js.
+- `server.ts`: baut die Fabrik mit der echten Umgebung (`"server-only"`) und exportiert die fertige Instanz. Seiten und Server Actions holen die Instanz von dort.
+- Weitere Entry Points nach Bedarf, z. B. `anzeige.ts` für Typen und Labels ohne `"server-only"`.
+- `tests/fakes.ts`: Umgebung im Speicher. Die Tests laufen über `index.ts` und brauchen weder Netz noch Datenbank.
+
+Server Actions bleiben dünn: Eingabe mit Zod parsen, Web-Belange (Honeypot, Rate-Limit, Request-Header) erledigen, Paket aufrufen.
