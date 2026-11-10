@@ -52,7 +52,28 @@ _Vermeiden_: Revisor, Rechnungsprüfer
 ## Spenden
 
 **Spende**:
-Eine einzelne Überweisung eines Spenders auf das Vereinskonto.
+Eine freiwillige Zuwendung an den Förderverein ohne Gegenleistung, als Geldspende oder Sachspende. Eine Spende braucht keine Beleganfrage, die meisten haben keine.
+
+**Geldspende**:
+Spende in Geld, per Überweisung auf das Vereinskonto oder bar.
+_Vermeiden_: Barspende (als eigener Begriff)
+
+**Sachspende** (vorläufig, ob es sie gibt, ist noch offen):
+Spende in Form einer Sache statt Geld, zum Beispiel Trikots oder Bälle.
+
+**Aufwandsspende** (vorläufig, ob es sie gibt, ist noch offen):
+Verzicht eines Ehrenamtlichen auf eine Erstattung, die ihm der Förderverein vorher zugesagt hat, zum Beispiel für Fahrtkosten. Gilt als Geldspende.
+
+**Spender**:
+Die Person, von der eine Spende kommt und auf die der Spendenbeleg ausgestellt wird. Ein Mitglied ist bei einer zusätzlichen Spende auch Spender. Wer das Geld überweist, ist nicht automatisch der Spender.
+_Vermeiden_: Gönner, Sponsor, Förderer
+
+**Zuwendung**:
+Gesetzlicher Oberbegriff für Spende und Mitgliedsbeitrag. Der Förderverein benutzt das Wort nur in „Zuwendungsbestätigung“ und sagt sonst Spende.
+_Vermeiden_: Zuwendung (allein, für eine Spende)
+
+**Sponsoring**:
+Zahlung mit Gegenleistung, etwa Werbung auf Trikot oder Bande. Keine Spende, bekommt keinen Spendenbeleg.
 
 **Spendenbeleg**:
 Oberbegriff für das Dokument, mit dem ein Spender seine Spende beim Finanzamt nachweist. Es gilt immer für genau eine Spende.
@@ -60,12 +81,21 @@ _Vermeiden_: Quittung, Spendenquittung, Spendenbescheinigung
 
 **Vereinfachter Spendenbeleg**:
 Spendenbeleg für eine Spende bis 300 €, der zusammen mit dem Kontoauszug des Spenders gilt.
+_Vermeiden_: vereinfachter Zuwendungsnachweis
 
-**Zuwendungsbestätigung**:
-Spendenbeleg nach amtlichem Muster für eine Spende über 300 €, ausgestellt vom Vorstand.
+**Zuwendungsbestätigung** (Betragsgrenze vorläufig):
+Spendenbeleg nach amtlichem Muster, für jeden Betrag zulässig. Der Förderverein stellt sie nur für Spenden über 300 € aus.
+
+**Sammelbestätigung** (vorläufig):
+Zuwendungsbestätigung über mehrere Spenden eines Spenders. Gibt es beim Förderverein nicht.
+_Vermeiden_: Jahresbeleg, Jahresbescheinigung
+
+**Belegnummer**:
+Eindeutige Kennung eines Spendenbelegs, steht auf dem Beleg. Muss nicht fortlaufend sein.
+_Vermeiden_: Beleg-Nr. (in Texten)
 
 **Beleganfrage**:
-Der Wunsch eines Spenders, für eine bestimmte Spende einen Spendenbeleg zu bekommen. Mehrere Spenden ergeben mehrere Beleganfragen.
+Der Wunsch eines Spenders, für eine bestimmte Spende einen Spendenbeleg zu bekommen. Mehrere Spenden ergeben mehrere Beleganfragen. Der Spender stellt sie über die Website, oder der Vorstand erfasst sie für ihn, wenn der Wunsch per Mail oder mündlich kommt.
 
 **Offen**:
 Beleganfrage, die noch niemand vom Vorstand geprüft hat.
@@ -94,7 +124,7 @@ _Vermeiden_: Online-Mitglied, Altmitglied, Neumitglied (als Gattung)
 Die Zugehörigkeit eines Mitglieds zum Förderverein. Sie beginnt mit der Aufnahme und endet mit dem Ende der Mitgliedschaft.
 
 **Mitgliedsantrag**:
-Der unterschriebene Wunsch einer Person, dem Förderverein beizutreten, samt SEPA-Lastschriftmandat für den Beitrag. Ohne Unterschrift gibt es keinen Mitgliedsantrag. Er endet mit Aufnahme oder Ablehnung.
+Der unterschriebene Wunsch einer Person, dem Förderverein beizutreten, samt erstem Mandat für den Mitgliedsbeitrag. Ohne Unterschrift gibt es keinen Mitgliedsantrag. Er endet mit Aufnahme oder Ablehnung.
 _Vermeiden_: Beitrittserklärung, Antrag (allein), Anmeldung
 
 **Aufnahme** (vorläufig, bis die Satzung vorliegt):
@@ -114,3 +144,90 @@ _Vermeiden_: Kündigung, Abmeldung
 **Ausschluss**:
 Ende der Mitgliedschaft, weil der Förderverein es beschließt.
 _Vermeiden_: Rauswurf, Streichung
+
+## Beitrag und Einzug
+
+**Mitgliedsbeitrag**:
+Der feste Betrag, den ein Mitglied für jedes Beitragsjahr an den Förderverein zahlt. Ein Mitgliedsbeitrag ist keine Spende und bekommt keinen Spendenbeleg. Einen anteiligen Mitgliedsbeitrag bei Beitritt im laufenden Jahr gibt es nicht.
+_Vermeiden_: Jahresbeitrag, Beitrag (allein), Gebühr, anteiliger Beitrag
+
+**Beitragsjahr**:
+Das Kalenderjahr, für das ein Mitgliedsbeitrag gilt. Pro Beitragsjahr schuldet ein Mitglied genau einen Mitgliedsbeitrag.
+
+**Beitragsrückstand**:
+Ein Mitgliedsbeitrag für ein Beitragsjahr, der nach dem Einzugstermin nicht bezahlt ist.
+
+**Einzugstermin**:
+Der feste Tag im Jahr, an dem der Förderverein die Mitgliedsbeiträge per Lastschrift einzieht. Ist er kein Bankarbeitstag, gilt der nächste Bankarbeitstag.
+_Vermeiden_: Fälligkeitsdatum, Abbuchungstag, Stichtag
+
+**Beitragseinzug**:
+Der jährliche Einzug der Mitgliedsbeiträge aller Mitglieder zum Einzugstermin. Er besteht aus einer Lastschrift je Mitglied.
+_Vermeiden_: Sammeleinzug, Bankeinzug
+
+**Lastschrift**:
+Die einzelne Abbuchung eines Mitgliedsbeitrags vom Konto eines Kontoinhabers aufgrund eines Mandats.
+_Vermeiden_: Abbuchung, Bankeinzug
+
+**Rücklastschrift**:
+Eine Lastschrift, die nicht eingelöst oder später zurückgeholt wird, egal aus welchem Grund, auch wenn der Kontoinhaber sie innerhalb von acht Wochen zurückfordert.
+_Vermeiden_: Rückbuchung, Retoure, geplatzte Lastschrift
+
+**Vorabankündigung**:
+Die Mitteilung von Betrag und Einzugstermin an den Kontoinhaber vor einer Lastschrift. Der Förderverein kündigt einmal beim Erteilen des Mandats an, ein eigenes Schreiben vor jedem Beitragseinzug gibt es nicht.
+_Vermeiden_: Vorabinformation, Pre-Notification
+
+**Mandat**:
+Die Erlaubnis des Kontoinhabers, Mitgliedsbeiträge per Lastschrift von seinem Konto einzuziehen. Das erste Mandat entsteht mit dem Mitgliedsantrag. Ein neues Mandat ersetzt es, etwa bei Kontowechsel, ohne neuen Mitgliedsantrag. Es endet durch Widerruf, Verfall oder das Ende der Mitgliedschaft.
+_Vermeiden_: Einzugsermächtigung, Abbuchungsauftrag, Lastschriftmandat
+
+**Widerruf**:
+Ende eines Mandats, weil der Kontoinhaber es zurücknimmt. Die Mitgliedschaft bleibt davon unberührt.
+_Vermeiden_: Kündigung (des Mandats)
+
+**Verfall**:
+Ende eines Mandats, weil 36 Monate lang keine Lastschrift darauf eingereicht wurde.
+
+**Mandatsreferenz**:
+Die Kennung, unter der der Förderverein ein Mandat führt. Zusammen mit der Gläubiger-ID bestimmt sie das Mandat eindeutig.
+
+**Gläubiger-ID**:
+Die Kennung des Fördervereins als Einreicher von Lastschriften.
+_Vermeiden_: Gläubiger-Identifikationsnummer, Creditor-ID
+
+**Kontoinhaber**:
+Die Person, von deren Konto die Lastschrift abgeht und die das Mandat unterschreibt. Muss nicht das Mitglied sein.
+_Vermeiden_: Zahler, Zahlungspflichtiger, Debitor
+
+## Mittelverwendung
+
+**Mittel**:
+Alle Einnahmen des Fördervereins, also Mitgliedsbeiträge, Spenden und Sponsoring.
+_Vermeiden_: Gelder, Vereinsvermögen
+
+**Mittelverwendung**:
+Oberbegriff dafür, wofür der Förderverein seine Mittel ausgibt.
+_Vermeiden_: Ausgaben, Investitionen, Ausschüttung
+
+**Förderzweck** (vorläufig, bis die Satzung vorliegt):
+Der in der Satzung festgelegte Zweck des Fördervereins: die Fußballabteilung des SV Amendingen zu fördern. Die Jugend ist ein Schwerpunkt, keine Grenze. Jedes Förderprojekt muss zum Förderzweck passen.
+_Vermeiden_: Vereinszweck, Satzungszweck
+
+**Förderprojekt**:
+Eine einzelne Mittelverwendung mit Titel, Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung.
+_Vermeiden_: Spendenprojekt, Maßnahme, Aktion
+
+**Zuschuss** (vorläufig, bis der Vorstand bestätigt):
+Förderprojekt, bei dem der Förderverein Geld an den SV Amendingen gibt und der SV Amendingen selbst bezahlt. Empfänger ist rechtlich der SV Amendingen, bestimmt ist das Geld für die Fußballabteilung. Rechtlich eine Mittelweitergabe.
+_Vermeiden_: Mittelweitergabe (im Alltag), Überweisung an den Verein
+
+**Anschaffung** (vorläufig, bis der Vorstand bestätigt):
+Förderprojekt, bei dem der Förderverein selbst einkauft und die Sache an die Fußballabteilung übergibt, zum Beispiel Bälle und Hütchen.
+_Vermeiden_: Kauf, Beschaffung
+
+**Zweckgebundene Spende** (vorläufig, bis der Vorstand entscheidet):
+Spende, deren Verwendung der Spender verbindlich festlegt, zum Beispiel „für die Trikots der C-Jugend“. Der Förderverein darf sie nur dafür ausgeben. Er nimmt sie nur an, wenn die Verwendung zum Förderzweck passt.
+_Vermeiden_: Zweckspende, Spende mit Auflage
+
+**Verwendungswunsch**:
+Unverbindliche Bitte eines Spenders, wofür seine Spende eingesetzt werden soll. Bindet den Förderverein nicht, anders als eine zweckgebundene Spende.
