@@ -13,7 +13,7 @@ export type WebsiteUmgebung = {
 export type StellenErgebnis = { ok: true; art: BelegArt } | { ok: false; grund: "nicht-angekommen" };
 
 // Jede Anfrage wird nur gespeichert und dem Vorstand gemeldet. Den Beleg gibt es erst,
-// wenn der Vorstand den Geldeingang auf dem Vereinskonto geprüft hat (/admin/spenden).
+// wenn der Vorstand den Geldeingang geprüft hat (/admin/spenden).
 // Sonst könnte jeder einen Beleg für eine Spende anfordern, die nie überwiesen wurde.
 // Angekommen ist die Anfrage, wenn sie gespeichert oder dem Vorstand gemeldet wurde.
 export function website(u: WebsiteUmgebung) {

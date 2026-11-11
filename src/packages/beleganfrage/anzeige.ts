@@ -2,10 +2,18 @@
 import { spendenGrenzeVereinfacht } from "./lib/regeln";
 import { ABLEHNUNGSGRUENDE, ANFRAGE_STATUS, type Ablehnungsgrund, type AnfrageStatus } from "./lib/typen";
 
-export { ABLEHNUNGSGRUENDE, ANFRAGE_STATUS } from "./lib/typen";
-export type { Ablehnungsgrund, AnfrageStatus, BelegArt, Beleganfrage, Listeneintrag, Trefferliste } from "./lib/typen";
+export { ABLEHNUNGSGRUENDE, ANFRAGE_STATUS, ZAHLUNGSWEGE } from "./lib/typen";
+export type {
+  Ablehnungsgrund,
+  AnfrageStatus,
+  BelegArt,
+  Beleganfrage,
+  Listeneintrag,
+  Trefferliste,
+  Zahlungsweg,
+} from "./lib/typen";
 export { belegArt, istBearbeitbar, spendenGrenzeVereinfacht } from "./lib/regeln";
-export { euro } from "./lib/format";
+export { euro, ZAHLUNGSWEG_LABEL, ZAHLUNGSWEG_PRUEFORT } from "./lib/format";
 
 export const ANFRAGE_STATUS_LABEL: Record<AnfrageStatus, string> = {
   offen: "Offen",

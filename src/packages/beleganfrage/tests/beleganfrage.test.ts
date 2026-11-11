@@ -17,6 +17,7 @@ const SPENDE = {
   email: "erika@example.org",
   betrag: 50,
   tagDerSpende: "2026-11-01",
+  zahlungsweg: "ueberweisung" as const,
 };
 
 describe("belegArt", () => {
@@ -68,6 +69,20 @@ describe("Beleganfrage über die Website stellen", () => {
     expect(mail.subject).toBe("Spendenbeleg angefordert: Erika Muster, 50,00\u00a0€");
     expect(mail.text).toContain("Tag der Spende: 1.11.2026");
     expect(mail.text).toContain("https://sva.example/admin/spenden/anfrage1");
+  });
+
+  test("die Mail nennt den Zahlungsweg und sagt, wo der Vorstand prüft", async () => {
+    await website.stellen(SPENDE);
+    expect(post.gesendet[0].text).toContain("Zahlungsweg: Überweisung");
+    expect(post.gesendet[0].text).toContain("Geldeingang auf dem Vereinskonto prüfen");
+  });
+
+  test("bei PayPal prüft der Vorstand im PayPal-Konto", async () => {
+    await website.stellen({ ...SPENDE, zahlungsweg: "paypal" });
+    const [anfrage] = ablage.eintraege.values();
+    expect(anfrage.zahlungsweg).toBe("paypal");
+    expect(post.gesendet[0].text).toContain("Zahlungsweg: PayPal");
+    expect(post.gesendet[0].text).toContain("Geldeingang im PayPal-Konto des Fördervereins prüfen");
   });
 
   test("bei einer Zuwendungsbestätigung bittet die Mail ums Ausstellen", async () => {
@@ -205,6 +220,7 @@ describe("Beleganfragen im internen Bereich", () => {
       expect(mail.text).toContain("Deine Spende ist bei uns eingegangen.");
       expect(mail.text).not.toContain("Deine Überweisung");
       expect(mail.text).not.toContain("angegeben");
+      expect(mail.text).toContain("Kontoauszug oder deiner PayPal-Buchungsbestätigung");
     });
 
     test("ohne E-Mail-Adresse geht keine Mail raus, der Beleg wird trotzdem abgelegt", async () => {

@@ -58,12 +58,16 @@ _Vermeiden_: Revisor, Rechnungsprüfer
 Eine freiwillige Zuwendung an den Förderverein ohne Gegenleistung, als Geldspende oder Sachspende. Eine Spende braucht keine Beleganfrage, die meisten haben keine.
 
 **Geldspende**:
-Spende in Geld, per Überweisung auf das Vereinskonto, per PayPal oder bar. PayPal ist ein offizieller Spendenweg.
+Spende in Geld, per Überweisung auf das Vereinskonto, per PayPal oder bar. PayPal ist ein offizieller Zahlungsweg.
 _Vermeiden_: Barspende, PayPal-Spende (als eigene Begriffe)
 
 **Tag der Spende**:
 Der Tag, an dem der Spender das Geld überwiesen, per PayPal gezahlt oder bar übergeben hat. Nicht der Tag der Gutschrift auf dem Vereinskonto.
 _Vermeiden_: Überweisungsdatum, Datum (allein)
+
+**Zahlungsweg**:
+Wie eine Geldspende zum Förderverein kommt: Überweisung, PayPal oder bar. Steht an der Beleganfrage, damit der Vorstand weiß, wo er den Geldeingang prüft: auf dem Vereinskonto, im PayPal-Konto oder in der Kasse. Über die Website wählt der Spender Überweisung oder PayPal, eine Barspende erfasst der Vorstand selbst.
+_Vermeiden_: Zahlungsart, Zahlungsmethode, Spendenweg
 
 **Sachspende**:
 Spende in Form einer Sache statt Geld, zum Beispiel Trikots oder Bälle. Gab es bisher nicht, ist aber möglich. Die Sache wird Inventar des Fördervereins.

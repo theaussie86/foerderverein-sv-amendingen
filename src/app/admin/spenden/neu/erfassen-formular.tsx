@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { beleganfrageErfassenSchema, type BeleganfrageErfassenDaten } from "@/lib/schemas";
-import { belegArt, spendenGrenzeVereinfacht } from "@/packages/beleganfrage/anzeige";
+import { belegArt, spendenGrenzeVereinfacht, ZAHLUNGSWEGE, ZAHLUNGSWEG_LABEL } from "@/packages/beleganfrage/anzeige";
 import { beleganfrageErfassen } from "../actions";
 
 const inputCls =
@@ -31,6 +31,7 @@ export function ErfassenFormular() {
       ort: "",
       email: "",
       tag_der_spende: "",
+      zahlungsweg: "ueberweisung",
       notiz: "",
       direktAusstellen: false,
     },
@@ -120,6 +121,18 @@ export function ErfassenFormular() {
           <Fehler text={errors.tag_der_spende?.message} />
         </div>
       </div>
+      <fieldset>
+        <legend className={labelCls}>Zahlungsweg *</legend>
+        <div className="mt-2 flex flex-wrap gap-4 text-sva-gray-300">
+          {ZAHLUNGSWEGE.map((weg) => (
+            <label key={weg} className="flex items-center gap-2">
+              <input type="radio" value={weg} {...register("zahlungsweg")} className="accent-sva-gold" />
+              {ZAHLUNGSWEG_LABEL[weg]}
+            </label>
+          ))}
+        </div>
+        <Fehler text={errors.zahlungsweg?.message} />
+      </fieldset>
       {art && (
         <p className="text-sm text-sva-gray-300">
           {art === "vereinfacht"
@@ -140,7 +153,8 @@ export function ErfassenFormular() {
           <span className="font-medium text-white">Geldeingang schon geprüft, direkt ausstellen</span>
           <br />
           <span className="text-sm">
-            Nur ankreuzen, wenn die Spende auf dem Vereinskonto zu sehen ist. Sonst bleibt die Anfrage offen.
+            Nur ankreuzen, wenn die Spende schon eingegangen ist, auf dem Vereinskonto, bei PayPal oder in der Kasse.
+            Sonst bleibt die Anfrage offen.
           </span>
         </span>
       </label>

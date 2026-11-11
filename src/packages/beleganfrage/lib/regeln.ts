@@ -1,6 +1,6 @@
 import type { AnfrageStatus, BelegArt } from "./typen";
 
-// Bis zu diesem Betrag genügt dem Finanzamt Kontoauszug plus Vereinsbeleg (§ 50 Abs. 4 EStDV).
+// Bis zu diesem Betrag genügt dem Finanzamt Kontoauszug oder PayPal-Buchungsbestätigung plus Vereinsbeleg (§ 50 Abs. 4 EStDV).
 export const spendenGrenzeVereinfacht = 300;
 
 // Welchen Beleg eine Beleganfrage bekommt, hängt nur vom Betrag ab.

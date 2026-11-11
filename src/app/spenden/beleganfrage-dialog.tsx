@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { beleganfrageSchema, type BeleganfrageFormData } from "@/lib/schemas";
-import { spendenGrenzeVereinfacht } from "@/packages/beleganfrage/anzeige";
+import { spendenGrenzeVereinfacht, ZAHLUNGSWEG_LABEL } from "@/packages/beleganfrage/anzeige";
 import { verein } from "@/lib/verein";
 import { belegAnfordern } from "./actions";
 
@@ -24,7 +24,16 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
     formState: { errors, isSubmitting },
   } = useForm<BeleganfrageFormData>({
     resolver: zodResolver(beleganfrageSchema),
-    defaultValues: { name: "", strasse: "", plz: "", ort: "", email: "", tag_der_spende: "", website: "" },
+    defaultValues: {
+      name: "",
+      strasse: "",
+      plz: "",
+      ort: "",
+      email: "",
+      tag_der_spende: "",
+      zahlungsweg: "ueberweisung",
+      website: "",
+    },
   });
 
   function oeffnen() {
@@ -79,8 +88,8 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
             <>
               <p className="mt-4 text-sva-gray-300">
                 {gesendet === "vereinfacht"
-                  ? "Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir den Spendenbeleg per E-Mail. Heb ihn zusammen mit deinem Kontoauszug für die Steuererklärung auf."
-                  : "Vielen Dank! Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir die Zuwendungsbestätigung zu."}
+                  ? "Vielen Dank! Sobald deine Spende bei uns eingegangen ist, schicken wir dir den Spendenbeleg per E-Mail. Heb ihn zusammen mit deinem Kontoauszug oder deiner PayPal-Buchungsbestätigung für die Steuererklärung auf."
+                  : "Vielen Dank! Sobald deine Spende bei uns eingegangen ist, schicken wir dir die Zuwendungsbestätigung zu."}
               </p>
               <button
                 type="button"
@@ -93,9 +102,8 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
           ) : (
             <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className="mt-4 space-y-4">
               <p className="text-sm text-sva-gray-300">
-                Sobald deine Überweisung auf unserem Konto eingegangen ist, schicken wir dir bis{" "}
-                {spendenGrenzeVereinfacht} € den Spendenbeleg per E-Mail. Für höhere Beträge stellen wir eine
-                Zuwendungsbestätigung aus.
+                Sobald deine Spende bei uns eingegangen ist, schicken wir dir bis {spendenGrenzeVereinfacht} € den
+                Spendenbeleg per E-Mail. Für höhere Beträge stellen wir eine Zuwendungsbestätigung aus.
               </p>
               <p className="rounded-md border border-sva-gray-700 bg-sva-charcoal px-4 py-3 font-mono text-xs leading-relaxed text-sva-gray-200">
                 {verein.bank.kontoinhaber}
@@ -164,7 +172,7 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="q-betrag" className="block text-sm font-medium text-sva-gray-300">
-                    Überwiesener Betrag (€) *
+                    Gespendeter Betrag (€) *
                   </label>
                   <input
                     id="q-betrag"
@@ -179,7 +187,7 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
                 </div>
                 <div>
                   <label htmlFor="q-datum" className="block text-sm font-medium text-sva-gray-300">
-                    Tag der Überweisung *
+                    Tag der Spende *
                   </label>
                   <input id="q-datum" type="date" {...register("tag_der_spende")} className={inputCls} />
                   {errors.tag_der_spende && (
@@ -187,6 +195,18 @@ export function BeleganfrageDialog({ betrag }: { betrag?: number }) {
                   )}
                 </div>
               </div>
+              <fieldset>
+                <legend className="block text-sm font-medium text-sva-gray-300">Gespendet per *</legend>
+                <div className="mt-2 flex gap-6 text-white">
+                  {(["ueberweisung", "paypal"] as const).map((weg) => (
+                    <label key={weg} className="flex items-center gap-2">
+                      <input type="radio" value={weg} {...register("zahlungsweg")} className="accent-sva-gold" />
+                      {ZAHLUNGSWEG_LABEL[weg]}
+                    </label>
+                  ))}
+                </div>
+                {errors.zahlungsweg && <p className="mt-1 text-xs text-red-400">{errors.zahlungsweg.message}</p>}
+              </fieldset>
               {/* Honeypot gegen Bots */}
               <div className="absolute -left-[9999px]" aria-hidden="true">
                 <label htmlFor="q-website">Website</label>

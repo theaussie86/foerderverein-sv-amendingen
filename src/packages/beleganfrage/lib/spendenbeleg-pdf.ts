@@ -4,8 +4,8 @@ import { euro, tagAnzeigen } from "./format";
 import type { Beleganfrage } from "./typen";
 
 // Beleg für den vereinfachten Zuwendungsnachweis bis 300 € (§ 50 Abs. 4 Satz 1 Nr. 2 Buchst. b EStDV).
-// Er bestätigt keinen Geldeingang, den belegt der Kontoauszug des Spenders. Trotzdem geht er erst raus,
-// wenn der Vorstand die Überweisung auf dem Vereinskonto gesehen hat (/admin/spenden).
+// Er bestätigt keinen Geldeingang, den belegt der Kontoauszug oder die PayPal-Buchungsbestätigung
+// des Spenders. Trotzdem geht er erst raus, wenn der Vorstand den Geldeingang gesehen hat (/admin/spenden).
 // Die Belegnummer ist die ID der Beleganfrage.
 export async function spendenbelegPdf(anfrage: Beleganfrage): Promise<Uint8Array> {
   const { doc, s } = await neuesDokument("Spendenbeleg");
@@ -25,7 +25,8 @@ export async function spendenbelegPdf(anfrage: Beleganfrage): Promise<Uint8Array
   s.abstand(14);
   s.linie();
   s.text(
-    "Hinweis: Dieser Beleg gilt nur zusammen mit dem Kontoauszug oder der Buchungsbestätigung der Bank, aus dem " +
+    "Hinweis: Dieser Beleg gilt nur zusammen mit einem Zahlungsnachweis (Kontoauszug oder Buchungsbestätigung der Bank " +
+      "oder von PayPal), aus dem " +
       "Name und Konto von Auftraggeber und Empfänger, Betrag und Buchungstag hervorgehen. Er ist keine " +
       "Zuwendungsbestätigung nach amtlichem Muster und wird maschinell erstellt, deshalb ohne Unterschrift.",
     { size: 9, grau: true },

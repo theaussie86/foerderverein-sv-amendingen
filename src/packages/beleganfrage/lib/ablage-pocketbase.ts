@@ -4,6 +4,7 @@ import type {
   Ablehnungsgrund,
   AnfrageStatus,
   BelegArt,
+  Zahlungsweg,
   Beleganfrage,
   Datei,
   Leseablage,
@@ -32,6 +33,8 @@ type Spendenbeleg = RecordModel & {
   zuletzt_geprueft: string;
   ablehnungsgrund: Ablehnungsgrund | "";
   ablehnung_begruendung: string;
+  // Leer nur bei Einträgen, die vor der Migration entstanden und nicht nachgezogen wurden.
+  zahlungsweg: Zahlungsweg | "";
   ausgestellt_von: string;
   ausgestellt_am: string;
   notiz: string;
@@ -59,6 +62,7 @@ function listeneintrag(r: Spendenbeleg): Listeneintrag {
     // Vor der Betragskorrektur gespeicherte Datensätze hat die Migration befüllt, sicher ist sicher.
     betragAngegeben: r.betrag_angegeben || r.betrag,
     tagDerSpende: tag(r.tag_der_spende),
+    zahlungsweg: r.zahlungsweg || "ueberweisung",
     angefragtAm: r.created,
     wartend: r.wartet_seit ? { seit: r.wartet_seit, zuletztGeprueft: r.zuletzt_geprueft || r.wartet_seit } : null,
   };
@@ -120,7 +124,7 @@ export function leseablage(pb: PocketBase): Leseablage {
         filter: teile.length ? pb.filter(teile.join(" && "), params) : "",
         sort: "-created",
         fields:
-          "id,art,status,name,ort,email,betrag,betrag_angegeben,tag_der_spende,created,wartet_seit,zuletzt_geprueft",
+          "id,art,status,name,ort,email,betrag,betrag_angegeben,tag_der_spende,zahlungsweg,created,wartet_seit,zuletzt_geprueft",
       });
       return { eintraege: liste.items.map(listeneintrag), anzahl: liste.totalItems, seiten: liste.totalPages };
     },

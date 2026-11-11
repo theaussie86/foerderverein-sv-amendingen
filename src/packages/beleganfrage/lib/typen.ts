@@ -2,6 +2,10 @@
 
 export type BelegArt = "vereinfacht" | "zuwendungsbestaetigung";
 
+// Wie die Geldspende zum Förderverein kam. Sagt dem Vorstand, wo er den Geldeingang prüft.
+export const ZAHLUNGSWEGE = ["ueberweisung", "paypal", "bar"] as const;
+export type Zahlungsweg = (typeof ZAHLUNGSWEGE)[number];
+
 export const ANFRAGE_STATUS = ["offen", "wartend", "ausgestellt", "abgelehnt"] as const;
 export type AnfrageStatus = (typeof ANFRAGE_STATUS)[number];
 
@@ -29,11 +33,12 @@ export type Beleganfrage = {
   betragAngegeben: number;
   // YYYY-MM-DD
   tagDerSpende: string;
+  zahlungsweg: Zahlungsweg;
   notiz: string;
   angefragtAm: string;
   // Name des Vorstandsmitglieds, das die Anfrage erfasst hat. Null, wenn sie über die Website kam.
   erfasstVon: string | null;
-  // Seit wann die Anfrage wartet und wann der Vorstand zuletzt das Vereinskonto geprüft hat.
+  // Seit wann die Anfrage wartet und wann der Vorstand zuletzt den Geldeingang geprüft hat.
   // Null, wenn sie nie wartend war.
   wartend: { seit: string; zuletztGeprueft: string } | null;
   // Wann und von wem die Anfrage abgeschlossen wurde. Null, solange sie offen oder wartend ist.
@@ -55,6 +60,7 @@ export type Listeneintrag = Pick<
   | "betrag"
   | "betragAngegeben"
   | "tagDerSpende"
+  | "zahlungsweg"
   | "angefragtAm"
   | "wartend"
 >;
@@ -72,6 +78,7 @@ export type Spenderangaben = {
   email: string;
   betrag: number;
   tagDerSpende: string;
+  zahlungsweg: Zahlungsweg;
 };
 
 export type Datei = { dateiname: string; inhalt: Uint8Array };

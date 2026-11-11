@@ -81,6 +81,7 @@ describe("beleganfrageSchema und kontaktSchema", () => {
       email: "a@example.org",
       betrag: 50,
       tag_der_spende: "2026-11-01",
+      zahlungsweg: "ueberweisung",
       website: "spam",
     };
     expect(beleganfrageSchema.safeParse(anfrage).success).toBe(true);
@@ -112,8 +113,25 @@ describe("beleganfrageErfassenSchema", () => {
     betrag: 50,
     tag_der_spende: "2026-11-01",
     notiz: "",
+    zahlungsweg: "bar",
     direktAusstellen: false,
   };
+
+  test("die Website bietet Bar nicht an, der Vorstand schon", () => {
+    expect(beleganfrageErfassenSchema.safeParse(erfasst).success).toBe(true);
+    expect(
+      beleganfrageSchema.safeParse({
+        name: "A",
+        strasse: "B 1",
+        plz: "87700",
+        ort: "C",
+        email: "a@example.org",
+        betrag: 50,
+        tag_der_spende: "2026-11-01",
+        zahlungsweg: "bar",
+      }).success,
+    ).toBe(false);
+  });
 
   test("Vorstand darf ohne E-Mail-Adresse erfassen", () => {
     expect(beleganfrageErfassenSchema.safeParse(erfasst).success).toBe(true);

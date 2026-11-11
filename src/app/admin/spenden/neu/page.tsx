@@ -19,8 +19,8 @@ export default async function BeleganfrageErfassenPage() {
       <h1 className="mt-6 text-3xl font-black text-white uppercase sm:text-4xl">Beleganfrage erfassen</h1>
       <div className="mt-2 h-1 w-16 bg-sva-gold" />
       <p className="mt-4 text-sva-gray-300">
-        Für Spender, die sich nicht über die Website melden, etwa per WhatsApp. Ist die Spende noch nicht auf dem
-        Vereinskonto, nur erfassen und später ausstellen.
+        Für Spender, die sich nicht über die Website melden, etwa per WhatsApp. Ist die Spende noch nicht eingegangen,
+        nur erfassen und später ausstellen.
       </p>
       <ErfassenFormular />
     </div>

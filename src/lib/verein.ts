@@ -41,6 +41,8 @@ export const verein = {
     name: "Sparkasse Memmingen-Lindau-Mindelheim",
   },
   spendenVerwendungszweck: "Spende Förderverein SVA",
+  // PayPal ist ein offizieller Zahlungsweg (GLOSSARY.md).
+  paypalMe: "https://paypal.me/svamendingen",
   // Steuerangaben für den vereinfachten Spendenbeleg (§ 50 Abs. 4 EStDV). Die Angaben aus dem
   // Freistellungsbescheid fehlen noch (#55). Bis 300 € reicht dem Finanzamt meist der Kontoauszug,
   // deshalb geht der Beleg bis dahin ohne sie raus. Sobald der Bescheid vorliegt, hier eintragen.
@@ -72,6 +74,12 @@ export function mandatstext(): string {
     `Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. ` +
     `Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.`
   );
+}
+
+// paypal.me-Link, mit Betrag vorausgefüllt, wenn einer gewählt ist.
+export function paypalLink(betrag?: number): string {
+  if (!betrag || !(betrag > 0)) return verein.paypalMe;
+  return `${verein.paypalMe}/${Number.isInteger(betrag) ? betrag : betrag.toFixed(2)}EUR`;
 }
 
 // Ziel für den Mitgliederzähler auf der Startseite (src/lib/mitglieder.ts).

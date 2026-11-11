@@ -9,6 +9,7 @@ import {
   istAnfrageStatus,
   type AnfrageStatus,
   type Trefferliste,
+  ZAHLUNGSWEG_LABEL,
 } from "@/packages/beleganfrage/anzeige";
 import { beleganfragenFuerVorstand } from "@/packages/beleganfrage/server";
 import { cn } from "@/lib/utils";
@@ -55,9 +56,10 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
           <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Spendenbelege</h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 max-w-2xl text-sva-gray-300">
-            Bei jeder Anfrage zuerst den Geldeingang auf dem Vereinskonto prüfen. Bis 300 € stellt die Website den
-            Spendenbeleg aus und schickt ihn. Darüber die Zuwendungsbestätigung ausstellen und hier als ausgestellt
-            markieren. Ist die Spende noch nicht da, die Anfrage als wartend markieren.
+            Bei jeder Anfrage zuerst den Geldeingang prüfen, je nach Zahlungsweg auf dem Vereinskonto oder bei PayPal.
+            Bis 300 € stellt die Website den Spendenbeleg aus und schickt ihn. Darüber die Zuwendungsbestätigung
+            ausstellen und hier als ausgestellt markieren. Ist die Spende noch nicht da, die Anfrage als wartend
+            markieren.
           </p>
           <p className="mt-2 text-sm text-sva-gray-400">Angemeldet als {vorstand.name || vorstand.email}.</p>
         </div>
@@ -163,6 +165,11 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                       <Link href={`/admin/spenden/${b.id}`} className="after:absolute after:inset-0">
                         {b.name}
                       </Link>
+                      {b.zahlungsweg !== "ueberweisung" && (
+                        <span className="ml-2 rounded-full bg-sva-gray-700 px-2 py-0.5 text-xs font-semibold text-sva-gray-200">
+                          {ZAHLUNGSWEG_LABEL[b.zahlungsweg]}
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-right whitespace-nowrap text-white tabular-nums">
                       {euro(b.betrag)}
