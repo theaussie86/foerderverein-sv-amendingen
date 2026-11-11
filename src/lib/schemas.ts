@@ -46,6 +46,9 @@ export const mitgliedSchema = z.object({
   ort: z.string().min(1, "Ort ist erforderlich."),
   email: z.string().email("Bitte eine gültige E-Mail-Adresse eingeben."),
   geburtsdatum: z.string().optional(),
+  // Freiwillig wie auf der Papiervorlage (#16). Neu: Anträge aus alten Links haben die Felder nicht.
+  telefon: z.string().max(40, "Höchstens 40 Zeichen.").optional(),
+  handy: z.string().max(40, "Höchstens 40 Zeichen.").optional(),
   kontoinhaber: z.string().min(1, "Kontoinhaber ist erforderlich."),
   iban: z.string().refine((v) => isValidIban(normalizeIban(v)), "Bitte eine gültige IBAN eingeben."),
   // boolean statt literal(true), damit das Formular mit false starten kann.

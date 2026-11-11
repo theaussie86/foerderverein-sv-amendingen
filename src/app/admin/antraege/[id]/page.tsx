@@ -129,6 +129,8 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
                 </a>,
               ],
               ["Geburtsdatum", datum(antrag.geburtsdatum)],
+              ["Telefon privat", antrag.telefon],
+              ["Handy", antrag.handy],
             ]}
           />
         </Abschnitt>

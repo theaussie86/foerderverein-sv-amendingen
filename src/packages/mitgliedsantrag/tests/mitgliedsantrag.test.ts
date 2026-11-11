@@ -133,14 +133,14 @@ describe("unterschreiben", () => {
     expect(e?.mandatPdf.filename).toBe("SEPA-Lastschriftmandat_Gr__er_J_rgen.pdf");
   });
 
-  test("beide PDFs sind lesbar und haben je eine Protokollseite", async () => {
+  test("beide PDFs sind lesbar, die Beitrittserklärung mit Datenschutzhinweisen, beide mit Protokollseite", async () => {
     const { antraege, token, sitzungToken, ablage } = await eingereichtUndGeoeffnet();
     await antraege.unterschreiben({ token, sitzungToken, unterschrift: UNTERSCHRIFT }, herkunft);
     const e = ablage.gespeichert[0];
-    for (const pdf of [e?.beitrittPdf, e?.mandatPdf]) {
-      const doc = await PDFDocument.load(pdf?.content ?? new Uint8Array());
-      expect(doc.getPageCount()).toBe(2);
-    }
+    const seiten = async (pdf?: { content: Buffer }) =>
+      (await PDFDocument.load(pdf?.content ?? new Uint8Array())).getPageCount();
+    expect(await seiten(e?.beitrittPdf)).toBe(3);
+    expect(await seiten(e?.mandatPdf)).toBe(2);
   });
 
   test("schickt dem Vorstand und dem Mitglied je eine Mail mit beiden PDFs", async () => {

@@ -30,7 +30,8 @@ export default function DatenschutzPage() {
           <ul className="mt-2 list-inside list-disc space-y-1">
             <li>Name und Anschrift</li>
             <li>E-Mail-Adresse</li>
-            <li>Geburtsdatum</li>
+            <li>Geburtsdatum (freiwillig)</li>
+            <li>Telefon- und Handynummer (freiwillig)</li>
             <li>Bankverbindung (IBAN) bei SEPA-Lastschrift</li>
           </ul>
         </section>
@@ -52,8 +53,8 @@ export default function DatenschutzPage() {
           </h2>
           <p>
             Wenn Sie online Mitglied werden, verarbeiten wir die Angaben aus dem Formular (Name, Anschrift,
-            E-Mail-Adresse, Geburtsdatum, Kontoinhaber, IBAN) zur Durchführung der Mitgliedschaft und zum Einzug des
-            Beitrags per SEPA-Lastschrift (Art. 6 Abs. 1 lit. b DSGVO).
+            E-Mail-Adresse, Kontoinhaber, IBAN, freiwillig Geburtsdatum, Telefon und Handy) zur Durchführung der
+            Mitgliedschaft und zum Einzug des Beitrags per SEPA-Lastschrift (Art. 6 Abs. 1 lit. b DSGVO).
           </p>
           <p className="mt-2">
             Zur Bestätigung erhalten Sie einen persönlichen Link per E-Mail. Ihre Angaben sind in diesem Link

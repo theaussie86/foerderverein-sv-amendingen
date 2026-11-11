@@ -43,6 +43,8 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
     ["E-Mail", d.email],
   ];
   if (d.geburtsdatum) zeilen.push(["Geburtsdatum", new Date(d.geburtsdatum).toLocaleDateString("de-DE")]);
+  if (d.telefon) zeilen.push(["Telefon privat", d.telefon]);
+  if (d.handy) zeilen.push(["Handy", d.handy]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">

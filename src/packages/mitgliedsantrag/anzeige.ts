@@ -30,6 +30,9 @@ export type Mitgliedsantrag = RecordModel & {
   ort: string;
   email: string;
   geburtsdatum: string;
+  // Seit #16. Ältere Datensätze haben die Felder leer.
+  telefon: string;
+  handy: string;
   kontoinhaber: string;
   iban: string;
   jahresbeitrag: number;

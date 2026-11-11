@@ -23,6 +23,9 @@ export const verein = {
   ort: "Memmingen",
   plzOrt: "87700 Memmingen",
   email: "foerderverein.sva@gmx.de",
+  // Fußzeile von Beitrittserklärung und SEPA-Mandat, wie auf der Papiervorlage (#16), ohne Privatanschriften.
+  vorsitz: "Manuel Rothermel",
+  stellvertretung: "Christian Geiger",
   registergericht: "Amtsgericht Memmingen",
   registernummer: "VR 1428",
   // Laut Beitrittserklärung.
