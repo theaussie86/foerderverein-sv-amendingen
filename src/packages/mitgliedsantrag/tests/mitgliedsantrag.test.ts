@@ -274,18 +274,24 @@ describe("unterschreiben", () => {
 describe("anzahlSeit", () => {
   const datum = new Date("2026-10-23T00:00:00Z");
 
-  test("gibt die Zahl der Ablage zurück", async () => {
+  test("zählt die Anträge der Ablage", async () => {
     const { umgebung, ablage } = fakeUmgebung();
-    ablage.anzahl = 4;
+    ablage.ids = ["a", "b", "c", "d"];
     expect(await mitgliedsantraege(umgebung).anzahlSeit(datum)).toBe(4);
     expect(ablage.zaehlAufrufe).toEqual([datum]);
   });
 
+  test("ohne Anträge, die schon Mitglied sind", async () => {
+    const { umgebung, ablage } = fakeUmgebung();
+    ablage.ids = ["a", "b", "c", "d"];
+    expect(await mitgliedsantraege(umgebung).anzahlSeit(datum, ["b", "x"])).toBe(3);
+  });
+
   test("null ohne Ablage oder bei Fehler", async () => {
     const { umgebung, ablage } = fakeUmgebung();
-    ablage.anzahl = null;
+    ablage.ids = null;
     expect(await mitgliedsantraege(umgebung).anzahlSeit(datum)).toBeNull();
-    ablage.anzahl = "wirft";
+    ablage.ids = "wirft";
     expect(await mitgliedsantraege(umgebung).anzahlSeit(datum)).toBeNull();
   });
 });

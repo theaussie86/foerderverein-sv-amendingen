@@ -6,6 +6,7 @@ import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { datum, datumZeit } from "@/lib/format";
 import { DATEIEN, istDateifeld, type Dateifeld } from "@/packages/mitgliedsantrag/anzeige";
 import { mitgliedsantraegeFuerVorstand } from "@/packages/mitgliedsantrag/server";
+import { mitgliederFuerVorstand } from "@/packages/mitglied/server";
 import { formatIban } from "@/lib/schemas";
 import { StatusBadge } from "../../status-badge";
 
@@ -41,6 +42,7 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
   const { id } = await params;
   const antrag = await mitgliedsantraegeFuerVorstand(pb).laden(id);
   if (!antrag) notFound();
+  const mitgliedId = await mitgliederFuerVorstand(pb).zuAntrag(antrag.id);
 
   const p = antrag.protokoll;
   const dateiLink = (feld: Dateifeld) => `/admin/antraege/${antrag.id}/dateien/${feld}`;
@@ -61,7 +63,26 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
             Mandatsreferenz <span className="font-mono text-white">{antrag.mandatsreferenz}</span>
           </p>
         </div>
-        <StatusBadge status={antrag.status} className="px-4 py-1.5 text-sm" />
+        <div className="flex flex-col items-end gap-3">
+          <StatusBadge status={antrag.status} className="px-4 py-1.5 text-sm" />
+          {mitgliedId ? (
+            <Link
+              href={`/admin/mitglieder/${mitgliedId}`}
+              className="text-sm font-medium text-sva-gold hover:text-sva-gold-light"
+            >
+              Zum Mitglied →
+            </Link>
+          ) : (
+            antrag.status !== "abgelehnt" && (
+              <Link
+                href={`/admin/mitglieder/neu?antrag=${antrag.id}`}
+                className="rounded-md bg-sva-gold px-5 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+              >
+                Als Mitglied übernehmen
+              </Link>
+            )
+          )}
+        </div>
       </div>
 
       <div className="mt-10 grid gap-6">

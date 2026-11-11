@@ -186,9 +186,11 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mx-auto mt-14 max-w-xl">
-            <Zaehler stand={stand} />
-          </div>
+          {stand && (
+            <div className="mx-auto mt-14 max-w-xl">
+              <Zaehler stand={stand} />
+            </div>
+          )}
         </div>
       </section>
 

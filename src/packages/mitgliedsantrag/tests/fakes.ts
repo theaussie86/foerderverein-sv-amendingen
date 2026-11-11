@@ -5,7 +5,7 @@ import type { Ablage, Mail, Siegel, Speicherergebnis, Umgebung, Unterschriebener
 export class FakeAblage implements Ablage {
   gespeichert: UnterschriebenerAntrag[] = [];
   verhalten: Speicherergebnis | "wirft" = "gespeichert";
-  anzahl: number | null | "wirft" = 0;
+  ids: string[] | null | "wirft" = [];
   zaehlAufrufe: Date[] = [];
 
   speichern(eintrag: UnterschriebenerAntrag): Promise<Speicherergebnis> {
@@ -14,10 +14,10 @@ export class FakeAblage implements Ablage {
     return Promise.resolve(this.verhalten);
   }
 
-  zaehlenSeit(datum: Date): Promise<number | null> {
+  idsSeit(datum: Date): Promise<string[] | null> {
     this.zaehlAufrufe.push(datum);
-    if (this.anzahl === "wirft") return Promise.reject(new Error("PocketBase nicht erreichbar"));
-    return Promise.resolve(this.anzahl);
+    if (this.ids === "wirft") return Promise.reject(new Error("PocketBase nicht erreichbar"));
+    return Promise.resolve(this.ids);
   }
 }
 

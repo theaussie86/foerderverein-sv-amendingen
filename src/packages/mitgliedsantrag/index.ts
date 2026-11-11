@@ -37,8 +37,8 @@ export type Speicherergebnis = "gespeichert" | "bereits-vorhanden" | "uebersprun
 export type Ablage = {
   // Wirft, wenn die Ablage nicht erreichbar ist.
   speichern(eintrag: UnterschriebenerAntrag): Promise<Speicherergebnis>;
-  // Unterschriebene Anträge seit `datum` ohne abgelehnte und ausgetretene. Null ohne Ablage.
-  zaehlenSeit(datum: Date): Promise<number | null>;
+  // IDs der unterschriebenen Anträge seit `datum` ohne abgelehnte und ausgetretene. Null ohne Ablage.
+  idsSeit(datum: Date): Promise<string[] | null>;
 };
 
 export type Siegel = {
@@ -158,11 +158,12 @@ export function mitgliedsantraege(u: Umgebung) {
       return { ok: true };
     },
 
-    // Unterschriebene Mitgliedsanträge seit `datum`, ohne abgelehnte und ausgetretene.
-    // Null, wenn die Ablage fehlt oder nicht erreichbar ist.
-    async anzahlSeit(datum: Date): Promise<number | null> {
+    // Unterschriebene Mitgliedsanträge seit `datum`, ohne abgelehnte und ausgetretene und ohne die
+    // Anträge in `ohne` (schon als Mitglied erfasst). Null, wenn die Ablage fehlt oder nicht erreichbar ist.
+    async anzahlSeit(datum: Date, ohne: readonly string[] = []): Promise<number | null> {
       try {
-        return await u.ablage.zaehlenSeit(datum);
+        const ids = await u.ablage.idsSeit(datum);
+        return ids && ids.filter((id) => !ohne.includes(id)).length;
       } catch (e) {
         console.error("Mitgliederzähler: Abfrage der Ablage fehlgeschlagen", e);
         return null;
