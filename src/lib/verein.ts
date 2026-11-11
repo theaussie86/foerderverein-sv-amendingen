@@ -42,7 +42,7 @@ export const verein = {
   },
   spendenVerwendungszweck: "Spende Förderverein SVA",
   // PayPal ist ein offizieller Zahlungsweg (GLOSSARY.md).
-  paypalMe: "https://paypal.me/svamendingen",
+  paypalMe: "https://paypal.me/foerdervereinsva",
   // Steuerangaben für den vereinfachten Spendenbeleg (§ 50 Abs. 4 EStDV). Die Angaben aus dem
   // Freistellungsbescheid fehlen noch (#55). Bis 300 € reicht dem Finanzamt meist der Kontoauszug,
   // deshalb geht der Beleg bis dahin ohne sie raus. Sobald der Bescheid vorliegt, hier eintragen.
