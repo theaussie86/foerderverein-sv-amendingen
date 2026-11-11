@@ -1,5 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import {
+  beleganfrageAblehnenSchema,
+  beleganfrageAusstellenSchema,
   beleganfrageErfassenSchema,
   beleganfrageSchema,
   formatIban,
@@ -110,7 +112,7 @@ describe("beleganfrageErfassenSchema", () => {
     betrag: 50,
     tag_der_spende: "2026-11-01",
     notiz: "",
-    direktFreigeben: false,
+    direktAusstellen: false,
   };
 
   test("Vorstand darf ohne E-Mail-Adresse erfassen", () => {
@@ -127,6 +129,43 @@ describe("beleganfrageErfassenSchema", () => {
 
   test("Betrag ab 1 Euro", () => {
     expect(beleganfrageErfassenSchema.safeParse({ ...erfasst, betrag: 0 }).success).toBe(false);
+  });
+});
+
+describe("beleganfrageAblehnenSchema", () => {
+  const ablehnung = { grund: "doppelt", begruendung: "", mailSenden: false, mailText: "" };
+
+  test("ein fester Ablehnungsgrund genügt", () => {
+    expect(beleganfrageAblehnenSchema.safeParse(ablehnung).success).toBe(true);
+  });
+
+  test("ohne Ablehnungsgrund abgewiesen", () => {
+    expect(beleganfrageAblehnenSchema.safeParse({ ...ablehnung, grund: undefined }).success).toBe(false);
+    expect(beleganfrageAblehnenSchema.safeParse({ ...ablehnung, grund: "betrag" }).success).toBe(false);
+  });
+
+  test("Sonstiges verlangt eine Begründung", () => {
+    const ergebnis = beleganfrageAblehnenSchema.safeParse({ ...ablehnung, grund: "sonstiges", begruendung: "  " });
+    expect(ergebnis.error?.issues.map((i) => i.path)).toEqual([["begruendung"]]);
+    expect(
+      beleganfrageAblehnenSchema.safeParse({ ...ablehnung, grund: "sonstiges", begruendung: "Spam" }).success,
+    ).toBe(true);
+  });
+
+  test("eine Ablehnungsmail braucht Text", () => {
+    const ergebnis = beleganfrageAblehnenSchema.safeParse({ ...ablehnung, mailSenden: true });
+    expect(ergebnis.error?.issues.map((i) => i.path)).toEqual([["mailText"]]);
+    expect(beleganfrageAblehnenSchema.safeParse({ ...ablehnung, mailSenden: true, mailText: "Hallo" }).success).toBe(
+      true,
+    );
+  });
+});
+
+describe("beleganfrageAusstellenSchema", () => {
+  test("eingegangener Betrag ab 1 Euro", () => {
+    expect(beleganfrageAusstellenSchema.safeParse({ eingegangen: 250 }).success).toBe(true);
+    expect(beleganfrageAusstellenSchema.safeParse({ eingegangen: 0 }).success).toBe(false);
+    expect(beleganfrageAusstellenSchema.safeParse({ eingegangen: Number.NaN }).success).toBe(false);
   });
 });
 

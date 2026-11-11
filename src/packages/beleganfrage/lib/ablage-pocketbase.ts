@@ -1,6 +1,7 @@
 import type PocketBase from "pocketbase";
 import { ClientResponseError, type RecordModel } from "pocketbase";
 import type {
+  Ablehnungsgrund,
   AnfrageStatus,
   BelegArt,
   Beleganfrage,
@@ -12,7 +13,7 @@ import type {
 } from "./typen";
 
 // Einzige Stelle, die die Collection "spendenbelege" kennt. Hier werden die PocketBase-Namen
-// in die Begriffe des Glossars übersetzt (Umbenennen in der Datenbank ist #38).
+// in die Begriffe des Glossars übersetzt (Umbenennen in der Datenbank ist #67).
 
 type Vorstandsrecord = RecordModel & { name: string; email: string };
 
@@ -25,7 +26,12 @@ type Spendenbeleg = RecordModel & {
   ort: string;
   email: string;
   betrag: number;
+  betrag_angegeben: number;
   tag_der_spende: string;
+  wartet_seit: string;
+  zuletzt_geprueft: string;
+  ablehnungsgrund: Ablehnungsgrund | "";
+  ablehnung_begruendung: string;
   ausgestellt_von: string;
   ausgestellt_am: string;
   notiz: string;
@@ -50,8 +56,11 @@ function listeneintrag(r: Spendenbeleg): Listeneintrag {
     ort: r.ort,
     email: r.email,
     betrag: r.betrag,
+    // Vor der Betragskorrektur gespeicherte Datensätze hat die Migration befüllt, sicher ist sicher.
+    betragAngegeben: r.betrag_angegeben || r.betrag,
     tagDerSpende: tag(r.tag_der_spende),
     angefragtAm: r.created,
+    wartend: r.wartet_seit ? { seit: r.wartet_seit, zuletztGeprueft: r.zuletzt_geprueft || r.wartet_seit } : null,
   };
 }
 
@@ -63,6 +72,7 @@ function beleganfrage(r: Spendenbeleg): Beleganfrage {
     plz: r.plz,
     notiz: r.notiz,
     erfasstVon: r.erfasst_von ? erfasser?.name || erfasser?.email || "Vorstand" : null,
+    ablehnung: r.ablehnungsgrund ? { grund: r.ablehnungsgrund, begruendung: r.ablehnung_begruendung } : null,
     abschluss: r.ausgestellt_am ? { am: r.ausgestellt_am, von: r.expand?.ausgestellt_von?.name || null } : null,
     hatBeleg: !!r.beleg_pdf,
   };
@@ -109,7 +119,8 @@ export function leseablage(pb: PocketBase): Leseablage {
       const liste = await spendenbelege().getList<Spendenbeleg>(seite, PRO_SEITE, {
         filter: teile.length ? pb.filter(teile.join(" && "), params) : "",
         sort: "-created",
-        fields: "id,art,status,name,ort,email,betrag,tag_der_spende,created",
+        fields:
+          "id,art,status,name,ort,email,betrag,betrag_angegeben,tag_der_spende,created,wartet_seit,zuletzt_geprueft",
       });
       return { eintraege: liste.items.map(listeneintrag), anzahl: liste.totalItems, seiten: liste.totalPages };
     },
@@ -141,6 +152,7 @@ export function schreibablage(superuser: () => Promise<PocketBase | null>): Schr
       if (!pb) return null;
       const record = await pb.collection("spendenbelege").create({
         ...rest,
+        betrag_angegeben: rest.betrag,
         status: "offen",
         tag_der_spende: `${tagDerSpende} 00:00:00.000Z`,
         erfasst_von: erfasstVon ?? "",
@@ -148,15 +160,46 @@ export function schreibablage(superuser: () => Promise<PocketBase | null>): Schr
       return record.id;
     },
 
-    // Hält fest, wer abgeschlossen hat. "versendet" legt den verschickten Beleg mit ab.
-    async abschliessen(id, { status, vorstandId, am, beleg }) {
+    // Hält fest, wer abgeschlossen hat. Die Ausstellung schreibt den maßgeblichen Betrag samt Art
+    // und legt beim vereinfachten Spendenbeleg das PDF ab, die Ablehnung ihren Grund.
+    async abschliessen(id, abschluss) {
+      const pb = await superuser();
+      if (!pb) throw new Error("PocketBase ist nicht konfiguriert.");
+      const gemeinsam = {
+        status: abschluss.status,
+        ausgestellt_von: abschluss.vorstandId,
+        ausgestellt_am: pbDatum(abschluss.am),
+      };
+      await pb.collection("spendenbelege").update(
+        id,
+        abschluss.status === "ausgestellt"
+          ? {
+              ...gemeinsam,
+              betrag: abschluss.betrag,
+              art: abschluss.art,
+              ...(abschluss.beleg ? { beleg_pdf: pdfDatei(abschluss.beleg) } : {}),
+            }
+          : {
+              ...gemeinsam,
+              ablehnungsgrund: abschluss.ablehnung.grund,
+              ablehnung_begruendung: abschluss.ablehnung.begruendung,
+            },
+      );
+    },
+
+    async betragKorrigieren(id, { betrag, art }) {
+      const pb = await superuser();
+      if (!pb) throw new Error("PocketBase ist nicht konfiguriert.");
+      await pb.collection("spendenbelege").update(id, { betrag, art });
+    },
+
+    async wartendMarkieren(id, { seit, zuletztGeprueft }) {
       const pb = await superuser();
       if (!pb) throw new Error("PocketBase ist nicht konfiguriert.");
       await pb.collection("spendenbelege").update(id, {
-        status,
-        ausgestellt_von: vorstandId,
-        ausgestellt_am: pbDatum(am),
-        ...(beleg ? { beleg_pdf: pdfDatei(beleg) } : {}),
+        status: "wartend",
+        wartet_seit: pbDatum(seit),
+        zuletzt_geprueft: pbDatum(zuletztGeprueft),
       });
     },
   };

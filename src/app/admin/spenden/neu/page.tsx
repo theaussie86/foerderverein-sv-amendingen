@@ -20,7 +20,7 @@ export default async function BeleganfrageErfassenPage() {
       <div className="mt-2 h-1 w-16 bg-sva-gold" />
       <p className="mt-4 text-sva-gray-300">
         Für Spender, die sich nicht über die Website melden, etwa per WhatsApp. Ist die Spende noch nicht auf dem
-        Vereinskonto, nur erfassen und später freigeben.
+        Vereinskonto, nur erfassen und später ausstellen.
       </p>
       <ErfassenFormular />
     </div>

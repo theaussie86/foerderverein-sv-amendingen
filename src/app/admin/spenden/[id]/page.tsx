@@ -3,11 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
-import { datum, datumZeit } from "@/lib/format";
-import { BELEG_ART_LABEL, euro } from "@/packages/beleganfrage/anzeige";
+import { datum, datumZeit, seitWann } from "@/lib/format";
+import { ABLEHNUNGSGRUND_LABEL, BELEG_ART_LABEL, euro, istBearbeitbar } from "@/packages/beleganfrage/anzeige";
+import { ablehnungsmailVorlagen } from "@/packages/beleganfrage/index";
 import { beleganfragenFuerVorstand } from "@/packages/beleganfrage/server";
-import { alsAusgestelltMarkieren, belegFreigeben, anfrageAblehnen } from "../actions";
+import { alsWartendMarkieren } from "../actions";
 import { AnfrageStatusBadge } from "../status-badge";
+import { AblehnenFormular } from "./ablehnen-formular";
+import { AusstellenFormular } from "./ausstellen-formular";
 
 export const metadata: Metadata = {
   title: "Spendenbeleg",
@@ -36,7 +39,12 @@ export default async function SpendenbelegPage({
         {beleg.id}
       </span>,
     ],
-    ["Betrag", euro(beleg.betrag)],
+    [
+      "Betrag",
+      beleg.betrag === beleg.betragAngegeben
+        ? euro(beleg.betrag)
+        : `${euro(beleg.betrag)} eingegangen, ${euro(beleg.betragAngegeben)} angegeben`,
+    ],
     ["Tag der Spende", datum(beleg.tagDerSpende)],
     ["Art", BELEG_ART_LABEL[beleg.art]],
     ["Name", beleg.name],
@@ -56,10 +64,19 @@ export default async function SpendenbelegPage({
     ["Herkunft", beleg.erfasstVon ? `Erfasst von ${beleg.erfasstVon}` : "Über die Website"],
     ["Angefragt", datumZeit(beleg.angefragtAm)],
   ];
-  if (beleg.status !== "offen" && beleg.abschluss) {
-    const { am, von } = beleg.abschluss;
-    felder.push(["Erledigt", `${datumZeit(am)}${von ? ` von ${von}` : ""}`]);
+  const wartend = beleg.status === "wartend" ? beleg.wartend : null;
+  if (wartend) {
+    felder.push(["Wartet", `${seitWann(wartend.seit, new Date())}, erstmals geprüft am ${datum(wartend.seit)}`]);
+    felder.push(["Zuletzt geprüft", datumZeit(wartend.zuletztGeprueft)]);
   }
+  if ((beleg.status === "ausgestellt" || beleg.status === "abgelehnt") && beleg.abschluss) {
+    const { am, von } = beleg.abschluss;
+    felder.push([
+      beleg.status === "ausgestellt" ? "Ausgestellt" : "Abgelehnt",
+      `${datumZeit(am)}${von ? ` von ${von}` : ""}`,
+    ]);
+  }
+  const bearbeitbar = istBearbeitbar(beleg.status);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
@@ -78,17 +95,23 @@ export default async function SpendenbelegPage({
         <AnfrageStatusBadge status={beleg.status} className="px-4 py-1.5 text-sm" />
       </div>
 
-      {fehler === "mail" && beleg.status === "offen" && (
+      {fehler === "mail" && bearbeitbar && (
         <p role="alert" className="mt-10 rounded-lg border border-red-500/40 bg-red-500/10 p-6 text-red-300">
-          Der Spendenbeleg konnte nicht verschickt werden. Die Anfrage ist weiter offen, bitte später erneut versuchen.
+          Der Spendenbeleg konnte nicht verschickt werden. Die Anfrage ist unverändert, bitte später erneut versuchen.
         </p>
       )}
 
-      {beleg.status === "offen" && (
+      {bearbeitbar && (
         <section className="mt-10 rounded-lg border-2 border-sva-gold/60 bg-sva-charcoal-light p-6">
           <h2 className="text-sm font-bold tracking-wide text-sva-gold uppercase">
             {beleg.art === "vereinfacht" ? "Geldeingang prüfen" : "Zuwendungsbestätigung ausstellen"}
           </h2>
+          {wartend && (
+            <p className="mt-4 rounded-md border border-dashed border-sva-gold/60 px-4 py-3 text-sva-gray-300">
+              Wartet {seitWann(wartend.seit, new Date())}: Beim letzten Blick aufs Vereinskonto am{" "}
+              {datumZeit(wartend.zuletztGeprueft)} war die Spende noch nicht da.
+            </p>
+          )}
           <ol className="mt-4 list-decimal space-y-1 pl-5 text-sva-gray-300">
             <li>
               Auf dem Vereinskonto nach einer Spende über {euro(beleg.betrag)} von {beleg.name} um den{" "}
@@ -97,8 +120,8 @@ export default async function SpendenbelegPage({
             {beleg.art === "vereinfacht" ? (
               <li>
                 {beleg.email
-                  ? `Ist sie da, bestätigen. Dann geht der Spendenbeleg automatisch an ${beleg.email}.`
-                  : "Ist sie da, bestätigen. Ohne E-Mail-Adresse geht keine Mail raus, den Spendenbeleg danach hier herunterladen und dem Spender geben."}
+                  ? `Ist sie da, ausstellen. Dann geht der Spendenbeleg automatisch an ${beleg.email}.`
+                  : "Ist sie da, ausstellen. Ohne E-Mail-Adresse geht keine Mail raus, den Spendenbeleg danach hier herunterladen und dem Spender geben."}
               </li>
             ) : (
               <>
@@ -108,43 +131,58 @@ export default async function SpendenbelegPage({
                 <li>Doppel für die Vereinsunterlagen aufbewahren.</li>
               </>
             )}
-            <li>Ist keine Spende da, die Anfrage ablehnen. Der Spender bekommt dann nichts.</li>
+            <li>Ist ein anderer Betrag eingegangen, ihn beim Ausstellen eintragen.</li>
+            <li>Ist die Spende noch nicht da, als wartend markieren und später erneut nachsehen.</li>
           </ol>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {beleg.art === "vereinfacht" ? (
-              <form action={belegFreigeben.bind(null, beleg.id)}>
-                <button type="submit" className={`${knopf} bg-sva-gold text-sva-charcoal-dark hover:bg-sva-gold-light`}>
-                  {beleg.email ? "Geldeingang bestätigt, Beleg senden" : "Geldeingang bestätigt, Beleg erzeugen"}
-                </button>
-              </form>
-            ) : (
-              <form action={alsAusgestelltMarkieren.bind(null, beleg.id)}>
-                <button type="submit" className={`${knopf} bg-sva-gold text-sva-charcoal-dark hover:bg-sva-gold-light`}>
-                  Als ausgestellt markieren
-                </button>
-              </form>
-            )}
-            <form action={anfrageAblehnen.bind(null, beleg.id)}>
+          <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+            <AusstellenFormular
+              id={beleg.id}
+              art={beleg.art}
+              betrag={beleg.betrag}
+              betragAngegeben={beleg.betragAngegeben}
+              email={beleg.email}
+            />
+            <form action={alsWartendMarkieren.bind(null, beleg.id)}>
               <button
                 type="submit"
-                className={`${knopf} border border-sva-gray-600 text-sva-gray-300 hover:bg-sva-charcoal`}
+                className={`${knopf} border border-dashed border-sva-gold/60 text-sva-gold-light hover:bg-sva-charcoal`}
               >
-                Ablehnen
+                {wartend ? "Erneut geprüft, noch nicht da" : "Spende noch nicht da, warten"}
               </button>
             </form>
           </div>
+          <details className="mt-6 border-t border-sva-gray-700 pt-4">
+            <summary className="cursor-pointer text-sm font-bold tracking-wide text-sva-gray-300 uppercase">
+              Ablehnen
+            </summary>
+            <div className="mt-4">
+              <AblehnenFormular id={beleg.id} email={beleg.email} vorlagen={ablehnungsmailVorlagen(beleg)} />
+            </div>
+          </details>
         </section>
       )}
 
       {beleg.status === "abgelehnt" && (
         <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
+          <p className="text-sva-gray-300">Die Anfrage ist abgelehnt, es gibt keinen Spendenbeleg.</p>
+          <p className="mt-2 text-white">
+            {beleg.ablehnung ? ABLEHNUNGSGRUND_LABEL[beleg.ablehnung.grund] : "Grund nicht erfasst"}
+          </p>
+          {beleg.ablehnung?.begruendung && (
+            <p className="mt-1 whitespace-pre-wrap text-sva-gray-300">{beleg.ablehnung.begruendung}</p>
+          )}
+        </section>
+      )}
+
+      {beleg.status === "ausgestellt" && beleg.art === "zuwendungsbestaetigung" && (
+        <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
           <p className="text-sva-gray-300">
-            Auf dem Vereinskonto war keine passende Spende. Die Anfrage ist geschlossen, es wurde kein Beleg verschickt.
+            Die Zuwendungsbestätigung wurde außerhalb der Website ausgestellt. Hier ist nichts mehr zu tun.
           </p>
         </section>
       )}
 
-      {beleg.status === "versendet" && (
+      {beleg.status === "ausgestellt" && beleg.art === "vereinfacht" && (
         <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
           <p className="text-sva-gray-300">
             {beleg.email

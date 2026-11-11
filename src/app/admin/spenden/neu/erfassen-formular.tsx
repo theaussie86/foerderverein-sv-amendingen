@@ -32,11 +32,11 @@ export function ErfassenFormular() {
       email: "",
       tag_der_spende: "",
       notiz: "",
-      direktFreigeben: false,
+      direktAusstellen: false,
     },
   });
 
-  const [betrag, email, direktFreigeben] = useWatch({ control, name: ["betrag", "email", "direktFreigeben"] });
+  const [betrag, email, direktAusstellen] = useWatch({ control, name: ["betrag", "email", "direktAusstellen"] });
   const art = Number.isFinite(betrag) && betrag > 0 ? belegArt(betrag) : null;
 
   async function onSubmit(daten: BeleganfrageErfassenDaten) {
@@ -47,9 +47,9 @@ export function ErfassenFormular() {
   }
 
   let knopf = "Beleganfrage erfassen";
-  if (direktFreigeben && art === "vereinfacht")
+  if (direktAusstellen && art === "vereinfacht")
     knopf = email ? "Erfassen und Beleg senden" : "Erfassen und Beleg erzeugen";
-  if (direktFreigeben && art === "zuwendungsbestaetigung") knopf = "Erfassen und als ausgestellt markieren";
+  if (direktAusstellen && art === "zuwendungsbestaetigung") knopf = "Erfassen und als ausgestellt markieren";
 
   return (
     <form
@@ -135,9 +135,9 @@ export function ErfassenFormular() {
         <Fehler text={errors.notiz?.message} />
       </div>
       <label className="flex items-start gap-3 rounded-md border border-sva-gray-700 p-4 text-sva-gray-300">
-        <input type="checkbox" {...register("direktFreigeben")} className="mt-1 accent-sva-gold" />
+        <input type="checkbox" {...register("direktAusstellen")} className="mt-1 accent-sva-gold" />
         <span>
-          <span className="font-medium text-white">Geldeingang schon geprüft, direkt freigeben</span>
+          <span className="font-medium text-white">Geldeingang schon geprüft, direkt ausstellen</span>
           <br />
           <span className="text-sm">
             Nur ankreuzen, wenn die Spende auf dem Vereinskonto zu sehen ist. Sonst bleibt die Anfrage offen.

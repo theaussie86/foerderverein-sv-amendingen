@@ -1,7 +1,7 @@
 import { verein } from "@/lib/verein";
 import { euro, tagAnzeigen } from "./format";
 import { spendenGrenzeVereinfacht } from "./regeln";
-import type { BelegArt, Spenderangaben } from "./typen";
+import type { Ablehnungsgrund, BelegArt, Spenderangaben } from "./typen";
 
 // Meldung an den Vorstand, wenn ein Spender über die Website eine Beleganfrage stellt.
 // Der Link zur Anfrage fehlt, wenn sie nicht gespeichert werden konnte.
@@ -24,16 +24,67 @@ export function vorstandMail(d: Spenderangaben, art: BelegArt, link: string | nu
   };
 }
 
-// Mail an den Spender, wenn der Vorstand den Spendenbeleg freigibt. Neutral formuliert,
-// weil die Spende auch bar übergeben worden sein kann.
-export function spendenbelegMail({ name, betrag }: { name: string; betrag: number }) {
+// Mail an den Spender bei der Ausstellung eines vereinfachten Spendenbelegs. Neutral formuliert,
+// weil die Spende auch bar übergeben worden sein kann. Nach einer Betragskorrektur nennt sie beide Beträge.
+export function spendenbelegMail({
+  name,
+  betrag,
+  betragAngegeben,
+}: {
+  name: string;
+  betrag: number;
+  betragAngegeben: number;
+}) {
+  const korrektur =
+    betrag === betragAngegeben
+      ? ""
+      : `Auf unserem Konto sind ${euro(betrag)} eingegangen, angegeben hattest du ${euro(betragAngegeben)}. ` +
+        `Der Spendenbeleg lautet deshalb über ${euro(betrag)}.\n\n`;
   return {
     subject: `Dein Spendenbeleg über ${euro(betrag)}`,
     text:
       `Hallo ${name},\n\n` +
       `vielen Dank für deine Spende an den ${verein.name}! Deine Spende ist bei uns eingegangen.\n\n` +
+      korrektur +
       `Im Anhang findest du den Spendenbeleg. Bis ${spendenGrenzeVereinfacht} € genügt dem Finanzamt dieser Beleg zusammen mit deinem ` +
       `Kontoauszug, auf dem die Überweisung an uns zu sehen ist. Heb bitte beides für deine Steuererklärung auf.\n\n` +
       `Viele Grüße\n${verein.name}`,
+  };
+}
+
+type Angefragt = { name: string; betrag: number; tagDerSpende: string };
+
+export function ablehnungsmailBetreff({ betrag }: { betrag: number }): string {
+  return `Deine Beleganfrage über ${euro(betrag)}`;
+}
+
+// Vorlagen für die Ablehnungsmail, je Ablehnungsgrund. Der Vorstand kann den Text vor dem
+// Versand anpassen. "Antworten" geht an die Adresse des Vereins.
+export function ablehnungsmailVorlagen({ name, betrag, tagDerSpende }: Angefragt): Record<Ablehnungsgrund, string> {
+  const anfrage = `deine Beleganfrage über ${euro(betrag)} vom ${tagAnzeigen(tagDerSpende)}`;
+  const gruss = `\n\nBei Fragen antworte einfach auf diese Mail.\n\nViele Grüße\n${verein.name}`;
+  return {
+    "nicht-eingegangen":
+      `Hallo ${name},\n\n` +
+      `danke für ${anfrage}. Leider haben wir auf unserem Vereinskonto keine passende Spende gefunden. ` +
+      `Deshalb können wir dir dafür keinen Spendenbeleg ausstellen.\n\n` +
+      `Hast du die Spende von einem anderen Konto, unter einem anderen Namen oder an einem anderen Tag überwiesen? ` +
+      `Dann schreib uns kurz, wir schauen gern noch einmal nach.` +
+      gruss,
+    doppelt:
+      `Hallo ${name},\n\n` +
+      `${anfrage.charAt(0).toUpperCase()}${anfrage.slice(1)} liegt uns doppelt vor. ` +
+      `Wir bearbeiten nur eine davon, du bekommst für die Spende also einen Spendenbeleg und nicht zwei.` +
+      gruss,
+    "keine-spende":
+      `Hallo ${name},\n\n` +
+      `danke für ${anfrage}. Leider können wir dafür keinen Spendenbeleg ausstellen. ` +
+      `Eine Zahlung mit Gegenleistung, etwa für Werbung, oder ein Mitgliedsbeitrag ist keine Spende, ` +
+      `für die wir einen Spendenbeleg ausstellen dürfen.` +
+      gruss,
+    sonstiges:
+      `Hallo ${name},\n\n` +
+      `danke für ${anfrage}. Leider können wir dir dafür keinen Spendenbeleg ausstellen.` +
+      gruss,
   };
 }

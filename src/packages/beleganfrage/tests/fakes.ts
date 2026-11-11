@@ -1,5 +1,6 @@
 import type {
   Abschluss,
+  BelegArt,
   Beleganfrage,
   Leseablage,
   Mail,
@@ -30,9 +31,12 @@ export class Ablage implements Leseablage, Schreibablage {
     this.eintraege.set(id, {
       ...rest,
       id,
+      betragAngegeben: neu.betrag,
       status: "offen",
       angefragtAm: "2026-11-10 08:00:00.000Z",
       erfasstVon: erfasstVon ? (VORSTAENDE[erfasstVon] ?? "Vorstand") : null,
+      wartend: null,
+      ablehnung: null,
       abschluss: null,
       hatBeleg: false,
     });
@@ -44,10 +48,31 @@ export class Ablage implements Leseablage, Schreibablage {
     if (!e) return ausfall("404");
     e.status = a.status;
     e.abschluss = { am: a.am.toISOString(), von: VORSTAENDE[a.vorstandId] ?? null };
-    if (a.beleg) {
+    if (a.status === "abgelehnt") e.ablehnung = a.ablehnung;
+    if (a.status === "ausgestellt") {
+      e.betrag = a.betrag;
+      e.art = a.art;
+    }
+    if (a.status === "ausgestellt" && a.beleg) {
       e.pdf = a.beleg.inhalt;
       e.hatBeleg = true;
     }
+    return Promise.resolve();
+  }
+
+  betragKorrigieren(id: string, k: { betrag: number; art: BelegArt }): Promise<void> {
+    const e = this.eintraege.get(id);
+    if (!e) return ausfall("404");
+    e.betrag = k.betrag;
+    e.art = k.art;
+    return Promise.resolve();
+  }
+
+  wartendMarkieren(id: string, w: { seit: Date; zuletztGeprueft: Date }): Promise<void> {
+    const e = this.eintraege.get(id);
+    if (!e) return ausfall("404");
+    e.status = "wartend";
+    e.wartend = { seit: w.seit.toISOString(), zuletztGeprueft: w.zuletztGeprueft.toISOString() };
     return Promise.resolve();
   }
 

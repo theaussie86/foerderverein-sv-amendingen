@@ -4,8 +4,11 @@ export { website as websiteBeleganfragen } from "./lib/website";
 export type { StellenErgebnis, WebsiteUmgebung } from "./lib/website";
 export { vorstand as vorstandsBeleganfragen } from "./lib/vorstand";
 export type { AbschlussErgebnis, BelegPdf, ErfassenErgebnis, VorstandsUmgebung } from "./lib/vorstand";
+export { ablehnungsmailVorlagen } from "./lib/mails";
 export type {
+  Ablehnung,
   Abschluss,
+  BelegArt,
   Beleganfrage,
   Leseablage,
   Mail,
