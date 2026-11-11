@@ -24,8 +24,8 @@ _Vermeiden_: Jahreshauptversammlung, JHV, Generalversammlung
 Das gewählte Gremium aller Amtsträger: 1. Vorsitz, 2. Vorsitz, Kasse, Schriftführung und Beisitz.
 _Vermeiden_: Gesamtvorstand, erweiterter Vorstand, geschäftsführender Vorstand
 
-**Vertretungsvorstand** (vorläufig, bis die Satzung vorliegt):
-Der Teil des Vorstands, der den Förderverein nach außen vertritt und im Vereinsregister steht (Vorstand im Sinne von § 26 BGB).
+**Vertretungsvorstand**:
+Der Teil des Vorstands, der den Förderverein nach außen vertritt und im Vereinsregister steht (Vorstand im Sinne von § 26 BGB). Laut Satzung 1. und 2. Vorsitz, jeder allein vertretungsberechtigt.
 _Vermeiden_: Vorstand (für diesen Teil), BGB-Vorstand
 
 **Amt**:
@@ -45,8 +45,8 @@ Das Amt, das Protokolle und Schriftverkehr führt.
 **Beisitz**:
 Ein Amt im Vorstand ohne festen Aufgabenbereich. Kann mehrfach besetzt sein.
 
-**Kassenprüfer** (vorläufig, Bestand noch offen):
-Von der Mitgliederversammlung gewählte Person außerhalb des Vorstands, die die Kasse prüft.
+**Kassenprüfer**:
+Von der Mitgliederversammlung gewählte Person außerhalb des Vorstands, die die Kasse prüft. Der Förderverein hat zwei.
 _Vermeiden_: Revisor, Rechnungsprüfer
 
 ## Spenden
@@ -87,8 +87,8 @@ _Vermeiden_: Quittung, Spendenquittung, Spendenbescheinigung
 Spendenbeleg für eine Spende bis 300 €, der zusammen mit dem Kontoauszug des Spenders gilt.
 _Vermeiden_: vereinfachter Zuwendungsnachweis
 
-**Zuwendungsbestätigung** (Betragsgrenze vorläufig):
-Spendenbeleg nach amtlichem Muster, für jeden Betrag zulässig. Der Förderverein stellt sie nur für Spenden über 300 € aus.
+**Zuwendungsbestätigung**:
+Spendenbeleg nach amtlichem Muster, für jeden Betrag zulässig. Der Förderverein stellt sie nur für Spenden über 300 € aus, von Hand und unterschrieben.
 
 **Sammelbestätigung** (vorläufig):
 Zuwendungsbestätigung über mehrere Spenden eines Spenders. Gibt es beim Förderverein nicht.
@@ -125,15 +125,15 @@ Einer von wenigen festen Gründen für eine Ablehnung, zum Beispiel „Spende ni
 Natürliche oder juristische Person mit einer Mitgliedschaft im Förderverein, egal ob ihr Mitgliedsantrag online oder auf Papier gestellt wurde.
 _Vermeiden_: Online-Mitglied, Altmitglied, Neumitglied (als Gattung)
 
-**Mitgliedschaft** (Beginn vorläufig, bis die Satzung vorliegt):
+**Mitgliedschaft**:
 Die Zugehörigkeit eines Mitglieds zum Förderverein. Sie beginnt mit der Aufnahme und endet mit dem Ende der Mitgliedschaft.
 
 **Mitgliedsantrag**:
 Der unterschriebene Wunsch einer Person, dem Förderverein beizutreten, samt erstem Mandat für den Mitgliedsbeitrag. Ohne Unterschrift gibt es keinen Mitgliedsantrag. Er endet mit Aufnahme oder Ablehnung.
 _Vermeiden_: Beitrittserklärung, Antrag (allein), Anmeldung
 
-**Aufnahme** (vorläufig, bis die Satzung vorliegt):
-Die Annahme eines Mitgliedsantrags durch den Vorstand. Mit ihr beginnt die Mitgliedschaft.
+**Aufnahme**:
+Die Annahme eines Mitgliedsantrags durch den Vorstand. Mit ihr beginnt die Mitgliedschaft. Das Datum heißt Eintrittsdatum und trägt der Vorstand ein.
 _Vermeiden_: Annahme, Bestätigung
 
 **Ablehnung eines Mitgliedsantrags**:
@@ -143,17 +143,17 @@ Abschluss eines Mitgliedsantrags ohne Aufnahme. Nicht zu verwechseln mit der Abl
 Oberbegriff für Austritt, Ausschluss und Tod.
 
 **Austritt**:
-Ende der Mitgliedschaft, weil das Mitglied es erklärt.
+Ende der Mitgliedschaft, weil das Mitglied es erklärt. Nur schriftlich gegenüber dem Vorstand, zum Ende eines Kalenderjahres und einen Monat vorher, also bis 30. November.
 _Vermeiden_: Kündigung, Abmeldung
 
 **Ausschluss**:
-Ende der Mitgliedschaft, weil der Förderverein es beschließt.
+Ende der Mitgliedschaft, weil der Vorstand es beschließt, wenn ein Mitglied gegen die Interessen oder das Ansehen des Fördervereins verstößt. Das Mitglied kann die Mitgliederversammlung anrufen, sie entscheidet endgültig.
 _Vermeiden_: Rauswurf, Streichung
 
 ## Beitrag und Einzug
 
 **Mitgliedsbeitrag**:
-Der feste Betrag, den ein Mitglied für jedes Beitragsjahr an den Förderverein zahlt. Ein Mitgliedsbeitrag ist keine Spende und bekommt keinen Spendenbeleg. Einen anteiligen Mitgliedsbeitrag bei Beitritt im laufenden Jahr gibt es nicht.
+Der feste Betrag, den ein Mitglied für jedes Beitragsjahr an den Förderverein zahlt. Ein Mitgliedsbeitrag ist keine Spende und bekommt keinen Spendenbeleg. Einen anteiligen Mitgliedsbeitrag gibt es nicht: Wer im laufenden Jahr aufgenommen wird, zahlt den vollen Mitgliedsbeitrag, außer bei Aufnahme im Dezember, dann erst ab dem Folgejahr. Befreiungen, Ermäßigungen oder Ehrenmitglieder gibt es nicht.
 _Vermeiden_: Jahresbeitrag, Beitrag (allein), Gebühr, anteiliger Beitrag
 
 **Beitragsjahr**:
@@ -167,7 +167,7 @@ Der feste Tag im Jahr, an dem der Förderverein die Mitgliedsbeiträge per Lasts
 _Vermeiden_: Fälligkeitsdatum, Abbuchungstag, Stichtag
 
 **Beitragseinzug**:
-Der jährliche Einzug der Mitgliedsbeiträge aller Mitglieder zum Einzugstermin. Er besteht aus einer Lastschrift je Mitglied.
+Der jährliche Einzug der Mitgliedsbeiträge aller Mitglieder zum Einzugstermin. Er besteht aus einer Lastschrift je Mitglied. Zuständig ist das Amt Kasse.
 _Vermeiden_: Sammeleinzug, Bankeinzug
 
 **Lastschrift**:
@@ -175,7 +175,7 @@ Die einzelne Abbuchung eines Mitgliedsbeitrags vom Konto eines Kontoinhabers auf
 _Vermeiden_: Abbuchung, Bankeinzug
 
 **Rücklastschrift**:
-Eine Lastschrift, die nicht eingelöst oder später zurückgeholt wird, egal aus welchem Grund, auch wenn der Kontoinhaber sie innerhalb von acht Wochen zurückfordert.
+Eine Lastschrift, die nicht eingelöst oder später zurückgeholt wird, egal aus welchem Grund, auch wenn der Kontoinhaber sie innerhalb von acht Wochen zurückfordert. Der Vorstand klärt sie persönlich mit dem Mitglied, ohne Gebühren oder Mahnverfahren.
 _Vermeiden_: Rückbuchung, Retoure, geplatzte Lastschrift
 
 **Vorabankündigung**:
@@ -207,30 +207,30 @@ _Vermeiden_: Zahler, Zahlungspflichtiger, Debitor
 ## Mittelverwendung
 
 **Mittel**:
-Alle Einnahmen des Fördervereins, also Mitgliedsbeiträge, Spenden und Sponsoring.
+Alle Einnahmen des Fördervereins, also Mitgliedsbeiträge, Spenden, Sponsoring und Einnahmen aus Veranstaltungen.
 _Vermeiden_: Gelder, Vereinsvermögen
 
 **Mittelverwendung**:
 Oberbegriff dafür, wofür der Förderverein seine Mittel ausgibt.
 _Vermeiden_: Ausgaben, Investitionen, Ausschüttung
 
-**Förderzweck** (vorläufig, bis die Satzung vorliegt):
-Der in der Satzung festgelegte Zweck des Fördervereins: die Fußballabteilung des SV Amendingen zu fördern. Die Jugend ist ein Schwerpunkt, keine Grenze. Jedes Förderprojekt muss zum Förderzweck passen.
+**Förderzweck**:
+Der in der Satzung festgelegte Zweck des Fördervereins: die ideelle und finanzielle Förderung der Fußballabteilung des SV Amendingen, ausschließlich durch Beschaffung von Mitteln (Förderverein nach § 58 Nr. 1 AO). Die Jugend ist ein Schwerpunkt, keine Grenze. Jedes Förderprojekt muss zum Förderzweck passen.
 _Vermeiden_: Vereinszweck, Satzungszweck
 
 **Förderprojekt**:
 Eine einzelne Mittelverwendung mit Titel, Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung.
 _Vermeiden_: Spendenprojekt, Maßnahme, Aktion
 
-**Zuschuss** (vorläufig, bis der Vorstand bestätigt):
-Förderprojekt, bei dem der Förderverein Geld an den SV Amendingen gibt und der SV Amendingen selbst bezahlt. Empfänger ist rechtlich der SV Amendingen, bestimmt ist das Geld für die Fußballabteilung. Rechtlich eine Mittelweitergabe.
+**Zuschuss**:
+Förderprojekt, bei dem der Förderverein Geld an den SV Amendingen gibt und der SV Amendingen selbst bezahlt. Empfänger ist rechtlich der SV Amendingen, bestimmt ist das Geld für die Fußballabteilung. Rechtlich eine Mittelweitergabe. Heute der übliche Weg.
 _Vermeiden_: Mittelweitergabe (im Alltag), Überweisung an den Verein
 
-**Anschaffung** (vorläufig, bis der Vorstand bestätigt):
-Förderprojekt, bei dem der Förderverein selbst einkauft und die Sache an die Fußballabteilung übergibt, zum Beispiel Bälle und Hütchen.
+**Anschaffung** (Verbleib der Sache vorläufig):
+Förderprojekt, bei dem der Förderverein selbst einkauft, zum Beispiel Bälle und Hütchen. Ob die Sache an die Fußballabteilung übergeben wird oder als Inventar beim Förderverein bleibt, ist noch offen.
 _Vermeiden_: Kauf, Beschaffung
 
-**Zweckgebundene Spende** (vorläufig, bis der Vorstand entscheidet):
+**Zweckgebundene Spende**:
 Spende, deren Verwendung der Spender verbindlich festlegt, zum Beispiel „für die Trikots der C-Jugend“. Der Förderverein darf sie nur dafür ausgeben. Er nimmt sie nur an, wenn die Verwendung zum Förderzweck passt.
 _Vermeiden_: Zweckspende, Spende mit Auflage
 
