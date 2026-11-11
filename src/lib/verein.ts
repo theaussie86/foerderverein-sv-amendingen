@@ -43,6 +43,8 @@ export const verein = {
   spendenVerwendungszweck: "Spende Förderverein SVA",
   // PayPal ist ein offizieller Zahlungsweg (GLOSSARY.md).
   paypalMe: "https://paypal.me/foerdervereinsva",
+  // Link aus dem QR-Code, den PayPal für das Vereinskonto erzeugt. Öffnet die PayPal-App, ohne Betrag.
+  paypalQr: "https://www.paypal.com/qrcodes/managed/779ac0bb-12a5-4564-9439-353386d64264?utm_source=payandgetpaid",
   // Steuerangaben für den vereinfachten Spendenbeleg (§ 50 Abs. 4 EStDV). Die Angaben aus dem
   // Freistellungsbescheid fehlen noch (#55). Bis 300 € reicht dem Finanzamt meist der Kontoauszug,
   // deshalb geht der Beleg bis dahin ohne sie raus. Sobald der Bescheid vorliegt, hier eintragen.

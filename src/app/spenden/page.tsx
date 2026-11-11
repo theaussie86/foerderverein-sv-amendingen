@@ -107,12 +107,12 @@ export default function SpendenPage() {
         <h3 className="text-lg font-semibold text-white">Per PayPal</h3>
         <p className="mt-2 text-sm text-sva-gray-300">
           Mit einem Klick zu PayPal, der Betrag ist schon eingetragen. Am Computer kannst du auch den QR-Code mit dem
-          Handy scannen.
+          Handy scannen und den Betrag dort eingeben.
         </p>
 
         <div className="mt-6 flex flex-col items-center gap-8 sm:flex-row sm:items-center">
           <div className="hidden sm:block">
-            <PaypalQrCode amount={activeAmount > 0 ? activeAmount : undefined} />
+            <PaypalQrCode />
           </div>
           <div className="flex w-full flex-1 flex-col items-center gap-3 sm:items-start">
             <a
