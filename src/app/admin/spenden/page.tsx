@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
-import { datum, datumZeit } from "@/lib/format";
+import { datum, datumZeit, seitWann } from "@/lib/format";
 import {
   ANFRAGE_STATUS,
   ANFRAGE_STATUS_LABEL,
@@ -39,6 +39,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
   const status = istAnfrageStatus(params.status) ? params.status : undefined;
   const seite = Math.max(1, Number.parseInt(params.seite ?? "1", 10) || 1);
 
+  const jetzt = new Date();
   let liste: Trefferliste | null = null;
   try {
     liste = await beleganfragenFuerVorstand(pb).suchen({ suche: q, status, seite });
@@ -54,9 +55,9 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
           <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Spendenbelege</h1>
           <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 max-w-2xl text-sva-gray-300">
-            Bei jeder Anfrage zuerst den Geldeingang auf dem Vereinskonto prüfen. Bis 300 € schickt die Website den
-            Spendenbeleg nach deiner Bestätigung. Darüber die Zuwendungsbestätigung ausstellen und hier als ausgestellt
-            markieren.
+            Bei jeder Anfrage zuerst den Geldeingang auf dem Vereinskonto prüfen. Bis 300 € stellt die Website den
+            Spendenbeleg aus und schickt ihn. Darüber die Zuwendungsbestätigung ausstellen und hier als ausgestellt
+            markieren. Ist die Spende noch nicht da, die Anfrage als wartend markieren.
           </p>
           <p className="mt-2 text-sm text-sva-gray-400">Angemeldet als {vorstand.name || vorstand.email}.</p>
         </div>
@@ -163,7 +164,12 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                         {b.name}
                       </Link>
                     </td>
-                    <td className="px-4 py-3 text-right whitespace-nowrap text-white tabular-nums">{euro(b.betrag)}</td>
+                    <td className="px-4 py-3 text-right whitespace-nowrap text-white tabular-nums">
+                      {euro(b.betrag)}
+                      {b.betrag !== b.betragAngegeben && (
+                        <span className="block text-xs text-sva-gray-400">angegeben {euro(b.betragAngegeben)}</span>
+                      )}
+                    </td>
                     <td className="hidden px-4 py-3 text-sva-gray-300 sm:table-cell">{datum(b.tagDerSpende)}</td>
                     <td className="hidden px-4 py-3 text-sva-gray-300 md:table-cell">{b.email || "-"}</td>
                     <td className="hidden px-4 py-3 whitespace-nowrap text-sva-gray-300 lg:table-cell">
@@ -171,6 +177,11 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
                     </td>
                     <td className="px-4 py-3">
                       <AnfrageStatusBadge status={b.status} />
+                      {b.status === "wartend" && b.wartend && (
+                        <span className="mt-1 block text-xs whitespace-nowrap text-sva-gray-400">
+                          wartet {seitWann(b.wartend.seit, jetzt)}
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}

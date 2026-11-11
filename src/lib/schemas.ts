@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ABLEHNUNGSGRUENDE } from "@/packages/beleganfrage/anzeige";
 import { ENDE_GRUENDE } from "@/packages/mitglied/anzeige";
 
 // Angaben zum Spender, gleich für Website und internen Bereich. Betrag und Tag der Spende
@@ -25,18 +26,47 @@ export const beleganfrageSchema = z.object({
 export type BeleganfrageFormData = z.infer<typeof beleganfrageSchema>;
 
 // Der Vorstand erfasst eine Beleganfrage im internen Bereich, etwa nach einer WhatsApp-Nachricht.
-// Ohne E-Mail-Adresse gibt es den Spendenbeleg nur zum Herunterladen. Mit direktFreigeben hat der
-// Vorstand den Geldeingang schon gesehen, die Anfrage wird sofort abgeschlossen.
+// Ohne E-Mail-Adresse gibt es den Spendenbeleg nur zum Herunterladen. Mit direktAusstellen hat der
+// Vorstand den Geldeingang schon gesehen, die Anfrage wird sofort ausgestellt.
 export const beleganfrageErfassenSchema = z.object({
   ...spendeFelder,
   betrag: z.number({ error: "Bitte den Betrag eingeben." }).min(1, "Bitte den Betrag eingeben."),
   tag_der_spende: z.string().min(1, "Bitte den Tag der Spende angeben."),
   email: z.union([z.literal(""), z.string().trim().email("Bitte eine gültige E-Mail-Adresse eingeben.")]),
   notiz: z.string().max(5000, "Bitte höchstens 5000 Zeichen eingeben."),
-  direktFreigeben: z.boolean(),
+  direktAusstellen: z.boolean(),
 });
 
 export type BeleganfrageErfassenDaten = z.infer<typeof beleganfrageErfassenSchema>;
+
+// Ausstellung mit dem eingegangenen Betrag. Weicht er vom angegebenen ab, ist das eine Betragskorrektur.
+export const beleganfrageAusstellenSchema = z.object({
+  eingegangen: z
+    .number({ error: "Bitte den eingegangenen Betrag eingeben." })
+    .min(1, "Bitte den eingegangenen Betrag eingeben."),
+});
+
+export type BeleganfrageAusstellenDaten = z.infer<typeof beleganfrageAusstellenSchema>;
+
+// Ablehnung einer Beleganfrage. Bei "Sonstiges" ist eine Begründung Pflicht. Die Ablehnungsmail
+// geht nur raus, wenn der Vorstand sie ankreuzt, ihr Text ist dann Pflicht.
+export const beleganfrageAblehnenSchema = z
+  .object({
+    grund: z.enum(ABLEHNUNGSGRUENDE, { error: "Bitte einen Ablehnungsgrund wählen." }),
+    begruendung: z.string().trim().max(1000, "Bitte höchstens 1000 Zeichen eingeben."),
+    mailSenden: z.boolean(),
+    mailText: z.string().trim().max(5000, "Bitte höchstens 5000 Zeichen eingeben."),
+  })
+  .refine((d) => d.grund !== "sonstiges" || d.begruendung, {
+    path: ["begruendung"],
+    message: "Bitte die Ablehnung begründen.",
+  })
+  .refine((d) => !d.mailSenden || d.mailText, {
+    path: ["mailText"],
+    message: "Bitte den Text der Ablehnungsmail eingeben.",
+  });
+
+export type BeleganfrageAblehnenDaten = z.infer<typeof beleganfrageAblehnenSchema>;
 
 export const mitgliedSchema = z.object({
   vorname: z.string().min(1, "Vorname ist erforderlich."),

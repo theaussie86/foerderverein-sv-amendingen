@@ -1,10 +1,16 @@
-// Begriffe aus GLOSSARY.md, Abschnitt „Spenden“. Die Statuswerte entsprechen noch denen in
-// PocketBase, ob und wie sie umbenannt werden, klärt #38.
+// Begriffe aus GLOSSARY.md, Abschnitt „Spenden“.
 
 export type BelegArt = "vereinfacht" | "zuwendungsbestaetigung";
 
-export const ANFRAGE_STATUS = ["offen", "ausgestellt", "versendet", "abgelehnt"] as const;
+export const ANFRAGE_STATUS = ["offen", "wartend", "ausgestellt", "abgelehnt"] as const;
 export type AnfrageStatus = (typeof ANFRAGE_STATUS)[number];
+
+// Feste Gründe für eine Ablehnung. Weicht nur der Betrag ab, ist das ein Fall für die Betragskorrektur.
+export const ABLEHNUNGSGRUENDE = ["nicht-eingegangen", "doppelt", "keine-spende", "sonstiges"] as const;
+export type Ablehnungsgrund = (typeof ABLEHNUNGSGRUENDE)[number];
+
+// Bei "sonstiges" mit eigener Begründung, sonst ist sie leer.
+export type Ablehnung = { grund: Ablehnungsgrund; begruendung: string };
 
 export type Beleganfrage = {
   // Zugleich die Belegnummer.
@@ -17,22 +23,40 @@ export type Beleganfrage = {
   ort: string;
   // Leer, wenn der Vorstand die Anfrage ohne E-Mail-Adresse erfasst hat.
   email: string;
+  // Der maßgebliche Betrag, nach einer Betragskorrektur der eingegangene.
   betrag: number;
+  // Was der Spender angegeben hat (oder der Vorstand beim Erfassen).
+  betragAngegeben: number;
   // YYYY-MM-DD
   tagDerSpende: string;
   notiz: string;
   angefragtAm: string;
   // Name des Vorstandsmitglieds, das die Anfrage erfasst hat. Null, wenn sie über die Website kam.
   erfasstVon: string | null;
-  // Wann und von wem die Anfrage abgeschlossen wurde. Null, solange sie offen ist.
+  // Seit wann die Anfrage wartet und wann der Vorstand zuletzt das Vereinskonto geprüft hat.
+  // Null, wenn sie nie wartend war.
+  wartend: { seit: string; zuletztGeprueft: string } | null;
+  // Wann und von wem die Anfrage abgeschlossen wurde. Null, solange sie offen oder wartend ist.
   abschluss: { am: string; von: string | null } | null;
+  // Null, wenn nicht abgelehnt oder abgelehnt, bevor es Ablehnungsgründe gab.
+  ablehnung: Ablehnung | null;
   // Ob ein Spendenbeleg als PDF abgelegt ist.
   hatBeleg: boolean;
 };
 
 export type Listeneintrag = Pick<
   Beleganfrage,
-  "id" | "art" | "status" | "name" | "ort" | "email" | "betrag" | "tagDerSpende" | "angefragtAm"
+  | "id"
+  | "art"
+  | "status"
+  | "name"
+  | "ort"
+  | "email"
+  | "betrag"
+  | "betragAngegeben"
+  | "tagDerSpende"
+  | "angefragtAm"
+  | "wartend"
 >;
 
 export type Trefferliste = { eintraege: Listeneintrag[]; anzahl: number; seiten: number };
@@ -64,13 +88,17 @@ export type Mail = {
 
 export type NeueBeleganfrage = Spenderangaben & { art: BelegArt; notiz: string; erfasstVon: string | null };
 
-export type Abschluss = {
-  status: Exclude<AnfrageStatus, "offen">;
-  vorstandId: string;
-  am: Date;
-  // Nur beim vereinfachten Spendenbeleg: das verschickte PDF.
-  beleg?: Datei;
-};
+export type Abschluss = { vorstandId: string; am: Date } & (
+  | {
+      status: "ausgestellt";
+      // Maßgeblicher Betrag und Art, nach einer Betragskorrektur geändert.
+      betrag: number;
+      art: BelegArt;
+      // Nur beim vereinfachten Spendenbeleg: das erzeugte PDF.
+      beleg?: Datei;
+    }
+  | { status: "abgelehnt"; ablehnung: Ablehnung }
+);
 
 // Schreiben läuft als Superuser, weil der Vorstand Spendenbelege nur lesen darf.
 // Die Website prüft vorher die Vorstands-Session und hält fest, wer es war.
@@ -78,6 +106,10 @@ export type Schreibablage = {
   // ID der neuen Beleganfrage, null, wenn nichts gespeichert wurde (ohne PocketBase).
   speichern(neu: NeueBeleganfrage): Promise<string | null>;
   abschliessen(id: string, abschluss: Abschluss): Promise<void>;
+  // Betragskorrektur ohne Abschluss, wenn daraus eine Zuwendungsbestätigung wird.
+  betragKorrigieren(id: string, korrektur: { betrag: number; art: BelegArt }): Promise<void>;
+  // Setzt den Status auf wartend. seit bleibt beim erneuten Markieren gleich.
+  wartendMarkieren(id: string, wartend: { seit: Date; zuletztGeprueft: Date }): Promise<void>;
 };
 
 // Lesen läuft mit den Rechten des angemeldeten Vorstandsmitglieds.
