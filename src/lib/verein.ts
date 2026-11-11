@@ -1,5 +1,19 @@
 // Stammdaten des Vereins für Beitrittserklärung und SEPA-Mandat.
-// TODO: Platzhalter durch echte Daten ersetzen (Gläubiger-ID, Steuerdaten).
+// TODO: Platzhalter durch echte Daten ersetzen (Gläubiger-ID, Freistellungsbescheid).
+
+export type Freistellungsbescheid = {
+  finanzamt: string;
+  steuernummer: string;
+  datum: string;
+  veranlagungszeitraum: string;
+};
+
+export type Steuerangaben = { zweck: string; bescheid: Freistellungsbescheid | null };
+
+// Platzhalter, bis der Bescheid vorliegt. Als Funktion, damit der Typ nicht auf null verengt wird.
+function keinBescheid(): Freistellungsbescheid | null {
+  return null;
+}
 
 export const verein = {
   name: "Förderverein SV Amendingen / Fußball e.V.",
@@ -19,14 +33,12 @@ export const verein = {
     name: "Sparkasse Memmingen-Lindau-Mindelheim",
   },
   spendenVerwendungszweck: "Spende Förderverein SVA",
-  // Angaben aus dem Freistellungsbescheid für den vereinfachten Spendenbeleg (§ 50 Abs. 4 EStDV).
-  // TODO: aus dem aktuellen Bescheid übernehmen. Der Bescheid darf höchstens 5 Jahre alt sein.
+  // Steuerangaben für den vereinfachten Spendenbeleg (§ 50 Abs. 4 EStDV). Die Angaben aus dem
+  // Freistellungsbescheid fehlen noch (#55). Bis 300 € reicht dem Finanzamt meist der Kontoauszug,
+  // deshalb geht der Beleg bis dahin ohne sie raus. Sobald der Bescheid vorliegt, hier eintragen.
   steuer: {
     zweck: "Förderung des Sports (§ 52 Abs. 2 Satz 1 Nr. 21 AO) durch Beschaffung von Mitteln für den SV Amendingen",
-    finanzamt: "Memmingen-Mindelheim",
-    steuernummer: "000/000/00000",
-    bescheidDatum: "01.01.2025",
-    veranlagungszeitraum: "2023",
+    bescheid: keinBescheid(),
   },
 };
 
@@ -46,3 +58,14 @@ export function mandatstext(): string {
 // online eingegangenen Anträge seit dem Stichtag. Bei Offline-Beitritten Basis neu setzen.
 export const mitgliederbasis = { anzahl: 83, stichtag: "2026-10-23" };
 export const mitgliederziel = 100;
+
+// Satz zur Steuerbegünstigung auf dem vereinfachten Spendenbeleg. Ohne Bescheid nur der Zweck.
+export function steuerbeguenstigung(name: string, steuer: Steuerangaben): string {
+  const b = steuer.bescheid;
+  if (!b) return `Der ${name} verfolgt steuerbegünstigte Zwecke: ${steuer.zweck}.`;
+  return (
+    `Der ${name} ist wegen ${steuer.zweck} nach dem Freistellungsbescheid des Finanzamtes ${b.finanzamt}, ` +
+    `StNr. ${b.steuernummer}, vom ${b.datum} für den letzten Veranlagungszeitraum ${b.veranlagungszeitraum} ` +
+    `nach § 5 Abs. 1 Nr. 9 KStG von der Körperschaftsteuer und nach § 3 Nr. 6 GewStG von der Gewerbesteuer befreit.`
+  );
+}

@@ -1,5 +1,5 @@
 import { neuesDokument } from "@/lib/pdf";
-import { verein } from "@/lib/verein";
+import { steuerbeguenstigung, verein } from "@/lib/verein";
 import { euro, tagAnzeigen } from "./format";
 import type { Beleganfrage } from "./typen";
 
@@ -8,7 +8,6 @@ import type { Beleganfrage } from "./typen";
 // wenn der Vorstand die Überweisung auf dem Vereinskonto gesehen hat (/admin/spenden).
 // Die Belegnummer ist die ID der Beleganfrage.
 export async function spendenbelegPdf(anfrage: Beleganfrage): Promise<Uint8Array> {
-  const st = verein.steuer;
   const { doc, s } = await neuesDokument("Spendenbeleg");
   s.text("Beleg für den vereinfachten Zuwendungsnachweis nach § 50 Abs. 4 EStDV", { bold: true });
   s.abstand(10);
@@ -20,11 +19,7 @@ export async function spendenbelegPdf(anfrage: Beleganfrage): Promise<Uint8Array
   s.feld("Empfänger", `${verein.bank.kontoinhaber}, IBAN ${verein.bank.iban}`);
   s.feld("Art der Zuwendung", "Geldzuwendung (Spende), kein Mitgliedsbeitrag");
   s.abstand(14);
-  s.text(
-    `Der ${verein.name} ist wegen ${st.zweck} nach dem Freistellungsbescheid des Finanzamtes ${st.finanzamt}, ` +
-      `StNr. ${st.steuernummer}, vom ${st.bescheidDatum} für den letzten Veranlagungszeitraum ${st.veranlagungszeitraum} ` +
-      `nach § 5 Abs. 1 Nr. 9 KStG von der Körperschaftsteuer und nach § 3 Nr. 6 GewStG von der Gewerbesteuer befreit.`,
-  );
+  s.text(steuerbeguenstigung(verein.name, verein.steuer));
   s.abstand(6);
   s.text(`Die Zuwendung wird ausschließlich für diesen Zweck verwendet.`);
   s.abstand(14);
