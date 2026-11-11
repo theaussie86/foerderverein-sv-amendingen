@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
-import { paypalLink } from "@/lib/verein";
+import { verein } from "@/lib/verein";
 
-// QR-Code zu paypal.me mit dem Wappen in der Mitte. Fehlerkorrektur H verkraftet rund 30 % verdeckte
+// PayPals eigener QR-Code-Link des Vereinskontos mit dem Wappen in der Mitte. Fehlerkorrektur H verkraftet rund 30 % verdeckte
 // Fläche, das Wappen deckt mit Rand etwa 5 % ab.
-export function PaypalQrCode({ amount }: { amount?: number }) {
+export function PaypalQrCode() {
   const [svgDataUrl, setSvgDataUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    QRCode.toString(paypalLink(amount), {
+    QRCode.toString(verein.paypalQr, {
       type: "svg",
       width: 200,
       margin: 2,
@@ -21,7 +21,7 @@ export function PaypalQrCode({ amount }: { amount?: number }) {
       .catch(() => {
         // Ohne QR-Code bleibt der Button.
       });
-  }, [amount]);
+  }, []);
 
   if (!svgDataUrl) return null;
 
@@ -41,10 +41,7 @@ export function PaypalQrCode({ amount }: { amount?: number }) {
           <img src="/sva-wappen.png" alt="" width={36} height={36} />
         </span>
       </div>
-      <p className="max-w-[200px] text-center text-xs text-sva-gray-400">
-        QR-Code scannen für PayPal
-        {amount && amount > 0 ? ` (${amount} €)` : ""}
-      </p>
+      <p className="max-w-[200px] text-center text-xs text-sva-gray-400">QR-Code scannen für PayPal</p>
     </div>
   );
 }
