@@ -109,7 +109,7 @@ Beleganfrage, die noch niemand vom Vorstand geprüft hat. Solange sie offen ist,
 _Vermeiden_: Entwurf, offener Spendenbeleg
 
 **Wartend**:
-Beleganfrage, bei der der Vorstand das Vereinskonto geprüft und die Spende noch nicht gefunden hat. Endet nur durch erneute Prüfung von Hand.
+Beleganfrage, bei der der Vorstand das Vereinskonto geprüft und die Spende noch nicht gefunden hat. Endet nur von Hand, mit Ausstellung oder Ablehnung, nie von selbst. Zurück zu Offen geht sie nicht: Findet eine erneute Prüfung die Spende wieder nicht, bleibt sie wartend.
 _Vermeiden_: pending, Nicht eingegangen
 
 **Ausstellung**:
@@ -124,7 +124,10 @@ Abschluss einer Beleganfrage ohne Spendenbeleg, egal aus welchem Grund. Abgelehn
 _Vermeiden_: abgelehnter Beleg, Nicht eingegangen (als Statusname)
 
 **Ablehnungsgrund**:
-Einer von wenigen festen Gründen für eine Ablehnung, zum Beispiel „Spende nicht eingegangen“ oder „Doppelte Anfrage“.
+Einer von vier festen Gründen für eine Ablehnung: „Spende nicht eingegangen“, „Doppelte Anfrage“, „Keine Spende“ (etwa bei Gegenleistung oder Mitgliedsbeitrag) und „Sonstiges“ mit eigener Begründung, das auch Spam abdeckt. Weicht nur der Betrag ab, ist das kein Ablehnungsgrund, sondern ein Fall für die Betragskorrektur.
+
+**Ablehnungsmail**:
+Mail an den Spender, die ihm eine Ablehnung mitteilt. Ob sie rausgeht, entscheidet der Vorstand bei jeder Ablehnung, bei Spam geht keine raus.
 
 ## Mitgliedschaft
 
