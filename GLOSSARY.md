@@ -58,15 +58,15 @@ _Vermeiden_: Revisor, Rechnungsprüfer
 Eine freiwillige Zuwendung an den Förderverein ohne Gegenleistung, als Geldspende oder Sachspende. Eine Spende braucht keine Beleganfrage, die meisten haben keine.
 
 **Geldspende**:
-Spende in Geld, per Überweisung auf das Vereinskonto oder bar.
-_Vermeiden_: Barspende (als eigener Begriff)
+Spende in Geld, per Überweisung auf das Vereinskonto, per PayPal oder bar. PayPal ist ein offizieller Spendenweg.
+_Vermeiden_: Barspende, PayPal-Spende (als eigene Begriffe)
 
 **Tag der Spende**:
-Der Tag, an dem der Spender das Geld überwiesen oder bar übergeben hat. Nicht der Tag der Gutschrift auf dem Vereinskonto.
+Der Tag, an dem der Spender das Geld überwiesen, per PayPal gezahlt oder bar übergeben hat. Nicht der Tag der Gutschrift auf dem Vereinskonto.
 _Vermeiden_: Überweisungsdatum, Datum (allein)
 
-**Sachspende** (vorläufig, ob es sie gibt, ist noch offen):
-Spende in Form einer Sache statt Geld, zum Beispiel Trikots oder Bälle.
+**Sachspende**:
+Spende in Form einer Sache statt Geld, zum Beispiel Trikots oder Bälle. Gab es bisher nicht, ist aber möglich. Die Sache wird Inventar des Fördervereins.
 
 **Aufwandsspende** (vorläufig, ob es sie gibt, ist noch offen):
 Verzicht eines Ehrenamtlichen auf eine Erstattung, die ihm der Förderverein vorher zugesagt hat, zum Beispiel für Fahrtkosten. Gilt als Geldspende.
@@ -91,10 +91,10 @@ Spendenbeleg für eine Spende bis 300 €, der zusammen mit dem Kontoauszug des 
 _Vermeiden_: vereinfachter Zuwendungsnachweis
 
 **Zuwendungsbestätigung**:
-Spendenbeleg nach amtlichem Muster, für jeden Betrag zulässig. Der Förderverein stellt sie nur für Spenden über 300 € aus, von Hand und unterschrieben.
+Spendenbeleg nach amtlichem Muster, für jeden Betrag zulässig. Der Förderverein stellt sie nur für Spenden über 300 € aus, von Hand. Unterschreiben darf nur der Vertretungsvorstand, also 1. oder 2. Vorsitz.
 
-**Sammelbestätigung** (vorläufig):
-Zuwendungsbestätigung über mehrere Spenden eines Spenders. Gibt es beim Förderverein nicht.
+**Sammelbestätigung**:
+Zuwendungsbestätigung über mehrere Spenden eines Spenders. Bietet der Förderverein derzeit nicht an, später vielleicht auf Wunsch.
 _Vermeiden_: Jahresbeleg, Jahresbescheinigung
 
 **Belegnummer**:
@@ -156,7 +156,7 @@ _Vermeiden_: Rauswurf, Streichung
 ## Beitrag und Einzug
 
 **Mitgliedsbeitrag**:
-Der feste Betrag, den ein Mitglied für jedes Beitragsjahr an den Förderverein zahlt. Die Mitgliederversammlung legt ihn fest, derzeit 20 €. Wer mehr geben will, spendet zusätzlich. Ein Mitgliedsbeitrag ist keine Spende und bekommt keinen Spendenbeleg. Einen anteiligen Mitgliedsbeitrag gibt es nicht: Wer im laufenden Jahr aufgenommen wird, zahlt den vollen Mitgliedsbeitrag, außer bei Aufnahme im Dezember, dann erst ab dem Folgejahr. Befreiungen, Ermäßigungen oder Ehrenmitglieder gibt es nicht.
+Der feste Betrag, den ein Mitglied für jedes Beitragsjahr an den Förderverein zahlt. Die Mitgliederversammlung legt ihn fest, derzeit 20 €. Wer mehr geben will, spendet zusätzlich. Ein Mitgliedsbeitrag ist keine Spende und bekommt keinen Spendenbeleg. Einen anteiligen Mitgliedsbeitrag gibt es nicht: Wer im laufenden Jahr aufgenommen wird, zahlt den vollen Mitgliedsbeitrag. Bei Aufnahme vor dem Einzugstermin geht er in den Beitragseinzug ein, bei Aufnahme danach zieht die Kasse ihn bald nach der Aufnahme mit einer einzelnen Lastschrift ein. Bei Aufnahme im Dezember zieht der Förderverein aus Kulanz erst ab dem Folgejahr ein. Befreiungen, Ermäßigungen oder Ehrenmitglieder gibt es nicht.
 _Vermeiden_: Jahresbeitrag, Mindestjahresbeitrag, Beitrag (allein), Gebühr, anteiliger Beitrag
 
 **Beitragsjahr**:
@@ -229,9 +229,13 @@ _Vermeiden_: Spendenprojekt, Maßnahme, Aktion
 Förderprojekt, bei dem der Förderverein Geld an den SV Amendingen gibt und der SV Amendingen selbst bezahlt. Empfänger ist rechtlich der SV Amendingen, bestimmt ist das Geld für die Fußballabteilung. Rechtlich eine Mittelweitergabe. Heute der übliche Weg.
 _Vermeiden_: Mittelweitergabe (im Alltag), Überweisung an den Verein
 
-**Anschaffung** (Verbleib der Sache vorläufig):
-Förderprojekt, bei dem der Förderverein selbst einkauft, zum Beispiel Bälle und Hütchen. Ob die Sache an die Fußballabteilung übergeben wird oder als Inventar beim Förderverein bleibt, ist noch offen.
+**Anschaffung**:
+Förderprojekt, bei dem der Förderverein selbst einkauft, zum Beispiel Bälle und Hütchen. Die Sache wird Inventar des Fördervereins und geht nicht automatisch an die Fußballabteilung über.
 _Vermeiden_: Kauf, Beschaffung
+
+**Inventar**:
+Alle Sachen im Eigentum des Fördervereins, aus Anschaffungen oder Sachspenden. Die Fußballabteilung nutzt sie, Eigentümer bleibt der Förderverein.
+_Vermeiden_: Vereinsvermögen, Material (als Oberbegriff)
 
 **Zweckgebundene Spende**:
 Spende, deren Verwendung der Spender verbindlich festlegt, zum Beispiel „für die Trikots der C-Jugend“. Der Förderverein darf sie nur dafür ausgeben. Er nimmt sie nur an, wenn die Verwendung zum Förderzweck passt.
