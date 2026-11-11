@@ -1,4 +1,5 @@
 import "server-only";
+import { connection } from "next/server";
 import { mitgliederFuerWebsite } from "@/packages/mitglied/server";
 import { mitgliedsantraegeFuerWebsite } from "@/packages/mitgliedsantrag/server";
 import { mitgliederziel } from "@/lib/verein";
@@ -21,7 +22,10 @@ const zeitraeume = [
 // Mitgliederzähler auf der Startseite: alle Mitglieder, deren Mitgliedschaft läuft, plus online
 // unterschriebene Mitgliedsanträge, die der Vorstand noch nicht als Mitglied erfasst hat.
 // Null ohne PocketBase oder wenn es nicht antwortet, dann zeigt die Startseite keinen Zähler.
+// Wird bei jedem Aufruf frisch gezählt: Beim Docker-Build gibt es kein PocketBase, ein vorgerenderter
+// Zähler würde nach jedem Deploy fehlen.
 export async function mitgliederstand(): Promise<Mitgliederstand | null> {
+  await connection();
   try {
     const mitglieder = await mitgliederFuerWebsite();
     if (!mitglieder) return null;

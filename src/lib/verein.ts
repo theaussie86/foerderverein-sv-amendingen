@@ -75,7 +75,7 @@ export function mandatstext(): string {
 }
 
 // Ziel für den Mitgliederzähler auf der Startseite (src/lib/mitglieder.ts).
-export const mitgliederziel = 100;
+export const mitgliederziel = 150;
 
 // Satz zur Steuerbegünstigung auf dem vereinfachten Spendenbeleg. Ohne Bescheid nur der Zweck.
 export function steuerbeguenstigung(name: string, steuer: Steuerangaben): string {
