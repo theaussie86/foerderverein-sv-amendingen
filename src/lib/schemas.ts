@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ENDE_GRUENDE } from "@/packages/mitglied/anzeige";
 
 // Angaben zum Spender, gleich für Website und internen Bereich. Betrag und Tag der Spende
 // heißen auf der Website "überwiesen", im internen Bereich neutral.
@@ -74,6 +75,58 @@ export function isValidIban(iban: string): boolean {
 }
 
 export type MitgliedFormData = z.infer<typeof mitgliedSchema>;
+
+// Der Vorstand legt ein Mitglied im internen Bereich an oder pflegt es. Anders als beim
+// Mitgliedsantrag dürfen Angaben fehlen, weil die Bestandsliste lückenhaft ist (#49).
+const leerOder = <T extends z.ZodType<string>>(schema: T) => z.union([z.literal(""), schema]);
+const tag = leerOder(z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Bitte ein Datum angeben."));
+
+export const mitgliedPflegeSchema = z
+  .object({
+    // Zeichen, die eine SEPA-Mandatsreferenz enthalten darf.
+    mandatsreferenz: z
+      .string()
+      .trim()
+      .min(1, "Mandatsreferenz ist erforderlich.")
+      .max(35, "Höchstens 35 Zeichen.")
+      .regex(/^[A-Za-z0-9+?/:().,' -]+$/, "Nur Buchstaben ohne Umlaute, Ziffern und + ? / : ( ) . , ' -"),
+    vorname: z.string().trim().min(1, "Vorname ist erforderlich.").max(100),
+    nachname: z.string().trim().min(1, "Nachname ist erforderlich.").max(100),
+    strasse: z.string().max(200),
+    plz: leerOder(
+      z
+        .string()
+        .trim()
+        .regex(/^\d{5}$/, "Bitte eine gültige 5-stellige PLZ eingeben."),
+    ),
+    ort: z.string().max(100),
+    email: leerOder(z.string().trim().email("Bitte eine gültige E-Mail-Adresse eingeben.")),
+    kontoinhaber: z.string().max(200),
+    iban: z.string().refine((v) => isValidIban(normalizeIban(v)), "Bitte eine gültige IBAN eingeben."),
+    bic: leerOder(
+      z
+        .string()
+        .transform((v) => v.replace(/\s+/g, "").toUpperCase())
+        .pipe(z.string().regex(/^[A-Z0-9]{8}([A-Z0-9]{3})?$/, "Eine BIC hat 8 oder 11 Zeichen.")),
+    ),
+    bank: z.string().max(100),
+    eintrittsdatum: tag,
+    mandatDatum: tag,
+    endeDatum: tag,
+    endeGrund: z.enum(["", ...ENDE_GRUENDE]),
+    antragId: z.string().max(15),
+    notiz: z.string().max(5000, "Bitte höchstens 5000 Zeichen eingeben."),
+  })
+  .refine((d) => !d.endeDatum || d.endeGrund, {
+    path: ["endeGrund"],
+    message: "Bitte den Grund für das Ende angeben.",
+  })
+  .refine((d) => d.endeDatum || !d.endeGrund, {
+    path: ["endeDatum"],
+    message: "Bitte das Datum des Endes angeben.",
+  });
+
+export type MitgliedPflegeDaten = z.infer<typeof mitgliedPflegeSchema>;
 
 export const kontaktSchema = z.object({
   name: z.string().min(1, "Name ist erforderlich."),

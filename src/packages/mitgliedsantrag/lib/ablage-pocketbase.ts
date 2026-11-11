@@ -56,16 +56,16 @@ export function pocketbaseAblage(superuser: () => Promise<PocketBase | null>): A
       }
     },
 
-    async zaehlenSeit(datum: Date): Promise<number | null> {
+    async idsSeit(datum: Date): Promise<string[] | null> {
       const pb = await superuser();
       if (!pb) return null;
-      const liste = await pb.collection("mitgliedsantraege").getList(1, 1, {
+      const liste = await pb.collection("mitgliedsantraege").getFullList({
         filter: pb.filter('unterschrieben_am >= {:datum} && status != "abgelehnt" && status != "ausgetreten"', {
           datum: datum.toISOString().replace("T", " "),
         }),
         fields: "id",
       });
-      return liste.totalItems;
+      return liste.map((r) => r.id);
     },
   };
 }
