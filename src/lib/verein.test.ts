@@ -41,15 +41,15 @@ describe("glaeubigerIdGueltig", () => {
 
 describe("paypalLink", () => {
   test("ohne Betrag nur der paypal.me-Link", () => {
-    expect(paypalLink()).toBe("https://paypal.me/svamendingen");
-    expect(paypalLink(0)).toBe("https://paypal.me/svamendingen");
+    expect(paypalLink()).toBe("https://paypal.me/foerdervereinsva");
+    expect(paypalLink(0)).toBe("https://paypal.me/foerdervereinsva");
   });
 
   test("ganze Beträge ohne Nachkommastellen", () => {
-    expect(paypalLink(25)).toBe("https://paypal.me/svamendingen/25EUR");
+    expect(paypalLink(25)).toBe("https://paypal.me/foerdervereinsva/25EUR");
   });
 
   test("krumme Beträge mit Punkt und zwei Stellen", () => {
-    expect(paypalLink(12.5)).toBe("https://paypal.me/svamendingen/12.50EUR");
+    expect(paypalLink(12.5)).toBe("https://paypal.me/foerdervereinsva/12.50EUR");
   });
 });
