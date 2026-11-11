@@ -5,8 +5,8 @@ Website des Fördervereins: Mitglieder gewinnen, Spenden annehmen und dem Vorsta
 ## Verein und Organe
 
 **Förderverein**:
-Der eingetragene Verein, um den es hier geht. Rechtlich eigenständig, nicht Teil des SV Amendingen.
-_Vermeiden_: Verein (allein, mehrdeutig)
+Der eingetragene Verein, um den es hier geht. Rechtlich eigenständig, nicht Teil des SV Amendingen. Offizieller Name laut Satzung: „Förderverein des SV Amendingen/Fußball e.V.“. Im Text reicht „Förderverein“.
+_Vermeiden_: Verein (allein, mehrdeutig), andere Schreibweisen des offiziellen Namens
 
 **SV Amendingen**:
 Der Sportverein, dessen Fußballabteilung der Förderverein unterstützt. Ein eigener Verein mit eigenen Organen.
@@ -16,12 +16,15 @@ _Vermeiden_: Hauptverein, Stammverein, Verein (allein)
 Die Abteilung des SV Amendingen, die der Förderverein unterstützt.
 _Vermeiden_: Abteilung (allein), die Fußballer
 
+**Organ**:
+Ein Gremium, durch das der Förderverein handelt. Laut Satzung gibt es drei: Vorstand, Mitgliederversammlung und Kassenprüfer.
+
 **Mitgliederversammlung**:
 Organ des Fördervereins aus allen Mitgliedern. Wählt den Vorstand und die Kassenprüfer.
 _Vermeiden_: Jahreshauptversammlung, JHV, Generalversammlung
 
 **Vorstand**:
-Das gewählte Gremium aller Amtsträger: 1. Vorsitz, 2. Vorsitz, Kasse, Schriftführung und Beisitz.
+Organ des Fördervereins: das gewählte Gremium aller Amtsträger: 1. Vorsitz, 2. Vorsitz, Kasse, Schriftführung und Beisitz.
 _Vermeiden_: Gesamtvorstand, erweiterter Vorstand, geschäftsführender Vorstand
 
 **Vertretungsvorstand**:
@@ -29,24 +32,24 @@ Der Teil des Vorstands, der den Förderverein nach außen vertritt und im Verein
 _Vermeiden_: Vorstand (für diesen Teil), BGB-Vorstand
 
 **Amt**:
-Eine Funktion im Vorstand. Ämter sind 1. Vorsitz, 2. Vorsitz, Kasse, Schriftführung und Beisitz.
+Eine Funktion im Vorstand. Ämter sind 1. Vorsitz, 2. Vorsitz, Kasse, Schriftführung und Beisitz. Die Person im Amt heißt wie in der Satzung: 1. Vorsitzender, 2. Vorsitzender, Kassier, Schriftführer, Beisitzer.
 
 **1. Vorsitz** / **2. Vorsitz**:
-Die beiden Ämter an der Spitze des Vorstands.
-_Vermeiden_: 1. Vorstand, 2. Vorstand
+Die beiden Ämter an der Spitze des Vorstands. Die Personen darin sind 1. Vorsitzender und 2. Vorsitzender.
+_Vermeiden_: 1. Vorstand, 2. Vorstand, stellvertretender Vorsitzender
 
 **Kasse**:
-Das Amt, das die Finanzen des Fördervereins führt.
-_Vermeiden_: Kassenwart, Schatzmeister, Kassier
+Das Amt, das die Finanzen des Fördervereins führt. Die Person darin ist der Kassier.
+_Vermeiden_: Kassenwart, Schatzmeister, Kassierer
 
 **Schriftführung**:
-Das Amt, das Protokolle und Schriftverkehr führt.
+Das Amt, das Protokolle und Schriftverkehr führt. Die Person darin ist der Schriftführer.
 
 **Beisitz**:
-Ein Amt im Vorstand ohne festen Aufgabenbereich. Kann mehrfach besetzt sein.
+Ein Amt im Vorstand ohne festen Aufgabenbereich. Mindestens einmal besetzt, auch mehrfach möglich. Die Person darin ist ein Beisitzer.
 
 **Kassenprüfer**:
-Von der Mitgliederversammlung gewählte Person außerhalb des Vorstands, die die Kasse prüft. Der Förderverein hat zwei.
+Von der Mitgliederversammlung gewählte Person außerhalb des Vorstands, die die Kasse prüft. Der Förderverein hat zwei. Zusammen sind sie ein Organ des Fördervereins.
 _Vermeiden_: Revisor, Rechnungsprüfer
 
 ## Spenden
@@ -143,7 +146,7 @@ Abschluss eines Mitgliedsantrags ohne Aufnahme. Nicht zu verwechseln mit der Abl
 Oberbegriff für Austritt, Ausschluss und Tod.
 
 **Austritt**:
-Ende der Mitgliedschaft, weil das Mitglied es erklärt. Nur schriftlich gegenüber dem Vorstand, zum Ende eines Kalenderjahres und einen Monat vorher, also bis 30. November.
+Ende der Mitgliedschaft, weil das Mitglied es erklärt. Nur schriftlich gegenüber dem Vorstand, zum Ende eines Kalenderjahres und einen Monat vorher, also bis 30. November. Die Satzung nennt die Austrittserklärung „Kündigung“.
 _Vermeiden_: Kündigung, Abmeldung
 
 **Ausschluss**:
@@ -153,8 +156,8 @@ _Vermeiden_: Rauswurf, Streichung
 ## Beitrag und Einzug
 
 **Mitgliedsbeitrag**:
-Der feste Betrag, den ein Mitglied für jedes Beitragsjahr an den Förderverein zahlt. Ein Mitgliedsbeitrag ist keine Spende und bekommt keinen Spendenbeleg. Einen anteiligen Mitgliedsbeitrag gibt es nicht: Wer im laufenden Jahr aufgenommen wird, zahlt den vollen Mitgliedsbeitrag, außer bei Aufnahme im Dezember, dann erst ab dem Folgejahr. Befreiungen, Ermäßigungen oder Ehrenmitglieder gibt es nicht.
-_Vermeiden_: Jahresbeitrag, Beitrag (allein), Gebühr, anteiliger Beitrag
+Der feste Betrag, den ein Mitglied für jedes Beitragsjahr an den Förderverein zahlt. Die Mitgliederversammlung legt ihn fest, derzeit 20 €. Wer mehr geben will, spendet zusätzlich. Ein Mitgliedsbeitrag ist keine Spende und bekommt keinen Spendenbeleg. Einen anteiligen Mitgliedsbeitrag gibt es nicht: Wer im laufenden Jahr aufgenommen wird, zahlt den vollen Mitgliedsbeitrag, außer bei Aufnahme im Dezember, dann erst ab dem Folgejahr. Befreiungen, Ermäßigungen oder Ehrenmitglieder gibt es nicht.
+_Vermeiden_: Jahresbeitrag, Mindestjahresbeitrag, Beitrag (allein), Gebühr, anteiliger Beitrag
 
 **Beitragsjahr**:
 Das Kalenderjahr, für das ein Mitgliedsbeitrag gilt. Pro Beitragsjahr schuldet ein Mitglied genau einen Mitgliedsbeitrag.
