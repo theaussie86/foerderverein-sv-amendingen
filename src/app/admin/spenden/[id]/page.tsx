@@ -4,7 +4,14 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { datum, datumZeit, seitWann } from "@/lib/format";
-import { ABLEHNUNGSGRUND_LABEL, BELEG_ART_LABEL, euro, istBearbeitbar } from "@/packages/beleganfrage/anzeige";
+import {
+  ABLEHNUNGSGRUND_LABEL,
+  BELEG_ART_LABEL,
+  euro,
+  istBearbeitbar,
+  ZAHLUNGSWEG_LABEL,
+  ZAHLUNGSWEG_PRUEFORT,
+} from "@/packages/beleganfrage/anzeige";
 import { ablehnungsmailVorlagen } from "@/packages/beleganfrage/index";
 import { beleganfragenFuerVorstand } from "@/packages/beleganfrage/server";
 import { alsWartendMarkieren } from "../actions";
@@ -46,6 +53,7 @@ export default async function SpendenbelegPage({
         : `${euro(beleg.betrag)} eingegangen, ${euro(beleg.betragAngegeben)} angegeben`,
     ],
     ["Tag der Spende", datum(beleg.tagDerSpende)],
+    ["Zahlungsweg", ZAHLUNGSWEG_LABEL[beleg.zahlungsweg]],
     ["Art", BELEG_ART_LABEL[beleg.art]],
     ["Name", beleg.name],
     ["Anschrift", `${beleg.strasse}, ${beleg.plz} ${beleg.ort}`],
@@ -108,14 +116,14 @@ export default async function SpendenbelegPage({
           </h2>
           {wartend && (
             <p className="mt-4 rounded-md border border-dashed border-sva-gold/60 px-4 py-3 text-sva-gray-300">
-              Wartet {seitWann(wartend.seit, new Date())}: Beim letzten Blick aufs Vereinskonto am{" "}
-              {datumZeit(wartend.zuletztGeprueft)} war die Spende noch nicht da.
+              Wartet {seitWann(wartend.seit, new Date())}: Beim letzten Prüfen am {datumZeit(wartend.zuletztGeprueft)}{" "}
+              war die Spende noch nicht da.
             </p>
           )}
           <ol className="mt-4 list-decimal space-y-1 pl-5 text-sva-gray-300">
             <li>
-              Auf dem Vereinskonto nach einer Spende über {euro(beleg.betrag)} von {beleg.name} um den{" "}
-              {datum(beleg.tagDerSpende)} suchen.
+              {ZAHLUNGSWEG_PRUEFORT[beleg.zahlungsweg].replace(/^./, (c) => c.toUpperCase())} nach einer Spende über{" "}
+              {euro(beleg.betrag)} von {beleg.name} um den {datum(beleg.tagDerSpende)} suchen.
             </li>
             {beleg.art === "vereinfacht" ? (
               <li>

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { glaeubigerIdGueltig, steuerbeguenstigung, verein } from "./verein";
+import { glaeubigerIdGueltig, paypalLink, steuerbeguenstigung, verein } from "./verein";
 
 const zweck = "Förderung des Sports";
 
@@ -36,5 +36,20 @@ describe("glaeubigerIdGueltig", () => {
 
   test("die Gläubiger-ID des Fördervereins ist gültig", () => {
     expect(glaeubigerIdGueltig(verein.glaeubigerId)).toBe(true);
+  });
+});
+
+describe("paypalLink", () => {
+  test("ohne Betrag nur der paypal.me-Link", () => {
+    expect(paypalLink()).toBe("https://paypal.me/svamendingen");
+    expect(paypalLink(0)).toBe("https://paypal.me/svamendingen");
+  });
+
+  test("ganze Beträge ohne Nachkommastellen", () => {
+    expect(paypalLink(25)).toBe("https://paypal.me/svamendingen/25EUR");
+  });
+
+  test("krumme Beträge mit Punkt und zwei Stellen", () => {
+    expect(paypalLink(12.5)).toBe("https://paypal.me/svamendingen/12.50EUR");
   });
 });

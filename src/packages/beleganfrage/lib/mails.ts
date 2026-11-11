@@ -1,5 +1,5 @@
 import { verein } from "@/lib/verein";
-import { euro, tagAnzeigen } from "./format";
+import { euro, tagAnzeigen, ZAHLUNGSWEG_LABEL, ZAHLUNGSWEG_PRUEFORT } from "./format";
 import { spendenGrenzeVereinfacht } from "./regeln";
 import type { Ablehnungsgrund, BelegArt, Spenderangaben } from "./typen";
 
@@ -13,8 +13,8 @@ export function vorstandMail(d: Spenderangaben, art: BelegArt, link: string | nu
     text:
       `Über die Website wurde ${vereinfacht ? "ein Spendenbeleg" : "eine Zuwendungsbestätigung"} angefordert.\n\n` +
       `Name: ${d.name}\nAnschrift: ${d.strasse}, ${d.plz} ${d.ort}\nE-Mail: ${d.email}\n` +
-      `Betrag: ${euro(d.betrag)}\nTag der Spende: ${tagAnzeigen(d.tagDerSpende)}\n\n` +
-      `Bitte zuerst den Geldeingang auf dem Vereinskonto prüfen. ` +
+      `Betrag: ${euro(d.betrag)}\nTag der Spende: ${tagAnzeigen(d.tagDerSpende)}\nZahlungsweg: ${ZAHLUNGSWEG_LABEL[d.zahlungsweg]}\n\n` +
+      `Bitte zuerst den Geldeingang ${ZAHLUNGSWEG_PRUEFORT[d.zahlungsweg]} prüfen. ` +
       (vereinfacht
         ? `Ist die Spende eingegangen, im internen Bereich bestätigen. Dann geht der Spendenbeleg automatisch an den Spender.`
         : `Ist die Spende eingegangen, die Zuwendungsbestätigung ausstellen und im internen Bereich als ausgestellt markieren.`) +
@@ -47,7 +47,7 @@ export function spendenbelegMail({
       `vielen Dank für deine Spende an den ${verein.name}! Deine Spende ist bei uns eingegangen.\n\n` +
       korrektur +
       `Im Anhang findest du den Spendenbeleg. Bis ${spendenGrenzeVereinfacht} € genügt dem Finanzamt dieser Beleg zusammen mit deinem ` +
-      `Kontoauszug, auf dem die Überweisung an uns zu sehen ist. Heb bitte beides für deine Steuererklärung auf.\n\n` +
+      `Kontoauszug oder deiner PayPal-Buchungsbestätigung über die Zahlung an uns. Heb bitte beides für deine Steuererklärung auf.\n\n` +
       `Viele Grüße\n${verein.name}`,
   };
 }
@@ -66,9 +66,9 @@ export function ablehnungsmailVorlagen({ name, betrag, tagDerSpende }: Angefragt
   return {
     "nicht-eingegangen":
       `Hallo ${name},\n\n` +
-      `danke für ${anfrage}. Leider haben wir auf unserem Vereinskonto keine passende Spende gefunden. ` +
+      `danke für ${anfrage}. Leider haben wir keine passende Spende gefunden. ` +
       `Deshalb können wir dir dafür keinen Spendenbeleg ausstellen.\n\n` +
-      `Hast du die Spende von einem anderen Konto, unter einem anderen Namen oder an einem anderen Tag überwiesen? ` +
+      `Hast du die Spende von einem anderen Konto, unter einem anderen Namen oder an einem anderen Tag gespendet? ` +
       `Dann schreib uns kurz, wir schauen gern noch einmal nach.` +
       gruss,
     doppelt:

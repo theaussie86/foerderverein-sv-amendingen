@@ -1,9 +1,8 @@
 import { z } from "zod";
-import { ABLEHNUNGSGRUENDE } from "@/packages/beleganfrage/anzeige";
+import { ABLEHNUNGSGRUENDE, ZAHLUNGSWEGE } from "@/packages/beleganfrage/anzeige";
 import { ENDE_GRUENDE } from "@/packages/mitglied/anzeige";
 
-// Angaben zum Spender, gleich für Website und internen Bereich. Betrag und Tag der Spende
-// heißen auf der Website "überwiesen", im internen Bereich neutral.
+// Angaben zum Spender, gleich für Website und internen Bereich.
 const spendeFelder = {
   name: z.string().min(1, "Name ist erforderlich."),
   strasse: z.string().min(1, "Straße ist erforderlich."),
@@ -15,9 +14,11 @@ export const beleganfrageSchema = z.object({
   ...spendeFelder,
   email: z.string().email("Bitte eine gültige E-Mail-Adresse eingeben."),
   betrag: z
-    .number({ error: "Bitte den überwiesenen Betrag eingeben." })
-    .min(1, "Bitte den überwiesenen Betrag eingeben."),
-  tag_der_spende: z.string().min(1, "Bitte den Tag der Überweisung angeben."),
+    .number({ error: "Bitte den gespendeten Betrag eingeben." })
+    .min(1, "Bitte den gespendeten Betrag eingeben."),
+  tag_der_spende: z.string().min(1, "Bitte den Tag der Spende angeben."),
+  // Bar gibt es auf der Website nicht, Barspenden erfasst der Vorstand selbst.
+  zahlungsweg: z.enum(["ueberweisung", "paypal"], { error: "Bitte angeben, wie du gespendet hast." }),
   // Honeypot gegen Bots: bleibt für Menschen unsichtbar und leer. Ohne max(0), damit die
   // Action befüllte Felder erkennt und Bots eine scheinbare Erfolgsmeldung bekommen.
   website: z.string().optional(),
@@ -32,6 +33,7 @@ export const beleganfrageErfassenSchema = z.object({
   ...spendeFelder,
   betrag: z.number({ error: "Bitte den Betrag eingeben." }).min(1, "Bitte den Betrag eingeben."),
   tag_der_spende: z.string().min(1, "Bitte den Tag der Spende angeben."),
+  zahlungsweg: z.enum(ZAHLUNGSWEGE, { error: "Bitte den Zahlungsweg wählen." }),
   email: z.union([z.literal(""), z.string().trim().email("Bitte eine gültige E-Mail-Adresse eingeben.")]),
   notiz: z.string().max(5000, "Bitte höchstens 5000 Zeichen eingeben."),
   direktAusstellen: z.boolean(),
