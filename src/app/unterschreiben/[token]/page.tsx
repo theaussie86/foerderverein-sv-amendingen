@@ -53,7 +53,16 @@ export default async function UnterschreibenPage({ params }: { params: Promise<{
       <section className="mt-10 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6 sm:p-8">
         <h2 className="text-xl font-semibold text-white">Beitrittserklärung</h2>
         <p className="mt-2 text-sm text-sva-gray-300">
-          Hiermit erkläre ich meinen Beitritt zum {verein.name} und erkenne die Vereinssatzung an.
+          Hiermit erkläre ich meinen Beitritt zum {verein.name} und erkenne die{" "}
+          <a
+            href={verein.satzungUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sva-gold underline hover:text-sva-gold-light"
+          >
+            Vereinssatzung
+          </a>{" "}
+          an.
         </p>
         <dl className="mt-6 space-y-2 text-sm">
           {zeilen.map(([k, v]) => (

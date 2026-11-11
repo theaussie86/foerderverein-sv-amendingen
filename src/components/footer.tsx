@@ -70,6 +70,16 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <a
+                  href={verein.satzungUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sva-gray-300 transition-colors hover:text-white"
+                >
+                  Satzung
+                </a>
+              </li>
+              <li>
                 <CookieEinstellungenButton className="text-sva-gray-300 transition-colors hover:text-white" />
               </li>
             </ul>
