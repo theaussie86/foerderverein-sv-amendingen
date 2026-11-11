@@ -112,8 +112,12 @@ _Vermeiden_: Entwurf, offener Spendenbeleg
 Beleganfrage, bei der der Vorstand das Vereinskonto geprüft und die Spende noch nicht gefunden hat. Endet nur durch erneute Prüfung von Hand.
 _Vermeiden_: pending, Nicht eingegangen
 
+**Ausstellung**:
+Abschluss einer Beleganfrage mit Spendenbeleg. Ob ein vereinfachter Spendenbeleg oder eine Zuwendungsbestätigung entsteht, richtet sich nach dem Betrag, nicht nach dem Abschluss. Die Beleganfrage endet mit der Ausstellung, egal ob und wie der Spendenbeleg danach zum Spender kommt. Einen vereinfachten Spendenbeleg darf jedes Vorstandsmitglied ausstellen, eine Zuwendungsbestätigung nur der Vertretungsvorstand.
+_Vermeiden_: versendet, Versand, Freigabe, erledigt, bestätigt (als Statusname)
+
 **Betragskorrektur**:
-Freigabe eines Spendenbelegs über den tatsächlich eingegangenen Betrag statt über den vom Spender angegebenen. Ob ein vereinfachter Spendenbeleg oder eine Zuwendungsbestätigung entsteht, richtet sich nach dem korrigierten Betrag.
+Ausstellung über den tatsächlich eingegangenen Betrag statt über den vom Spender angegebenen. Ob ein vereinfachter Spendenbeleg oder eine Zuwendungsbestätigung entsteht, richtet sich nach dem korrigierten Betrag.
 
 **Ablehnung**:
 Abschluss einer Beleganfrage ohne Spendenbeleg, egal aus welchem Grund. Abgelehnt wird die Beleganfrage, nicht der Spendenbeleg.
