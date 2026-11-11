@@ -3,9 +3,6 @@ import { MitgliedLeiste } from "@/components/mitglied-leiste";
 import { mitgliederstand, type Mitgliederstand } from "@/lib/mitglieder";
 import { mitgliedsbeitrag, verein } from "@/lib/verein";
 
-// Mitgliederzähler stündlich neu berechnen.
-export const revalidate = 3600;
-
 const gruendungsjahr = 1946;
 const teilenText =
   "Für 20 € im Jahr den Jugendfußball beim SV Amendingen unterstützen: https://foerderverein-sv-amendingen.de";
