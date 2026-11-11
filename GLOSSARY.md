@@ -222,8 +222,19 @@ Der in der Satzung festgelegte Zweck des Fördervereins: die ideelle und finanzi
 _Vermeiden_: Vereinszweck, Satzungszweck
 
 **Förderprojekt**:
-Eine einzelne Mittelverwendung mit Titel, Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung.
-_Vermeiden_: Spendenprojekt, Maßnahme, Aktion
+Eine einzelne Mittelverwendung mit Titel, Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung. Es ist geplant, solange das Geld noch nicht ausgegeben ist, und endet umgesetzt oder abgesagt. Für ein geplantes Förderprojekt kann der Förderverein mit einem Spendenziel Spenden sammeln. Dafür gibt es keinen eigenen Begriff. Gesammelt wird, bis das Förderprojekt umgesetzt oder abgesagt ist, eine Frist gibt es nicht.
+_Vermeiden_: Spendenprojekt, Spendenaktion, Crowdfunding, Kampagne, Maßnahme, Aktion
+
+**Spendenziel**:
+Betrag, den der Förderverein für ein geplantes Förderprojekt an Spenden sammeln will. Ein Förderprojekt kann ein Spendenziel haben, muss aber nicht. Kein „Alles oder nichts“: Wird das Spendenziel nicht erreicht, kann der Förderverein das Förderprojekt trotzdem umsetzen und den Rest aus seinen übrigen Mitteln zahlen.
+_Vermeiden_: Funding-Ziel, Sammelziel
+
+**Spendenstand**:
+Summe der Spenden, die für ein Förderprojekt bisher eingegangen sind, egal ob per Überweisung, PayPal oder bar. Angekündigte Spenden zählen nicht.
+
+**Ersatzverwendung**:
+Verwendung, die der Förderverein für ein Förderprojekt mit Spendenziel vorher nennt, für Spenden über den Bedarf hinaus oder für den Fall, dass das Förderprojekt abgesagt wird. Damit bleiben die Spenden zweckgebunden, ohne dass der Förderverein sie zurückzahlen muss.
+_Vermeiden_: Restverwendung, Umwidmung
 
 **Zuschuss**:
 Förderprojekt, bei dem der Förderverein Geld an den SV Amendingen gibt und der SV Amendingen selbst bezahlt. Empfänger ist rechtlich der SV Amendingen, bestimmt ist das Geld für die Fußballabteilung. Rechtlich eine Mittelweitergabe. Heute der übliche Weg.
@@ -238,7 +249,7 @@ Alle Sachen im Eigentum des Fördervereins, aus Anschaffungen oder Sachspenden. 
 _Vermeiden_: Vereinsvermögen, Material (als Oberbegriff)
 
 **Zweckgebundene Spende**:
-Spende, deren Verwendung der Spender verbindlich festlegt, zum Beispiel „für die Trikots der C-Jugend“. Der Förderverein darf sie nur dafür ausgeben. Er nimmt sie nur an, wenn die Verwendung zum Förderzweck passt.
+Spende, deren Verwendung der Spender verbindlich festlegt, zum Beispiel „für die Trikots der C-Jugend“. Der Förderverein darf sie nur dafür ausgeben. Er nimmt sie nur an, wenn die Verwendung zum Förderzweck passt. Eine Spende für ein bestimmtes Förderprojekt ist immer zweckgebunden.
 _Vermeiden_: Zweckspende, Spende mit Auflage
 
 **Verwendungswunsch**:
