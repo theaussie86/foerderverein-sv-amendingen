@@ -34,6 +34,8 @@ export default function MitgliedWerdenPage() {
       ort: "",
       email: "",
       geburtsdatum: "",
+      telefon: "",
+      handy: "",
       kontoinhaber: "",
       iban: "",
       website: "",
@@ -43,7 +45,7 @@ export default function MitgliedWerdenPage() {
   });
 
   async function goToStep2() {
-    if (!(await trigger(["vorname", "nachname", "strasse", "plz", "ort", "email"]))) return;
+    if (!(await trigger(["vorname", "nachname", "strasse", "plz", "ort", "email", "telefon", "handy"]))) return;
     if (!getValues("kontoinhaber")) setValue("kontoinhaber", `${getValues("vorname")} ${getValues("nachname")}`);
     setStep(2);
   }
@@ -166,6 +168,22 @@ export default function MitgliedWerdenPage() {
                     Geburtsdatum
                   </label>
                   <input id="geburtsdatum" type="date" {...register("geburtsdatum")} className={inputCls} />
+                </div>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="telefon" className="block text-sm font-medium text-sva-gray-300">
+                    Telefon privat
+                  </label>
+                  <input id="telefon" type="tel" autoComplete="tel" {...register("telefon")} className={inputCls} />
+                  {errors.telefon && <p className="mt-1 text-xs text-red-400">{errors.telefon.message}</p>}
+                </div>
+                <div>
+                  <label htmlFor="handy" className="block text-sm font-medium text-sva-gray-300">
+                    Handy
+                  </label>
+                  <input id="handy" type="tel" autoComplete="tel" {...register("handy")} className={inputCls} />
+                  {errors.handy && <p className="mt-1 text-xs text-red-400">{errors.handy.message}</p>}
                 </div>
               </div>
             </div>

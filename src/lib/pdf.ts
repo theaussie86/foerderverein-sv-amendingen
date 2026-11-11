@@ -53,7 +53,7 @@ export class Schreiber {
   }
 }
 
-function umbrechen(text: string, font: PDFFont, size: number, max: number): string[] {
+export function umbrechen(text: string, font: PDFFont, size: number, max: number): string[] {
   const zeilen: string[] = [];
   let zeile = "";
   for (const wort of text.split(/\s+/)) {

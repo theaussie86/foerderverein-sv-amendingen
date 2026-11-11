@@ -34,6 +34,8 @@ export function pocketbaseAblage(superuser: () => Promise<PocketBase | null>): A
           ort: d.ort,
           email: d.email,
           geburtsdatum: d.geburtsdatum ? `${d.geburtsdatum} 00:00:00.000Z` : "",
+          telefon: d.telefon ?? "",
+          handy: d.handy ?? "",
           kontoinhaber: d.kontoinhaber,
           iban: d.iban,
           jahresbeitrag: e.mitgliedsbeitrag,
