@@ -16,7 +16,8 @@ function keinBescheid(): Freistellungsbescheid | null {
 }
 
 export const verein = {
-  name: "Förderverein SV Amendingen / Fußball e.V.",
+  // Offizieller Name laut Satzung (#50).
+  name: "Förderverein des SV Amendingen/Fußball e.V.",
   strasse: "Grünenfurterstraße 36",
   plz: "87700",
   ort: "Memmingen",
