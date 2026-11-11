@@ -1,5 +1,5 @@
 // Stammdaten des Vereins für Beitrittserklärung und SEPA-Mandat.
-// TODO: Platzhalter durch echte Daten ersetzen (Gläubiger-ID, Freistellungsbescheid).
+// TODO: Angaben aus dem Freistellungsbescheid fehlen noch.
 
 export type Freistellungsbescheid = {
   finanzamt: string;
@@ -16,13 +16,18 @@ function keinBescheid(): Freistellungsbescheid | null {
 }
 
 export const verein = {
-  name: "Förderverein SV Amendingen / Fußball e.V.",
+  // Offizieller Name laut Satzung (#50).
+  name: "Förderverein des SV Amendingen/Fußball e.V.",
   strasse: "Grünenfurterstraße 36",
   plz: "87700",
   ort: "Memmingen",
   plzOrt: "87700 Memmingen",
   email: "foerderverein.sva@gmx.de",
-  glaeubigerId: "DE00ZZZ00000000000",
+  registergericht: "Amtsgericht Memmingen",
+  registernummer: "VR 1428",
+  // Laut Beitrittserklärung.
+  glaeubigerId: "DE03ZZZ00000843718",
+  satzungUrl: "/satzung.pdf",
   // Termin des jährlichen Beitragseinzugs, dient zugleich als Vorabankündigung (Pre-Notification).
   einzugstermin: "15. März",
   bank: {
@@ -41,6 +46,18 @@ export const verein = {
     bescheid: keinBescheid(),
   },
 };
+
+// Prüfziffer der SEPA-Gläubiger-ID nach ISO 7064 (mod 97). Die Geschäftsbereichskennung
+// (Stellen 5-7) zählt nicht mit. Fängt Tippfehler ab, nicht ob die ID dem Verein gehört.
+export function glaeubigerIdGueltig(id: string): boolean {
+  const kompakt = id.replace(/\s/g, "").toUpperCase();
+  if (!/^[A-Z]{2}\d{2}[A-Z0-9]{3}[A-Z0-9]+$/.test(kompakt)) return false;
+  const umgestellt = kompakt.slice(7) + kompakt.slice(0, 4);
+  const ziffern = [...umgestellt].map((z) => (/[A-Z]/.test(z) ? String(z.charCodeAt(0) - 55) : z)).join("");
+  let rest = 0;
+  for (const z of ziffern) rest = (rest * 10 + Number(z)) % 97;
+  return rest === 1;
+}
 
 // Es gibt nur eine Mitgliedschaft mit festem Jahresbeitrag.
 export const mitgliedsbeitrag = 20;

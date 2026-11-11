@@ -156,7 +156,7 @@ describe("unterschreiben", () => {
     expect(vorstand?.text).toContain("Mandatsreferenz: FV-3F2A9C1B");
     expect(mitglied?.to).toBe("juergen@example.org");
     expect(mitglied?.subject).toBe("Willkommen im Förderverein SV Amendingen!");
-    expect(mitglied?.text).toContain("jeweils zum 15. März unter der Gläubiger-ID DE00ZZZ00000000000");
+    expect(mitglied?.text).toContain("jeweils zum 15. März unter der Gläubiger-ID DE03ZZZ00000843718");
     expect(mitglied?.text).toContain("Mandatsreferenz FV-3F2A9C1B");
     for (const mail of [vorstand, mitglied]) {
       expect(mail?.attachments?.map((a) => a.filename)).toEqual([

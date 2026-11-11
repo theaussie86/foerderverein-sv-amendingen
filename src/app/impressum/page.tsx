@@ -42,9 +42,9 @@ export default function ImpressumPage() {
           <p>
             Eingetragen im Vereinsregister.
             <br />
-            Registergericht: Amtsgericht Memmingen
+            Registergericht: {verein.registergericht}
             <br />
-            Registernummer: VR [Nummer]
+            Registernummer: {verein.registernummer}
           </p>
         </section>
         <section>
@@ -69,10 +69,6 @@ export default function ImpressumPage() {
             Dritter, auf deren Inhalte wir keinen Einfluss haben.
           </p>
         </section>
-        <div className="rounded-md border border-sva-gold/30 bg-sva-gold/10 p-4 text-xs text-sva-gold">
-          <strong>Hinweis:</strong> Alle mit [Klammern] markierten Angaben sind Platzhalter und müssen durch die
-          tatsächlichen Vereinsdaten ersetzt werden.
-        </div>
       </div>
     </div>
   );

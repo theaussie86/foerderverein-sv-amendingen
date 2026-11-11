@@ -245,7 +245,16 @@ export default function MitgliedWerdenPage() {
                   <a href="/datenschutz" className="text-sva-gold underline hover:text-sva-gold-light">
                     Datenschutzerklärung
                   </a>{" "}
-                  zu und akzeptiere die Vereinssatzung. *
+                  zu und akzeptiere die{" "}
+                  <a
+                    href={verein.satzungUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sva-gold underline hover:text-sva-gold-light"
+                  >
+                    Vereinssatzung
+                  </a>
+                  . *
                 </span>
               </label>
               {errors.datenschutz && <p className="mt-1 ml-7 text-xs text-red-400">{errors.datenschutz.message}</p>}
