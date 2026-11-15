@@ -21,8 +21,8 @@ const projekte = [
     text: "Bälle, Hütchen, Leibchen: Material, das jede Woche gebraucht wird und schnell verschleißt.",
   },
   {
-    titel: "FC-Bayern-Jugendcamp",
-    text: "Besondere Projekte wie das Jugendcamp mit unserem Kooperationspartner FC Bayern München.",
+    titel: "Schuhwaschanlage",
+    text: "1.000 € Zuschuss für die Schuhwaschanlage vor dem Vereinsheim. Saubere Schuhe, sauberes Vereinsheim.",
   },
 ];
 
