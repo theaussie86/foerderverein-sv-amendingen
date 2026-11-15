@@ -4,7 +4,6 @@ import { keinZusammengesetzterFilter } from "./pocketbase-filter.mjs";
 
 RuleTester.describe = describe;
 RuleTester.it = it;
-RuleTester.itOnly = it.only;
 
 new RuleTester().run("kein-zusammengesetzter-filter", keinZusammengesetzterFilter, {
   valid: [
