@@ -1,4 +1,5 @@
 import "server-only";
+import { env } from "@/lib/env";
 import { writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -15,7 +16,8 @@ type Mail = {
 
 // Ohne RESEND_API_KEY (lokale Entwicklung) werden Mails ins Log und Anhänge ins Temp-Verzeichnis geschrieben.
 export async function sendMail(mail: Mail): Promise<void> {
-  if (!process.env.RESEND_API_KEY) {
+  const { RESEND_API_KEY, MAIL_FROM } = env();
+  if (!RESEND_API_KEY) {
     console.log(`[mail] an ${mail.to}: ${mail.subject}\n${mail.text}`);
     for (const a of mail.attachments ?? []) {
       const pfad = join(tmpdir(), a.filename);
@@ -24,10 +26,10 @@ export async function sendMail(mail: Mail): Promise<void> {
     }
     return;
   }
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const resend = new Resend(RESEND_API_KEY);
   // MAIL_FROM enthält nur die Adresse, der Anzeigename kommt aus den Vereinsdaten.
   const { error } = await resend.emails.send({
-    from: `"${verein.name}" <${process.env.MAIL_FROM}>`,
+    from: `"${verein.name}" <${MAIL_FROM}>`,
     to: mail.to
       .split(",")
       .map((a) => a.trim())

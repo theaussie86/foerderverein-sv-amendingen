@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "testRunner": "command",
+  "commandRunner": { "command": "bun test" },
+  "coverageAnalysis": "off",
+  "reporters": ["clear-text", "progress", "json"],
+  "jsonReporter": { "fileName": "reports/mutation/mutation.json" },
+  "ignorePatterns": [
+    ".claude",
+    ".agents",
+    "scripts/mitglieder-import",
+    "docs",
+    "video",
+    "public/video",
+    ".next",
+    "pocketbase/pb_data",
+    "reports"
+  ],
+  "tempDirName": ".stryker-tmp",
+  "cleanTempDir": "always"
+}

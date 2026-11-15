@@ -2,6 +2,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import tseslint from "typescript-eslint";
+import verein from "./lint-regeln/pocketbase-filter.mjs";
 
 export default defineConfig([
   ...nextVitals,
@@ -24,6 +25,26 @@ export default defineConfig([
     rules: {
       // Mit _ markierte Variablen sind bewusst ungenutzt (z. B. beim Weglassen von Feldern).
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+    },
+  },
+  {
+    // Eigene Regeln aus lint-regeln/, jeweils mit Test daneben.
+    plugins: { verein },
+    rules: { "verein/kein-zusammengesetzter-filter": "error" },
+  },
+  {
+    // Umgebungsvariablen liest nur src/lib/env.ts, mit Zod geprüft. Tests dürfen sie setzen.
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: ["src/lib/env.ts", "src/**/*.test.ts"],
+    rules: {
+      "no-restricted-properties": [
+        "error",
+        {
+          object: "process",
+          property: "env",
+          message: "Umgebungsvariablen über env() aus @/lib/env lesen. Neue Variablen dort ins Zod-Schema eintragen.",
+        },
+      ],
     },
   },
   {

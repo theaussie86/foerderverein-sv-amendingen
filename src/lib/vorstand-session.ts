@@ -1,4 +1,5 @@
 import "server-only";
+import { env } from "@/lib/env";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -12,7 +13,7 @@ export const SESSION_COOKIE = "vorstand_token";
 export type Vorstand = RecordModel & { name: string; email: string; rolle?: string };
 
 export function neuerClient(): PocketBase {
-  const url = process.env.POCKETBASE_URL;
+  const url = env().POCKETBASE_URL;
   if (!url) throw new Error("POCKETBASE_URL fehlt.");
   const pb = new PocketBase(url);
   pb.autoCancellation(false);
@@ -23,7 +24,7 @@ export async function sessionSetzen(token: string): Promise<void> {
   const exp = Number(getTokenPayload(token).exp) || 0;
   (await cookies()).set(SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: env().NODE_ENV === "production",
     sameSite: "lax",
     path: "/admin",
     expires: new Date(exp * 1000),

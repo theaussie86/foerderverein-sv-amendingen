@@ -1,5 +1,6 @@
 // Entry Point: echte Umgebung mit PocketBase und Resend.
 import "server-only";
+import { env } from "@/lib/env";
 import type PocketBase from "pocketbase";
 import { sendMail } from "@/lib/mail";
 import { superuser } from "@/lib/pocketbase";
@@ -20,7 +21,7 @@ export function beleganfragenFuerWebsite() {
   return websiteBeleganfragen({
     schreiben: schreibablage(superuser),
     post,
-    vorstandPostfach: process.env.QUITTUNG_EMPFAENGER || process.env.ANTRAG_EMPFAENGER || "",
+    vorstandPostfach: env().QUITTUNG_EMPFAENGER ?? env().ANTRAG_EMPFAENGER ?? "",
     siteUrl: siteUrl(),
   });
 }
