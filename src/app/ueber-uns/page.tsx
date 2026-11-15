@@ -19,8 +19,8 @@ export default function UeberUnsPage() {
         </p>
         <p>
           Vereinsarbeit lebt von ehrenamtlichem Engagement &mdash; aber sie benötigt auch finanzielle Mittel. Ob
-          Jugendförderung, Sportplatzpflege, neue Trainingsausrüstung oder besondere Projekte wie das FC Bayern
-          Jugendcamp: Der Förderverein stellt sicher, dass der SV Amendingen die nötigen Ressourcen hat.
+          Jugendförderung, Sportplatzpflege, neue Trainingsausrüstung oder besondere Projekte wie die Schuhwaschanlage
+          vor dem Vereinsheim: Der Förderverein stellt sicher, dass der SV Amendingen die nötigen Ressourcen hat.
         </p>
 
         <h2 className="pt-4 text-2xl font-bold text-white">Unsere Ziele</h2>
