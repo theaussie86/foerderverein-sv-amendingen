@@ -1,5 +1,6 @@
 // Entry Point: echte Umgebung mit PocketBase, Resend und AES-Token.
 import "server-only";
+import { env } from "@/lib/env";
 import { randomUUID } from "node:crypto";
 import type PocketBase from "pocketbase";
 import { sendMail } from "@/lib/mail";
@@ -21,7 +22,7 @@ export function mitgliedsantraegeFuerWebsite() {
     jetzt: () => new Date(),
     neueId: randomUUID,
     linkBasis: siteUrl(),
-    antragEmpfaenger: process.env.ANTRAG_EMPFAENGER ?? "",
+    antragEmpfaenger: env().ANTRAG_EMPFAENGER ?? "",
   });
 }
 

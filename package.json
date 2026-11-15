@@ -17,7 +17,8 @@
     "typecheck": "bun run typegen && tsc --noEmit",
     "lint:boundaries": "depcruise src",
     "test": "bun test",
-    "check": "bun run format:check && bun run lint && bun run typecheck && bun run lint:boundaries && bun run test"
+    "check": "bun run format:check && bun run lint && bun run typecheck && bun run lint:boundaries && bun run test",
+    "test:mutation": "bun scripts/mutation-diff.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -37,6 +38,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@stryker-mutator/core": "^10.1.1",
     "@tailwindcss/postcss": "^4",
     "@types/bun": "^1.4.4",
     "@types/node": "^22",
@@ -55,6 +57,10 @@
   },
   "packageManager": "bun@1.4.4",
   "lint-staged": {
-    "*": "prettier --write --ignore-unknown"
+    "*": [
+      "prettier --write --ignore-unknown",
+      "bun scripts/dateigroesse-pruefen.ts"
+    ],
+    "*.{ts,tsx,mjs}": "eslint --max-warnings=0 --no-warn-ignored"
   }
 }

@@ -1,4 +1,5 @@
 import "server-only";
+import { env } from "@/lib/env";
 import { headers } from "next/headers";
 
 export async function clientInfo(): Promise<{ ip: string; userAgent: string }> {
@@ -8,7 +9,7 @@ export async function clientInfo(): Promise<{ ip: string; userAgent: string }> {
 }
 
 export function siteUrl(): string {
-  return process.env.SITE_URL ?? "http://localhost:3000";
+  return env().SITE_URL;
 }
 
 // Einfache Begrenzung pro IP im Speicher. Reicht für einen einzelnen Container.

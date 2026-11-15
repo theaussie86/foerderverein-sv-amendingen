@@ -1,5 +1,6 @@
 "use server";
 
+import { env } from "@/lib/env";
 import { sendMail } from "@/lib/mail";
 import { clientInfo, rateLimit } from "@/lib/request";
 import { kontaktSchema } from "@/lib/schemas";
@@ -24,7 +25,7 @@ export async function nachrichtSenden(eingabe: unknown): Promise<Ergebnis> {
 
   try {
     await sendMail({
-      to: process.env.KONTAKT_EMPFAENGER || verein.email,
+      to: env().KONTAKT_EMPFAENGER ?? verein.email,
       replyTo: email,
       subject: `Kontaktformular: ${betreff?.trim() || name}`,
       text:

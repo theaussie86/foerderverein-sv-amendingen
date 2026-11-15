@@ -1,1 +1,18 @@
-bunx lint-staged
+# Schnelle Checks vor jedem Commit. Alles Übrige (Tests, ganzes Repo, Build) läuft in `bun run check` und der CI.
+# Routentypen zuerst, ESLint und tsc brauchen sie (RouteContext).
+bun --bun next typegen > /dev/null || exit 1
+
+# Gestagte Dateien: Prettier, Dateigröße, ESLint. Parallel dazu Typecheck und Modulgrenzen fürs ganze Projekt.
+bunx lint-staged --concurrent false &
+staged=$!
+bunx tsc --noEmit &
+typen=$!
+bunx depcruise src > /tmp/depcruise-$$.log 2>&1 &
+grenzen=$!
+
+fehler=0
+wait $staged || fehler=1
+wait $typen || fehler=1
+wait $grenzen || { cat /tmp/depcruise-$$.log; fehler=1; }
+rm -f /tmp/depcruise-$$.log
+exit $fehler

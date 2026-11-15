@@ -1,4 +1,5 @@
 import "server-only";
+import { env } from "@/lib/env";
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "node:crypto";
 import { z } from "zod";
 
@@ -6,7 +7,7 @@ import { z } from "zod";
 // in den Mails die Antragsdaten selbst, und der Server braucht keine Datenbank.
 
 function key(): Buffer {
-  const secret = process.env.ANTRAG_SECRET;
+  const secret = env().ANTRAG_SECRET;
   if (!secret || secret.length < 32) {
     throw new Error("ANTRAG_SECRET fehlt oder ist kürzer als 32 Zeichen.");
   }

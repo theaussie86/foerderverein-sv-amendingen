@@ -30,7 +30,11 @@ Pakete sind Deep Modules: vor dem Anlegen oder Importieren eines Pakets [src/pac
 
 Vor jedem Commit `bun run check` ausführen und erst bei grünem Ergebnis committen. Der Befehl prüft Formatierung, Lint (ohne Warnungen), Typen und Tests.
 
-- Formatierung macht Prettier (`.prettierrc.json`, Breite 120, Tailwind-Klassen sortiert). Der Pre-commit-Hook (Husky + lint-staged) formatiert gestagte Dateien automatisch. `bun run format` formatiert alles. Markdown bleibt unformatiert. Die CI (`.github/workflows/ci.yml`) führt dasselbe auf jedem Push aus und baut zusätzlich mit `bun run build`.
+- Formatierung macht Prettier (`.prettierrc.json`, Breite 120, Tailwind-Klassen sortiert). `bun run format` formatiert alles. Markdown bleibt unformatiert.
+- Der Pre-commit-Hook (`.husky/pre-commit`) formatiert gestagte Dateien, prüft ihre Größe und lintet sie mit ESLint. Parallel laufen Typecheck und Modulgrenzen. Tests laufen nicht im Hook.
+- Code-Dateien über etwa 5.000 Tokens (Bytes / 4) blockieren den Commit (`scripts/dateigroesse-pruefen.ts`). Wer eine solche Datei anfasst, teilt sie auf. Die Fehlermeldung sagt, wie.
+- Die CI (`.github/workflows/ci.yml`) führt `bun run check` auf jedem Push aus und baut zusätzlich mit `bun run build`. Sie ist die einzige harte Sperre. Den Hook mit `HUSKY=0` zu überspringen ist nur für reine Formatierungs-Commits gedacht.
+- Mutation-Tests laufen nur auf Ansage: `bun run test:mutation` mutiert die gegenüber `origin/main` geänderten Zeilen in `src/`. Überlebende Mutanten heißen, dass ein Test fehlt. Dann den Test verschärfen, nicht den Code.
 
 - `lint` und `typecheck` erzeugen zuerst die Next-Routentypen (`bun run typegen`). Ein nacktes `eslint` oder `tsc` scheitert ohne sie an `RouteContext`.
 - Tests laufen mit `bun test` und liegen als `*.test.ts` neben dem Code. `test/setup.ts` neutralisiert `server-only` und setzt einen Test-`ANTRAG_SECRET`.
@@ -42,6 +46,10 @@ ESLint läuft mit Typinformation und erzwingt:
 
 - Kein `any`, kein Non-Null-`!`, keine Casts mit `as` (nur `as const`). Ungeprüfte `any`-Werte (z. B. aus `JSON.parse`) dürfen nicht weiterfließen.
 - Promises werden abgewartet. In JSX-Handlern `void` davor: `onSubmit={(e) => void handleSubmit(onSubmit)(e)}`.
+
+Umgebungsvariablen liest nur `src/lib/env.ts` (`env()`, Zod-Schema). ESLint sperrt `process.env` überall sonst in `src/`. Neue Variablen kommen ins Schema und in `.env.example`.
+
+PocketBase-Filter werden nie per Template-String oder `+` zusammengebaut, sondern mit Platzhaltern: `pb.filter("feld = {:wert}", { wert })`. Die eigene Regel `verein/kein-zusammengesetzter-filter` (`lint-regeln/`) erzwingt das.
 
 Daten unbekannter Form werden mit Zod geparst, der Typ kommt per `z.infer` aus dem Schema. Das gilt für Formulareingaben, Server-Action-Argumente, `FormData`, Token-Inhalte (`unseal(token, schema)`) und Fehlerantworten fremder Dienste.
 
