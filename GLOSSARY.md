@@ -147,11 +147,11 @@ Der unterschriebene Wunsch einer Person, dem Förderverein beizutreten, samt ers
 _Vermeiden_: Beitrittserklärung, Antrag (allein), Anmeldung
 
 **Aufnahme**:
-Die Annahme eines Mitgliedsantrags durch den Vorstand. Mit ihr beginnt die Mitgliedschaft. Das Datum heißt Eintrittsdatum und trägt der Vorstand ein.
-_Vermeiden_: Annahme, Bestätigung
+Die Annahme eines Mitgliedsantrags durch den Vorstand. Mit ihr beginnt die Mitgliedschaft. Das Datum heißt Eintrittsdatum und trägt der Vorstand ein. Eine Mitgliedschaft endet nie am Mitgliedsantrag, nur am Mitglied.
+_Vermeiden_: Annahme, Bestätigung, Übernahme, ausgetreten (als Status eines Mitgliedsantrags)
 
 **Ablehnung eines Mitgliedsantrags**:
-Abschluss eines Mitgliedsantrags ohne Aufnahme. Nicht zu verwechseln mit der Ablehnung einer Beleganfrage.
+Abschluss eines Mitgliedsantrags ohne Aufnahme. Sie ist endgültig: Wer später doch beitreten will, stellt einen neuen Mitgliedsantrag. Der Vorstand hält dazu einen Grund fest, der intern bleibt. Ob der Antragsteller eine Mail bekommt, entscheidet der Vorstand bei jeder Ablehnung. Nicht zu verwechseln mit der Ablehnung einer Beleganfrage.
 
 **Ende der Mitgliedschaft**:
 Oberbegriff für Austritt, Ausschluss und Tod.
