@@ -233,7 +233,7 @@ Der in der Satzung festgelegte Zweck des Fördervereins: die ideelle und finanzi
 _Vermeiden_: Vereinszweck, Satzungszweck
 
 **Förderprojekt**:
-Eine einzelne Mittelverwendung mit Titel, Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung. Es ist geplant, solange das Geld noch nicht ausgegeben ist, und endet umgesetzt oder abgesagt. Für ein geplantes Förderprojekt kann der Förderverein mit einem Spendenziel Spenden sammeln. Dafür gibt es keinen eigenen Begriff. Gesammelt wird, bis das Förderprojekt umgesetzt oder abgesagt ist, eine Frist gibt es nicht.
+Eine einzelne Mittelverwendung, beschrieben mit Titel und kurzer Beschreibung, bei Bedarf mit Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Ein Dauerposten wie „Trainingsmaterial“ ist kein Förderprojekt, erst die einzelne Anschaffung ist eins. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung. Es ist geplant, solange das Geld noch nicht ausgegeben ist, und endet umgesetzt oder abgesagt. Für ein geplantes Förderprojekt kann der Förderverein mit einem Spendenziel Spenden sammeln. Dafür gibt es keinen eigenen Begriff. Gesammelt wird, bis das Förderprojekt umgesetzt oder abgesagt ist, eine Frist gibt es nicht.
 _Vermeiden_: Spendenprojekt, Spendenaktion, Crowdfunding, Kampagne, Maßnahme, Aktion
 
 **Spendenziel**:
