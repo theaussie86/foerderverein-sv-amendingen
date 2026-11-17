@@ -41,7 +41,7 @@ Pick the lowest-numbered open issue that has no open blocker. Issues link to the
 ## Rules
 
 - Use Bun, not npm: `bun install`, `bun add`, `bun run`.
-- Follow `AGENTS.md`: no `any`, no non-null `!`, no `as` casts; env only via `src/lib/env.ts`; PocketBase filters only with placeholders `pb.filter(...)`; unknown data parsed with Zod; forms validate with the same schema from `src/lib/schemas.ts` in browser and Server Action.
+- Follow `AGENTS.md`: no `any`, no non-null assertions, no type casts except as const; env only via `src/lib/env.ts`; PocketBase filters only with placeholders `pb.filter(...)`; unknown data parsed with Zod; forms validate with the same schema from `src/lib/schemas.ts` in browser and Server Action.
 - Schema changes go into a new migration file in `pocketbase/pb_migrations/`. Never edit existing migrations.
 - Code files over about 5,000 tokens block the commit. Split them as the error message says.
 - No deploy, no Dokploy, no VPS, no live database. No changes under `.github/workflows/`.
