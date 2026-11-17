@@ -62,5 +62,7 @@ export default defineConfig([
     // Lokal installierte Agent-Skills
     ".agents/**",
     ".claude/**",
+    // Sandcastle-Runner für AFK-Agenten
+    ".sandcastle/**",
   ]),
 ]);
