@@ -1,12 +1,14 @@
 // Entry Point: Mitglieder pflegen und zählen. Die Ablage wird hineingereicht, die echte
 // mit PocketBase baut server.ts, Tests nehmen Fakes.
+import { csvDateiname, mitgliederCsv, type CsvSpalte } from "./lib/csv";
 import { naechsteMandatsreferenz, normalisieren } from "./lib/regeln";
-import type { Ablage, Mitglied, Mitgliedsdaten, Speicherergebnis, Suche, Trefferliste } from "./lib/typen";
+import type { Ablage, Gesamtsuche, Mitglied, Mitgliedsdaten, Speicherergebnis, Suche, Trefferliste } from "./lib/typen";
 
 export type {
   Ablage,
   EndeGrund,
   Filter,
+  Gesamtsuche,
   Listeneintrag,
   Mitglied,
   Mitgliedsdaten,
@@ -15,6 +17,7 @@ export type {
   Trefferliste,
 } from "./lib/typen";
 export { istAktiv } from "./lib/aktiv";
+export { CSV_SPALTEN, type CsvSpalte } from "./lib/csv";
 export { naechsteMandatsreferenz, normalisieren } from "./lib/regeln";
 
 export type Umgebung = {
@@ -38,6 +41,15 @@ export function mitglieder(u: Umgebung) {
     suchen: (suche: Suche): Promise<Trefferliste> => u.ablage.suchen(suche, heute(u.jetzt())),
 
     laden: (id: string): Promise<Mitglied | null> => u.ablage.laden(id),
+
+    // CSV mit genau den Mitgliedern, die die Liste bei dieser Suche zeigt, über alle Seiten.
+    async exportieren(suche: Gesamtsuche, spalten: readonly CsvSpalte[]) {
+      const tag = heute(u.jetzt());
+      return {
+        inhalt: mitgliederCsv(await u.ablage.alle(suche, tag), spalten),
+        dateiname: csvDateiname(suche.filter, tag),
+      };
+    },
 
     // Aufnahme: Stammt das Mitglied aus einem Online-Mitgliedsantrag, wird dieser im selben Vorgang
     // angenommen. Klappt das nicht, bleibt das Mitglied trotzdem gespeichert. Aus einem abgelehnten

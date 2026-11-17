@@ -1,7 +1,14 @@
 import type PocketBase from "pocketbase";
 import { ClientResponseError } from "pocketbase";
 import { z } from "zod";
-import { ENDE_GRUENDE, type Ablage, type Listeneintrag, type Mitglied, type Mitgliedsdaten } from "./typen";
+import {
+  ENDE_GRUENDE,
+  type Ablage,
+  type Gesamtsuche,
+  type Listeneintrag,
+  type Mitglied,
+  type Mitgliedsdaten,
+} from "./typen";
 
 // Einzige Stelle, die die Collection "mitglieder" kennt. Übersetzt zwischen den Feldnamen in
 // PocketBase und den Begriffen des Glossars.
@@ -109,6 +116,26 @@ function speicherfehler(err: unknown) {
   return null;
 }
 
+const SORTIERUNG = "nachname,vorname";
+
+// Jedes Suchwort muss in mindestens einem Feld vorkommen, damit "Max Muster" Vor- und Nachnamen findet.
+function suchfilter(c: PocketBase, { suche, filter }: Gesamtsuche, heute: string): string {
+  const teile: string[] = [];
+  const params: Record<string, string> = { heute: pbTag(heute) };
+  suche
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 5)
+    .forEach((wort, i) => {
+      params[`w${i}`] = wort;
+      params[`W${i}`] = wort.replace(/\s/g, "").toUpperCase();
+      teile.push(`(${SUCHFELDER.map((f) => `${f} ~ {:${f === "iban" ? "W" : "w"}${i}}`).join(" || ")})`);
+    });
+  if (filter === "aktiv") teile.push('(ende_datum = "" || ende_datum >= {:heute})');
+  if (filter === "beendet") teile.push('(ende_datum != "" && ende_datum < {:heute})');
+  return c.filter(teile.join(" && "), params);
+}
+
 // Läuft mit dem Client des angemeldeten Vorstands (Lesen und Schreiben) oder als Superuser (Zähler).
 export function pocketbaseAblage(client: () => Promise<PocketBase | null>): Ablage {
   async function pb(): Promise<PocketBase> {
@@ -131,24 +158,9 @@ export function pocketbaseAblage(client: () => Promise<PocketBase | null>): Abla
   return {
     async suchen({ suche, filter, seite }, heute) {
       const c = await pb();
-      const teile: string[] = [];
-      const params: Record<string, string> = { heute: pbTag(heute) };
-      // Jedes Suchwort muss in mindestens einem Feld vorkommen, damit "Max Muster" Vor- und Nachnamen findet.
-      suche
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 5)
-        .forEach((wort, i) => {
-          params[`w${i}`] = wort;
-          params[`W${i}`] = wort.replace(/\s/g, "").toUpperCase();
-          teile.push(`(${SUCHFELDER.map((f) => `${f} ~ {:${f === "iban" ? "W" : "w"}${i}}`).join(" || ")})`);
-        });
-      if (filter === "aktiv") teile.push('(ende_datum = "" || ende_datum >= {:heute})');
-      if (filter === "beendet") teile.push('(ende_datum != "" && ende_datum < {:heute})');
-
       const liste = await c.collection("mitglieder").getList(seite, PRO_SEITE, {
-        filter: c.filter(teile.join(" && "), params),
-        sort: "nachname,vorname",
+        filter: suchfilter(c, { suche, filter }, heute),
+        sort: SORTIERUNG,
         fields: LISTENFELDER,
       });
       return {
@@ -158,6 +170,14 @@ export function pocketbaseAblage(client: () => Promise<PocketBase | null>): Abla
       };
     },
 
+    async alle(suche, heute) {
+      const c = await pb();
+      const alle = await c.collection("mitglieder").getFullList({
+        filter: suchfilter(c, suche, heute),
+        sort: SORTIERUNG,
+      });
+      return alle.map((r) => mitglied(record.parse(r)));
+    },
     async laden(id) {
       const c = await pb();
       try {

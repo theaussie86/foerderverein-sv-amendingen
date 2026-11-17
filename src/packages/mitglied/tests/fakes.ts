@@ -1,4 +1,11 @@
-import { istAktiv, type Ablage, type Mitglied, type Mitgliedsdaten, type Speicherergebnis } from "../index";
+import {
+  istAktiv,
+  type Ablage,
+  type Gesamtsuche,
+  type Mitglied,
+  type Mitgliedsdaten,
+  type Speicherergebnis,
+} from "../index";
 
 // Ablage im Speicher mit denselben Eindeutigkeitsregeln wie die Collection "mitglieder".
 export class FakeAblage implements Ablage {
@@ -16,6 +23,16 @@ export class FakeAblage implements Ablage {
 
   suchen(): never {
     throw new Error("Im Fake nicht gebraucht");
+  }
+
+  // Vereinfachte Suche: jedes Wort in Vorname, Nachname, Ort oder E-Mail, sortiert nach Namen.
+  alle({ suche, filter }: Gesamtsuche, heute: string) {
+    const woerter = suche.toLowerCase().split(/\s+/).filter(Boolean);
+    const treffer = this.mitglieder
+      .filter((m) => woerter.every((w) => [m.vorname, m.nachname, m.ort, m.email].join(" ").toLowerCase().includes(w)))
+      .filter((m) => (filter === "aktiv" ? istAktiv(m, heute) : filter === "beendet" ? !istAktiv(m, heute) : true))
+      .sort((a, b) => a.nachname.localeCompare(b.nachname) || a.vorname.localeCompare(b.vorname));
+    return Promise.resolve(treffer);
   }
 
   laden(id: string) {

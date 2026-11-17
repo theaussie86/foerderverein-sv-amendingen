@@ -8,6 +8,7 @@ import {
   isValidIban,
   kontaktSchema,
   loginSchema,
+  mitgliederExportSchema,
   mitgliedSchema,
   mitgliedsantragAblehnenSchema,
   normalizeIban,
@@ -232,5 +233,19 @@ describe("mitgliedsantragAblehnenSchema", () => {
       grund: "Spam",
       mailSenden: false,
     });
+  });
+});
+
+describe("mitgliederExportSchema", () => {
+  test("übernimmt Suche, Filter und bekannte Spalten", () => {
+    expect(mitgliederExportSchema.parse({ q: "  Max ", filter: "aktiv", spalte: ["iban", "notiz", "id"] })).toEqual({
+      q: "Max",
+      filter: "aktiv",
+      spalte: ["iban"],
+    });
+  });
+
+  test("unbekannter Filter heißt alle, fehlende Suche heißt leer", () => {
+    expect(mitgliederExportSchema.parse({ filter: "x", spalte: [] })).toEqual({ q: "", filter: undefined, spalte: [] });
   });
 });

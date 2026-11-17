@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ABLEHNUNGSGRUENDE, ZAHLUNGSWEGE } from "@/packages/beleganfrage/anzeige";
-import { ENDE_GRUENDE } from "@/packages/mitglied/anzeige";
+import { ENDE_GRUENDE, istCsvSpalte, istFilter } from "@/packages/mitglied/anzeige";
 
 // Angaben zum Spender, gleich für Website und internen Bereich.
 const spendeFelder = {
@@ -170,6 +170,19 @@ export const mitgliedPflegeSchema = z
   });
 
 export type MitgliedPflegeDaten = z.infer<typeof mitgliedPflegeSchema>;
+
+// Query des CSV-Exports der Mitgliederliste. Suche und Filter wie in der Liste, unbekannte Spalten fallen weg.
+export const mitgliederExportSchema = z.object({
+  q: z
+    .string()
+    .default("")
+    .transform((q) => q.trim().slice(0, 100)),
+  filter: z
+    .string()
+    .optional()
+    .transform((f) => (istFilter(f) ? f : undefined)),
+  spalte: z.array(z.string()).transform((spalten) => spalten.filter(istCsvSpalte)),
+});
 
 export const kontaktSchema = z.object({
   name: z.string().min(1, "Name ist erforderlich."),
