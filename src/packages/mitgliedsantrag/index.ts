@@ -37,7 +37,7 @@ export type Speicherergebnis = "gespeichert" | "bereits-vorhanden" | "uebersprun
 export type Ablage = {
   // Wirft, wenn die Ablage nicht erreichbar ist.
   speichern(eintrag: UnterschriebenerAntrag): Promise<Speicherergebnis>;
-  // IDs der unterschriebenen Anträge seit `datum` ohne abgelehnte und ausgetretene. Null ohne Ablage.
+  // IDs der unterschriebenen Anträge seit `datum` ohne abgelehnte. Null ohne Ablage.
   idsSeit(datum: Date): Promise<string[] | null>;
 };
 
@@ -158,7 +158,7 @@ export function mitgliedsantraege(u: Umgebung) {
       return { ok: true };
     },
 
-    // Unterschriebene Mitgliedsanträge seit `datum`, ohne abgelehnte und ausgetretene und ohne die
+    // Unterschriebene Mitgliedsanträge seit `datum`, ohne abgelehnte und ohne die
     // Anträge in `ohne` (schon als Mitglied erfasst). Null, wenn die Ablage fehlt oder nicht erreichbar ist.
     async anzahlSeit(datum: Date, ohne: readonly string[] = []): Promise<number | null> {
       try {

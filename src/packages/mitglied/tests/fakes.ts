@@ -57,6 +57,16 @@ export class FakeAblage implements Ablage {
   }
 }
 
+// Merkt sich, welche Mitgliedsanträge angenommen wurden.
+export class FakeMitgliedsantraege {
+  angenommen: string[] = [];
+
+  annehmen(antragId: string) {
+    this.angenommen.push(antragId);
+    return Promise.resolve();
+  }
+}
+
 export function daten(teil: Partial<Mitgliedsdaten> = {}): Mitgliedsdaten {
   return {
     mandatsreferenz: "1",

@@ -10,6 +10,7 @@ import { seal, unseal } from "@/lib/token";
 import type { Antragsliste } from "./anzeige";
 import { mitgliedsantraege } from "./index";
 import { pocketbaseAblage } from "./lib/ablage-pocketbase";
+import { aufnahme } from "./lib/aufnahme";
 import { datei, laden, suchen, type Suche } from "./lib/vorstandssicht";
 
 // Für die öffentliche Website: einreichen, öffnen, unterschreiben und der Mitgliederzähler.
@@ -36,4 +37,10 @@ export function mitgliedsantraegeFuerVorstand(pb: PocketBase) {
     // Beitrittserklärung, Mandat oder Unterschriftsbild zum Durchreichen an den Browser.
     datei: (id: string, feld: string) => datei(pb, id, feld),
   };
+}
+
+// Für die Aufnahme eines Mitglieds aus einem Online-Mitgliedsantrag. Nur nach vorstandErforderlich
+// aufrufen: Gesetzt wird der Status als Superuser.
+export function mitgliedsantraegeFuerAufnahme() {
+  return aufnahme(superuser);
 }

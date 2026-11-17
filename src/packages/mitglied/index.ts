@@ -17,7 +17,12 @@ export type {
 export { istAktiv } from "./lib/aktiv";
 export { naechsteMandatsreferenz, normalisieren } from "./lib/regeln";
 
-export type Umgebung = { ablage: Ablage; jetzt(): Date };
+export type Umgebung = {
+  ablage: Ablage;
+  // Setzt einen Online-Mitgliedsantrag auf „angenommen“. Wirft, wenn das nicht klappt.
+  mitgliedsantraege: { annehmen(antragId: string): Promise<void> };
+  jetzt(): Date;
+};
 
 // Kalendertag in deutscher Zeit, damit ein Ende am 31.12. bis Mitternacht zählt.
 function heute(jetzt: Date): string {
@@ -30,7 +35,19 @@ export function mitglieder(u: Umgebung) {
 
     laden: (id: string): Promise<Mitglied | null> => u.ablage.laden(id),
 
-    anlegen: (daten: Mitgliedsdaten): Promise<Speicherergebnis> => u.ablage.anlegen(normalisieren(daten)),
+    // Aufnahme: Stammt das Mitglied aus einem Online-Mitgliedsantrag, wird dieser im selben Vorgang
+    // angenommen. Klappt das nicht, bleibt das Mitglied trotzdem gespeichert.
+    async anlegen(daten: Mitgliedsdaten): Promise<Speicherergebnis> {
+      const ergebnis = await u.ablage.anlegen(normalisieren(daten));
+      if (ergebnis.ok && daten.antragId) {
+        try {
+          await u.mitgliedsantraege.annehmen(daten.antragId);
+        } catch (e) {
+          console.error(`Mitgliedsantrag ${daten.antragId} konnte nicht angenommen werden`, e);
+        }
+      }
+      return ergebnis;
+    },
 
     aendern: (id: string, daten: Mitgliedsdaten): Promise<Speicherergebnis> =>
       u.ablage.aendern(id, normalisieren(daten)),

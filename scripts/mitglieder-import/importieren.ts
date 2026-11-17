@@ -41,7 +41,13 @@ const antraege = z
 
 const { mitglieder: neu, hinweise } = auswerten(stammdaten, antraege);
 const ablage = pocketbaseAblage(() => Promise.resolve(pb));
-const m = mitglieder({ ablage, jetzt: () => new Date() });
+// Wer aus einem Online-Mitgliedsantrag importiert wird, ist aufgenommen.
+const mitgliedsantraege = {
+  annehmen: async (id: string) => {
+    await pb.collection("mitgliedsantraege").update(id, { status: "angenommen" });
+  },
+};
+const m = mitglieder({ ablage, mitgliedsantraege, jetzt: () => new Date() });
 const vorhanden = new Set(await ablage.mandatsreferenzen());
 const offen = neu.filter((x) => !vorhanden.has(x.mandatsreferenz));
 

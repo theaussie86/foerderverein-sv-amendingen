@@ -4,14 +4,13 @@ import type { Protokoll } from "./lib/antrag";
 
 export type { Protokoll };
 
-export const STATUS = ["eingegangen", "angenommen", "abgelehnt", "ausgetreten"] as const;
+export const STATUS = ["eingegangen", "angenommen", "abgelehnt"] as const;
 export type Status = (typeof STATUS)[number];
 
 export const STATUS_LABEL: Record<Status, string> = {
   eingegangen: "Eingegangen",
   angenommen: "Angenommen",
   abgelehnt: "Abgelehnt",
-  ausgetreten: "Ausgetreten",
 };
 
 export function istStatus(wert: string | undefined): wert is Status {
