@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ABLEHNUNGSGRUENDE, ZAHLUNGSWEGE } from "@/packages/beleganfrage/anzeige";
+import { BILD_MAX_BYTES, BILD_TYPEN } from "@/packages/foerderprojekt/anzeige";
 import { ENDE_GRUENDE, istCsvSpalte, istFilter } from "@/packages/mitglied/anzeige";
 
 // Angaben zum Spender, gleich für Website und internen Bereich.
@@ -183,6 +184,40 @@ export const mitgliederExportSchema = z.object({
     .transform((f) => (istFilter(f) ? f : undefined)),
   spalte: z.array(z.string()).transform((spalten) => spalten.filter(istCsvSpalte)),
 });
+
+// Förderprojekt im internen Bereich. Kommt als FormData und wird im Browser wie in der Server Action
+// als Object.fromEntries(formData) geprüft. Ohne id wird angelegt, dann ist ein Bild Pflicht.
+// Ein leeres Dateifeld schickt der Browser als leere Datei, das heißt: Bild bleibt.
+const ganzeZahl = (muster: RegExp, meldung: string) =>
+  z
+    .string()
+    .transform((s) => s.replace(/[\s.€]/g, ""))
+    .pipe(z.string().regex(muster, meldung))
+    .transform((s) => (s ? Number(s) : null));
+
+export const foerderprojektSchema = z
+  .object({
+    id: z.string().max(15).default(""),
+    titel: z.string().trim().min(1, "Titel ist erforderlich.").max(200, "Höchstens 200 Zeichen."),
+    beschreibung: z.string().trim().min(1, "Beschreibung ist erforderlich.").max(1000, "Höchstens 1000 Zeichen."),
+    jahr: ganzeZahl(/^((19|20)\d{2})?$/, "Bitte ein Jahr wie 2026 angeben."),
+    betrag: ganzeZahl(/^([1-9]\d{0,6})?$/, "Bitte den Betrag in ganzen Euro angeben."),
+    startseite: z
+      .literal("on")
+      .optional()
+      .transform((v) => v === "on"),
+    bild: z
+      .instanceof(File)
+      .optional()
+      .transform((f) => (f && f.size > 0 ? f : null))
+      .refine((f) => !f || BILD_TYPEN.some((t) => t === f.type), "Nur JPEG oder PNG.")
+      .refine((f) => !f || f.size <= BILD_MAX_BYTES, "Das Bild darf höchstens 5 MB groß sein."),
+  })
+  .refine((d) => d.id || d.bild, { path: ["bild"], message: "Bitte ein Bild auswählen." });
+
+export type FoerderprojektEingabe = z.infer<typeof foerderprojektSchema>;
+
+export const foerderprojektLoeschenSchema = z.object({ id: z.string().min(1).max(15) });
 
 export const kontaktSchema = z.object({
   name: z.string().min(1, "Name ist erforderlich."),

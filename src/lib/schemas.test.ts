@@ -4,6 +4,7 @@ import {
   beleganfrageAusstellenSchema,
   beleganfrageErfassenSchema,
   beleganfrageSchema,
+  foerderprojektSchema,
   formatIban,
   isValidIban,
   kontaktSchema,
@@ -247,5 +248,42 @@ describe("mitgliederExportSchema", () => {
 
   test("unbekannter Filter heißt alle, fehlende Suche heißt leer", () => {
     expect(mitgliederExportSchema.parse({ filter: "x", spalte: [] })).toEqual({ q: "", filter: undefined, spalte: [] });
+  });
+});
+
+describe("foerderprojektSchema", () => {
+  const jpg = (bytes = 10, type = "image/jpeg") => new File([new Uint8Array(bytes)], "a.jpg", { type });
+  const leer = new File([], "", { type: "application/octet-stream" });
+  const eingabe = { titel: " Fahrt ", beschreibung: "Toll.", jahr: "2025", betrag: "1.000 €", bild: jpg() };
+
+  test("wandelt FormData-Werte um", () => {
+    const d = foerderprojektSchema.parse({ ...eingabe, startseite: "on" });
+    expect(d).toMatchObject({ id: "", titel: "Fahrt", jahr: 2025, betrag: 1000, startseite: true });
+    expect(d.bild?.name).toBe("a.jpg");
+  });
+
+  test("leere Felder und ohne Haken", () => {
+    const d = foerderprojektSchema.parse({ ...eingabe, id: "abc", jahr: "", betrag: " ", bild: leer });
+    expect(d).toMatchObject({ jahr: null, betrag: null, startseite: false, bild: null });
+  });
+
+  test("beim Anlegen ist ein Bild Pflicht", () => {
+    expect(foerderprojektSchema.safeParse({ ...eingabe, bild: leer }).success).toBe(false);
+    expect(foerderprojektSchema.safeParse({ ...eingabe, bild: undefined }).success).toBe(false);
+  });
+
+  test("nur JPEG und PNG bis 5 MB", () => {
+    expect(foerderprojektSchema.safeParse({ ...eingabe, bild: jpg(10, "image/png") }).success).toBe(true);
+    expect(foerderprojektSchema.safeParse({ ...eingabe, bild: jpg(10, "image/webp") }).success).toBe(false);
+    expect(foerderprojektSchema.safeParse({ ...eingabe, bild: jpg(10, "image/svg+xml") }).success).toBe(false);
+    expect(foerderprojektSchema.safeParse({ ...eingabe, bild: jpg(5 * 1024 * 1024 + 1) }).success).toBe(false);
+  });
+
+  test("Pflichtfelder, Jahr und Betrag", () => {
+    expect(foerderprojektSchema.safeParse({ ...eingabe, titel: " " }).success).toBe(false);
+    expect(foerderprojektSchema.safeParse({ ...eingabe, beschreibung: "" }).success).toBe(false);
+    expect(foerderprojektSchema.safeParse({ ...eingabe, jahr: "26" }).success).toBe(false);
+    expect(foerderprojektSchema.safeParse({ ...eingabe, betrag: "12,50" }).success).toBe(false);
+    expect(foerderprojektSchema.safeParse({ ...eingabe, betrag: "0" }).success).toBe(false);
   });
 });
