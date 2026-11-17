@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Foerderprojekte } from "@/components/foerderprojekte";
 import { MitgliedLeiste } from "@/components/mitglied-leiste";
 import { mitgliederstand, type Mitgliederstand } from "@/lib/mitglieder";
 import { mitgliedsbeitrag, verein } from "@/lib/verein";
@@ -6,25 +7,6 @@ import { mitgliedsbeitrag, verein } from "@/lib/verein";
 const gruendungsjahr = 1946;
 const teilenText =
   "Für 20 € im Jahr den Jugendfußball beim SV Amendingen unterstützen: https://foerderverein-sv-amendingen.de";
-
-const projekte = [
-  {
-    titel: "Fahrt nach Augsburg",
-    text: "Zuschuss zur Fahrt für die gesamte Jugend. Ein Ausflug, an den sich die Kinder noch lange erinnern.",
-  },
-  {
-    titel: "Trainingsanzüge",
-    text: "Zuschüsse für Trainingsanzüge, damit jede Mannschaft einheitlich auftritt und kein Kind außen vor bleibt.",
-  },
-  {
-    titel: "Trainingsmaterial",
-    text: "Bälle, Hütchen, Leibchen: Material, das jede Woche gebraucht wird und schnell verschleißt.",
-  },
-  {
-    titel: "Schuhwaschanlage",
-    text: "1.000 € Zuschuss für die Schuhwaschanlage vor dem Vereinsheim. Saubere Schuhe, sauberes Vereinsheim.",
-  },
-];
 
 const hebel = [
   { mitglieder: 1, text: "ein neuer Spielball" },
@@ -219,22 +201,7 @@ export default async function HomePage() {
       </Abschnitt>
 
       {/* 4. Mittelverwendung */}
-      <section className="bg-sva-charcoal py-20 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <h2 className={h2Cls}>Kleine Beiträge, die man sieht</h2>
-          <p className="mt-8 max-w-3xl text-lg leading-relaxed text-sva-gray-200">
-            Keine großen Schlagzeilen, sondern Unterstützung im Hintergrund. Das haben wir zuletzt möglich gemacht:
-          </p>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {projekte.map((p) => (
-              <div key={p.titel} className="rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6">
-                <h3 className="text-lg font-bold text-white">{p.titel}</h3>
-                <p className="mt-2 leading-relaxed text-sva-gray-300">{p.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Foerderprojekte h2Cls={h2Cls} />
 
       {/* 5. Hebel */}
       <section className="bg-sva-green-dark py-20 sm:py-24">

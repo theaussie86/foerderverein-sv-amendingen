@@ -42,7 +42,22 @@ export function foerderprojekte({ ablage }: Umgebung) {
     return { ok: true, reihenfolge: naechsterPlatz(startseite) };
   }
 
+  // Was Besucher sehen: angehakte Förderprojekte in der gepflegten Reihenfolge, höchstens 4.
+  async function startseite(): Promise<Foerderprojekt[]> {
+    return sortieren(await ablage.alle()).startseite.slice(0, STARTSEITE_PLAETZE);
+  }
+
   return {
+    startseite,
+
+    // Einzige Sperre für Bilder ohne Anmeldung: nur Förderprojekte, die auf der Startseite zu sehen sind,
+    // und nur mit dem aktuellen Dateinamen.
+    async oeffentlichesBild(id: string, datei: string, groesse: Bildgroesse): Promise<Bild | null> {
+      const projekt = (await startseite()).find((p) => p.id === id);
+      if (!projekt || !datei || projekt.bild !== datei) return null;
+      return ablage.bild(projekt, groesse);
+    },
+
     async liste(): Promise<Liste> {
       const { startseite, weitere } = sortieren(await ablage.alle());
       return { startseite, weitere, voll: startseite.length >= STARTSEITE_PLAETZE };
