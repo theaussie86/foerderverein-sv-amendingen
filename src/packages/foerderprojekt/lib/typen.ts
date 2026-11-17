@@ -40,6 +40,12 @@ export type Speicherergebnis =
 // Oben die Förderprojekte auf der Startseite in ihrer Reihenfolge, darunter die übrigen.
 export type Liste = { startseite: Foerderprojekt[]; weitere: Foerderprojekt[]; voll: boolean };
 
+// Knöpfe im Admin-Reiter: Pfeile ↑↓, „Auf die Startseite“, „Von Startseite nehmen“.
+export const STARTSEITE_AKTIONEN = ["hoch", "runter", "aufnehmen", "entfernen"] as const;
+export type Startseitenaktion = (typeof STARTSEITE_AKTIONEN)[number];
+
+export type Ordnungsergebnis = { ok: true } | { ok: false; grund: "startseite-voll" | "nicht-gefunden" };
+
 export type Bild = { inhalt: ReadableStream<Uint8Array>; contentType: string };
 
 // --- Seams -------------------------------------------------------------------

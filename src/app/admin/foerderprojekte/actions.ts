@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { Speicherergebnis } from "@/packages/foerderprojekt/index";
+import type { Ordnungsergebnis, Speicherergebnis } from "@/packages/foerderprojekt/index";
 import { foerderprojekteFuerVorstand } from "@/packages/foerderprojekt/server";
-import { foerderprojektLoeschenSchema, foerderprojektSchema } from "@/lib/schemas";
+import { foerderprojektLoeschenSchema, foerderprojektSchema, foerderprojektStartseiteSchema } from "@/lib/schemas";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 
 export type Speicherfehler = { ok: false; fehler: string };
@@ -56,4 +56,20 @@ export async function foerderprojektLoeschen(eingabe: unknown): Promise<Speicher
   }
   neuLaden();
   redirect("/admin/foerderprojekte?geloescht=1");
+}
+
+// Pfeile ↑↓, „Auf die Startseite“ und „Von Startseite nehmen“. Ohne JavaScript nutzbar, Fehler kommen per URL.
+export async function foerderprojektStartseite(eingabe: unknown): Promise<void> {
+  await vorstandErforderlich();
+  const parsed = foerderprojektStartseiteSchema.safeParse(eingabe);
+  if (!parsed.success) redirect("/admin/foerderprojekte?fehler=unbekannt");
+  let ergebnis: Ordnungsergebnis;
+  try {
+    ergebnis = await foerderprojekteFuerVorstand().startseiteAendern(parsed.data.id, parsed.data.aktion);
+  } catch (e) {
+    console.error("Startseite konnte nicht geändert werden", e instanceof Error ? e.message : e);
+    redirect("/admin/foerderprojekte?fehler=speichern");
+  }
+  neuLaden();
+  redirect(ergebnis.ok ? "/admin/foerderprojekte" : `/admin/foerderprojekte?fehler=${ergebnis.grund}`);
 }

@@ -1,8 +1,8 @@
 // Entry Point ohne "server-only": Typen und Grenzen für Seiten, Client-Komponenten und Schemas.
 import type { Bildgroesse } from "./lib/typen";
 
-export { BILD_MAX_BYTES, BILD_TYPEN, STARTSEITE_PLAETZE } from "./lib/typen";
-export type { Bildgroesse, Foerderprojekt, Foerderprojektdaten, Liste } from "./lib/typen";
+export { BILD_MAX_BYTES, BILD_TYPEN, STARTSEITE_AKTIONEN, STARTSEITE_PLAETZE } from "./lib/typen";
+export type { Bildgroesse, Foerderprojekt, Foerderprojektdaten, Liste, Startseitenaktion } from "./lib/typen";
 
 // „2026 · 1.000 €“, leer ohne Jahr und Betrag.
 export function jahrUndBetrag(p: { jahr: number | null; betrag: number | null }): string {

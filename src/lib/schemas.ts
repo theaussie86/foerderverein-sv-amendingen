@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ABLEHNUNGSGRUENDE, ZAHLUNGSWEGE } from "@/packages/beleganfrage/anzeige";
-import { BILD_MAX_BYTES, BILD_TYPEN } from "@/packages/foerderprojekt/anzeige";
+import { BILD_MAX_BYTES, BILD_TYPEN, STARTSEITE_AKTIONEN } from "@/packages/foerderprojekt/anzeige";
 import { ENDE_GRUENDE, istCsvSpalte, istFilter } from "@/packages/mitglied/anzeige";
 
 // Angaben zum Spender, gleich für Website und internen Bereich.
@@ -218,6 +218,12 @@ export const foerderprojektSchema = z
 export type FoerderprojektEingabe = z.infer<typeof foerderprojektSchema>;
 
 export const foerderprojektLoeschenSchema = z.object({ id: z.string().min(1).max(15) });
+
+// Pfeile und Knöpfe für die Startseiten-Plätze im Admin-Reiter.
+export const foerderprojektStartseiteSchema = z.object({
+  id: z.string().min(1).max(15),
+  aktion: z.enum(STARTSEITE_AKTIONEN),
+});
 
 export const kontaktSchema = z.object({
   name: z.string().min(1, "Name ist erforderlich."),
