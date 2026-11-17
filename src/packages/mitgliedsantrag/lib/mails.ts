@@ -58,3 +58,16 @@ export function willkommenMail(antrag: Antrag, anhaenge: Anhang[]): Mail {
     attachments: anhaenge,
   };
 }
+
+// Fester Text ohne den internen Grund der Ablehnung.
+export function ablehnungsMail(vorname: string, email: string): Mail {
+  return {
+    to: email,
+    subject: "Dein Mitgliedsantrag beim Förderverein SV Amendingen",
+    text:
+      `Hallo ${vorname},\n\n` +
+      `vielen Dank für dein Interesse am ${verein.name}. Leider können wir deinen Mitgliedsantrag nicht annehmen.\n\n` +
+      `Das SEPA-Lastschriftmandat aus deinem Mitgliedsantrag nutzen wir nicht. Von deinem Konto wird nichts eingezogen.\n\n` +
+      `Sportliche Grüße\n${verein.name}`,
+  };
+}

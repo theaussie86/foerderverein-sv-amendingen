@@ -57,9 +57,14 @@ export class FakeAblage implements Ablage {
   }
 }
 
-// Merkt sich, welche Mitgliedsanträge angenommen wurden.
+// Merkt sich, welche Mitgliedsanträge angenommen wurden. Die in `abgelehnt` sind nicht annehmbar.
 export class FakeMitgliedsantraege {
   angenommen: string[] = [];
+  abgelehnt: string[] = [];
+
+  annehmbar(antragId: string) {
+    return Promise.resolve(!this.abgelehnt.includes(antragId));
+  }
 
   annehmen(antragId: string) {
     this.angenommen.push(antragId);

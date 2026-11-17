@@ -8,9 +8,10 @@ import { superuser } from "@/lib/pocketbase";
 import { siteUrl } from "@/lib/request";
 import { seal, unseal } from "@/lib/token";
 import type { Antragsliste } from "./anzeige";
+import { entscheidungen } from "./entscheidung";
 import { mitgliedsantraege } from "./index";
+import { pocketbaseEntscheidungen } from "./lib/entscheidung-pocketbase";
 import { pocketbaseAblage } from "./lib/ablage-pocketbase";
-import { aufnahme } from "./lib/aufnahme";
 import { datei, laden, suchen, type Suche } from "./lib/vorstandssicht";
 
 // Für die öffentliche Website: einreichen, öffnen, unterschreiben und der Mitgliederzähler.
@@ -39,8 +40,8 @@ export function mitgliedsantraegeFuerVorstand(pb: PocketBase) {
   };
 }
 
-// Für die Aufnahme eines Mitglieds aus einem Online-Mitgliedsantrag. Nur nach vorstandErforderlich
-// aufrufen: Gesetzt wird der Status als Superuser.
-export function mitgliedsantraegeFuerAufnahme() {
-  return aufnahme(superuser);
+// Für Aufnahme und Ablehnung durch den Vorstand. Nur nach vorstandErforderlich aufrufen:
+// Gesetzt wird der Status als Superuser.
+export function mitgliedsantraegeFuerEntscheidung() {
+  return entscheidungen({ ablage: pocketbaseEntscheidungen(superuser), postausgang: { senden: sendMail } });
 }

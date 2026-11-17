@@ -12,6 +12,8 @@ export type Speicherfehler = { ok: false; fehler: string };
 const MELDUNG: Record<Exclude<Speicherergebnis, { ok: true }>["grund"], string> = {
   "mandatsreferenz-vergeben": "Diese Mandatsreferenz hat schon ein anderes Mitglied.",
   "antrag-vergeben": "Aus diesem Mitgliedsantrag ist schon ein Mitglied entstanden.",
+  "antrag-nicht-uebernehmbar":
+    "Dieser Mitgliedsantrag ist abgelehnt oder existiert nicht und kann nicht übernommen werden.",
   "nicht-gefunden": "Das Mitglied gibt es nicht mehr.",
 };
 

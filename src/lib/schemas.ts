@@ -70,6 +70,14 @@ export const beleganfrageAblehnenSchema = z
 
 export type BeleganfrageAblehnenDaten = z.infer<typeof beleganfrageAblehnenSchema>;
 
+// Ablehnung eines Mitgliedsantrags (#83). Der Grund bleibt intern, die Mail hat einen festen Text.
+export const mitgliedsantragAblehnenSchema = z.object({
+  grund: z.string().trim().min(1, "Bitte einen Grund angeben.").max(1000, "Bitte höchstens 1000 Zeichen eingeben."),
+  mailSenden: z.boolean(),
+});
+
+export type MitgliedsantragAblehnenDaten = z.infer<typeof mitgliedsantragAblehnenSchema>;
+
 export const mitgliedSchema = z.object({
   vorname: z.string().min(1, "Vorname ist erforderlich."),
   nachname: z.string().min(1, "Nachname ist erforderlich."),

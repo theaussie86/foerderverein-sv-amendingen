@@ -55,6 +55,17 @@ describe("Aufnahme aus einem Mitgliedsantrag", () => {
     expect(antraege.angenommen).toEqual(["a1"]);
   });
 
+  test("aus einem abgelehnten Mitgliedsantrag entsteht kein Mitglied", async () => {
+    const { ablage, antraege, m } = aufbau();
+    antraege.abgelehnt.push("a1");
+    expect(await m.anlegen(daten({ mandatsreferenz: "FV-1", antragId: "a1" }))).toEqual({
+      ok: false,
+      grund: "antrag-nicht-uebernehmbar",
+    });
+    expect(ablage.mitglieder).toEqual([]);
+    expect(antraege.angenommen).toEqual([]);
+  });
+
   test("ein Papierantrag ändert keinen Mitgliedsantrag", async () => {
     const { antraege, m } = aufbau();
     await m.anlegen(daten());

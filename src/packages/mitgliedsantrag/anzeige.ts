@@ -13,6 +13,16 @@ export const STATUS_LABEL: Record<Status, string> = {
   abgelehnt: "Abgelehnt",
 };
 
+// Ablehnen geht nur, solange der Mitgliedsantrag eingegangen ist und noch kein Mitglied daraus entstanden ist.
+export function ablehnbar(status: Status, mitgliedVerknuepft: boolean): boolean {
+  return status === "eingegangen" && !mitgliedVerknuepft;
+}
+
+// Ablehnung ist endgültig: Ein abgelehnter Mitgliedsantrag wird kein Mitglied mehr.
+export function uebernehmbar(status: Status): boolean {
+  return status !== "abgelehnt";
+}
+
 export function istStatus(wert: string | undefined): wert is Status {
   return STATUS.some((s) => s === wert);
 }
@@ -43,6 +53,8 @@ export type Mitgliedsantrag = RecordModel & {
   beitritt_pdf: string;
   mandat_pdf: string;
   notiz: string;
+  // Interner Grund einer Ablehnung, seit #83.
+  ablehnungsgrund: string;
   created: string;
   updated: string;
 };

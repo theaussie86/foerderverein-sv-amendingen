@@ -9,6 +9,7 @@ import {
   kontaktSchema,
   loginSchema,
   mitgliedSchema,
+  mitgliedsantragAblehnenSchema,
   normalizeIban,
   unterschriftSchema,
 } from "./schemas";
@@ -221,5 +222,15 @@ describe("loginSchema", () => {
 
   test("unbekannter Modus wird abgelehnt", () => {
     expect(loginSchema.safeParse({ modus: "admin", email: "vorstand@example.org" }).success).toBe(false);
+  });
+});
+
+describe("mitgliedsantragAblehnenSchema", () => {
+  test("verlangt einen Grund", () => {
+    expect(mitgliedsantragAblehnenSchema.safeParse({ grund: "  ", mailSenden: true }).success).toBe(false);
+    expect(mitgliedsantragAblehnenSchema.safeParse({ grund: " Spam ", mailSenden: false }).data).toEqual({
+      grund: "Spam",
+      mailSenden: false,
+    });
   });
 });

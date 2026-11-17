@@ -46,7 +46,11 @@ export type Suche = { suche: string; filter?: Filter; seite: number };
 // --- Seams -------------------------------------------------------------------
 
 export type Speicherergebnis =
-  { ok: true; id: string } | { ok: false; grund: "mandatsreferenz-vergeben" | "antrag-vergeben" | "nicht-gefunden" };
+  | { ok: true; id: string }
+  | {
+      ok: false;
+      grund: "mandatsreferenz-vergeben" | "antrag-vergeben" | "antrag-nicht-uebernehmbar" | "nicht-gefunden";
+    };
 
 export type Ablage = {
   suchen(suche: Suche, heute: string): Promise<Trefferliste>;

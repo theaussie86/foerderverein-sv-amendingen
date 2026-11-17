@@ -19,8 +19,12 @@ export { naechsteMandatsreferenz, normalisieren } from "./lib/regeln";
 
 export type Umgebung = {
   ablage: Ablage;
-  // Setzt einen Online-Mitgliedsantrag auf „angenommen“. Wirft, wenn das nicht klappt.
-  mitgliedsantraege: { annehmen(antragId: string): Promise<void> };
+  mitgliedsantraege: {
+    // Falsch bei einem abgelehnten oder unbekannten Online-Mitgliedsantrag.
+    annehmbar(antragId: string): Promise<boolean>;
+    // Setzt einen Online-Mitgliedsantrag auf „angenommen“. Wirft, wenn das nicht klappt.
+    annehmen(antragId: string): Promise<void>;
+  };
   jetzt(): Date;
 };
 
@@ -36,8 +40,12 @@ export function mitglieder(u: Umgebung) {
     laden: (id: string): Promise<Mitglied | null> => u.ablage.laden(id),
 
     // Aufnahme: Stammt das Mitglied aus einem Online-Mitgliedsantrag, wird dieser im selben Vorgang
-    // angenommen. Klappt das nicht, bleibt das Mitglied trotzdem gespeichert.
+    // angenommen. Klappt das nicht, bleibt das Mitglied trotzdem gespeichert. Aus einem abgelehnten
+    // Mitgliedsantrag entsteht kein Mitglied.
     async anlegen(daten: Mitgliedsdaten): Promise<Speicherergebnis> {
+      if (daten.antragId && !(await u.mitgliedsantraege.annehmbar(daten.antragId))) {
+        return { ok: false, grund: "antrag-nicht-uebernehmbar" };
+      }
       const ergebnis = await u.ablage.anlegen(normalisieren(daten));
       if (ergebnis.ok && daten.antragId) {
         try {

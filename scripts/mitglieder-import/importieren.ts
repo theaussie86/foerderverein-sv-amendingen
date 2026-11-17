@@ -42,7 +42,9 @@ const antraege = z
 const { mitglieder: neu, hinweise } = auswerten(stammdaten, antraege);
 const ablage = pocketbaseAblage(() => Promise.resolve(pb));
 // Wer aus einem Online-Mitgliedsantrag importiert wird, ist aufgenommen.
+// Abgelehnte Mitgliedsanträge sind oben schon herausgefiltert.
 const mitgliedsantraege = {
+  annehmbar: () => Promise.resolve(true),
   annehmen: async (id: string) => {
     await pb.collection("mitgliedsantraege").update(id, { status: "angenommen" });
   },

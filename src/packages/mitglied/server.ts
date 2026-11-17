@@ -2,7 +2,7 @@
 import "server-only";
 import type PocketBase from "pocketbase";
 import { superuser } from "@/lib/pocketbase";
-import { mitgliedsantraegeFuerAufnahme } from "@/packages/mitgliedsantrag/server";
+import { mitgliedsantraegeFuerEntscheidung } from "@/packages/mitgliedsantrag/server";
 import { mitglieder } from "./index";
 import { pocketbaseAblage } from "./lib/ablage-pocketbase";
 
@@ -11,7 +11,7 @@ import { pocketbaseAblage } from "./lib/ablage-pocketbase";
 export function mitgliederFuerVorstand(pb: PocketBase) {
   return mitglieder({
     ablage: pocketbaseAblage(() => Promise.resolve(pb)),
-    mitgliedsantraege: mitgliedsantraegeFuerAufnahme(),
+    mitgliedsantraege: mitgliedsantraegeFuerEntscheidung(),
     jetzt: () => new Date(),
   });
 }
@@ -21,7 +21,7 @@ export async function mitgliederFuerWebsite() {
   if (!(await superuser())) return null;
   const { anzahlAktiv, verknuepfteAntraege } = mitglieder({
     ablage: pocketbaseAblage(superuser),
-    mitgliedsantraege: mitgliedsantraegeFuerAufnahme(),
+    mitgliedsantraege: mitgliedsantraegeFuerEntscheidung(),
     jetzt: () => new Date(),
   });
   return { anzahlAktiv, verknuepfteAntraege };
