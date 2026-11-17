@@ -1,10 +1,11 @@
 import { describe, expect, test } from "bun:test";
 import { mitglieder, naechsteMandatsreferenz } from "../index";
-import { daten, FakeAblage } from "./fakes";
+import { daten, FakeAblage, FakeMitgliedsantraege } from "./fakes";
 
 function aufbau(jetzt = "2026-11-11T10:00:00.000Z") {
   const ablage = new FakeAblage();
-  return { ablage, m: mitglieder({ ablage, jetzt: () => new Date(jetzt) }) };
+  const antraege = new FakeMitgliedsantraege();
+  return { ablage, antraege, m: mitglieder({ ablage, mitgliedsantraege: antraege, jetzt: () => new Date(jetzt) }) };
 }
 
 describe("anlegen", () => {
@@ -44,6 +45,45 @@ describe("anlegen", () => {
     const { ablage, m } = aufbau();
     await m.anlegen(daten({ endeGrund: "austritt" }));
     expect(ablage.mitglieder[0]?.endeGrund).toBe("");
+  });
+});
+
+describe("Aufnahme aus einem Mitgliedsantrag", () => {
+  test("setzt den Mitgliedsantrag beim Anlegen auf angenommen", async () => {
+    const { antraege, m } = aufbau();
+    expect((await m.anlegen(daten({ mandatsreferenz: "FV-1", antragId: "a1" }))).ok).toBe(true);
+    expect(antraege.angenommen).toEqual(["a1"]);
+  });
+
+  test("aus einem abgelehnten Mitgliedsantrag entsteht kein Mitglied", async () => {
+    const { ablage, antraege, m } = aufbau();
+    antraege.abgelehnt.push("a1");
+    expect(await m.anlegen(daten({ mandatsreferenz: "FV-1", antragId: "a1" }))).toEqual({
+      ok: false,
+      grund: "antrag-nicht-uebernehmbar",
+    });
+    expect(ablage.mitglieder).toEqual([]);
+    expect(antraege.angenommen).toEqual([]);
+  });
+
+  test("ein Papierantrag ändert keinen Mitgliedsantrag", async () => {
+    const { antraege, m } = aufbau();
+    await m.anlegen(daten());
+    expect(antraege.angenommen).toEqual([]);
+  });
+
+  test("scheitert das Anlegen, bleibt der Mitgliedsantrag eingegangen", async () => {
+    const { antraege, m } = aufbau();
+    await m.anlegen(daten({ mandatsreferenz: "FV-1", antragId: "a1" }));
+    await m.anlegen(daten({ mandatsreferenz: "FV-1", antragId: "a2" }));
+    expect(antraege.angenommen).toEqual(["a1"]);
+  });
+
+  test("Ändern eines Mitglieds nimmt keinen Mitgliedsantrag an", async () => {
+    const { ablage, antraege, m } = aufbau();
+    await ablage.anlegen(daten({ mandatsreferenz: "FV-1", antragId: "a1" }));
+    await m.aendern("m1", daten({ mandatsreferenz: "FV-1", antragId: "a1", ort: "Amendingen" }));
+    expect(antraege.angenommen).toEqual([]);
   });
 });
 

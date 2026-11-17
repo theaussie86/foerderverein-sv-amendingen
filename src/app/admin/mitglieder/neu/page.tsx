@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { mitgliederFuerVorstand } from "@/packages/mitglied/server";
+import { uebernehmbar } from "@/packages/mitgliedsantrag/anzeige";
 import { mitgliedsantraegeFuerVorstand } from "@/packages/mitgliedsantrag/server";
 import { MitgliedFormular } from "../mitglied-formular";
 import { formularwerte } from "../werte";
@@ -27,6 +28,8 @@ export default async function MitgliedAnlegenPage({ searchParams }: { searchPara
     const schonMitglied = await mitglieder.zuAntrag(antragId);
     if (schonMitglied) redirect(`/admin/mitglieder/${schonMitglied}`);
     const a = await mitgliedsantraegeFuerVorstand(pb).laden(antragId);
+    // Ablehnung ist endgültig: Ein abgelehnter Mitgliedsantrag wird kein Mitglied.
+    if (a && !uebernehmbar(a.status)) redirect(`/admin/antraege/${a.id}`);
     if (a) {
       herkunft = `${a.vorname} ${a.nachname}`;
       const selbst = a.kontoinhaber.trim().toLowerCase() === `${a.vorname} ${a.nachname}`.trim().toLowerCase();

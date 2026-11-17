@@ -8,7 +8,9 @@ import { superuser } from "@/lib/pocketbase";
 import { siteUrl } from "@/lib/request";
 import { seal, unseal } from "@/lib/token";
 import type { Antragsliste } from "./anzeige";
+import { entscheidungen } from "./entscheidung";
 import { mitgliedsantraege } from "./index";
+import { pocketbaseEntscheidungen } from "./lib/entscheidung-pocketbase";
 import { pocketbaseAblage } from "./lib/ablage-pocketbase";
 import { datei, laden, suchen, type Suche } from "./lib/vorstandssicht";
 
@@ -36,4 +38,10 @@ export function mitgliedsantraegeFuerVorstand(pb: PocketBase) {
     // Beitrittserklärung, Mandat oder Unterschriftsbild zum Durchreichen an den Browser.
     datei: (id: string, feld: string) => datei(pb, id, feld),
   };
+}
+
+// Für Aufnahme und Ablehnung durch den Vorstand. Nur nach vorstandErforderlich aufrufen:
+// Gesetzt wird der Status als Superuser.
+export function mitgliedsantraegeFuerEntscheidung() {
+  return entscheidungen({ ablage: pocketbaseEntscheidungen(superuser), postausgang: { senden: sendMail } });
 }

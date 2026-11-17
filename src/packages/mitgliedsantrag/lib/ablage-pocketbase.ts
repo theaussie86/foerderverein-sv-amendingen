@@ -62,7 +62,7 @@ export function pocketbaseAblage(superuser: () => Promise<PocketBase | null>): A
       const pb = await superuser();
       if (!pb) return null;
       const liste = await pb.collection("mitgliedsantraege").getFullList({
-        filter: pb.filter('unterschrieben_am >= {:datum} && status != "abgelehnt" && status != "ausgetreten"', {
+        filter: pb.filter('unterschrieben_am >= {:datum} && status != "abgelehnt"', {
           datum: datum.toISOString().replace("T", " "),
         }),
         fields: "id",

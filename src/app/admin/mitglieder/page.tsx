@@ -7,6 +7,7 @@ import { FILTER, FILTER_LABEL, istFilter, type Filter, type Trefferliste } from 
 import { mitgliederFuerVorstand } from "@/packages/mitglied/server";
 import { abmelden } from "../actions";
 import { AdminNav } from "../admin-nav";
+import { CsvExport } from "./csv-export";
 import { heute, MitgliedBadge } from "./mitglied-badge";
 
 export const metadata: Metadata = {
@@ -60,6 +61,7 @@ export default async function MitgliederPage({ searchParams }: { searchParams: P
           >
             Mitglied anlegen
           </Link>
+          <CsvExport q={q} filter={filter} />
           <form action={abmelden}>
             <button
               type="submit"

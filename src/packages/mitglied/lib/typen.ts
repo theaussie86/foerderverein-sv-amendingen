@@ -3,6 +3,12 @@
 export const ENDE_GRUENDE = ["austritt", "ausschluss", "tod"] as const;
 export type EndeGrund = (typeof ENDE_GRUENDE)[number];
 
+export const ENDE_GRUND_LABEL: Record<EndeGrund, string> = {
+  austritt: "Austritt",
+  ausschluss: "Ausschluss",
+  tod: "Tod",
+};
+
 // Daten eines Mitglieds, wie der Vorstand sie pflegt. Datumsfelder als YYYY-MM-DD, leer = unbekannt.
 export type Mitgliedsdaten = {
   mandatsreferenz: string;
@@ -43,13 +49,22 @@ export type Filter = "aktiv" | "beendet";
 
 export type Suche = { suche: string; filter?: Filter; seite: number };
 
+// Suche über alle Seiten, etwa für den CSV-Export.
+export type Gesamtsuche = Omit<Suche, "seite">;
+
 // --- Seams -------------------------------------------------------------------
 
 export type Speicherergebnis =
-  { ok: true; id: string } | { ok: false; grund: "mandatsreferenz-vergeben" | "antrag-vergeben" | "nicht-gefunden" };
+  | { ok: true; id: string }
+  | {
+      ok: false;
+      grund: "mandatsreferenz-vergeben" | "antrag-vergeben" | "antrag-nicht-uebernehmbar" | "nicht-gefunden";
+    };
 
 export type Ablage = {
   suchen(suche: Suche, heute: string): Promise<Trefferliste>;
+  // Alle Treffer der Suche über alle Seiten, sortiert wie die Liste.
+  alle(suche: Gesamtsuche, heute: string): Promise<Mitglied[]>;
   laden(id: string): Promise<Mitglied | null>;
   anlegen(daten: Mitgliedsdaten): Promise<Speicherergebnis>;
   aendern(id: string, daten: Mitgliedsdaten): Promise<Speicherergebnis>;

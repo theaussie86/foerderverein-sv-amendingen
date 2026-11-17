@@ -4,16 +4,23 @@ import { beleganfragenFuerVorstand } from "@/packages/beleganfrage/server";
 import { cn } from "@/lib/utils";
 
 // Umschalter zwischen den Übersichten im internen Bereich. Zeigt offene Zuwendungsbestätigungen als Zahl.
-export async function AdminNav({ pb, aktiv }: { pb: PocketBase; aktiv: "antraege" | "mitglieder" | "spenden" }) {
+export async function AdminNav({
+  pb,
+  aktiv,
+}: {
+  pb: PocketBase;
+  aktiv: "antraege" | "mitglieder" | "spenden" | "foerderprojekte";
+}) {
   const offen = await beleganfragenFuerVorstand(pb).anzahlOffen();
   const eintraege = [
     { key: "antraege", href: "/admin", label: "Mitgliedsanträge", zahl: null },
     { key: "mitglieder", href: "/admin/mitglieder", label: "Mitglieder", zahl: null },
     { key: "spenden", href: "/admin/spenden", label: "Spendenbelege", zahl: offen },
+    { key: "foerderprojekte", href: "/admin/foerderprojekte", label: "Förderprojekte", zahl: null },
   ] as const;
 
   return (
-    <nav aria-label="Bereiche" className="mb-10 flex gap-6 border-b border-sva-gray-700">
+    <nav aria-label="Bereiche" className="mb-10 flex flex-wrap gap-x-6 gap-y-2 border-b border-sva-gray-700">
       {eintraege.map((e) => (
         <Link
           key={e.key}

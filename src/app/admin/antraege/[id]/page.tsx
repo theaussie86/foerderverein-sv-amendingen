@@ -4,11 +4,12 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { datum, datumZeit } from "@/lib/format";
-import { DATEIEN, istDateifeld, type Dateifeld } from "@/packages/mitgliedsantrag/anzeige";
+import { ablehnbar, DATEIEN, istDateifeld, uebernehmbar, type Dateifeld } from "@/packages/mitgliedsantrag/anzeige";
 import { mitgliedsantraegeFuerVorstand } from "@/packages/mitgliedsantrag/server";
 import { mitgliederFuerVorstand } from "@/packages/mitglied/server";
 import { formatIban } from "@/lib/schemas";
 import { StatusBadge } from "../../status-badge";
+import { AblehnenFormular } from "./ablehnen-formular";
 
 export const metadata: Metadata = {
   title: "Mitgliedsantrag",
@@ -73,7 +74,7 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
               Zum Mitglied →
             </Link>
           ) : (
-            antrag.status !== "abgelehnt" && (
+            uebernehmbar(antrag.status) && (
               <Link
                 href={`/admin/mitglieder/neu?antrag=${antrag.id}`}
                 className="rounded-md bg-sva-gold px-5 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
@@ -86,6 +87,21 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
       </div>
 
       <div className="mt-10 grid gap-6">
+        {antrag.status === "abgelehnt" && (
+          <Abschnitt titel="Ablehnung">
+            <Felder
+              felder={[
+                [
+                  "Grund (intern)",
+                  <p key="grund" className="whitespace-pre-wrap">
+                    {antrag.ablehnungsgrund}
+                  </p>,
+                ],
+              ]}
+            />
+          </Abschnitt>
+        )}
+
         <Abschnitt titel="Dokumente">
           <ul className="divide-y divide-sva-gray-700">
             {Object.keys(DATEIEN)
@@ -192,6 +208,12 @@ export default async function AntragPage({ params }: { params: Promise<{ id: str
         {antrag.notiz && (
           <Abschnitt titel="Notiz">
             <p className="whitespace-pre-wrap text-white">{antrag.notiz}</p>
+          </Abschnitt>
+        )}
+
+        {ablehnbar(antrag.status, !!mitgliedId) && (
+          <Abschnitt titel="Ablehnen">
+            <AblehnenFormular id={antrag.id} email={antrag.email} />
           </Abschnitt>
         )}
       </div>

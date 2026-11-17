@@ -1,5 +1,6 @@
 import type { z } from "zod";
 import type { Ablage, Mail, Siegel, Speicherergebnis, Umgebung, UnterschriebenerAntrag } from "../index";
+import type { Antragsstand, Entscheidungsablage, Entscheidungsumgebung } from "../entscheidung";
 
 // Ablage im Speicher. `verhalten` steuert, was speichern() meldet.
 export class FakeAblage implements Ablage {
@@ -91,4 +92,43 @@ export function fakeUmgebung() {
     antragEmpfaenger: "vorstand@foerderverein.test",
   };
   return { umgebung, uhr, ablage, postausgang, siegel };
+}
+
+// Mitgliedsanträge im Speicher für Aufnahme und Ablehnung.
+export class FakeEntscheidungsablage implements Entscheidungsablage {
+  staende = new Map<string, Antragsstand>();
+  gruende = new Map<string, string>();
+
+  stand(id: string): Promise<Antragsstand | null> {
+    return Promise.resolve(this.staende.get(id) ?? null);
+  }
+
+  private setzen(id: string, status: Antragsstand["status"]) {
+    const s = this.staende.get(id);
+    if (!s) return Promise.reject(new Error(`Mitgliedsantrag ${id} fehlt`));
+    this.staende.set(id, { ...s, status });
+    return Promise.resolve();
+  }
+
+  annehmen(id: string): Promise<void> {
+    return this.setzen(id, "angenommen");
+  }
+
+  ablehnen(id: string, grund: string): Promise<void> {
+    this.gruende.set(id, grund);
+    return this.setzen(id, "abgelehnt");
+  }
+}
+
+export function fakeEntscheidungsumgebung() {
+  const ablage = new FakeEntscheidungsablage();
+  const postausgang = new FakePostausgang();
+  ablage.staende.set("a1", {
+    status: "eingegangen",
+    vorname: "Jürgen",
+    email: "juergen@example.org",
+    mitgliedVerknuepft: false,
+  });
+  const umgebung: Entscheidungsumgebung = { ablage, postausgang };
+  return { umgebung, ablage, postausgang };
 }

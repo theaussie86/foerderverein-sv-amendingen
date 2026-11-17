@@ -1,4 +1,11 @@
-import { istAktiv, type Ablage, type Mitglied, type Mitgliedsdaten, type Speicherergebnis } from "../index";
+import {
+  istAktiv,
+  type Ablage,
+  type Gesamtsuche,
+  type Mitglied,
+  type Mitgliedsdaten,
+  type Speicherergebnis,
+} from "../index";
 
 // Ablage im Speicher mit denselben Eindeutigkeitsregeln wie die Collection "mitglieder".
 export class FakeAblage implements Ablage {
@@ -16,6 +23,16 @@ export class FakeAblage implements Ablage {
 
   suchen(): never {
     throw new Error("Im Fake nicht gebraucht");
+  }
+
+  // Vereinfachte Suche: jedes Wort in Vorname, Nachname, Ort oder E-Mail, sortiert nach Namen.
+  alle({ suche, filter }: Gesamtsuche, heute: string) {
+    const woerter = suche.toLowerCase().split(/\s+/).filter(Boolean);
+    const treffer = this.mitglieder
+      .filter((m) => woerter.every((w) => [m.vorname, m.nachname, m.ort, m.email].join(" ").toLowerCase().includes(w)))
+      .filter((m) => (filter === "aktiv" ? istAktiv(m, heute) : filter === "beendet" ? !istAktiv(m, heute) : true))
+      .sort((a, b) => a.nachname.localeCompare(b.nachname) || a.vorname.localeCompare(b.vorname));
+    return Promise.resolve(treffer);
   }
 
   laden(id: string) {
@@ -54,6 +71,21 @@ export class FakeAblage implements Ablage {
 
   verknuepfteAntraege() {
     return Promise.resolve(this.mitglieder.map((m) => m.antragId).filter(Boolean));
+  }
+}
+
+// Merkt sich, welche Mitgliedsanträge angenommen wurden. Die in `abgelehnt` sind nicht annehmbar.
+export class FakeMitgliedsantraege {
+  angenommen: string[] = [];
+  abgelehnt: string[] = [];
+
+  annehmbar(antragId: string) {
+    return Promise.resolve(!this.abgelehnt.includes(antragId));
+  }
+
+  annehmen(antragId: string) {
+    this.angenommen.push(antragId);
+    return Promise.resolve();
   }
 }
 
