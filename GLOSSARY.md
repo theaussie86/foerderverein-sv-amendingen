@@ -147,11 +147,11 @@ Der unterschriebene Wunsch einer Person, dem Förderverein beizutreten, samt ers
 _Vermeiden_: Beitrittserklärung, Antrag (allein), Anmeldung
 
 **Aufnahme**:
-Die Annahme eines Mitgliedsantrags durch den Vorstand. Mit ihr beginnt die Mitgliedschaft. Das Datum heißt Eintrittsdatum und trägt der Vorstand ein.
-_Vermeiden_: Annahme, Bestätigung
+Die Annahme eines Mitgliedsantrags durch den Vorstand. Mit ihr beginnt die Mitgliedschaft. Das Datum heißt Eintrittsdatum und trägt der Vorstand ein. Eine Mitgliedschaft endet nie am Mitgliedsantrag, nur am Mitglied.
+_Vermeiden_: Annahme, Bestätigung, Übernahme, ausgetreten (als Status eines Mitgliedsantrags)
 
 **Ablehnung eines Mitgliedsantrags**:
-Abschluss eines Mitgliedsantrags ohne Aufnahme. Nicht zu verwechseln mit der Ablehnung einer Beleganfrage.
+Abschluss eines Mitgliedsantrags ohne Aufnahme. Sie ist endgültig: Wer später doch beitreten will, stellt einen neuen Mitgliedsantrag. Der Vorstand hält dazu einen Grund fest, der intern bleibt. Ob der Antragsteller eine Mail bekommt, entscheidet der Vorstand bei jeder Ablehnung. Nicht zu verwechseln mit der Ablehnung einer Beleganfrage.
 
 **Ende der Mitgliedschaft**:
 Oberbegriff für Austritt, Ausschluss und Tod.
@@ -233,7 +233,7 @@ Der in der Satzung festgelegte Zweck des Fördervereins: die ideelle und finanzi
 _Vermeiden_: Vereinszweck, Satzungszweck
 
 **Förderprojekt**:
-Eine einzelne Mittelverwendung mit Titel, Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung. Es ist geplant, solange das Geld noch nicht ausgegeben ist, und endet umgesetzt oder abgesagt. Für ein geplantes Förderprojekt kann der Förderverein mit einem Spendenziel Spenden sammeln. Dafür gibt es keinen eigenen Begriff. Gesammelt wird, bis das Förderprojekt umgesetzt oder abgesagt ist, eine Frist gibt es nicht.
+Eine einzelne Mittelverwendung, beschrieben mit Titel und kurzer Beschreibung, bei Bedarf mit Jahr und Betrag, zum Beispiel die Jugendfahrt nach Augsburg. Ein Dauerposten wie „Trainingsmaterial“ ist kein Förderprojekt, erst die einzelne Anschaffung ist eins. Gegenüber Spendern und Mitgliedern kurz „Projekt“. Ein Förderprojekt ist ein Zuschuss oder eine Anschaffung. Es ist geplant, solange das Geld noch nicht ausgegeben ist, und endet umgesetzt oder abgesagt. Für ein geplantes Förderprojekt kann der Förderverein mit einem Spendenziel Spenden sammeln. Dafür gibt es keinen eigenen Begriff. Gesammelt wird, bis das Förderprojekt umgesetzt oder abgesagt ist, eine Frist gibt es nicht.
 _Vermeiden_: Spendenprojekt, Spendenaktion, Crowdfunding, Kampagne, Maßnahme, Aktion
 
 **Spendenziel**:
