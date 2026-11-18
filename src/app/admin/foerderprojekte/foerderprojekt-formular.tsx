@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useTransition, type FormEvent } from "react";
+import { useState, useTransition, type FormEvent } from "react";
 import { foerderprojektSchema } from "@/lib/schemas";
 import type { Foerderprojekt } from "@/packages/foerderprojekt/anzeige";
 import { foerderprojektLoeschen, foerderprojektSpeichern } from "./actions";
+import { BildAuswahl } from "./bild-auswahl";
 
 const inputCls =
   "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
@@ -31,16 +31,10 @@ export function FoerderprojektFormular({
 }) {
   const [fehler, setFehler] = useState<string | null>(null);
   const [feldfehler, setFeldfehler] = useState<Feldfehler>({});
-  const [vorschau, setVorschau] = useState<string | null>(null);
   const [laeuft, starten] = useTransition();
   const p = projekt;
-
-  useEffect(
-    () => () => {
-      if (vorschau) URL.revokeObjectURL(vorschau);
-    },
-    [vorschau],
-  );
+  // Für die Vorschau des Standardbilds, solange kein Bild gewählt ist.
+  const [titel, setTitel] = useState(p?.titel ?? "");
 
   function absenden(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -70,8 +64,6 @@ export function FoerderprojektFormular({
     starten(async () => setFehler((await foerderprojektLoeschen({ id: p.id })).fehler));
   }
 
-  const bild = vorschau ?? bildUrl;
-
   return (
     <form
       onSubmit={absenden}
@@ -83,7 +75,14 @@ export function FoerderprojektFormular({
         <label htmlFor="f-titel" className={labelCls}>
           Titel *
         </label>
-        <input id="f-titel" name="titel" defaultValue={p?.titel} maxLength={200} className={inputCls} />
+        <input
+          id="f-titel"
+          name="titel"
+          defaultValue={p?.titel}
+          onChange={(e) => setTitel(e.target.value)}
+          maxLength={200}
+          className={inputCls}
+        />
         <Fehler text={feldfehler.titel} />
       </div>
       <div>
@@ -103,35 +102,9 @@ export function FoerderprojektFormular({
       </div>
       <div>
         <label htmlFor="f-bild" className={labelCls}>
-          Bild *
+          Bild
         </label>
-        <div className="mt-1 flex flex-wrap items-center gap-4">
-          {bild && (
-            <Image
-              src={bild}
-              alt=""
-              width={80}
-              height={80}
-              unoptimized
-              className="h-20 w-20 shrink-0 rounded-md bg-sva-gray-800 object-cover"
-            />
-          )}
-          <input
-            id="f-bild"
-            name="bild"
-            type="file"
-            accept="image/jpeg,image/png"
-            onChange={(e) => {
-              const datei = e.target.files?.[0];
-              setVorschau(datei ? URL.createObjectURL(datei) : null);
-            }}
-            className="text-sm text-sva-gray-300 file:mr-4 file:rounded-md file:border file:border-sva-gray-600 file:bg-transparent file:px-4 file:py-2 file:text-sva-gray-200"
-          />
-        </div>
-        <p className="mt-1 text-xs text-sva-gray-400">
-          JPEG oder PNG, höchstens 5 MB. Querformat sieht am besten aus.
-          {p && " Ohne neue Auswahl bleibt das bisherige Bild."}
-        </p>
+        <BildAuswahl bildUrl={bildUrl} titel={titel} bearbeiten={Boolean(p)} />
         <Fehler text={feldfehler.bild} />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
@@ -190,7 +163,7 @@ export function FoerderprojektFormular({
         <button
           type="submit"
           disabled={laeuft}
-          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light disabled:opacity-60"
+          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-60"
         >
           {laeuft ? "Speichert …" : "Speichern"}
         </button>

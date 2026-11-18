@@ -111,7 +111,7 @@ export function AblehnenFormular({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-md border border-red-500/60 px-6 py-3 text-sm font-bold text-red-300 uppercase transition-colors hover:bg-red-500/10 disabled:opacity-50"
+        className="rounded-md border border-red-500/60 px-6 py-3 text-sm font-bold text-red-300 transition-colors hover:bg-red-500/10 disabled:opacity-50"
       >
         {isSubmitting ? "Wird gespeichert …" : mailSenden && email ? "Ablehnen und Mail senden" : "Ablehnen"}
       </button>

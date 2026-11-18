@@ -5,6 +5,7 @@ import {
   STARTSEITE_PLAETZE,
   type Ablage,
   type Bild,
+  type Bildaenderung,
   type Bildgroesse,
   type Foerderprojekt,
   type Foerderprojektdaten,
@@ -17,6 +18,7 @@ import {
 export type {
   Ablage,
   Bild,
+  Bildaenderung,
   Bildgroesse,
   Foerderprojekt,
   Foerderprojektdaten,
@@ -70,7 +72,6 @@ export function foerderprojekte({ ablage }: Umgebung) {
     laden: (id: string): Promise<Foerderprojekt | null> => ablage.laden(id),
 
     async anlegen(eingabe: Foerderprojektdaten, bild: File | null): Promise<Speicherergebnis> {
-      if (!bild) return { ok: false, grund: "bild-fehlt" };
       const daten = normalisieren(eingabe);
       const p = await platz(daten, bild, null);
       if (!p.ok) return p;
@@ -78,12 +79,13 @@ export function foerderprojekte({ ablage }: Umgebung) {
       return { ok: true, id };
     },
 
-    // Ohne bild bleibt das bisherige Bild. Wer neu auf die Startseite kommt, hängt hinten an.
-    async aendern(id: string, eingabe: Foerderprojektdaten, bild: File | null): Promise<Speicherergebnis> {
+    // Ohne bild bleibt das bisherige Bild (oder das Standardbild), "entfernen" führt zurück zum
+    // Standardbild. Wer neu auf die Startseite kommt, hängt hinten an.
+    async aendern(id: string, eingabe: Foerderprojektdaten, bild: Bildaenderung): Promise<Speicherergebnis> {
       const bisher = await ablage.laden(id);
       if (!bisher) return { ok: false, grund: "nicht-gefunden" };
       const daten = normalisieren(eingabe);
-      const p = await platz(daten, bild, bisher);
+      const p = await platz(daten, bild instanceof File ? bild : null, bisher);
       if (!p.ok) return p;
       await ablage.aendern(id, { ...daten, reihenfolge: p.reihenfolge }, bild);
       return { ok: true, id };

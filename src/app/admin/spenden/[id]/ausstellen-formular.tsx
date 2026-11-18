@@ -7,7 +7,7 @@ import { beleganfrageAusstellenSchema, type BeleganfrageAusstellenDaten } from "
 import { belegArt, euro, spendenGrenzeVereinfacht, type BelegArt } from "@/packages/beleganfrage/anzeige";
 import { beleganfrageAusstellen } from "../actions";
 
-const knopf = "rounded-md px-6 py-3 text-sm font-bold uppercase transition-colors disabled:opacity-50";
+const knopf = "rounded-md px-6 py-3 text-sm font-bold transition-colors disabled:opacity-50";
 
 // Ausstellung mit dem eingegangenen Betrag. Die Art richtet sich nach ihm (Betragskorrektur).
 export function AusstellenFormular({

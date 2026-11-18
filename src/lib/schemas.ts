@@ -195,25 +195,28 @@ const ganzeZahl = (muster: RegExp, meldung: string) =>
     .pipe(z.string().regex(muster, meldung))
     .transform((s) => (s ? Number(s) : null));
 
-export const foerderprojektSchema = z
-  .object({
-    id: z.string().max(15).default(""),
-    titel: z.string().trim().min(1, "Titel ist erforderlich.").max(200, "Höchstens 200 Zeichen."),
-    beschreibung: z.string().trim().min(1, "Beschreibung ist erforderlich.").max(1000, "Höchstens 1000 Zeichen."),
-    jahr: ganzeZahl(/^((19|20)\d{2})?$/, "Bitte ein Jahr wie 2026 angeben."),
-    betrag: ganzeZahl(/^([1-9]\d{0,6})?$/, "Bitte den Betrag in ganzen Euro angeben."),
-    startseite: z
-      .literal("on")
-      .optional()
-      .transform((v) => v === "on"),
-    bild: z
-      .instanceof(File)
-      .optional()
-      .transform((f) => (f && f.size > 0 ? f : null))
-      .refine((f) => !f || BILD_TYPEN.some((t) => t === f.type), "Nur JPEG oder PNG.")
-      .refine((f) => !f || f.size <= BILD_MAX_BYTES, "Das Bild darf höchstens 5 MB groß sein."),
-  })
-  .refine((d) => d.id || d.bild, { path: ["bild"], message: "Bitte ein Bild auswählen." });
+export const foerderprojektSchema = z.object({
+  id: z.string().max(15).default(""),
+  titel: z.string().trim().min(1, "Titel ist erforderlich.").max(200, "Höchstens 200 Zeichen."),
+  beschreibung: z.string().trim().min(1, "Beschreibung ist erforderlich.").max(1000, "Höchstens 1000 Zeichen."),
+  jahr: ganzeZahl(/^((19|20)\d{2})?$/, "Bitte ein Jahr wie 2026 angeben."),
+  betrag: ganzeZahl(/^([1-9]\d{0,6})?$/, "Bitte den Betrag in ganzen Euro angeben."),
+  startseite: z
+    .literal("on")
+    .optional()
+    .transform((v) => v === "on"),
+  bild: z
+    .instanceof(File)
+    .optional()
+    .transform((f) => (f && f.size > 0 ? f : null))
+    .refine((f) => !f || BILD_TYPEN.some((t) => t === f.type), "Nur JPEG oder PNG.")
+    .refine((f) => !f || f.size <= BILD_MAX_BYTES, "Das Bild darf höchstens 5 MB groß sein."),
+  // Beim Ändern: zurück zum Standardbild. Ein neues Bild hat Vorrang.
+  bild_entfernen: z
+    .literal("on")
+    .optional()
+    .transform((v) => v === "on"),
+});
 
 export type FoerderprojektEingabe = z.infer<typeof foerderprojektSchema>;
 

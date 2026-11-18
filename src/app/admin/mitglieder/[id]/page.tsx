@@ -27,16 +27,15 @@ export default async function MitgliedPage({
   if (!m) notFound();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
       <Link href="/admin/mitglieder" className="text-sm font-medium text-sva-gold hover:text-sva-gold-light">
         ← Alle Mitglieder
       </Link>
       <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
             {m.vorname} {m.nachname}
           </h1>
-          <div className="mt-2 h-1 w-16 bg-sva-gold" />
           <p className="mt-4 text-sva-gray-300">
             Mandatsreferenz <span className="font-mono text-white">{m.mandatsreferenz}</span>
             {m.antragId && (

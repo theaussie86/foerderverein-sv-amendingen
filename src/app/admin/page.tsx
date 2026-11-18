@@ -5,8 +5,6 @@ import { datumZeit } from "@/lib/format";
 import { istStatus, STATUS, STATUS_LABEL, type Antragsliste, type Status } from "@/packages/mitgliedsantrag/anzeige";
 import { mitgliedsantraegeFuerVorstand } from "@/packages/mitgliedsantrag/server";
 import { cn } from "@/lib/utils";
-import { abmelden } from "./actions";
-import { AdminNav } from "./admin-nav";
 import { StatusBadge } from "./status-badge";
 
 export const metadata: Metadata = {
@@ -26,7 +24,7 @@ function listenLink({ q, status, seite }: { q: string; status?: Status; seite?: 
 }
 
 export default async function AdminPage({ searchParams }: { searchParams: Promise<Suchparameter> }) {
-  const { pb, vorstand } = await vorstandErforderlich();
+  const { pb } = await vorstandErforderlich();
   const params = await searchParams;
   const q = (params.q ?? "").trim().slice(0, 100);
   const status = istStatus(params.status) ? params.status : undefined;
@@ -40,22 +38,11 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <AdminNav pb={pb} aktiv="antraege" />
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Mitgliedsanträge</h1>
-          <div className="mt-2 h-1 w-16 bg-sva-gold" />
-          <p className="mt-4 text-sva-gray-300">Angemeldet als {vorstand.name || vorstand.email}.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Mitgliedsanträge</h1>
         </div>
-        <form action={abmelden}>
-          <button
-            type="submit"
-            className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light"
-          >
-            Abmelden
-          </button>
-        </form>
       </div>
 
       <form action="/admin" role="search" className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -73,7 +60,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
         />
         <button
           type="submit"
-          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light"
         >
           Suchen
         </button>

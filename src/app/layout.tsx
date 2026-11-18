@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { CookieHinweis } from "@/components/cookie-hinweis";
+import { NurWebseite } from "@/components/nur-webseite";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,12 +43,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Zum Inhalt springen
         </a>
-        <Header />
+        <NurWebseite>
+          <Header />
+        </NurWebseite>
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <Footer />
-        <CookieHinweis />
+        <NurWebseite>
+          <Footer />
+        </NurWebseite>
+        <NurWebseite>
+          <CookieHinweis />
+        </NurWebseite>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

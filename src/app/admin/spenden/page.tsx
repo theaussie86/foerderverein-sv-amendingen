@@ -13,8 +13,6 @@ import {
 } from "@/packages/beleganfrage/anzeige";
 import { beleganfragenFuerVorstand } from "@/packages/beleganfrage/server";
 import { cn } from "@/lib/utils";
-import { abmelden } from "../actions";
-import { AdminNav } from "../admin-nav";
 import { AnfrageStatusBadge } from "./status-badge";
 
 export const metadata: Metadata = {
@@ -34,7 +32,7 @@ function listenLink({ q, status, seite }: { q: string; status?: AnfrageStatus; s
 }
 
 export default async function SpendenbelegePage({ searchParams }: { searchParams: Promise<Suchparameter> }) {
-  const { pb, vorstand } = await vorstandErforderlich();
+  const { pb } = await vorstandErforderlich();
   const params = await searchParams;
   const q = (params.q ?? "").trim().slice(0, 100);
   const status = istAnfrageStatus(params.status) ? params.status : undefined;
@@ -49,35 +47,24 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <AdminNav pb={pb} aktiv="spenden" />
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Spendenbelege</h1>
-          <div className="mt-2 h-1 w-16 bg-sva-gold" />
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Spendenbelege</h1>
           <p className="mt-4 max-w-2xl text-sva-gray-300">
             Bei jeder Anfrage zuerst den Geldeingang prüfen, je nach Zahlungsweg auf dem Vereinskonto oder bei PayPal.
             Bis 300 € stellt die Website den Spendenbeleg aus und schickt ihn. Darüber die Zuwendungsbestätigung
             ausstellen und hier als ausgestellt markieren. Ist die Spende noch nicht da, die Anfrage als wartend
             markieren.
           </p>
-          <p className="mt-2 text-sm text-sva-gray-400">Angemeldet als {vorstand.name || vorstand.email}.</p>
         </div>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/admin/spenden/neu"
-            className="rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+            className="rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light"
           >
             Beleganfrage erfassen
           </Link>
-          <form action={abmelden}>
-            <button
-              type="submit"
-              className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light"
-            >
-              Abmelden
-            </button>
-          </form>
         </div>
       </div>
 
@@ -96,7 +83,7 @@ export default async function SpendenbelegePage({ searchParams }: { searchParams
         />
         <button
           type="submit"
-          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light"
         >
           Suchen
         </button>

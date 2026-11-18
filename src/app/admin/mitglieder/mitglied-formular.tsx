@@ -195,7 +195,7 @@ export function MitgliedFormular({ id, werte }: { id: string; werte: Eingabe }) 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light disabled:opacity-50"
+        className="w-full rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-50"
       >
         {isSubmitting ? "Wird gespeichert …" : id ? "Änderungen speichern" : "Mitglied anlegen"}
       </button>

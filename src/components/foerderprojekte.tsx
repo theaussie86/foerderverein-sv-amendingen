@@ -8,6 +8,7 @@ import {
   type Foerderprojekt,
 } from "@/packages/foerderprojekt/anzeige";
 import { foerderprojekteFuerWebsite } from "@/packages/foerderprojekt/server";
+import { FoerderprojektPlatzhalter } from "./foerderprojekt-platzhalter";
 
 // Abschnitt „Kleine Beiträge, die man sieht“ auf der Startseite: das erste Förderprojekt groß, die
 // übrigen als kompakte Liste. Ohne Förderprojekt auf der Startseite fällt der Abschnitt weg.
@@ -31,6 +32,7 @@ function Meta({ p, className = "" }: { p: Foerderprojekt; className?: string }) 
 }
 
 function Bild({ p, groesse, className }: { p: Foerderprojekt; groesse: Bildgroesse; className: string }) {
+  if (!p.bild) return <FoerderprojektPlatzhalter titel={p.titel} className={className} />;
   return (
     <div className={`relative overflow-hidden bg-sva-gray-800 ${className}`}>
       <Image src={oeffentlicheBildUrl(p, groesse)} alt="" fill unoptimized className="object-cover" />

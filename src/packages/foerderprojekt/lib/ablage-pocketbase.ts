@@ -74,13 +74,15 @@ export function pocketbaseAblage(client: () => Promise<PocketBase | null>): Abla
 
     async anlegen(daten, bild) {
       const c = await pb();
-      const r = await c.collection(COLLECTION).create({ ...felder(daten), bild });
+      const r = await c.collection(COLLECTION).create(bild ? { ...felder(daten), bild } : felder(daten));
       return { id: z.object({ id: z.string() }).parse(r).id };
     },
 
     async aendern(id, daten, bild) {
       const c = await pb();
-      await c.collection(COLLECTION).update(id, bild ? { ...felder(daten), bild } : felder(daten));
+      // Leerer Wert löscht die Datei in PocketBase.
+      const datei = bild === "entfernen" ? { bild: "" } : bild ? { bild } : {};
+      await c.collection(COLLECTION).update(id, { ...felder(daten), ...datei });
     },
 
     async loeschen(id) {

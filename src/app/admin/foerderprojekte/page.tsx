@@ -3,8 +3,6 @@ import Link from "next/link";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { STARTSEITE_PLAETZE, type Liste } from "@/packages/foerderprojekt/anzeige";
 import { foerderprojekteFuerVorstand } from "@/packages/foerderprojekt/server";
-import { abmelden } from "../actions";
-import { AdminNav } from "../admin-nav";
 import { FoerderprojektFormular } from "./foerderprojekt-formular";
 import { StartseitenPlaetze } from "./startseiten-plaetze";
 
@@ -22,7 +20,7 @@ const FEHLER: Record<string, string> = {
 };
 
 export default async function FoerderprojektePage({ searchParams }: { searchParams: Promise<Suchparameter> }) {
-  const { pb } = await vorstandErforderlich();
+  await vorstandErforderlich();
   const params = await searchParams;
 
   let liste: Liste | null = null;
@@ -37,12 +35,10 @@ export default async function FoerderprojektePage({ searchParams }: { searchPara
   const neu = params.neu !== undefined;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <AdminNav pb={pb} aktiv="foerderprojekte" />
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Förderprojekte</h1>
-          <div className="mt-2 h-1 w-16 bg-sva-gold" />
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Förderprojekte</h1>
           <p className="mt-4 max-w-2xl text-sva-gray-300">
             Was der Förderverein finanziert hat. Höchstens {STARTSEITE_PLAETZE} Förderprojekte erscheinen auf der
             Startseite unter „Kleine Beiträge, die man sieht“. Die Reihenfolge stellen die Pfeile ein.
@@ -51,18 +47,10 @@ export default async function FoerderprojektePage({ searchParams }: { searchPara
         <div className="flex flex-wrap gap-3">
           <Link
             href="/admin/foerderprojekte?neu"
-            className="rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+            className="rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light"
           >
             Förderprojekt anlegen
           </Link>
-          <form action={abmelden}>
-            <button
-              type="submit"
-              className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light"
-            >
-              Abmelden
-            </button>
-          </form>
         </div>
       </div>
 

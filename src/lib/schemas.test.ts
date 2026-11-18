@@ -267,9 +267,9 @@ describe("foerderprojektSchema", () => {
     expect(d).toMatchObject({ jahr: null, betrag: null, startseite: false, bild: null });
   });
 
-  test("beim Anlegen ist ein Bild Pflicht", () => {
-    expect(foerderprojektSchema.safeParse({ ...eingabe, bild: leer }).success).toBe(false);
-    expect(foerderprojektSchema.safeParse({ ...eingabe, bild: undefined }).success).toBe(false);
+  test("ein Bild ist freiwillig, ohne Bild gibt es das Standardbild", () => {
+    expect(foerderprojektSchema.parse({ ...eingabe, bild: leer }).bild).toBeNull();
+    expect(foerderprojektSchema.parse({ ...eingabe, bild: undefined }).bild).toBeNull();
   });
 
   test("nur JPEG und PNG bis 5 MB", () => {
