@@ -96,6 +96,8 @@ export function BildAuswahl({
   const [pixel, setPixel] = useState<Area | null>(null);
   const [laeuft, setLaeuft] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
+  // Bisheriges Bild beim Speichern entfernen, zurück zum Standardbild.
+  const [entfernt, setEntfernt] = useState(false);
 
   useEffect(() => () => void (original && URL.revokeObjectURL(original.url)), [original]);
   useEffect(() => () => void (ergebnis && URL.revokeObjectURL(ergebnis.url)), [ergebnis]);
@@ -138,7 +140,17 @@ export function BildAuswahl({
     }
   }
 
-  const anzeige = ergebnis?.url ?? bildUrl;
+  // Entfernt, was gerade zu sehen ist: erst ein neu gewähltes Bild, dann das gespeicherte.
+  function entfernen() {
+    if (ergebnis) {
+      setErgebnis(null);
+      setOriginal(null);
+      eingabeSetzen(null);
+    } else setEntfernt(true);
+  }
+
+  const gespeichert = entfernt ? null : bildUrl;
+  const anzeige = ergebnis?.url ?? gespeichert;
 
   return (
     <div className="mt-1">
@@ -186,11 +198,27 @@ export function BildAuswahl({
             Zuschnitt ändern
           </button>
         )}
+        {anzeige && (
+          <button type="button" onClick={entfernen} className={`${knopf} text-red-400 hover:text-red-300`}>
+            Bild entfernen
+          </button>
+        )}
+        {entfernt && !ergebnis && (
+          <button
+            type="button"
+            onClick={() => setEntfernt(false)}
+            className={`${knopf} text-sva-gold hover:text-sva-gold-light`}
+          >
+            Rückgängig
+          </button>
+        )}
         {ergebnis && <span className="text-sm text-sva-gray-400">{ergebnis.datei.name}</span>}
+        {entfernt && <input type="hidden" name="bild_entfernen" value="on" />}
       </div>
       <p className="mt-2 text-xs text-sva-gray-400">
         JPEG oder PNG. Nach der Auswahl legst du den Ausschnitt fest.
-        {bearbeiten && anzeige && " Ohne neue Auswahl bleibt das bisherige Bild."}
+        {bearbeiten && anzeige && !ergebnis && " Ohne neue Auswahl bleibt das bisherige Bild."}
+        {entfernt && !ergebnis && " Beim Speichern wird das bisherige Bild entfernt."}
         {!anzeige && " Ohne Bild zeigt die Startseite das Standardbild mit Wappen und Titel."}
       </p>
       {fehler && <p className="mt-1 text-xs text-red-400">{fehler}</p>}

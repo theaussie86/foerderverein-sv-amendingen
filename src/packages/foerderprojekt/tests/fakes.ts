@@ -1,4 +1,4 @@
-import type { Ablage, Bildgroesse, Foerderprojekt, Foerderprojektdaten, Gespeichert } from "../index";
+import type { Ablage, Bildaenderung, Bildgroesse, Foerderprojekt, Foerderprojektdaten, Gespeichert } from "../index";
 
 // Ablage im Speicher. Merkt sich, welche Datei zuletzt hochgeladen wurde.
 export class FakeAblage implements Ablage {
@@ -20,8 +20,10 @@ export class FakeAblage implements Ablage {
     return Promise.resolve({ id });
   }
 
-  aendern(id: string, daten: Gespeichert, bild: File | null) {
-    this.projekte = this.projekte.map((p) => (p.id === id ? { ...p, ...daten, bild: bild?.name ?? p.bild } : p));
+  aendern(id: string, daten: Gespeichert, bild: Bildaenderung) {
+    this.projekte = this.projekte.map((p) =>
+      p.id === id ? { ...p, ...daten, bild: bild === "entfernen" ? "" : (bild?.name ?? p.bild) } : p,
+    );
     return Promise.resolve();
   }
 

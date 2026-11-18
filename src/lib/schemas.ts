@@ -211,6 +211,11 @@ export const foerderprojektSchema = z.object({
     .transform((f) => (f && f.size > 0 ? f : null))
     .refine((f) => !f || BILD_TYPEN.some((t) => t === f.type), "Nur JPEG oder PNG.")
     .refine((f) => !f || f.size <= BILD_MAX_BYTES, "Das Bild darf höchstens 5 MB groß sein."),
+  // Beim Ändern: zurück zum Standardbild. Ein neues Bild hat Vorrang.
+  bild_entfernen: z
+    .literal("on")
+    .optional()
+    .transform((v) => v === "on"),
 });
 
 export type FoerderprojektEingabe = z.infer<typeof foerderprojektSchema>;

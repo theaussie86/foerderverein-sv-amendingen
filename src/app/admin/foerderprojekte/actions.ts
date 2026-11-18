@@ -28,11 +28,13 @@ export async function foerderprojektSpeichern(eingabe: unknown): Promise<Speiche
   const parsed = foerderprojektSchema.safeParse(Object.fromEntries(eingabe));
   if (!parsed.success) return { ok: false, fehler: "Bitte prüf die Angaben." };
 
-  const { id, bild, ...daten } = parsed.data;
+  const { id, bild, bild_entfernen, ...daten } = parsed.data;
   const foerderprojekte = foerderprojekteFuerVorstand();
   let ergebnis: Speicherergebnis;
   try {
-    ergebnis = id ? await foerderprojekte.aendern(id, daten, bild) : await foerderprojekte.anlegen(daten, bild);
+    ergebnis = id
+      ? await foerderprojekte.aendern(id, daten, bild ?? (bild_entfernen ? "entfernen" : null))
+      : await foerderprojekte.anlegen(daten, bild);
   } catch (e) {
     console.error("Förderprojekt konnte nicht gespeichert werden", e instanceof Error ? e.message : e);
     return { ok: false, fehler: "Das Förderprojekt konnte nicht gespeichert werden." };

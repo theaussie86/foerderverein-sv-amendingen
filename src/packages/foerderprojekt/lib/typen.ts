@@ -47,6 +47,9 @@ export type Startseitenaktion = (typeof STARTSEITE_AKTIONEN)[number];
 
 export type Ordnungsergebnis = { ok: true } | { ok: false; grund: "startseite-voll" | "nicht-gefunden" };
 
+// Beim Ändern: neues Bild, "entfernen" (zurück zum Standardbild) oder null (Bild bleibt).
+export type Bildaenderung = File | "entfernen" | null;
+
 export type Bild = { inhalt: ReadableStream<Uint8Array>; contentType: string };
 
 // --- Seams -------------------------------------------------------------------
@@ -57,8 +60,7 @@ export type Ablage = {
   alle(): Promise<Foerderprojekt[]>;
   laden(id: string): Promise<Foerderprojekt | null>;
   anlegen(daten: Gespeichert, bild: File | null): Promise<{ id: string }>;
-  // Ohne bild bleibt das bisherige Bild.
-  aendern(id: string, daten: Gespeichert, bild: File | null): Promise<void>;
+  aendern(id: string, daten: Gespeichert, bild: Bildaenderung): Promise<void>;
   loeschen(id: string): Promise<void>;
   // Verkleinertes Bild, null wenn es das Förderprojekt nicht gibt oder PocketBase es nicht liefert.
   bild(projekt: Foerderprojekt, groesse: Bildgroesse): Promise<Bild | null>;

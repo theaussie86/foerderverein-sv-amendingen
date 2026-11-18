@@ -33,6 +33,13 @@ describe("Pflichtfelder", () => {
     expect(ablage.projekte[0]?.bild).toBe("");
   });
 
+  test("entfernen führt zurück zum Standardbild", async () => {
+    const { ablage, f } = aufbau();
+    await f.anlegen(daten(), bild("alt.jpg"));
+    expect((await f.aendern("f1", daten(), "entfernen")).ok).toBe(true);
+    expect(ablage.projekte[0]?.bild).toBe("");
+  });
+
   test("ohne Bild gibt es kein öffentliches Bild", async () => {
     const { f } = aufbau();
     await f.anlegen(daten({ startseite: true }), null);
