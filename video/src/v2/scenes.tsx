@@ -154,7 +154,7 @@ export const VereinsCard: React.FC<{ size?: number }> = ({ size = 56 }) => (
     <div>
       Förderverein
       <br />
-      SV Amendingen
+      SV Amendingen Fußball
     </div>
   </div>
 );
@@ -201,7 +201,7 @@ export const S08: React.FC<SceneProps> = ({ from, dur }) => (
   </AbsoluteFill>
 );
 
-// 09 · Jugendcamp und Freude am Fußball (Schnitt auf Nahaufnahme beim zweiten Satz)
+// 09 · Schuhwaschanlage und Freude am Fußball (Schnitt auf Nahaufnahme beim zweiten Satz)
 export const S09: React.FC<SceneProps> = ({ from, dur }) => {
   const frame = useCurrentFrame();
   const close = frame >= beatFrame("nahaufnahme", from);
@@ -213,13 +213,13 @@ export const S09: React.FC<SceneProps> = ({ from, dur }) => {
         <Shot {...panel("s09")} dur={dur} />
       )}
       <div style={{ position: "absolute", left: 740, top: 70, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 18 }}>
-        <Reveal at={beatFrame("jugendcamp", from)}>
+        <Reveal at={beatFrame("schuhwaschanlage", from)}>
           <Tag tone="yellow" size={64}>
-            Jugendcamp mit dem FC Bayern
+            Neue Schuhwaschanlage
           </Tag>
         </Reveal>
-        <Reveal at={beatFrame("unterstuetzt", from)}>
-          <Tag size={52}>Vom Förderverein unterstützt</Tag>
+        <Reveal at={beatFrame("bezuschusst", from)}>
+          <Tag size={52}>Vom Förderverein bezuschusst</Tag>
         </Reveal>
       </div>
     </AbsoluteFill>
@@ -337,12 +337,12 @@ const People: React.FC<{ size: number }> = ({ size }) => (
   </svg>
 );
 
-// 12 · Gemeinsam die hundert knacken
+// 12 · Gemeinsam die 150 knacken
 export const S12: React.FC<SceneProps> = ({ from, dur }) => {
   const frame = useCurrentFrame();
-  const at80 = beatFrame("ueber80", from);
-  const fill = interpolate(frame, [at80 - 14, at80 + 10], [0, 0.8], { ...clamp, easing: (t) => 1 - Math.pow(1 - t, 3) });
-  const goal = useAppear(beatFrame("hundert", from));
+  const at100 = beatFrame("ueber100", from);
+  const fill = interpolate(frame, [at100 - 14, at100 + 10], [0, 100 / 150], { ...clamp, easing: (t) => 1 - Math.pow(1 - t, 3) });
+  const goal = useAppear(beatFrame("hundertfuenfzig", from));
   return (
     <AbsoluteFill>
       <Shot {...panel("s12")} dur={dur} fx={0.34}>
@@ -350,7 +350,7 @@ export const S12: React.FC<SceneProps> = ({ from, dur }) => {
           <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
             <People size={72} />
             <span style={{ color: K.ink, fontWeight: 850, fontSize: 34, letterSpacing: "-0.01em" }}>
-              Über <span style={{ color: K.greenText, fontWeight: 900 }}>80</span> Mitglieder
+              Über <span style={{ color: K.greenText, fontWeight: 900 }}>100</span> Mitglieder
             </span>
           </div>
           <div style={{ position: "relative", width: 430, height: 40, marginTop: 26, borderRadius: 20, border: `4px solid ${K.green}`, background: "#e3e3e0", boxSizing: "border-box", overflow: "hidden" }}>
@@ -368,7 +368,7 @@ export const S12: React.FC<SceneProps> = ({ from, dur }) => {
                 background: `rgba(247,197,43,${goal})`,
               }}
             >
-              Ziel: 100
+              Ziel: 150
             </span>
           </div>
         </PanelCard>
