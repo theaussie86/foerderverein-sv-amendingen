@@ -95,7 +95,8 @@ function datenschutzhinweise(v: Vordruck) {
   v.text(
     "Mitgliederverzeichnisse werden nur an Vorstandsmitglieder und sonstige Mitglieder ausgehändigt, die im Verein " +
       "eine besondere Funktion ausüben, welche die Kenntnis der Mitgliederdaten erfordert. Für den Lastschrifteinzug " +
-      "erhält die Bank des Vereins die nötigen Bankdaten. E-Mails versenden wir über einen Auftragsverarbeiter. " +
+      "erhält die Bank des Vereins die nötigen Bankdaten. Website und Datenbank betreibt Hostinger, E-Mails versendet " +
+      "Resend, beide als Auftragsverarbeiter. " +
       "Die Daten werden durch geeignete technische und organisatorische Maßnahmen vor der Kenntnisnahme Dritter geschützt.",
     { size: 9.5 },
   );
@@ -111,7 +112,8 @@ function datenschutzhinweise(v: Vordruck) {
   abschnitt("Ihre Rechte");
   v.text(
     "Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit " +
-      "und Widerspruch (Art. 15 bis 21 DSGVO). Freiwillige Angaben löschen wir auf Wunsch jederzeit. Sie können sich " +
+      "und Widerspruch (Art. 15 bis 21 DSGVO). Freiwillige Angaben löschen wir auf Wunsch jederzeit. Das " +
+      `Lastschriftmandat können Sie jederzeit per E-Mail an ${verein.email} widerrufen. Sie können sich ` +
       "bei einer Aufsichtsbehörde beschweren, zuständig ist das Bayerische Landesamt für Datenschutzaufsicht (BayLDA).",
     { size: 9.5 },
   );
