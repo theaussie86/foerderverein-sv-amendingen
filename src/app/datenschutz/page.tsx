@@ -33,6 +33,7 @@ export default function DatenschutzPage() {
             <li>Geburtsdatum (freiwillig)</li>
             <li>Telefon- und Handynummer (freiwillig)</li>
             <li>Bankverbindung (IBAN) bei SEPA-Lastschrift</li>
+            <li>Betrag, Tag und Zahlungsweg einer Spende, wenn Sie einen Spendenbeleg anfordern</li>
           </ul>
         </section>
         <section>
@@ -43,13 +44,28 @@ export default function DatenschutzPage() {
           </p>
           <p className="mt-2">
             Nachrichten über das Kontaktformular leiten wir per E-Mail an das Postfach des Vereins weiter (Versand über
-            Resend, siehe Abschnitt 4). Wir speichern sie nicht auf der Website und nutzen sie nur zur Beantwortung
+            Resend, siehe Abschnitt 5). Wir speichern sie nicht auf der Website und nutzen sie nur zur Beantwortung
             Ihrer Anfrage.
           </p>
         </section>
         <section>
+          <h2 className="mb-3 text-lg font-semibold text-white">4. Hosting und Server-Logs</h2>
+          <p>
+            Website und Datenbank laufen auf einem Server von Hostinger (Hostinger International Ltd., Larnaka, Zypern).
+            Hostinger verarbeitet die dort gespeicherten Daten als Auftragsverarbeiter nach Art. 28 DSGVO und nur nach
+            unseren Weisungen.
+          </p>
+          <p className="mt-2">
+            Beim Aufruf der Website verarbeitet der Server technisch notwendige Angaben: IP-Adresse, Zeitpunkt,
+            aufgerufene Seite und Browserkennung. Wir brauchen sie, um die Seite auszuliefern, Fehler zu finden und
+            Angriffe abzuwehren (Art. 6 Abs. 1 lit. f DSGVO). Die Server-Logs werden nur kurz gespeichert und
+            automatisch überschrieben. Wir werten sie nicht zu Statistikzwecken aus und führen sie nicht mit anderen
+            Daten zusammen.
+          </p>
+        </section>
+        <section>
           <h2 className="mb-3 text-lg font-semibold text-white">
-            4. Online-Mitgliedsantrag und elektronische Unterschrift
+            5. Online-Mitgliedsantrag und elektronische Unterschrift
           </h2>
           <p>
             Wenn Sie online Mitglied werden, verarbeiten wir die Angaben aus dem Formular (Name, Anschrift,
@@ -75,21 +91,41 @@ export default function DatenschutzPage() {
           </p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">5. Weitergabe von Daten</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">6. Spenden und Spendenbelege</h2>
+          <p>
+            Wenn Sie einen Spendenbeleg anfordern, speichern wir Name, Anschrift, E-Mail-Adresse, Betrag, Tag und
+            Zahlungsweg der Spende. Der Vorstand prüft damit den Geldeingang und stellt den Beleg aus. Rechtsgrundlage
+            ist Ihre Anfrage (Art. 6 Abs. 1 lit. b DSGVO).
+          </p>
+          <p className="mt-2">
+            Der Verein muss eine Kopie jeder Zuwendungsbestätigung und die Unterlagen zur Spende aufbewahren (§ 50
+            EStDV, § 147 AO). Diese Daten speichern wir deshalb für die Dauer der steuerlichen Aufbewahrungsfristen
+            (Art. 6 Abs. 1 lit. c DSGVO) und löschen sie danach.
+          </p>
+        </section>
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-white">7. Weitergabe von Daten</h2>
           <p>
             Eine Weitergabe an Dritte erfolgt nur zur Vertragserfüllung (z.B. SEPA-Lastschrift) oder bei gesetzlicher
             Verpflichtung.
           </p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">6. Speicherdauer</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">8. Speicherdauer</h2>
           <p>
             Personenbezogene Daten werden gelöscht, sobald der Zweck entfällt und keine gesetzlichen
-            Aufbewahrungspflichten bestehen.
+            Aufbewahrungspflichten bestehen. Im Einzelnen:
           </p>
+          <ul className="mt-2 list-inside list-disc space-y-1">
+            <li>Mitgliedsdaten: für die Dauer der Mitgliedschaft</li>
+            <li>Lastschriftmandat: mindestens 14 Monate nach der letzten Lastschrift</li>
+            <li>Spendenbelege und Unterlagen zur Spende: für die Dauer der steuerlichen Aufbewahrungsfristen</li>
+            <li>Kontaktanfragen: bis die Anfrage erledigt ist</li>
+            <li>Server-Logs: kurzzeitig, sie werden automatisch überschrieben</li>
+          </ul>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">7. Ihre Rechte</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">9. Ihre Rechte</h2>
           <ul className="mt-2 list-inside list-disc space-y-1">
             <li>Auskunft (Art. 15 DSGVO)</li>
             <li>Berichtigung (Art. 16 DSGVO)</li>
@@ -98,9 +134,24 @@ export default function DatenschutzPage() {
             <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
             <li>Widerspruch (Art. 21 DSGVO)</li>
           </ul>
+          <p className="mt-4 font-semibold text-white">Widerspruchsrecht</p>
+          <p className="mt-1">
+            Soweit wir Daten auf Grundlage berechtigter Interessen verarbeiten (Art. 6 Abs. 1 lit. f DSGVO), etwa
+            Server-Logs und das Protokoll der elektronischen Unterschrift, können Sie dem jederzeit aus Gründen
+            widersprechen, die sich aus Ihrer besonderen Situation ergeben. Wir verarbeiten die Daten dann nicht mehr,
+            es sei denn, es gibt zwingende schutzwürdige Gründe oder sie dienen der Geltendmachung, Ausübung oder
+            Verteidigung von Rechtsansprüchen.
+          </p>
+          <p className="mt-4 font-semibold text-white">Widerruf des SEPA-Lastschriftmandats</p>
+          <p className="mt-1">
+            Sie können das Lastschriftmandat jederzeit widerrufen, formlos per E-Mail an {verein.email} oder per Post an
+            den Verein. Ab dann ziehen wir keine Beiträge mehr ein. Bereits eingezogene Lastschriften können Sie
+            innerhalb von acht Wochen bei Ihrer Bank zurückgeben.
+          </p>
+          <p className="mt-2">Für alle Anliegen zu Ihren Daten genügt eine E-Mail an {verein.email}.</p>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">8. Cookies und Analyse</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">10. Cookies und Analyse</h2>
           <p>
             Diese Website setzt keine Analyse-, Tracking- oder Marketing-Dienste ein. Schriftarten und Videos werden von
             unserem eigenen Server ausgeliefert, es werden dabei keine Daten an Dritte übertragen.
@@ -118,7 +169,7 @@ export default function DatenschutzPage() {
           </ul>
         </section>
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-white">9. Beschwerderecht</h2>
+          <h2 className="mb-3 text-lg font-semibold text-white">11. Beschwerderecht</h2>
           <p>Zuständige Aufsichtsbehörde: Bayerisches Landesamt für Datenschutzaufsicht (BayLDA).</p>
         </section>
       </div>
