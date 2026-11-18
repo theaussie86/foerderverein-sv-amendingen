@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Icon } from "../../_shell/icons";
+import { Icon } from "./icons";
 
 export type Dokument = { feld: string; label: string; href: string; bild: boolean };
 
-// Zeigt die PDFs eines Mitgliedsantrags direkt auf der Seite, mit Reitern zum Umschalten.
+// Zeigt PDFs (Mitgliedsantrag, Spendenbeleg) direkt auf der Seite, mit Reitern zum Umschalten.
 // Der Browser rendert das PDF selbst; ältere iPhones zeigen im Rahmen nur die erste Seite, dafür gibt es den Knopf zum Öffnen in neuem Tab.
 export function DokumentAnsicht({ dokumente }: { dokumente: Dokument[] }) {
   const [aktivFeld, setAktivFeld] = useState(dokumente[0]?.feld);
@@ -73,7 +73,12 @@ export function DokumentAnsicht({ dokumente }: { dokumente: Dokument[] }) {
             <img src={aktiv.href} alt={aktiv.label} className="max-h-full max-w-full object-contain" />
           </div>
         ) : (
-          <iframe key={aktiv.href} src={aktiv.href} title={aktiv.label} className="block h-full w-full" />
+          <iframe
+            key={aktiv.href}
+            src={`${aktiv.href}#navpanes=0&view=FitH`}
+            title={aktiv.label}
+            className="block h-full w-full"
+          />
         )}
       </div>
     </div>

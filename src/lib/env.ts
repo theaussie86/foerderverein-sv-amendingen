@@ -19,6 +19,8 @@ const envSchema = z
     KONTAKT_EMPFAENGER: optional(z.string()),
     RESEND_API_KEY: optional(z.string()),
     MAIL_FROM: optional(z.email()),
+    // Nur lokal: Ohne RESEND_API_KEY gehen Mails an diese Mailpit-Instanz (z. B. http://localhost:8025).
+    MAILPIT_URL: optional(z.url()),
     POCKETBASE_URL: optional(z.url()),
     POCKETBASE_EMAIL: optional(z.string()),
     POCKETBASE_PASSWORD: optional(z.string()),

@@ -10,7 +10,7 @@ import { mitgliederFuerVorstand } from "@/packages/mitglied/server";
 import { formatIban } from "@/lib/schemas";
 import { StatusBadge } from "../../status-badge";
 import { AblehnenFormular } from "./ablehnen-formular";
-import { DokumentAnsicht, type Dokument } from "./dokument-ansicht";
+import { DokumentAnsicht, type Dokument } from "../../_shell/dokument-ansicht";
 
 export const metadata: Metadata = {
   title: "Mitgliedsantrag",
