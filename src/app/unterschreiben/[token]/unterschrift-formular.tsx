@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import SignaturePad from "signature_pad";
+import type SignaturePad from "signature_pad";
 import { unterschriftSchema } from "@/lib/schemas";
 import { unterschreiben } from "./actions";
+import { ArtWahl, schriftzugAlsPng, startArt, TippFeld, ZeichenFeld, type Art } from "./unterschrift-felder";
 
 type Status = "offen" | "sendet" | "fertig";
 
@@ -42,7 +43,7 @@ export function UnterschriftFormular({
           Jetzt unterschreiben
         </button>
         <p className="mt-3 text-center text-xs text-sva-gray-400">
-          Du unterschreibst in einem eigenen Fenster mit Finger oder Maus.
+          Du tippst deinen Namen oder unterschreibst mit Finger oder Maus.
         </p>
       </div>
       {offen && (
@@ -74,52 +75,20 @@ function UnterschriftModal({
   onStatus: (s: Status) => void;
   onSchliessen: () => void;
 }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const padRef = useRef<SignaturePad | null>(null);
-  const [leer, setLeer] = useState(true);
+  const [art, setArt] = useState<Art>(startArt);
+  const [name, setName] = useState(kontoinhaber);
+  const [zeichnungLeer, setZeichnungLeer] = useState(true);
   const [bestaetigt, setBestaetigt] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
-  // Als Ref, damit ein neues Callback beim Re-Render das Unterschriftsfeld nicht neu aufbaut.
+  const leer = art === "tippen" ? name.trim() === "" : zeichnungLeer;
+  // Als Ref, damit ein neues Callback beim Re-Render den Effekt nicht neu startet.
   const schliessenRef = useRef(onSchliessen);
   useEffect(() => {
     schliessenRef.current = onSchliessen;
   });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const pad = new SignaturePad(canvas, {
-      penColor: "#0b1f4d",
-      backgroundColor: "rgba(255,255,255,0)",
-      minWidth: 1,
-      maxWidth: 3,
-    });
-    pad.addEventListener("endStroke", () => setLeer(pad.isEmpty()));
-    padRef.current = pad;
-
-    // Canvas an Größe und Pixeldichte anpassen. Beim Drehen des Handys wird die Unterschrift
-    // proportional mitskaliert statt gelöscht.
-    let alteBreite = 0;
-    function anpassen() {
-      if (!canvas) return;
-      const ratio = Math.max(window.devicePixelRatio || 1, 1);
-      const breite = canvas.offsetWidth;
-      const daten = pad.toData();
-      canvas.width = breite * ratio;
-      canvas.height = canvas.offsetHeight * ratio;
-      canvas.getContext("2d")?.scale(ratio, ratio);
-      pad.clear();
-      if (daten.length && alteBreite) {
-        const f = breite / alteBreite;
-        pad.fromData(daten.map((g) => ({ ...g, points: g.points.map((p) => ({ ...p, x: p.x * f, y: p.y * f })) })));
-      }
-      alteBreite = breite;
-      setLeer(pad.isEmpty());
-    }
-    anpassen();
-    const beobachter = new ResizeObserver(anpassen);
-    beobachter.observe(canvas);
-
     // Seite im Hintergrund nicht mitscrollen lassen.
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -127,27 +96,30 @@ function UnterschriftModal({
       if (e.key === "Escape") schliessenRef.current();
     }
     window.addEventListener("keydown", taste);
-
     return () => {
-      beobachter.disconnect();
       window.removeEventListener("keydown", taste);
       document.body.style.overflow = overflow;
-      pad.off();
     };
   }, []);
 
   function loeschen() {
     padRef.current?.clear();
-    setLeer(true);
+    setZeichnungLeer(true);
+  }
+
+  async function bildErzeugen(): Promise<string | null> {
+    if (art === "tippen") return name.trim() ? schriftzugAlsPng(name.trim()) : null;
+    const pad = padRef.current;
+    return pad && !pad.isEmpty() ? pad.toDataURL("image/png") : null;
   }
 
   async function absenden() {
-    const pad = padRef.current;
-    if (!pad || pad.isEmpty()) return;
+    const unterschrift = await bildErzeugen();
+    if (!unterschrift) return;
     const eingabe = unterschriftSchema.safeParse({
       token,
       sitzungToken,
-      unterschrift: pad.toDataURL("image/png"),
+      unterschrift,
       bestaetigt,
     });
     if (!eingabe.success) {
@@ -178,8 +150,16 @@ function UnterschriftModal({
             <h2 id="unterschrift-titel" className="text-lg font-semibold text-white sm:text-xl">
               Unterschrift
             </h2>
-            <p className="mt-1 text-sm text-sva-gray-300">Unterschreib mit Finger oder Maus im weißen Feld.</p>
-            <p className="mt-1 text-xs text-sva-gold sm:hidden">Tipp: Halt dein Handy quer, dann hast du mehr Platz.</p>
+            <p className="mt-1 text-sm text-sva-gray-300">
+              {art === "tippen"
+                ? "Tipp deinen Namen ein, wir setzen ihn als Unterschrift."
+                : "Unterschreib mit Finger oder Maus im weißen Feld."}
+            </p>
+            {art === "zeichnen" && (
+              <p className="mt-1 text-xs text-sva-gold sm:hidden">
+                Tipp: Halt dein Handy quer, dann hast du mehr Platz.
+              </p>
+            )}
           </div>
           <button
             type="button"
@@ -191,21 +171,13 @@ function UnterschriftModal({
           </button>
         </div>
 
-        <div className="relative mt-4 min-h-40 flex-1 sm:flex-none">
-          <canvas
-            ref={canvasRef}
-            className="absolute inset-0 h-full w-full touch-none rounded-md bg-white sm:static sm:h-64"
-            aria-label="Unterschriftsfeld"
-          />
-          <div className="pointer-events-none absolute right-6 bottom-8 left-6 border-b border-sva-gray-300" />
-          <button
-            type="button"
-            onClick={loeschen}
-            className="absolute top-3 right-3 rounded px-2 py-1 text-xs font-medium text-sva-gray-600 hover:bg-sva-gray-100"
-          >
-            Löschen
-          </button>
-        </div>
+        <ArtWahl art={art} onArt={setArt} />
+
+        {art === "tippen" ? (
+          <TippFeld name={name} onName={setName} />
+        ) : (
+          <ZeichenFeld padRef={padRef} onLeer={setZeichnungLeer} onLoeschen={loeschen} />
+        )}
 
         <label className="mt-4 flex cursor-pointer items-start gap-3">
           <input
