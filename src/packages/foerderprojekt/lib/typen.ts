@@ -23,7 +23,8 @@ export type Foerderprojektdaten = {
 
 export type Foerderprojekt = Foerderprojektdaten & {
   id: string;
-  // Dateiname des Bildes in PocketBase, ändert sich mit jedem neuen Bild.
+  // Dateiname des Bildes in PocketBase, ändert sich mit jedem neuen Bild. Leer ohne Bild: Dann zeigt
+  // die Website das Standardbild aus Wappen und Titel.
   bild: string;
   // Platz auf der Startseite, aufsteigend. Ohne Bedeutung, solange startseite falsch ist.
   reihenfolge: number;
@@ -34,7 +35,7 @@ export type Speicherergebnis =
   | { ok: true; id: string }
   | {
       ok: false;
-      grund: "pflichtfeld-fehlt" | "bild-fehlt" | "bild-ungueltig" | "startseite-voll" | "nicht-gefunden";
+      grund: "pflichtfeld-fehlt" | "bild-ungueltig" | "startseite-voll" | "nicht-gefunden";
     };
 
 // Oben die Förderprojekte auf der Startseite in ihrer Reihenfolge, darunter die übrigen.
@@ -55,7 +56,7 @@ export type Gespeichert = Foerderprojektdaten & { reihenfolge: number };
 export type Ablage = {
   alle(): Promise<Foerderprojekt[]>;
   laden(id: string): Promise<Foerderprojekt | null>;
-  anlegen(daten: Gespeichert, bild: File): Promise<{ id: string }>;
+  anlegen(daten: Gespeichert, bild: File | null): Promise<{ id: string }>;
   // Ohne bild bleibt das bisherige Bild.
   aendern(id: string, daten: Gespeichert, bild: File | null): Promise<void>;
   loeschen(id: string): Promise<void>;

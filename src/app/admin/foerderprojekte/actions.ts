@@ -11,7 +11,6 @@ export type Speicherfehler = { ok: false; fehler: string };
 
 const MELDUNG: Record<Exclude<Speicherergebnis, { ok: true }>["grund"], string> = {
   "pflichtfeld-fehlt": "Titel und Beschreibung sind Pflicht.",
-  "bild-fehlt": "Bitte ein Bild auswählen.",
   "bild-ungueltig": "Das Bild muss ein JPEG oder PNG mit höchstens 5 MB sein.",
   "startseite-voll": "Auf der Startseite sind schon alle 4 Plätze belegt.",
   "nicht-gefunden": "Das Förderprojekt gibt es nicht mehr.",

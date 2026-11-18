@@ -27,10 +27,16 @@ describe("Pflichtfelder", () => {
     expect(ablage.projekte).toEqual([]);
   });
 
-  test("ohne Bild wird nichts angelegt", async () => {
+  test("ohne Bild angelegt, bleibt das Bild leer (Standardbild)", async () => {
     const { ablage, f } = aufbau();
-    expect(await f.anlegen(daten(), null)).toEqual({ ok: false, grund: "bild-fehlt" });
-    expect(ablage.projekte).toEqual([]);
+    expect((await f.anlegen(daten(), null)).ok).toBe(true);
+    expect(ablage.projekte[0]?.bild).toBe("");
+  });
+
+  test("ohne Bild gibt es kein öffentliches Bild", async () => {
+    const { f } = aufbau();
+    await f.anlegen(daten({ startseite: true }), null);
+    expect(await f.oeffentlichesBild("f1", "", "kachel")).toBeNull();
   });
 
   test("nur JPEG und PNG bis 5 MB", async () => {

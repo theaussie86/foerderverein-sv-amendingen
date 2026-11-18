@@ -13,10 +13,10 @@ export class FakeAblage implements Ablage {
     return Promise.resolve(this.projekte.find((p) => p.id === id) ?? null);
   }
 
-  anlegen(daten: Gespeichert, bild: File) {
+  anlegen(daten: Gespeichert, bild: File | null) {
     const id = `f${this.naechsteId}`;
     const angelegt = `2026-11-${String(this.naechsteId++).padStart(2, "0")} 10:00:00.000Z`;
-    this.projekte.push({ ...daten, id, bild: bild.name, angelegt });
+    this.projekte.push({ ...daten, id, bild: bild?.name ?? "", angelegt });
     return Promise.resolve({ id });
   }
 

@@ -74,7 +74,7 @@ export function pocketbaseAblage(client: () => Promise<PocketBase | null>): Abla
 
     async anlegen(daten, bild) {
       const c = await pb();
-      const r = await c.collection(COLLECTION).create({ ...felder(daten), bild });
+      const r = await c.collection(COLLECTION).create(bild ? { ...felder(daten), bild } : felder(daten));
       return { id: z.object({ id: z.string() }).parse(r).id };
     },
 

@@ -70,7 +70,6 @@ export function foerderprojekte({ ablage }: Umgebung) {
     laden: (id: string): Promise<Foerderprojekt | null> => ablage.laden(id),
 
     async anlegen(eingabe: Foerderprojektdaten, bild: File | null): Promise<Speicherergebnis> {
-      if (!bild) return { ok: false, grund: "bild-fehlt" };
       const daten = normalisieren(eingabe);
       const p = await platz(daten, bild, null);
       if (!p.ok) return p;
@@ -78,7 +77,7 @@ export function foerderprojekte({ ablage }: Umgebung) {
       return { ok: true, id };
     },
 
-    // Ohne bild bleibt das bisherige Bild. Wer neu auf die Startseite kommt, hängt hinten an.
+    // Ohne bild bleibt das bisherige Bild (oder das Standardbild). Wer neu auf die Startseite kommt, hängt hinten an.
     async aendern(id: string, eingabe: Foerderprojektdaten, bild: File | null): Promise<Speicherergebnis> {
       const bisher = await ablage.laden(id);
       if (!bisher) return { ok: false, grund: "nicht-gefunden" };

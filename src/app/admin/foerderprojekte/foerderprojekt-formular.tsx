@@ -33,6 +33,8 @@ export function FoerderprojektFormular({
   const [feldfehler, setFeldfehler] = useState<Feldfehler>({});
   const [laeuft, starten] = useTransition();
   const p = projekt;
+  // Für die Vorschau des Standardbilds, solange kein Bild gewählt ist.
+  const [titel, setTitel] = useState(p?.titel ?? "");
 
   function absenden(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -73,7 +75,14 @@ export function FoerderprojektFormular({
         <label htmlFor="f-titel" className={labelCls}>
           Titel *
         </label>
-        <input id="f-titel" name="titel" defaultValue={p?.titel} maxLength={200} className={inputCls} />
+        <input
+          id="f-titel"
+          name="titel"
+          defaultValue={p?.titel}
+          onChange={(e) => setTitel(e.target.value)}
+          maxLength={200}
+          className={inputCls}
+        />
         <Fehler text={feldfehler.titel} />
       </div>
       <div>
@@ -93,9 +102,9 @@ export function FoerderprojektFormular({
       </div>
       <div>
         <label htmlFor="f-bild" className={labelCls}>
-          Bild *
+          Bild
         </label>
-        <BildAuswahl bildUrl={bildUrl} bearbeiten={Boolean(p)} />
+        <BildAuswahl bildUrl={bildUrl} titel={titel} bearbeiten={Boolean(p)} />
         <Fehler text={feldfehler.bild} />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">

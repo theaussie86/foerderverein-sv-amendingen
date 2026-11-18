@@ -7,10 +7,13 @@ import {
   type Liste,
   type Startseitenaktion,
 } from "@/packages/foerderprojekt/anzeige";
+import { FoerderprojektPlatzhalter } from "@/components/foerderprojekt-platzhalter";
 import { foerderprojektStartseite } from "./actions";
 import { FoerderprojektFormular } from "./foerderprojekt-formular";
 
-const bildUrl = (p: Foerderprojekt) => `/admin/foerderprojekte/${p.id}/bild?v=${encodeURIComponent(p.bild)}`;
+// null ohne eigenes Bild: Dann steht das Standardbild da.
+const bildUrl = (p: Foerderprojekt) =>
+  p.bild ? `/admin/foerderprojekte/${p.id}/bild?v=${encodeURIComponent(p.bild)}` : null;
 
 const pfeil =
   "rounded border border-sva-gray-600 px-2.5 py-1 text-sva-gray-300 transition-colors hover:bg-sva-gray-700 disabled:opacity-30 disabled:hover:bg-transparent";
@@ -41,6 +44,7 @@ export function StartseitenPlaetze({ liste, bearbeiten }: { liste: Liste; bearbe
   function zeile(p: Foerderprojekt, platz?: number) {
     const unterzeile = jahrUndBetrag(p);
     const offen = bearbeiten === p.id;
+    const bild = bildUrl(p);
     return (
       <li key={p.id} className="bg-sva-charcoal-light">
         <div className="flex flex-wrap items-center gap-4 p-4">
@@ -49,14 +53,18 @@ export function StartseitenPlaetze({ liste, bearbeiten }: { liste: Liste; bearbe
               {platz + 1}
             </span>
           )}
-          <Image
-            src={bildUrl(p)}
-            alt=""
-            width={64}
-            height={64}
-            unoptimized
-            className="h-16 w-16 shrink-0 rounded-md bg-sva-gray-800 object-cover"
-          />
+          {bild ? (
+            <Image
+              src={bild}
+              alt=""
+              width={64}
+              height={64}
+              unoptimized
+              className="h-16 w-16 shrink-0 rounded-md bg-sva-gray-800 object-cover"
+            />
+          ) : (
+            <FoerderprojektPlatzhalter titel={p.titel} className="h-16 w-16 shrink-0 rounded-md" />
+          )}
           <Link
             href={offen ? "/admin/foerderprojekte" : `/admin/foerderprojekte?bearbeiten=${p.id}`}
             className="min-w-0 flex-1"
@@ -95,7 +103,7 @@ export function StartseitenPlaetze({ liste, bearbeiten }: { liste: Liste; bearbe
         </div>
         {offen && (
           <div className="border-t border-sva-gray-700 p-4">
-            <FoerderprojektFormular projekt={p} bildUrl={bildUrl(p)} startseiteGesperrt={liste.voll && !p.startseite} />
+            <FoerderprojektFormular projekt={p} bildUrl={bild} startseiteGesperrt={liste.voll && !p.startseite} />
           </div>
         )}
       </li>

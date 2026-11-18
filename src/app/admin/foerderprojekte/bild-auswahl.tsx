@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Cropper, { type Area } from "react-easy-crop";
+import { FoerderprojektPlatzhalter } from "@/components/foerderprojekt-platzhalter";
 
 // Seitenverhältnis der großen Kachel auf der Startseite (PocketBase-Thumb 800x600). Die Liste zeigt
 // daraus die quadratische Mitte (Thumb 160x160).
@@ -76,7 +77,15 @@ function Beschriftete({ label, children, className }: { label: string; children:
 
 // Dateiauswahl mit Zuschnitt: Nach der Auswahl öffnet sich ein Dialog, in dem der Vorstand den
 // 4:3-Ausschnitt für die Startseite festlegt. Ins Formular geht nur das zugeschnittene JPEG.
-export function BildAuswahl({ bildUrl, bearbeiten }: { bildUrl: string | null; bearbeiten: boolean }) {
+export function BildAuswahl({
+  bildUrl,
+  titel,
+  bearbeiten,
+}: {
+  bildUrl: string | null;
+  titel: string;
+  bearbeiten: boolean;
+}) {
   const eingabe = useRef<HTMLInputElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const [original, setOriginal] = useState<{ datei: File; url: string } | null>(null);
@@ -133,16 +142,25 @@ export function BildAuswahl({ bildUrl, bearbeiten }: { bildUrl: string | null; b
 
   return (
     <div className="mt-1">
-      {anzeige && (
-        <div className="mb-3 flex items-end gap-4">
-          <Beschriftete label="Startseite" className="w-40">
+      <div className="mb-3 flex items-end gap-4">
+        <Beschriftete label={anzeige ? "Startseite" : "Startseite, Standardbild"} className="w-64">
+          {anzeige ? (
             <Vorschau src={anzeige} ausschnitt={null} />
-          </Beschriftete>
-          <Beschriftete label="Liste" className="w-20">
+          ) : (
+            <FoerderprojektPlatzhalter
+              titel={titel || "Titel des Förderprojekts"}
+              className="aspect-[4/3] rounded-md"
+            />
+          )}
+        </Beschriftete>
+        <Beschriftete label="Liste" className="w-20">
+          {anzeige ? (
             <Vorschau src={anzeige} ausschnitt={null} quadrat />
-          </Beschriftete>
-        </div>
-      )}
+          ) : (
+            <FoerderprojektPlatzhalter titel={titel} className="aspect-square rounded-md" />
+          )}
+        </Beschriftete>
+      </div>
       <div className="flex flex-wrap items-center gap-3">
         <input
           ref={eingabe}
@@ -172,7 +190,8 @@ export function BildAuswahl({ bildUrl, bearbeiten }: { bildUrl: string | null; b
       </div>
       <p className="mt-2 text-xs text-sva-gray-400">
         JPEG oder PNG. Nach der Auswahl legst du den Ausschnitt fest.
-        {bearbeiten && " Ohne neue Auswahl bleibt das bisherige Bild."}
+        {bearbeiten && anzeige && " Ohne neue Auswahl bleibt das bisherige Bild."}
+        {!anzeige && " Ohne Bild zeigt die Startseite das Standardbild mit Wappen und Titel."}
       </p>
       {fehler && <p className="mt-1 text-xs text-red-400">{fehler}</p>}
 
