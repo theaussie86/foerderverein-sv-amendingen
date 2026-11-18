@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useTransition, type FormEvent } from "react";
+import { useState, useTransition, type FormEvent } from "react";
 import { foerderprojektSchema } from "@/lib/schemas";
 import type { Foerderprojekt } from "@/packages/foerderprojekt/anzeige";
 import { foerderprojektLoeschen, foerderprojektSpeichern } from "./actions";
+import { BildAuswahl } from "./bild-auswahl";
 
 const inputCls =
   "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
@@ -31,16 +31,8 @@ export function FoerderprojektFormular({
 }) {
   const [fehler, setFehler] = useState<string | null>(null);
   const [feldfehler, setFeldfehler] = useState<Feldfehler>({});
-  const [vorschau, setVorschau] = useState<string | null>(null);
   const [laeuft, starten] = useTransition();
   const p = projekt;
-
-  useEffect(
-    () => () => {
-      if (vorschau) URL.revokeObjectURL(vorschau);
-    },
-    [vorschau],
-  );
 
   function absenden(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -69,8 +61,6 @@ export function FoerderprojektFormular({
     if (!p || !window.confirm(`„${p.titel}“ wirklich löschen?`)) return;
     starten(async () => setFehler((await foerderprojektLoeschen({ id: p.id })).fehler));
   }
-
-  const bild = vorschau ?? bildUrl;
 
   return (
     <form
@@ -105,33 +95,7 @@ export function FoerderprojektFormular({
         <label htmlFor="f-bild" className={labelCls}>
           Bild *
         </label>
-        <div className="mt-1 flex flex-wrap items-center gap-4">
-          {bild && (
-            <Image
-              src={bild}
-              alt=""
-              width={80}
-              height={80}
-              unoptimized
-              className="h-20 w-20 shrink-0 rounded-md bg-sva-gray-800 object-cover"
-            />
-          )}
-          <input
-            id="f-bild"
-            name="bild"
-            type="file"
-            accept="image/jpeg,image/png"
-            onChange={(e) => {
-              const datei = e.target.files?.[0];
-              setVorschau(datei ? URL.createObjectURL(datei) : null);
-            }}
-            className="text-sm text-sva-gray-300 file:mr-4 file:rounded-md file:border file:border-sva-gray-600 file:bg-transparent file:px-4 file:py-2 file:text-sva-gray-200"
-          />
-        </div>
-        <p className="mt-1 text-xs text-sva-gray-400">
-          JPEG oder PNG, höchstens 5 MB. Querformat sieht am besten aus.
-          {p && " Ohne neue Auswahl bleibt das bisherige Bild."}
-        </p>
+        <BildAuswahl bildUrl={bildUrl} bearbeiten={Boolean(p)} />
         <Fehler text={feldfehler.bild} />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
