@@ -10,7 +10,7 @@ Läuft der Next-Dev-Server auf Port 3000: `bun run v2:render -- --port=3123`.
 
 - `src/v2/timeline.json`: zentrale Zeitachse. Szenengrenzen (Frames, 30 fps), Beats für Einblendungen (Sekunden), Untertitel. Nach Änderungen `bun run v2:all`.
 - `src/v2/scenes.tsx`: die 14 Szenen. `src/v2/ui.tsx`: Bausteine (Shot, Tag, Wappen).
-- `public/v2/sprecher.mp3`: Sprecherspur, unverändert. `public/v2/scenes/*.webp`: Storyboard-Panels, bereinigt und 3x hochskaliert.
+- `public/v2/sprecher.mp3`: Sprecherspur. ElevenLabs-Webportal, Stimme „Simon - Relatable and Normal“, v4, Stability 50, Similarity 75. Am 18.11.2026 drei Sätze durch neue Takes ersetzt (per ffmpeg in Sprechpausen eingeschnitten). Die API geht im Free-Plan nicht für Bibliotheksstimmen. `public/v2/scenes/*.webp`: Storyboard-Panels, bereinigt und 3x hochskaliert.
 - `assets-source/storyboard/` (nicht im Repo): Seiten-PNGs aus dem Storyboard-PDF als `seite-01.png` bis `seite-04.png` (z. B. `pdfimages -png`). Panels neu erzeugen (Pillow + numpy):
   `python scripts/prep-v2.py assets-source/storyboard public/v2/scenes`
 

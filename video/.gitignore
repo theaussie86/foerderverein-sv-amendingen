@@ -3,3 +3,5 @@ out
 .tts
 build
 assets-source
+.env
+
