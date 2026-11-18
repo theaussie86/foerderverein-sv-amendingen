@@ -51,9 +51,9 @@ export default function DatenschutzPage() {
         <section>
           <h2 className="mb-3 text-lg font-semibold text-white">4. Hosting und Server-Logs</h2>
           <p>
-            Website und Datenbank laufen auf einem Server von Hostinger (Hostinger International Ltd., Larnaka, Zypern).
-            Hostinger verarbeitet die dort gespeicherten Daten als Auftragsverarbeiter nach Art. 28 DSGVO und nur nach
-            unseren Weisungen.
+            Website und Datenbank laufen auf einem Server von Hostinger (Hostinger International Ltd., Larnaka, Zypern)
+            in einem Rechenzentrum in Deutschland. Hostinger verarbeitet die dort gespeicherten Daten als
+            Auftragsverarbeiter nach Art. 28 DSGVO und nur nach unseren Weisungen.
           </p>
           <p className="mt-2">
             Beim Aufruf der Website verarbeitet der Server technisch notwendige Angaben: IP-Adresse, Zeitpunkt,
@@ -99,8 +99,8 @@ export default function DatenschutzPage() {
           </p>
           <p className="mt-2">
             Der Verein muss eine Kopie jeder Zuwendungsbestätigung und die Unterlagen zur Spende aufbewahren (§ 50
-            EStDV, § 147 AO). Diese Daten speichern wir deshalb für die Dauer der steuerlichen Aufbewahrungsfristen
-            (Art. 6 Abs. 1 lit. c DSGVO) und löschen sie danach.
+            EStDV, § 147 AO). Diese Daten speichern wir deshalb zehn Jahre, gerechnet ab dem Ende des Jahres der Spende
+            (Art. 6 Abs. 1 lit. c DSGVO), und löschen sie danach.
           </p>
         </section>
         <section>
@@ -119,7 +119,7 @@ export default function DatenschutzPage() {
           <ul className="mt-2 list-inside list-disc space-y-1">
             <li>Mitgliedsdaten: für die Dauer der Mitgliedschaft</li>
             <li>Lastschriftmandat: mindestens 14 Monate nach der letzten Lastschrift</li>
-            <li>Spendenbelege und Unterlagen zur Spende: für die Dauer der steuerlichen Aufbewahrungsfristen</li>
+            <li>Spendenbelege und Unterlagen zur Spende: zehn Jahre ab Ende des Jahres der Spende</li>
             <li>Kontaktanfragen: bis die Anfrage erledigt ist</li>
             <li>Server-Logs: kurzzeitig, sie werden automatisch überschrieben</li>
           </ul>
