@@ -7,7 +7,7 @@ import { anmelden, type LoginZustand } from "../actions";
 const inputCls =
   "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 const primaerCls =
-  "w-full rounded-md bg-sva-gold px-6 py-3 text-sm font-bold uppercase text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-50";
+  "w-full rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-50";
 const sekundaerCls =
   "w-full rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal disabled:opacity-50";
 const formCls = "mt-8 space-y-5 rounded-lg border border-sva-gray-700 bg-sva-charcoal-light p-6";

@@ -5,8 +5,6 @@ import { cn } from "@/lib/utils";
 import { vorstandErforderlich } from "@/lib/vorstand-session";
 import { FILTER, FILTER_LABEL, istFilter, type Filter, type Trefferliste } from "@/packages/mitglied/anzeige";
 import { mitgliederFuerVorstand } from "@/packages/mitglied/server";
-import { abmelden } from "../actions";
-import { AdminNav } from "../admin-nav";
 import { CsvExport } from "./csv-export";
 import { heute, MitgliedBadge } from "./mitglied-badge";
 
@@ -27,7 +25,7 @@ function listenLink({ q, filter, seite }: { q: string; filter?: Filter; seite?: 
 }
 
 export default async function MitgliederPage({ searchParams }: { searchParams: Promise<Suchparameter> }) {
-  const { pb, vorstand } = await vorstandErforderlich();
+  const { pb } = await vorstandErforderlich();
   const params = await searchParams;
   const q = (params.q ?? "").trim().slice(0, 100);
   const filter = istFilter(params.filter) ? params.filter : undefined;
@@ -42,34 +40,23 @@ export default async function MitgliederPage({ searchParams }: { searchParams: P
   const tag = heute();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <AdminNav pb={pb} aktiv="mitglieder" />
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">Mitglieder</h1>
-          <div className="mt-2 h-1 w-16 bg-sva-gold" />
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Mitglieder</h1>
           <p className="mt-4 max-w-2xl text-sva-gray-300">
             Alle Mitglieder, egal ob ihr Mitgliedsantrag online oder auf Papier kam. Online-Anträge übernimmst du in der
             Detailansicht des Antrags.
           </p>
-          <p className="mt-2 text-sm text-sva-gray-400">Angemeldet als {vorstand.name || vorstand.email}.</p>
         </div>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/admin/mitglieder/neu"
-            className="rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+            className="rounded-md bg-sva-gold px-6 py-3 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light"
           >
             Mitglied anlegen
           </Link>
           <CsvExport q={q} filter={filter} />
-          <form action={abmelden}>
-            <button
-              type="submit"
-              className="rounded-md border border-sva-gray-600 px-6 py-3 text-sm font-medium text-sva-gray-300 transition-colors hover:bg-sva-charcoal-light"
-            >
-              Abmelden
-            </button>
-          </form>
         </div>
       </div>
 
@@ -88,7 +75,7 @@ export default async function MitgliederPage({ searchParams }: { searchParams: P
         />
         <button
           type="submit"
-          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light"
         >
           Suchen
         </button>

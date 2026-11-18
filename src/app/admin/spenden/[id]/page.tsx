@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const knopf = "rounded-md px-6 py-3 text-sm font-bold uppercase transition-colors";
+const knopf = "rounded-md px-6 py-3 text-sm font-bold transition-colors";
 
 export default async function SpendenbelegPage({
   params,
@@ -87,15 +87,14 @@ export default async function SpendenbelegPage({
   const bearbeitbar = istBearbeitbar(beleg.status);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
       <Link href="/admin/spenden" className="text-sm font-medium text-sva-gold hover:text-sva-gold-light">
         ← Alle Spendenbelege
       </Link>
 
       <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white uppercase sm:text-4xl">{beleg.name}</h1>
-          <div className="mt-2 h-1 w-16 bg-sva-gold" />
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">{beleg.name}</h1>
           <p className="mt-4 text-sva-gray-300">
             {euro(beleg.betrag)} vom {datum(beleg.tagDerSpende)}
           </p>

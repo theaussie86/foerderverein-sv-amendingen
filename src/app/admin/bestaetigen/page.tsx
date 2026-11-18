@@ -23,9 +23,10 @@ export default async function BestaetigenPage({ searchParams }: { searchParams: 
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-16 sm:px-6">
-      <h1 className="text-3xl font-black text-white uppercase">E-Mail bestätigen</h1>
-      <div className="mt-2 h-1 w-16 bg-sva-gold" />
+    <div className="w-full max-w-sm">
+      {/* eslint-disable-next-line @next/next/no-img-element -- kleines Logo mit fester Größe */}
+      <img src="/sva-wappen.png" alt="" width={56} height={56} className="mb-6 size-14" />
+      <h1 className="text-2xl font-bold tracking-tight text-white">E-Mail bestätigen</h1>
       <p className="mt-4 text-sva-gray-300">
         {bestaetigt
           ? "Danke, deine E-Mail-Adresse ist bestätigt."

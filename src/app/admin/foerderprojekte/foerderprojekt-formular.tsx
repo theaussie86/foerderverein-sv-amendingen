@@ -190,7 +190,7 @@ export function FoerderprojektFormular({
         <button
           type="submit"
           disabled={laeuft}
-          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light disabled:opacity-60"
+          className="rounded-md bg-sva-gold px-6 py-2.5 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light disabled:opacity-60"
         >
           {laeuft ? "Speichert …" : "Speichern"}
         </button>

@@ -51,12 +51,11 @@ export default async function MitgliedAnlegenPage({ searchParams }: { searchPara
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
       <Link href="/admin/mitglieder" className="text-sm font-medium text-sva-gold hover:text-sva-gold-light">
         ← Alle Mitglieder
       </Link>
-      <h1 className="mt-6 text-3xl font-black text-white uppercase sm:text-4xl">Mitglied anlegen</h1>
-      <div className="mt-2 h-1 w-16 bg-sva-gold" />
+      <h1 className="mt-6 text-2xl font-bold tracking-tight text-white sm:text-3xl">Mitglied anlegen</h1>
       <p className="mt-4 text-sva-gray-300">
         {herkunft
           ? `Angaben aus dem Online-Mitgliedsantrag von ${herkunft}. Bitte das Eintrittsdatum eintragen, das ist der Tag der Aufnahme.`

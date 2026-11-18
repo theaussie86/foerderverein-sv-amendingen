@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { mitgliedsantragAblehnenSchema, type MitgliedsantragAblehnenDaten } from "@/lib/schemas";
@@ -10,7 +10,8 @@ const feldCls =
   "mt-1 w-full rounded-md border border-sva-gray-600 bg-sva-charcoal px-4 py-2.5 text-white focus:border-sva-gold focus:outline-none focus:ring-1 focus:ring-sva-gold";
 
 // Ablehnung eines Mitgliedsantrags mit internem Grund. Sie ist endgültig, deshalb fragt das Formular vorher nach.
-export function AblehnenFormular({ id, email }: { id: string; email: string }) {
+// daneben: weitere Entscheidung (Übernehmen), die neben dem Ablehnen-Knopf steht, solange das Formular zu ist.
+export function AblehnenFormular({ id, email, daneben }: { id: string; email: string; daneben?: ReactNode }) {
   const [offen, setOffen] = useState(false);
   const [fehler, setFehler] = useState<string | null>(null);
   const {
@@ -34,13 +35,16 @@ export function AblehnenFormular({ id, email }: { id: string; email: string }) {
 
   if (!offen) {
     return (
-      <button
-        type="button"
-        onClick={() => setOffen(true)}
-        className="rounded-md border border-red-500/60 px-5 py-2.5 text-sm font-bold text-red-300 uppercase transition-colors hover:bg-red-500/10"
-      >
-        Ablehnen
-      </button>
+      <div className="flex flex-wrap items-center gap-3">
+        {daneben}
+        <button
+          type="button"
+          onClick={() => setOffen(true)}
+          className="rounded-md border border-red-500/60 px-5 py-2.5 text-sm font-bold text-red-300 transition-colors hover:bg-red-500/10"
+        >
+          Ablehnen
+        </button>
+      </div>
     );
   }
 
@@ -64,7 +68,7 @@ export function AblehnenFormular({ id, email }: { id: string; email: string }) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-md border border-red-500/60 px-6 py-3 text-sm font-bold text-red-300 uppercase transition-colors hover:bg-red-500/10 disabled:opacity-50"
+          className="rounded-md border border-red-500/60 px-6 py-3 text-sm font-bold text-red-300 transition-colors hover:bg-red-500/10 disabled:opacity-50"
         >
           {isSubmitting ? "Wird gespeichert …" : "Endgültig ablehnen"}
         </button>

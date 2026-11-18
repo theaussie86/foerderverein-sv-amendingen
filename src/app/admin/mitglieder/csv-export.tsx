@@ -23,7 +23,7 @@ export function CsvExport({ q, filter }: { q: string; filter?: Filter }) {
         aria-expanded={offen}
         aria-controls="csv-export"
         onClick={() => setOffen((o) => !o)}
-        className="rounded-md border border-sva-gold px-6 py-3 text-sm font-bold text-sva-gold uppercase transition-colors hover:bg-sva-charcoal-light"
+        className="rounded-md border border-sva-gold px-6 py-3 text-sm font-bold text-sva-gold transition-colors hover:bg-sva-charcoal-light"
       >
         CSV exportieren
       </button>
@@ -71,7 +71,7 @@ export function CsvExport({ q, filter }: { q: string; filter?: Filter }) {
             </button>
             <button
               type="submit"
-              className="ml-auto rounded-md bg-sva-gold px-4 py-2 text-sm font-bold text-sva-charcoal-dark uppercase transition-colors hover:bg-sva-gold-light"
+              className="ml-auto rounded-md bg-sva-gold px-4 py-2 text-sm font-bold text-sva-charcoal-dark transition-colors hover:bg-sva-gold-light"
             >
               Herunterladen
             </button>
