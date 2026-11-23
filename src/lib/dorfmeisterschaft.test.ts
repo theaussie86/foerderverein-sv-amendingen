@@ -27,7 +27,8 @@ describe("kalenderEintrag", () => {
 
   test("Titel, Ort mit maskierten Kommas und Link", () => {
     expect(ics).toContain("SUMMARY:Fußball-Dorfmeisterschaft 2027\r\n");
-    expect(ics).toContain("LOCATION:Sportgelände SV Amendingen\\, Grünenfurterstraße 36\\, 87700 Memmingen\r\n");
+    expect(ics).toContain("LOCATION:Sportgelände SV Amendingen\\, Am Sportplatz 13\\, 87700 Memmingen\r\n");
+    expect(ics).toContain("DESCRIPTION:Save the Date! Kleinfeldspiel mit 6 gegen 6.");
     expect(ics).toContain("URL:https://example.org/dorfmeisterschaft\r\n");
   });
 

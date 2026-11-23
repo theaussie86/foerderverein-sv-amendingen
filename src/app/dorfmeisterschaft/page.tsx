@@ -4,7 +4,7 @@ import Link from "next/link";
 import { dorfmeisterschaft } from "@/lib/dorfmeisterschaft";
 import { verein } from "@/lib/verein";
 
-const beschreibung = `Save the Date: Die ${dorfmeisterschaft.titel} findet am ${dorfmeisterschaft.datumLang} auf dem ${dorfmeisterschaft.ort} statt. Für alle ab 6 Jahren.`;
+const beschreibung = `Save the Date: Die ${dorfmeisterschaft.titel} findet am ${dorfmeisterschaft.datumLang} auf dem ${dorfmeisterschaft.ort} statt. ${dorfmeisterschaft.spielform}, für alle ab 6 Jahren.`;
 
 export const metadata: Metadata = {
   title: "Dorfmeisterschaft 2027",
@@ -35,6 +35,7 @@ export default function DorfmeisterschaftPage() {
             Dorfmeister{"\u00AD"}schaft <span className="text-sva-gold">{dorfmeisterschaft.jahr}</span>
           </h1>
           <p className="mt-6 text-2xl font-black text-sva-gold sm:text-3xl">{dorfmeisterschaft.datumLang}</p>
+          <p className="mt-3 text-lg font-bold text-white">{dorfmeisterschaft.spielform}</p>
           <p className="mt-3 text-lg text-sva-gray-200">
             {dorfmeisterschaft.ort} · {dorfmeisterschaft.strasse}, {dorfmeisterschaft.plzOrt}
           </p>
@@ -58,12 +59,12 @@ export default function DorfmeisterschaftPage() {
           </h2>
           <div className="mt-6 space-y-4 text-lg leading-relaxed text-sva-gray-200">
             <p>
-              Familie, Nachbarn, Freunde, Stammtische: Mitmachen kann jeder von 6 Jahren bis unbegrenzt, ob Anfänger,
-              Vereinsspieler oder altgedienter Hobbykicker. Talent und Regelkunde braucht es nicht. Fairplay, Spaß und
-              viel Lachen stehen im Vordergrund.
+              Gespielt wird auf dem Kleinfeld, 6 gegen 6. Familie, Nachbarn, Freunde, Stammtische: Mitmachen kann jeder
+              von 6 Jahren bis unbegrenzt, ob Anfänger, Vereinsspieler oder altgedienter Hobbykicker. Talent und
+              Regelkunde braucht es nicht. Fairplay, Spaß und viel Lachen stehen im Vordergrund.
             </p>
             <p className="font-bold text-white">
-              Uhrzeit, Spielmodus und Anmeldung folgen. Merkt euch den Tag schon jetzt vor!
+              Uhrzeit, Spielplan und Anmeldung folgen. Merkt euch den Tag schon jetzt vor!
             </p>
           </div>
 

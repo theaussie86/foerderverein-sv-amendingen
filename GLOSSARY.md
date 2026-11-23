@@ -225,7 +225,7 @@ Ein Ereignis, das der Förderverein selbst ausrichtet, um Mittel zu beschaffen u
 _Vermeiden_: Event, Fest (allein)
 
 **Dorfmeisterschaft**:
-Veranstaltung des Fördervereins: ein Fußballturnier für Mannschaften aus Amendingen, offen für alle ab 6 Jahren. Kein Spielbetrieb des SV Amendingen. Ausgeschrieben als „Fußball-Dorfmeisterschaft“ mit Jahreszahl.
+Veranstaltung des Fördervereins: ein Fußballturnier für Mannschaften aus Amendingen, offen für alle ab 6 Jahren. Gespielt wird auf Kleinfeld, sechs gegen sechs. Kein Spielbetrieb des SV Amendingen. Ausgeschrieben als „Fußball-Dorfmeisterschaft“ mit Jahreszahl.
 _Vermeiden_: Dorfturnier, Ortsmeisterschaft
 
 ## Mittelverwendung
