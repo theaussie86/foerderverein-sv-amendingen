@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/vorstand",
     "/spenden",
     "/mitglied-werden",
+    "/dorfmeisterschaft",
     "/kontakt",
     "/impressum",
     "/datenschutz",

@@ -218,6 +218,16 @@ _Vermeiden_: Gläubiger-Identifikationsnummer, Creditor-ID
 Die Person, von deren Konto die Lastschrift abgeht und die das Mandat unterschreibt. Muss nicht das Mitglied sein.
 _Vermeiden_: Zahler, Zahlungspflichtiger, Debitor
 
+## Veranstaltungen
+
+**Veranstaltung**:
+Ein Ereignis, das der Förderverein selbst ausrichtet, um Mittel zu beschaffen und Menschen für den Fußball beim SV Amendingen zusammenzubringen.
+_Vermeiden_: Event, Fest (allein)
+
+**Dorfmeisterschaft**:
+Veranstaltung des Fördervereins: ein Fußballturnier für Mannschaften aus Amendingen, offen für alle ab 6 Jahren. Kein Spielbetrieb des SV Amendingen. Ausgeschrieben als „Fußball-Dorfmeisterschaft“ mit Jahreszahl.
+_Vermeiden_: Dorfturnier, Ortsmeisterschaft
+
 ## Mittelverwendung
 
 **Mittel**:
