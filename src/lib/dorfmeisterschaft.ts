@@ -1,4 +1,4 @@
-// Stammdaten der nächsten Dorfmeisterschaft. Bisher nur Save the Date: Uhrzeit, Modus und Anmeldung folgen.
+// Stammdaten der nächsten Dorfmeisterschaft. Bisher nur Save the Date: Uhrzeit, Spielplan und Anmeldung folgen.
 
 export const dorfmeisterschaft = {
   titel: "Fußball-Dorfmeisterschaft 2027",
@@ -9,8 +9,9 @@ export const dorfmeisterschaft = {
   datumLang: "Samstag, 19. Juni 2027",
   datumKurz: "Sa, 19.06.2027",
   ort: "Sportgelände SV Amendingen",
-  strasse: "Grünenfurterstraße 36",
+  strasse: "Am Sportplatz 13",
   plzOrt: "87700 Memmingen",
+  spielform: "Kleinfeldspiel mit 6 gegen 6",
   pfad: "/dorfmeisterschaft",
 } as const;
 
@@ -52,7 +53,7 @@ export function kalenderEintrag(url: string): string {
     `DTEND;VALUE=DATE:${icsDatum(folgetag.getUTCFullYear(), folgetag.getUTCMonth() + 1, folgetag.getUTCDate())}`,
     `SUMMARY:${dorfmeisterschaft.titel}`,
     `LOCATION:${ort}`,
-    `DESCRIPTION:Save the Date! Uhrzeit und Anmeldung folgen: ${url}`,
+    `DESCRIPTION:Save the Date! ${dorfmeisterschaft.spielform}. Uhrzeit und Anmeldung folgen: ${url}`,
     `URL:${url}`,
     "END:VEVENT",
     "END:VCALENDAR",
