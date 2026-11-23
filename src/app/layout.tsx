@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://foerderverein-sv-amendingen.de"),
   title: {
     default: verein.name,
     template: "%s | Förderverein SV Amendingen",

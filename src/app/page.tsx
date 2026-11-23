@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DorfmeisterschaftBanner } from "@/components/dorfmeisterschaft-banner";
 import { Foerderprojekte } from "@/components/foerderprojekte";
 import { MitgliedLeiste } from "@/components/mitglied-leiste";
 import { mitgliederstand, type Mitgliederstand } from "@/lib/mitglieder";
@@ -128,6 +129,8 @@ export default async function HomePage() {
 
   return (
     <>
+      <DorfmeisterschaftBanner />
+
       {/* 1. Hero */}
       <section className="relative overflow-hidden bg-sva-charcoal-dark">
         <div className="absolute inset-0 bg-gradient-to-br from-sva-green-dark/40 via-sva-charcoal-dark to-sva-charcoal-dark" />

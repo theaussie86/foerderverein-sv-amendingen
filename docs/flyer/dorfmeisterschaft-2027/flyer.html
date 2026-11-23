@@ -1,0 +1,279 @@
+<!doctype html>
+<!--
+  Save the Date: Fußball-Dorfmeisterschaft 2027.
+  Ein Motiv, zwei Formate: flyer.html?format=social (1080x1350 PNG) und flyer.html?format=a5 (PDF).
+  Rendern: ./rendern.sh
+-->
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Save the Date - Fußball-Dorfmeisterschaft 2027</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;900&display=block" rel="stylesheet" />
+    <style>
+      :root {
+        --green: #2d6a2e;
+        --green-dark: #1e4d1f;
+        --gold: #d4a017;
+        --charcoal: #2a2a2a;
+        --charcoal-dark: #1a1a1a;
+        --gray-200: #d4d4d4;
+        --gray-300: #a3a3a3;
+        --gray-700: #404040;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background: var(--charcoal-dark);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body {
+        font-family: "Geist", system-ui, sans-serif;
+        color: #fff;
+      }
+
+      /* Maßstab: social = 1080 px breit, a5 = 148 mm breit. Alles in --u (1/100 der Breite). */
+      .social {
+        --u: 10.8px;
+        width: 1080px;
+        height: 1350px;
+      }
+      .a5 {
+        --u: 1.48mm;
+        width: 148mm;
+        height: 210mm;
+      }
+      @page {
+        size: A5;
+        margin: 0;
+      }
+
+      .blatt {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: calc(6.5 * var(--u));
+        background:
+          radial-gradient(120% 70% at 0% 0%, rgba(45, 106, 46, 0.55), transparent 60%),
+          radial-gradient(90% 60% at 100% 100%, rgba(30, 77, 31, 0.5), transparent 65%), var(--charcoal-dark);
+      }
+
+      /* Mittelkreis und Mittellinie als ruhige Spielfeld-Andeutung */
+      .feld {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .feld::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 58%;
+        width: calc(78 * var(--u));
+        aspect-ratio: 1;
+        transform: translate(-50%, -50%);
+        border: calc(0.35 * var(--u)) solid rgba(255, 255, 255, 0.06);
+        border-radius: 50%;
+      }
+      .feld::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 58%;
+        border-top: calc(0.35 * var(--u)) solid rgba(255, 255, 255, 0.06);
+      }
+
+      .blatt > * {
+        flex-shrink: 0;
+      }
+      .kopf {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .marke {
+        display: inline-block;
+        background: var(--gold);
+        color: var(--charcoal-dark);
+        font-weight: 900;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        font-size: calc(3.4 * var(--u));
+        padding: calc(1.2 * var(--u)) calc(2.6 * var(--u)) calc(1.2 * var(--u)) calc(2.9 * var(--u));
+        border-radius: calc(0.4 * var(--u));
+      }
+      .wappen {
+        width: calc(10 * var(--u));
+        height: auto;
+      }
+
+      .titel {
+        position: relative;
+        margin-top: calc(5 * var(--u));
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+      }
+      .titel .klein {
+        display: block;
+        font-size: calc(5.6 * var(--u));
+        color: var(--gray-200);
+        letter-spacing: 0.02em;
+      }
+      .titel .gross {
+        display: block;
+        margin-top: calc(1.2 * var(--u));
+        font-size: calc(10.2 * var(--u));
+      }
+      .titel .jahr {
+        color: var(--gold);
+      }
+      .strich {
+        width: calc(16 * var(--u));
+        height: calc(1.1 * var(--u));
+        background: var(--gold);
+        margin-top: calc(3.5 * var(--u));
+      }
+
+      .datum {
+        position: relative;
+        margin-top: calc(3.5 * var(--u));
+      }
+      .datum .tag {
+        font-size: calc(3.8 * var(--u));
+        font-weight: 700;
+        color: var(--gray-200);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+      .datum .wann {
+        font-size: calc(10.5 * var(--u));
+        font-weight: 900;
+        color: var(--gold);
+        line-height: 1;
+        margin-top: calc(0.8 * var(--u));
+        letter-spacing: -0.02em;
+      }
+      .datum .wo {
+        margin-top: calc(2 * var(--u));
+        font-size: calc(3.3 * var(--u));
+        font-weight: 500;
+        color: var(--gray-200);
+        line-height: 1.35;
+      }
+
+      .teaser {
+        position: relative;
+        margin-top: calc(3.5 * var(--u));
+        font-size: calc(3 * var(--u));
+        line-height: 1.4;
+        color: #fff;
+        max-width: none;
+        text-wrap: balance;
+      }
+      .teaser strong {
+        color: var(--gold);
+      }
+
+      .fuss {
+        position: relative;
+        margin-top: auto;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: calc(4 * var(--u));
+        padding-top: calc(3 * var(--u));
+        border-top: calc(0.25 * var(--u)) solid var(--gray-700);
+      }
+      .folgt {
+        font-size: calc(3.3 * var(--u));
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--gold);
+      }
+      .absender {
+        margin-top: calc(1.2 * var(--u));
+        font-size: calc(2.5 * var(--u));
+        color: var(--gray-300);
+        white-space: nowrap;
+        line-height: 1.4;
+      }
+      .absender b {
+        color: #fff;
+        font-weight: 700;
+      }
+      .qr {
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .qr .code {
+        background: #fff;
+        padding: calc(1.4 * var(--u));
+        border-radius: calc(0.8 * var(--u));
+        width: calc(14 * var(--u));
+      }
+      .qr .code img {
+        display: block;
+        width: 100%;
+      }
+      .qr .url {
+        margin-top: calc(1.2 * var(--u));
+        font-size: calc(1.7 * var(--u));
+        color: var(--gray-300);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blatt" id="blatt">
+      <div class="feld"></div>
+
+      <div class="kopf">
+        <span class="marke">Save the Date</span>
+        <img class="wappen" src="sva-wappen.png" alt="Wappen SV Amendingen" />
+      </div>
+
+      <h1 class="titel">
+        <span class="klein">Fußball-</span>
+        <span class="gross">Dorfmeister&shy;schaft <span class="jahr">2027</span></span>
+      </h1>
+      <div class="strich"></div>
+
+      <div class="datum">
+        <div class="tag">Samstag</div>
+        <div class="wann">19.06.2027</div>
+        <div class="wo">Sportgelände SV Amendingen<br />Grünenfurterstraße 36, Memmingen</div>
+      </div>
+
+      <p class="teaser">
+        Für alle von <strong>6 Jahren bis unbegrenzt</strong>. Trommelt Familie, Nachbarn, Freunde und Stammtische
+        zusammen!
+      </p>
+
+      <div class="fuss">
+        <div>
+          <div class="folgt">Infos &amp; Anmeldung folgen</div>
+          <div class="absender">Euer <b>Förderverein des SV Amendingen/Fußball e.V.</b></div>
+          <div class="absender">foerderverein-sv-amendingen.de/dorfmeisterschaft</div>
+        </div>
+        <div class="qr">
+          <div class="code"><img src="qr.svg" alt="QR-Code zur Website" /></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const format = new URLSearchParams(location.search).get("format") === "a5" ? "a5" : "social";
+      document.getElementById("blatt").classList.add(format);
+    </script>
+  </body>
+</html>
