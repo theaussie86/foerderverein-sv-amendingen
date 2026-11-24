@@ -19,6 +19,8 @@ const envSchema = z
     KONTAKT_EMPFAENGER: optional(z.string()),
     RESEND_API_KEY: optional(z.string()),
     MAIL_FROM: optional(z.email()),
+    // Antwortadresse für Website-Mails ohne eigenen Reply-To. Ohne Wert gilt die Vereinsadresse.
+    MAIL_REPLY_TO: optional(z.email()),
     // Nur lokal: Ohne RESEND_API_KEY gehen Mails an diese Mailpit-Instanz (z. B. http://localhost:8025).
     MAILPIT_URL: optional(z.url()),
     POCKETBASE_URL: optional(z.url()),
