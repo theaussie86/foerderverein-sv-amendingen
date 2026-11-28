@@ -59,9 +59,10 @@ export default function DorfmeisterschaftPage() {
           </h2>
           <div className="mt-6 space-y-4 text-lg leading-relaxed text-sva-gray-200">
             <p>
-              Gespielt wird auf dem Kleinfeld, 6 gegen 6. Familie, Nachbarn, Freunde, Stammtische: Mitmachen kann jeder
-              von 6 Jahren bis unbegrenzt, ob Anfänger, Vereinsspieler oder altgedienter Hobbykicker. Talent und
-              Regelkunde braucht es nicht. Fairplay, Spaß und viel Lachen stehen im Vordergrund.
+              Gespielt wird auf dem Kleinfeld, 6 gegen 6. Familie, Nachbarn, Freunde, Stammtische, Vereine und
+              Sportabteilungen: Mitmachen kann jeder von 6 Jahren bis unbegrenzt, ob Anfänger, Vereinsspieler oder
+              altgedienter Hobbykicker. Talent und Regelkunde braucht es nicht. Fairplay, Spaß und viel Lachen stehen im
+              Vordergrund.
             </p>
             <p className="font-bold text-white">
               Uhrzeit, Spielplan und Anmeldung folgen. Merkt euch den Tag schon jetzt vor!
