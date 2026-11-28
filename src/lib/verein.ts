@@ -31,6 +31,8 @@ export const verein = {
   // Laut Beitrittserklärung.
   glaeubigerId: "DE03ZZZ00000843718",
   satzungUrl: "/satzung.pdf",
+  // Papierantrag zum Ausdrucken, für alle, die nicht online beitreten wollen.
+  beitrittserklaerungUrl: "/beitrittserklaerung.pdf",
   // Termin des jährlichen Beitragseinzugs, dient zugleich als Vorabankündigung (Pre-Notification).
   einzugstermin: "15. März",
   bank: {
