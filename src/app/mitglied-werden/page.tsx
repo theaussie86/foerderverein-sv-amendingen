@@ -300,6 +300,18 @@ export default function MitgliedWerdenPage() {
           </>
         )}
       </form>
+
+      <p className="mt-6 text-center text-sm text-sva-gray-400">
+        Doch lieber auf Papier?{" "}
+        <a
+          href={verein.beitrittserklaerungUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sva-gold underline hover:text-sva-gold-light"
+        >
+          Beitrittserklärung hier herunterladen
+        </a>
+      </p>
     </div>
   );
 }
